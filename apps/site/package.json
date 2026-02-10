@@ -1,0 +1,22 @@
+{
+  "name": "@bdc/site",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "@astrojs/react": "^4.2.0",
+    "@bdc/uswds-theme": "*",
+    "@trussworks/react-uswds": "^11.0.0",
+    "@uswds/uswds": "^3.13.0",
+    "astro": "^5.17.0",
+    "focus-trap-react": "^11.0.4",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sass-embedded": "^1.83.0"
+  }
+}

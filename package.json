@@ -1,0 +1,8 @@
+{
+  "name": "bdc-astro",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ]
+}

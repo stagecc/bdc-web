@@ -1,0 +1,28 @@
+---
+import "../styles/global.scss";
+import { SiteHeader } from "../components/SiteHeader";
+import { SiteFooter } from "../components/SiteFooter";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <a class="usa-skipnav" href="#main-content">Skip to main content</a>
+    <SiteHeader client:only="react" />
+    <main id="main-content">
+      <slot />
+    </main>
+    <SiteFooter client:only="react" />
+  </body>
+</html>
