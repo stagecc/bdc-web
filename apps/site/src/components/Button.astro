@@ -1,0 +1,54 @@
+---
+import Icon from './Icon.astro';
+
+interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
+  variant?:
+    | 'default'
+    | 'secondary'
+    | 'accent-cool'
+    | 'accent-warm'
+    | 'base'
+    | 'outline'
+    | 'inverse'
+    | 'unstyled';
+  size?: 'default' | 'big';
+  icon?: string;
+  href?: string;
+  to?: string;
+}
+
+const {
+  variant = 'default',
+  size = 'default',
+  icon,
+  class: className,
+  className: classNameProp,
+  type = 'button',
+  href,
+  to,
+  ...rest
+} = Astro.props;
+
+const targetUrl = href || to;
+const Tag = targetUrl ? 'a' : 'button';
+
+const classes = [
+  'usa-button',
+  'radius-pill',
+  variant !== 'default' && `usa-button--${variant}`,
+  size === 'big' && 'usa-button--big',
+  className,
+  classNameProp,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<Tag 
+  {...targetUrl ? { href: targetUrl } : { type }} 
+  class={classes} 
+  {...rest}
+>
+  {icon && <Icon name={icon} /> }
+  <slot />
+</Tag>

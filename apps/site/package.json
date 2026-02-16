@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.3.13",
     "@astrojs/react": "^4.2.0",
     "@bdc/uswds-theme": "*",
     "@trussworks/react-uswds": "^11.0.0",
@@ -17,6 +18,10 @@
     "focus-trap-react": "^11.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "remark-excerpt": "^1.0.0-beta.1",
     "sass-embedded": "^1.83.0"
+  },
+  "devDependencies": {
+    "pagefind": "^1.4.0"
   }
 }

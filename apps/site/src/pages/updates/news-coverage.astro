@@ -1,0 +1,42 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import CoverageList from '@components/news/CoverageList.astro';
+import Base from '@layouts/Base.astro';
+
+const coverage = (await getCollection('coverage')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+// Explicit type, 'coverage' type is automatically generated from schema in content.config.ts
+const coverageByYear: Record<number, CollectionEntry<'coverage'>[]> = {};
+
+for (const item of coverage) {
+  const year = item.data.date.getFullYear();
+
+  if (!coverageByYear[year]) {
+    coverageByYear[year] = [];
+  }
+
+  coverageByYear[year].push(item);
+}
+
+const years = Object.keys(coverageByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<Base title="News Coverage">
+  <section class="usa-section">
+    <div class="grid-container">
+      <h1>News Coverage</h1>
+      {
+        years.map((year) => (
+          <section class="margin-top-4">
+            <h2 class="font-heading-lg margin-bottom-2">{year}</h2>
+            <CoverageList items={coverageByYear[year]} />
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</Base>

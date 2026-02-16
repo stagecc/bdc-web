@@ -1,0 +1,88 @@
+---
+import { Image } from 'astro:assets';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import ArticleHeader from '@components/news/ArticleHeader.astro';
+import Base from '@layouts/Base.astro';
+
+const { frontmatter } = Astro.props;
+
+const crumbs = [
+  { label: 'News', href: '/news/' },
+  { label: frontmatter.title },
+];
+
+const { title, date, tags, heroImage, heroAlt } = frontmatter;
+---
+
+<Base title={title}>
+
+  <section class="usa-section">
+    <article class="article">
+      <div class="grid-container">
+
+        <Breadcrumbs items={crumbs} />
+
+        <ArticleHeader
+          title={title}
+          date={date}
+          tags={tags}
+        />
+
+        {heroImage && (
+          <Image
+            src={heroImage}
+            alt={heroAlt || ''}
+            class="article__hero"
+          />
+        )}
+
+        <div class="article__content">
+          <slot />
+        </div>
+
+      </div>
+    </article>
+  </section>
+
+</Base>
+
+<style>
+  .article__content {
+    line-height: 1.5;
+    blockquote {
+      font-size: 1.25rem;
+      font-style: italic;
+      position: relative;
+      margin: 4rem 0 4rem 4rem;
+      z-index: 1;
+      span.attribution {
+        display: block;
+        margin-top: 1rem;
+        color: #999;
+        text-align: right;
+        font-size: 75%;
+        &::before {
+          content: "- ";
+        }
+      }
+      &::before {
+        z-index: -1;
+        content: "\201C";
+        position: absolute;
+        top: -3rem;
+        left: -2.5rem;
+        font-size: 10rem;
+        color: #bbcae499;
+        font-family: Merriweather;
+        line-height: 1;
+      }
+    }
+  }
+
+  .article__hero {
+    width: 100%;
+    height: auto;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+  }
+</style>

@@ -1,0 +1,72 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  src: ImageMetadata;
+  alt?: string;
+  caption?: string;
+  float?: 'left' | 'right';
+  width?: 'small' | 'normal' | 'full';
+}
+
+const { src, alt = '', caption, float, width = 'normal' } = Astro.props;
+
+const classes = ['figure', `figure--${width}`, float && `figure--${float}`]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<figure class={classes}>
+  <Image src={src} alt={alt} />
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<style>
+  .figure {
+    margin: 2rem 0;
+  }
+
+  .figure img {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+  }
+
+  .figure figcaption {
+    color: gray;
+    font-style: italic;
+    font-size: 85%;
+    margin-top: 0.5rem;
+  }
+
+  .figure { /* normal */
+    max-width: 50%;
+  }
+
+  .figure--small {
+    max-width: 300px;
+  }
+
+  .figure--full {
+    max-width: 100%;
+  }
+
+  .figure--left {
+    float: left;
+    margin: 0 1.5rem 1rem 0;
+  }
+
+  .figure--right {
+    float: right;
+    margin: 0 0 1rem 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .figure--left,
+    .figure--right {
+      float: none;
+      margin: 2rem 0;
+      max-width: 100%;
+    }
+  }
+</style>

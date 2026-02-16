@@ -1,0 +1,47 @@
+---
+import { getCollection } from 'astro:content';
+import EventsList from '@components/events/EventsList.astro';
+import Base from '@layouts/Base.astro';
+
+const now = new Date();
+
+const allEvents = (await getCollection('events')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const upcoming = allEvents
+  .filter((e) => (e.data.end_date ?? e.data.date) >= now)
+  .reverse();
+
+const past = allEvents.filter((e) => (e.data.end_date ?? e.data.date) < now);
+---
+
+<Base title="Events">
+
+  <section class="usa-section">
+    <div class="grid-container">
+
+      <h1>Events</h1>
+
+      <section class="margin-top-4">
+        <h2 class="font-heading-lg margin-bottom-2">Upcoming</h2>
+        {
+          upcoming.length > 0
+          ? <EventsList items={upcoming} />
+          : 'No upcoming events are scheduled at this time. Check back soon!'
+        }
+      </section>
+
+      <br />
+
+      {past.length > 0 && (
+        <section class="margin-top-4">
+          <h2 class="font-heading-lg margin-bottom-2">Past</h2>
+          <EventsList items={past} />
+        </section>
+      )}
+
+    </div>
+  </section>
+
+</Base>

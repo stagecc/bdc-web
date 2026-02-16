@@ -5,7 +5,7 @@
 
 @use "@bdc/uswds-theme/src/settings" as *;
 
-@use "uswds-core" with (
+@use "uswds-core" as core with (
   $theme-color-primary: $theme-color-primary,
   $theme-color-primary-dark: $theme-color-primary-dark,
   $theme-color-primary-darker: $theme-color-primary-darker,
@@ -49,7 +49,28 @@
   $theme-in-page-nav-main-content-max-width: $theme-in-page-nav-main-content-max-width,
   $theme-in-page-nav-margin-left: $theme-in-page-nav-margin-left,
   $theme-in-page-nav-margin-top: $theme-in-page-nav-margin-top,
-  $theme-in-page-nav-top: $theme-in-page-nav-top
+  $theme-in-page-nav-top: $theme-in-page-nav-top,
+  $theme-image-path: "/img"
 );
 
 @use "uswds";
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: core.font-family('heading');
+}
+
+h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h2 {
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+h3 {
+  font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+}
+
+h4 {
+  font-size: clamp(1.125rem, 1.8vw, 1.5rem);
+}

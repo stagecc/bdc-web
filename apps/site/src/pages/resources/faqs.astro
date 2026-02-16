@@ -1,0 +1,27 @@
+---
+import { getCollection } from 'astro:content';
+import FaqList from '@components/faqs/FaqList.astro';
+import Link from '@components/link/Link.astro';
+import Base from '@layouts/Base.astro';
+
+const faqs = await getCollection('faqs');
+---
+
+<Base title="User FAQs">
+
+  <section class="usa-section">
+    <div class="grid-container">
+
+      <h1>Frequently Asked Questions</h1>
+
+      <FaqList items={faqs} />
+
+      <p class="margin-top-4">
+        View our FAQs directly at{' '}
+        <Link to="https://bdcatalyst.freshdesk.com/">bdcatalyst.freshdesk.com</Link>.
+      </p>
+
+    </div>
+  </section>
+
+</Base>

@@ -1,0 +1,47 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import TagLink from '@components/link/TagLink.astro';
+import NewsList from '@components/news/NewsList.astro';
+import Base from '@layouts/Base.astro';
+
+const posts = (await getCollection('news')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+// Explicit type, 'news' type is automatically generated from schema in content.config.ts
+const postsByYear: Record<number, CollectionEntry<'news'>[]> = {};
+
+for (const post of posts) {
+  const year = post.data.date.getFullYear();
+
+  if (!postsByYear[year]) {
+    postsByYear[year] = [];
+  }
+
+  postsByYear[year].push(post);
+}
+
+const years = Object.keys(postsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<Base title="News">
+
+  <section class="usa-section">
+    <div class="grid-container">
+
+      <h1>News</h1>
+      {years.map(year => (
+        <section class="margin-top-4">
+          <h2 class="font-heading-lg margin-bottom-2">
+            {year}
+          </h2>
+          <NewsList items={postsByYear[year]} />
+        </section>
+      ))}
+    </div>
+  </section>
+
+</Base>
+

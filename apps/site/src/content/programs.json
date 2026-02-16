@@ -1,0 +1,146 @@
+[
+  {
+    "key": "Bench to Bassinet",
+    "doc_count": 5,
+    "No_of_studies": {
+      "value": 5
+    },
+    "description": "Pediatric Cardiovascular",
+    "parent_program": [""]
+  },
+  {
+    "key": "BioLINCC",
+    "doc_count": 103,
+    "No_of_studies": {
+      "value": 103
+    },
+    "description": "Various HLBS",
+    "parent_program": [""]
+  },
+  {
+    "key": "C4R",
+    "doc_count": 34,
+    "No_of_studies": {
+      "value": 34
+    },
+    "description": "COVID-19 & Various HLBS",
+    "parent_program": [""]
+  },
+  {
+    "key": "CONNECTS",
+    "doc_count": 6,
+    "No_of_studies": {
+      "value": 6
+    },
+    "description": "COVID-19",
+    "parent_program": [""]
+  },
+  {
+    "key": "Extramural Research",
+    "doc_count": 106,
+    "No_of_studies": {
+      "value": 106
+    },
+    "description": "Various HLBS",
+    "parent_program": [""]
+  },
+  {
+    "key": "Heartshare",
+    "doc_count": 54,
+    "No_of_studies": {
+      "value": 54
+    },
+    "description": "Cardiovascular",
+    "parent_program": [""]
+  },
+  {
+    "key": "Longitudinal Epidemiology Observational Study (LEOS)",
+    "doc_count": 115,
+    "No_of_studies": {
+      "value": 115
+    },
+    "description": "Longitudinal Observational",
+    "parent_program": [""]
+  },
+  {
+    "key": "LungMAP",
+    "doc_count": 1,
+    "No_of_studies": {
+      "value": 1
+    },
+    "description": "Pulmonary",
+    "parent_program": [""]
+  },
+  {
+    "key": "NHLBI Intramural Research",
+    "doc_count": 3,
+    "No_of_studies": {
+      "value": 3
+    },
+    "description": "Various HLBS",
+    "parent_program": [""]
+  },
+  {
+    "key": "National Sleep Research Resource (NSRR)",
+    "doc_count": 7,
+    "No_of_studies": {
+      "value": 7
+    },
+    "description": "Sleep and Circadian Rhythms",
+    "parent_program": [""]
+  },
+  {
+    "key": "PETAL Network",
+    "doc_count": 8,
+    "No_of_studies": {
+      "value": 8
+    },
+    "description": "Pulmonary & COVID-19",
+    "parent_program": [""]
+  },
+  {
+    "key": "Pediatric Heart Network (PHN)",
+    "doc_count": 1,
+    "No_of_studies": {
+      "value": 1
+    },
+    "description": "Pediatric Cardiovascular",
+    "parent_program": [""]
+  },
+  {
+    "key": "RECOVER",
+    "doc_count": 3,
+    "No_of_studies": {
+      "value": 3
+    },
+    "description": "Long COVID & PASC",
+    "parent_program": [""]
+  },
+  {
+    "key": "Sickle Cell Disease",
+    "doc_count": 10,
+    "No_of_studies": {
+      "value": 10
+    },
+    "description": "Sickle Cell Disease",
+    "parent_program": [""]
+  },
+  {
+    "key": "TOPMed",
+    "doc_count": 112,
+    "No_of_studies": {
+      "value": 112
+    },
+    "description": "Precision Medicine ",
+    "parent_program": [""]
+  },
+  {
+    "key": "Training",
+    "doc_count": 4,
+    "No_of_studies": {
+      "value": 4
+    },
+    "description": "Open-Access; Training",
+    "parent_program": [""]
+  }
+]

@@ -1,0 +1,43 @@
+---
+import Icon from '@components/Icon.astro';
+import Link from '@components/link/Link.astro';
+
+const { items } = Astro.props;
+---
+<ul class="usa-list usa-list--unstyled">
+  {items.map(item => (
+    <li class="usa-collection__item">
+      <div class="usa-collection__body">
+        <h4 class="usa-collection__heading">
+          <Link to={item.data.url}>{item.data.title}</Link>
+        </h4>
+
+        <div class="display-flex flex-justify">
+          
+          <ul class="usa-collection__meta">
+            <li class="usa-collection__meta-item">
+              <time datetime={item.data.date.toISOString()}>
+                {item.data.date.toLocaleDateString('en-US', {
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </time>
+            </li>
+            <li class="usa-collection__meta-item">
+              {item.data.source}
+            </li>
+          </ul>
+          {
+            item.data.paywall && (
+              <ul class="usa-collection__meta">
+                <li class="usa-collection__meta-item text-thin text-italic">
+                  <Icon name="shield" /> Behind paywall
+                </li>
+              </ul>
+            )
+          }
+        </div>
+      </div>
+    </li>
+  ))}
+</ul>

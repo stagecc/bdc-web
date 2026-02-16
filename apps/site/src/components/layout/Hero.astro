@@ -1,0 +1,33 @@
+---
+interface Props {
+  image: string;
+  title: string;
+  text?: string;
+}
+const { image, title, text } = Astro.props;
+---
+
+<section
+  class="usa-hero"
+  aria-label="Introduction"
+  style={`--hero-bg: url(${image})`}
+>
+  <div class="grid-container">
+    <div class="usa-hero__callout">
+      <h1 class="usa-hero__heading">
+        {title}
+      </h1>
+      {text && <p class="text">{text}</p>}
+      <a class="usa-button" href="">Call to action</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .usa-hero {
+    position: relative;
+    background-image: var(--hero-bg);
+    padding: 6rem 2rem;
+    min-height: 400px;
+  }
+</style>

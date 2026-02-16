@@ -1,14 +1,17 @@
 ---
 import '../styles/global.scss';
 import { ViewTransitions } from 'astro:transitions';
-import { SiteHeader } from '../components/layout/SiteHeader';
-import { SiteFooter } from '../components/layout/SiteFooter';
+import SiteFooter from '@components/layout/SiteFooter.astro';
+import { SiteHeader } from '@components/layout/SiteHeader';
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
+const displayTitle = title.includes('BioData Catalyst')
+  ? title
+  : `${title} | BioData Catalyst`;
 ---
 
 <!doctype html>
@@ -16,15 +19,25 @@ const { title } = Astro.props;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
+    <title>{displayTitle}</title>
     <ViewTransitions />
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      main {
+        flex: 1;
+      }
+    </style>
   </head>
-  <body>
+  <body data-pagefind-ignore>
     <a class="usa-skipnav" href="#main-content">Skip to main content</a>
     <SiteHeader client:only="react" transition:persist />
-    <main id="main-content">
+    <main id="main-content" data-pagefind-body>
       <slot />
     </main>
-    <SiteFooter client:only="react" transition:persist />
+    <SiteFooter />
   </body>
 </html>

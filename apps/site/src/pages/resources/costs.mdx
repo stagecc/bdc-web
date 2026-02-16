@@ -1,0 +1,98 @@
+---
+title: Usage Costs
+layout: ../../layouts/Page.astro
+---
+import Button from '@components/Button.astro';
+
+There are no costs to BDC users for creating accounts or [exploring the data](/use-bdc/explore-data) BDC hosts.
+
+BDC users incur costs for computation, storage of uploaded or imported data ([BYOD](/use-bdc/analyze-data/)), storage of derived data, and downloads of analysis results (see [Cloud Infrastructure Pricing](https://sb-biodatacatalyst.readme.io/docs/about-pricing)). Computation costs depend on the compute instance size, the duration of the instance use, and the cloud providers' pricing of the compute instance at the time of execution. Storage costs depend on the file size, the duration the file is stored, and the cloud providers' pricing of the storage classes.
+
+If BDC users choose to use SAS within their workspaces, they also incur a SAS usage license fee (approximately $3 per hour; subject to change), which is NOT covered by BDC's cloud credit programs.
+
+
+## Estimate & Manage Costs
+
+BDC is committed to helping users estimate and minimize costs.
+
+**To help minimize file transfer costs**, BDC allows users to compute on Amazon Web Services (AWS), Google Cloud Platform (GCP), or Microsoft Azure. The result files are stored where the compute was orchestrated, which helps minimize costs because BDC users can use the data where it already "lives."
+
+**To help reduce file storage costs**, BDC collaborates with [NIH STRIDES](https://cloud.nih.gov/), which affords BDC users discounts on both compute and storage costs. These savings are automatically passed on to BDC users.
+
+BDC also offers **cost management recommendations**, like deleting result files once they are no longer needed.
+
+**To help estimate costs**, BDC offers cloud cost estimators for the following workflows and tools:
+-   BEDTools Coverage
+-   Cyrius
+-   GENESIS Aggregate Association Testing
+-   GENESIS Null Model
+-   GENESIS Single Variant Association Testing
+-   HTSeq-count
+-   kallisto quant
+-   STAR
+
+To use the cloud cost estimators, you will need the following:
+-   [eRA Commons account](https://www.era.nih.gov/register-accounts/create-and-edit-an-account.htm)
+-   Access to data that you plan to analyze: Either open-access data similar to the data you will analyze or an approved data access request (DAR) for each controlled-access dataset you plan to use. Researchers who do not have approved DARs for the controlled data should [read the dbGaP section of the Understanding Access page](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/written-documentation/data-access/understanding-access-requirements-for-biodata-catalyst\#dbgap) and [Submitting a dbGaP Data Access Request](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/written-documentation/data-access/submitting-a-dbgap-data-access-request) in BDC’s documentation.
+-   An [account and a project](/use-bdc/analyze-data) in a BDC workspace
+-   Download of the selected app(s) to your BDC workspace
+
+For information on using the cost estimators, refer to the following resources:
+-   [Written guidance](https://sb-biodatacatalyst.readme.io/page/estimate-task-costs)
+-   [Video tutorial](https://www.youtube.com/watch?v=h632PlryCwY)
+
+Additional information about estimating and managing costs is available on these documentation pages:
+
+-   [Estimate and Manage Your Cloud Costs](https://sb-biodatacatalyst.readme.io/docs/estimate-and-manage-your-cloud-costs)
+-   [Comprehensive tips for reliable and efficient analysis set-up](https://sb-biodatacatalyst.readme.io/page/comprehensive-tips-for-reliable-and-efficient-analysis-set-up)
+-   [Controlling your cloud costs](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/written-documentation/analyze-data-1/terra/account-setup/managing-costs)
+
+To get one-on-one assistance estimating and managing usage costs, submit the [Contact Us](/help-and-support/contact-us) form using the "Usage Costs/Cloud Credits" type (dropdown option).
+
+
+## Pay for Cloud Credits
+BDC usage costs are paid in the form of cloud credits (the virtual currency of cloud-based services) that can be purchased using a credit card or purchase order number. **Researchers should [include anticipated costs in their grant proposals](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/written-documentation/writing-biodata-catalyst-into-a-grant-proposal).** NHLBI and BDC offer the following cloud credit programs to help with usage costs, subject to the availability of funds.
+
+### NHLBI BDC Pilot Funding Program
+
+Researchers and research teams who have not previously used BDC and are affiliated with non-commercial entities or NIH intramural research may apply for an initial $500 in cloud credits, also known as Pilot Credits, through the NHLBI BDC Pilot Funding Program to test and evaluate BDC for their research needs. For example, they can assess the feasibility of their research on BDC, use pipelines on smaller samples, or estimate how much full analyses will cost. Some analyses can even be completed for that amount or less.
+
+Applicants for Pilot Credits may request that the funds be applied to a project in *BDC-Seven Bridges*, a workspace in *BDC-Terra*, or split equally between the two platforms.
+
+NHLBI BDC Pilot Funding Program recipients agree to acknowledge the funding in all publications and external presentations resulting from that work using the standard [BDC Citation and Acknowledgement language](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement). If contacted by BDC, recipients of the funds are required to provide additional information about their experiences with the Pilot Funding Program and their experiences using the ecosystem.
+
+Prior to applying for Pilot Credits, applicants must [create an account(s) and project or workspace](/use-bdc/analyze-data) in the platform(s) aligned with their Pilot Credit request. For more information about the differences between BDC's standard workspaces and those provided by *BDC Powered by Terra*, [visit this webpage](/use-bdc/analyze-data/bdc-workspaces).
+
+<Button to="#cloud-credit-request-form">Fill out the form below to request $500 in pilot cloud credits</Button>
+
+### NHLBI BDC Cloud Credit Support Program
+
+Researchers and research teams affiliated with non-commercial entities may apply for cloud credits through the NHLBI BDC Cloud Credit Support Program to support research projects in the heart, lung, blood, and sleep fields. Cloud credits are awarded per project; if multiple users work together on a project, the group should submit one application. All individuals involved in a project can use awarded cloud credits through a shared billing group.
+
+NHLBI BDC Cloud Credit Support Program recipients agree to acknowledge the funding in all publications and external presentations resulting from that work using the standard [BDC Citation and Acknowledgement language](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement). If contacted by BDC, recipients of these funds are required to provide additional information about their experiences with the NHLBI BDC Cloud Credit Support Program and their experiences using the ecosystem.
+
+Applicants for the NHLBI BDC Cloud Credit Support Program must specify the BDC platform they will use: either *BDC-Seven Bridges* or *BDC-Terra*. Before applying for Cloud Credit Support, applicants must [create an account in the platform aligned with their Cloud Credit Support request](/use-bdc/analyze-data). For more information about the differences between BDC's standard workspaces and those provided by *BDC Powered by Terra*, [visit this webpage](/use-bdc/analyze-data/bdc-workspaces).
+
+[Fill out the form below to apply for the NHLBI BDC Cloud Credit Support Program](/resources/usage-costs/#cloud-credit-request-form)
+
+### Cloud Credit Requests for Academic Classes and Group Educational Sessions
+
+To encourage the use of BDC among early career researchers, [BDC offers a guide to support integration into academic classes and group educational settings](https://sb-biodatacatalyst.readme.io/docs/using-nhlbi-biodata-catalyst-for-workshops-and-courses) and may provide cloud credits to support limited participant use during the sessions. In many instances, NHLBI/BDC will provide up to $7,500 per session in cloud credits.
+
+Criteria for Cloud Credits for Academic Classes and Group Educational Sessions include the following:
+
+-   Use of _BDC-Seven Bridges_ as the analysis platform
+-   No less than an hour of course time dedicated to describing and exploring the BDC ecosystem
+-   Facilitation by an experienced BDC user or BDC representative
+-   Expressed need by the sponsoring institution and BDC's availability of funds
+
+
+## Cloud Credit Request Form
+
+Before completing this form, you must [create an account for a BDC workspace](/use-bdc/analyze-data).
+
+Applications will be reviewed, and notifications will be sent as soon as possible.
+If granted, the cloud credits will remain available as long as there is activity in the billing group.
+If there are six months of inactivity, users will be asked whether the credits are still needed.
+
+[[ CloudCreditsForm ]]

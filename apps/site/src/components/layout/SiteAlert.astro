@@ -1,0 +1,39 @@
+---
+interface Props {
+  variant?: 'info' | 'warning' | 'error' | 'emergency';
+  slim?: boolean;
+  noIcon?: boolean;
+  title?: string;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+  ariaLabel?: string;
+}
+
+const {
+  variant = 'info',
+  slim = false,
+  noIcon = false,
+  title,
+  headingLevel: HeadingTag = 'h3',
+  ariaLabel = 'Site alert',
+} = Astro.props;
+
+const containerClasses = [
+  'usa-site-alert',
+  `usa-site-alert--${variant}`,
+  slim && 'usa-site-alert--slim',
+  noIcon && 'usa-site-alert--no-icon',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<section class={containerClasses} aria-label={ariaLabel}>
+  <div class="usa-alert">
+    <div class="usa-alert__body">
+      {title && <HeadingTag class="usa-alert__heading">{title}</HeadingTag>}
+      <div class="usa-alert__text">
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,57 @@
+---
+import Base from '@layouts/Base.astro';
+---
+
+<Base title="Search Results">
+  <section class="usa-section">
+    <div class="grid-container">
+      <h1>Search Results</h1>
+      <div id="search-results" class="margin-top-4"></div>
+    </div>
+  </section>
+</Base>
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
+<script src="/pagefind/pagefind-ui.js" is:inline></script>
+<script is:inline>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+
+    const pagefind = new PagefindUI({ 
+      element: "#search-results", 
+      showSubResults: true,
+      showImages: false,
+      translations: {
+        placeholder: "Search site..."
+      }
+    });
+
+    if (query) {
+      pagefind.triggerSearch(query);
+    }
+  });
+</script>
+
+<style is:global>
+  :root {
+    --pagefind-ui-primary: #005ea2;
+    --pagefind-ui-text: #1b1b1b;
+    --pagefind-ui-background: #ffffff;
+    --pagefind-ui-border: #adadad;
+    --pagefind-ui-tag: #f0f0f0;
+  }
+
+  .pagefind-ui__message {
+    margin: 1rem 0;
+  }
+  
+  .pagefind-ui__result-link {
+    color: #005ea2 !important;
+    text-decoration: underline !important;
+  }
+  
+  .pagefind-ui__search-input {
+  }
+
+</style>

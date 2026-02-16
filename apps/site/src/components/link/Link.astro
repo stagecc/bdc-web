@@ -1,0 +1,18 @@
+---
+interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+  to: string;
+}
+
+const { to, class: className, className: classNameProp, ...rest } = Astro.props;
+const isExternal = to.startsWith('https://') || to.startsWith('http://');
+const classes = [
+  className,
+  classNameProp,
+  'usa-link',
+  isExternal && 'usa-link--external',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<a href={to} class={classes} {...isExternal && { rel: 'noopener', target: '_blank' }} {...rest}><slot /></a>

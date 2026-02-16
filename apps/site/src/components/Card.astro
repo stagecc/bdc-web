@@ -1,0 +1,75 @@
+---
+interface Props {
+  title?: string;
+  mediaPosition?: 'left' | 'right';
+}
+
+const { title, mediaPosition = 'right' } = Astro.props;
+---
+
+<section
+  class={
+    `usa-card card ${mediaPosition === 'left' ? 'media-left' : 'media-right' } margin-y-2`
+  }
+>
+  <div class="usa-card__container card-inner margin-x-0">
+    
+    <div class="card-content">
+      {title && (
+        <div class="usa-card__header">
+          <h2 class="usa-card__heading heading" style={{ margin: 0 }}>{title}</h2>
+        </div>
+      )}
+
+      <div class="usa-card__body">
+        <slot name="content" />
+      </div>
+    </div>
+
+    <div class="usa-card__media card-media usa-card__media--inset">
+      <slot name="media" />
+    </div>
+
+  </div>
+</section>
+
+<style>
+.card {
+  container-type: inline-size;
+  container-name: card;
+}
+
+.card-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.card-content {
+  flex: 3;
+}
+.card-media {
+  flex: 2;
+}
+
+.heading {
+  margin-top: 0 !important;
+}
+
+/* Desktop layout */
+@container card (min-width: 800px) {
+  .card-inner {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .card-content,
+  .usa-card__media {
+    width: 50%;
+  }
+
+  .media-right .card-inner {
+    flex-direction: row-reverse;
+  }
+}
+</style>

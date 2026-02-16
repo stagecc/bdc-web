@@ -1,0 +1,74 @@
+---
+import { getCollection } from 'astro:content';
+import EventsList from '@components/events/EventsList.astro';
+import NewsList from '@components/news/NewsList.astro';
+import Base from '@layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const [allNews, allEvents] = await Promise.all([
+    getCollection('news'),
+    getCollection('events'),
+  ]);
+
+  const tagMap = new Map<
+    string,
+    {
+      news: typeof allNews;
+      events: typeof allEvents;
+    }
+  >();
+
+  for (const post of allNews) {
+    for (const tag of post.data.tags) {
+      if (!tagMap.has(tag)) tagMap.set(tag, { news: [], events: [] });
+      tagMap.get(tag)?.news.push(post);
+    }
+  }
+
+  for (const event of allEvents) {
+    for (const tag of event.data.tags) {
+      if (!tagMap.has(tag)) tagMap.set(tag, { news: [], events: [] });
+      tagMap.get(tag)?.events.push(event);
+    }
+  }
+
+  return [...tagMap.entries()].map(([tag, { news, events }]) => ({
+    params: { slug: tag },
+    props: {
+      tag,
+      news: news.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
+      events: events.sort(
+        (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+      ),
+    },
+  }));
+}
+
+const { tag, news, events } = Astro.props;
+---
+
+<Base title={`Tagged: ${tag}`}>
+
+  <section class="usa-section">
+    <div class="grid-container">
+
+      <h1>Tagged: {tag}</h1>
+
+      {news.length > 0 && (
+        <section class="margin-top-4">
+          <h2 class="font-heading-lg margin-bottom-2">News</h2>
+          <NewsList items={news} />
+        </section>
+      )}
+
+      {events.length > 0 && (
+        <section class="margin-top-4">
+          <h2 class="font-heading-lg margin-bottom-2">Events</h2>
+          <EventsList items={events} />
+        </section>
+      )}
+
+    </div>
+  </section>
+
+</Base>

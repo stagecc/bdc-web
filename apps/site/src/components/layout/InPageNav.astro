@@ -67,7 +67,7 @@ const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3);
   }
 
   .usa-prose :global(:is(h2, h3)) {
-    scroll-margin-top: 160px;
+    scroll-margin-top: 100px;
   }
 </style>
 
@@ -95,7 +95,7 @@ const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3);
         const visible = entries.findLast((e) => e.isIntersecting);
         if (visible?.target.id) setCurrent(visible.target.id);
       },
-      { rootMargin: '-160px 0px -60% 0px', threshold: 1 },
+      { rootMargin: '-100px 0px -60% 0px', threshold: 1 },
     );
 
     targets.forEach((el) => observer.observe(el));

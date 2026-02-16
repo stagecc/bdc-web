@@ -1,0 +1,54 @@
+- title: "Rakeiora Genomics Platform: a pathfinder for genomic medicine research in Aotearoa New Zealand"
+  url: 'https://www.tandfonline.com/doi/full/10.1080/03036758.2025.2469626#d1e639'
+  date: 'March 24, 2025'
+  source: Journal of the Royal Society of New Zealand
+  external: true
+
+- title: People RDC framework for advanced analytics for national healthcare research infrastructure
+  url: 'https://zenodo.org/records/13831386'
+  date: 'September 24, 2024'
+  source: Zenodo
+  external: true
+
+- title: NIH RECOVER Opens Long COVID Dataset To Researchers Via Database
+  url: https://insidehealthpolicy.com/daily-news/nih-recover-opens-long-covid-dataset-researchers-database
+  date: 'April 26, 2024'
+  source: InsideHealthPolicy
+  external: true
+  paywall: true
+
+- title: NIH eyes addition of imagery to Biomedical Platform
+  url: https://executivegov.com/2024/04/nih-eyes-addition-of-imagery-other-data-types-to-researcher-cloud-platform
+  date: 'April 1, 2024'
+  source: ExecutiveGov
+  external: true
+
+- title: 'Discrimination drives smoking habits, hurt heart health'
+  url: https://www.nyu.edu/about/news-publications/news/2024/february/discrimination-smoking-heart-health.html
+  date: 'February 26, 2024'
+  source: NYU News
+  external: true
+
+- title: 'GA4GH Announces 10 New ''Driver'' Projects, Including First Pediatric Partner'
+  url: https://www.genomeweb.com/informatics/ga4gh-announces-10-new-driver-projects-including-first-pediatric-partner
+  date: 'September 21, 2023'
+  source: GenomeWeb
+  external: true
+
+- title: A Cloud-Based Data Democratization Tool
+  url: 'https://www.rti.org/impact/data-democratization-tool'
+  date: 'January 31, 2022'
+  source: RTI International
+  external: true
+
+- title: Accelerating heart failure research
+  url: 'https://www.nhlbi.nih.gov/news/2022/accelerating-heart-failure-research'
+  date: 'December 14, 2022'
+  source: NHLBI NIH
+  external: false
+
+- title: 'Listen: The Open-Data Cloud Platform Transforming NIH Research'
+  url: https://governmentciomedia.com/listen-open-data-cloud-platform-transforming-nih-research
+  date: 'January 25, 2022'
+  source: 'HealthCast Podcast, GovCIO Media & Research'
+  external: true

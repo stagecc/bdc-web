@@ -1,0 +1,71 @@
+---
+import CalendarDate from '@components/events/CalendarDate.astro';
+import Icon from '@components/Icon.astro';
+import TagLink from '@components/link/TagLink.astro';
+
+const { items } = Astro.props;
+
+const dateOptions = {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+} as const;
+---
+
+<ul class="usa-collection">
+
+  {items.map(event => {
+
+    const dateStr =
+      event.data.date.toLocaleDateString('en-US', dateOptions);
+
+    const endDateStr =
+      event.data.end_date?.toLocaleDateString('en-US', dateOptions);
+
+    return (
+
+      <li class="usa-collection__item">
+
+        <!-- NEW: calendar date -->
+        <CalendarDate
+          date={event.data.date}
+          endDate={event.data.end_date}
+        />
+
+        <div class="usa-collection__body">
+
+          <h4 class="usa-collection__heading">
+            <a href={`/events/${event.id}/`} class="usa-link">
+              {event.data.title}
+            </a>
+          </h4>
+
+          <ul class="usa-collection__meta">
+
+            {event.data.location && (
+              <li class="usa-collection__meta-item">
+                <Icon name="location_on" /> {event.data.location}
+              </li>
+            )}
+
+            {event.data.tags.length > 0 && (
+              <li class="usa-collection__meta-item">
+                <div class="display-flex flex-wrap gap-05">
+                  {event.data.tags.map(tag => (
+                    <TagLink tag={tag} />
+                  ))}
+                </div>
+              </li>
+            )}
+
+          </ul>
+
+        </div>
+
+      </li>
+
+    );
+
+  })}
+
+</ul>

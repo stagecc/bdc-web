@@ -1,0 +1,100 @@
+---
+import Link from '@components/link/Link.astro';
+---
+
+<footer class="usa-footer usa-footer--big">
+  <div class="grid-container usa-footer__return-to-top">
+    <Link to="#">Return to top</Link>
+  </div>
+  <div class="usa-footer__primary-section">
+    <div class="grid-container">
+      <div class="grid-row grid-gap">
+        <div class="tablet:grid-col-8">
+          <nav class="usa-footer__nav" aria-label="Footer navigation">
+            <div class="grid-row grid-gap-4">
+              <div class="mobile-lg:grid-col-4 desktop:grid-col-4">
+                <section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
+                  <h4 class="usa-footer__primary-link">Use BDC</h4>
+                  <ul class="usa-list usa-list--unstyled">
+                    <li class="usa-footer__secondary-link"><Link to="/use-bdc/explore">Explore</Link></li>
+                    <li class="usa-footer__secondary-link"><Link to="/use-bdc/analyze">Analyze</Link></li>
+                    <li class="usa-footer__secondary-link"><Link to="/use-bdc/share">Share</Link></li>
+                    <li class="usa-footer__secondary-link"><Link to="https://imputation.biodatacatalyst.nhlbi.nih.gov/#!">Impute Genotypes</Link></li>
+                  </ul>
+                </section>
+              </div>
+              <div class="mobile-lg:grid-col-4 desktop:grid-col-4">
+                <section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
+                  <h4 class="usa-footer__primary-link">Resources</h4>
+                  <ul class="usa-list usa-list--unstyled">
+                    <li class="usa-footer__secondary-link"><Link to="/resources/faqs">FAQs</Link></li>
+                    <li class="usa-footer__secondary-link"><Link to="/resources/costs">Usage Costs</Link></li>
+                    <li class="usa-footer__secondary-link"><Link to="/resources/terms">Terms of Use</Link></li>
+                    <li class="usa-footer__secondary-link"><Link to="https://bdcatalyst.gitbook.io/biodata-catalyst-documentation">Documentation</Link></li>
+                  </ul>
+                </section>
+              </div>
+              <div class="mobile-lg:grid-col-4 desktop:grid-col-4">
+                <section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
+                  <h4 class="usa-footer__primary-link">Support</h4>
+                  <ul class="usa-list usa-list--unstyled">
+                    <li class="usa-footer__secondary-link"><Link to="/support/contact">Contact Us</Link></li>
+                    <li class="usa-footer__secondary-link"><Link to="/support/guidance">Guidance</Link></li>
+                    <li class="usa-footer__secondary-link"><Link to="/accessibility">Accessibility</Link></li>
+                    <li class="usa-footer__secondary-link"><Link to="/privacy">Privacy</Link></li>
+                  </ul>
+                </section>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="tablet:grid-col-4">
+          <div class="usa-sign-up">
+            <h3 class="usa-sign-up__heading">Stay informed</h3>
+            <p class="text-base font-ui-xs">
+              <Link to="#">Sign up</Link> for our newsletter to receive the latest BDC updates and news.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="usa-footer__secondary-section">
+    <div class="grid-container">
+      <div class="grid-row grid-gap">
+        <div class="usa-footer__logo grid-row mobile-lg:grid-col-6 mobile-lg:grid-gap-2">
+          <div class="mobile-lg:grid-col-auto">
+            <img class="usa-footer__logo-img" alt="BioData Catalyst logo" src="/img/logo-img.png" />
+          </div>
+          <div class="mobile-lg:grid-col-auto">
+            <p class="usa-footer__logo-heading">BioData Catalyst</p>
+          </div>
+        </div>
+        <div class="usa-footer__contact-links mobile-lg:grid-col-6">
+          <div class="usa-footer__social-links">
+            <div class="grid-row grid-gap-1">
+              <div class="grid-col-auto">
+                <a class="usa-social-link" href="https://twitter.com">
+                  <img class="usa-social-link__icon" src="/img/usa-icons/x.svg" alt="X (formerly Twitter)" />
+                </a>
+              </div>
+              <div class="grid-col-auto">
+                <a class="usa-social-link" href="https://youtube.com">
+                  <img class="usa-social-link__icon" src="/img/usa-icons/youtube.svg" alt="YouTube" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <p class="usa-footer__contact-heading">BDC Contact Center</p>
+          <address class="usa-footer__address">
+            <div class="usa-footer__contact-info grid-row grid-gap">
+              <div class="grid-col-auto">
+                <Link to="mailto:biodatacatalyst@nhlbi.nih.gov">biodatacatalyst@nhlbi.nih.gov</Link>
+              </div>
+            </div>
+          </address>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

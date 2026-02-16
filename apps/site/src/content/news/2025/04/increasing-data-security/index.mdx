@@ -1,0 +1,36 @@
+---
+title: Increasing Data Security Can Also Improve Usability
+date: 2025-04-10
+tags:
+  - RAS
+  - interoperability
+  - security
+seo:
+  title: Increasing Data Security Can Also Improve Usability
+---
+
+import Figure from '@components/news/Figure.astro'
+import logo from './ras-phase1-blog.jpg'
+
+Deploying security controls in biomedical data ecosystems is not usually known for improving usability, but sometimes, making data more secure also means making it easier to use. The most recent example is BDC's implementation of the [NIH Researcher Auth Service (RAS)](https://datascience.nih.gov/researcher-auth-service-initiative).
+
+<Figure
+  src={logo}
+  alt="Person using a laptop with virtual security icons displayed, including a shield with a checkmark"
+  float="right"
+  width="normal"
+/>
+
+BDC is the first NIH multi-platform ecosystem to support RAS authentication and authorization. And when researchers and other users leverage RAS to access BDC, they benefit from and support data security measures: 
+- Centralized authentication, authorization, and audit logging within an NIH service and limited password visibility to one trusted system.
+- Standardized security measures and requirements defined and enforced in BDC Interconnection Security Agreements. These agreements between BDC independent entities and the NIH RAS ensure that federal cybersecurity and data security requirements are implemented.
+- Access tokens (also known as keys) that expire and can be canceled easily, allowing BDC to revoke access quickly if needed.
+- User activity logging that records every time someone logs in or accesses data. This helps identify unusual activity that may indicate malicious intent, which can then be stopped, and supports system engineers trying to pinpoint system performance issues.
+
+However, the value of implementing RAS goes beyond data security. It also simplifies interactions between users and the BDC ecosystem by allowing users to do the following:
+- Have one login (username and password) to access different systems so they do not need to remember multiple passwords.
+- Give apps access to their information without sharing their passwords, and instead use special tokens that only work for specific tasks and for a limited time, better protecting the users' accounts.
+
+These are just the results of BDC's early RAS implementation. BDC is already testing data interoperability using "passports" that will work with other RAS-enabled platforms deploying the same technology. A passport electronically conveys a list of datasets a researcher is authorized to use in any RAS Passport-enabled environment. When a researcher has data access approvals for datasets hosted in BDC and one or more other RAS Passport-enabled environments, they will be able to use BDC to analyze datasets separately or in combination.
+
+Improving data interoperability across the NIH data ecosystem will make it easier for researchers to analyze multitudes of data and further advance scientific research.

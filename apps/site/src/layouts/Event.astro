@@ -1,0 +1,75 @@
+---
+import { Image } from 'astro:assets';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
+import AddToCalendar from '@components/events/AddToCalendar.astro';
+import EventHeader from '@components/events/EventHeader.astro';
+import Base from '@layouts/Base.astro';
+
+const { frontmatter } = Astro.props;
+
+const crumbs = [
+  { label: 'Events', href: '/events/' },
+  { label: frontmatter.title },
+];
+
+const { title, date, end_date, time, location, url, tags, heroImage, heroAlt } =
+  frontmatter;
+---
+
+<Base title={title}>
+
+  <section class="usa-section">
+    <article class="event">
+      <div class="grid-container">
+
+        <Breadcrumbs items={crumbs} />
+
+        <EventHeader
+          title={title}
+          date={date}
+          endDate={end_date}
+          time={time}
+          location={location}
+          url={url}
+          tags={tags}
+        />
+
+        <AddToCalendar
+          title={title}
+          date={date}
+          endDate={end_date}
+          location={location}
+        />
+
+        {heroImage && (
+          <Image
+            src={heroImage}
+            alt={heroAlt || ''}
+            class="event__hero"
+          />
+        )}
+
+        <div class="event__content">
+          <slot />
+        </div>
+
+      </div>
+    </article>
+  </section>
+
+</Base>
+
+<style>
+  .event__content {
+    line-height: 1.5;
+    margin-top: 2rem;
+  }
+
+  .event__hero {
+    width: 100%;
+    height: auto;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    border-radius: 4px;
+  }
+</style>

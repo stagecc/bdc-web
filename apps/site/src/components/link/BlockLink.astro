@@ -1,0 +1,26 @@
+---
+import Icon from '@components/Icon.astro';
+import Link from '@components/link/Link.astro';
+
+const { to, flex = 'center', class: className = '' } = Astro.props;
+---
+
+<p
+  class={`arrow-link display-flex flex-justify-${flex} ${className}`}
+>
+  <Link to={to}>
+    <slot />
+  </Link>
+  <Icon name="navigate_next" class="margin-top-05" />
+</p>
+
+<style>
+.arrow-link {
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.text-center {
+  text-align: center;
+}
+</style>

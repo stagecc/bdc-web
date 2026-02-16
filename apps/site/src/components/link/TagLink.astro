@@ -1,0 +1,23 @@
+---
+import Link from '@components/link/Link.astro';
+
+const { tag } = Astro.props;
+const to = `/tagged/${tag}`;
+---
+<Link class="usa-tag tag-link border padding-05 margin-x-05" to={to}>
+  {tag}
+</Link>
+
+<style>
+  .tag-link {
+    color: #fff;
+    &:visited, &:active { color: #fff; }
+    &:first-of-type {
+      margin-left: 0;
+    }
+    display: inline-block;
+    align-self: center;
+    text-decoration: none;
+    filter: brightness(1.0);
+  }
+</style>

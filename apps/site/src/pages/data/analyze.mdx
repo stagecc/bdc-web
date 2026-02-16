@@ -1,0 +1,69 @@
+---
+title: Analyze Data
+layout: ../../layouts/Page.astro
+---
+import Button from '@components/Button.astro';
+import Link from '@components/link/Link.astro';
+
+## About Analyzing Data in BDC
+
+Researchers can analyze BDC-hosted data (visit the [Explore Data in BDC webpage](/use-bdc/explore) to learn more), data they upload to BDC (Bring Your Own Data or BYOD), or a combination of both.
+
+## Understanding Usage Costs
+
+BDC users incur costs for computation, storage of uploaded or imported data (BYOD),
+storage of derived results (including egress costs for downloads of derived data),
+and file transfers. Read more about [BDC Usage Costs](/resources/usage-costs).
+
+## Prepare to Analyze Data
+
+BDC workspaces offer private, secure environments for running analyses at scale.
+BDC also has RStudio, Jupyterlab, and SAS Notebooks built directly into the platform.
+
+**All users can find and access open-access hosted data on BDC. Researchers with approved data access requests (DARs) and an eRA Commons account can also access controlled-access data and use that data in analyses.** Researchers bringing their own data should refer to [Bring Your Own Data](#bring-your-own-data-byod) below.
+
+- To use a BDC workspace for the first time, users must create an account and at least one 
+project. [Create an account from this 
+webpage](https://accounts.sb.biodatacatalyst.nhlbi.nih.gov/auth/login?next=https%3A%2F%2Faccounts.sb.biodatacatalyst.nhlbi.nih.gov%2Foauth2%2Fauthorization%3Fresponse_type%3Dcode%26client_id%3D74735b722c33498cb981b6b6e24f659f%26redirect_uri%3Dhttps%253A%252F%252Fplatform.sb.biodatacatalyst.nhlbi.nih.gov%252Foauth2%252Fredirect%26state%3DNf8ffCyv90SV3fM1I33IfLt9OYPsQ0%26client_next%3Dhttps%253A%252F%252Fplatform.sb.biodatacatalyst.nhlbi.nih.gov%252F%26scope%3Dopenid%26nonce%3D173653215059824939581701286549) 
+using instructions in the workspace [Getting started 
+guide](https://sb-biodatacatalyst.readme.io/docs/getting-started). A billing group is required to 
+create a workspace, and BDC users begin incurring costs when they store Bring Your Own Data and/or 
+compute using Bring Your Own Data or BDC-hosted data.
+- Researchers who [already have a BDC workspace account can go to this webpage](https://accounts.sb.biodatacatalyst.nhlbi.nih.gov/auth/login?next=https%3A%2F%2Faccounts.sb.biodatacatalyst.nhlbi.nih.gov%2Foauth2%2Fauthorization%3Fresponse_type%3Dcode%26client_id%3D74735b722c33498cb981b6b6e24f659f%26redirect_uri%3Dhttps%253A%252F%252Fplatform.sb.biodatacatalyst.nhlbi.nih.gov%252Foauth2%252Fredirect%26state%3D1EkV3YBKf68zTItMe1DoVVZJePnUMs%26client_next%3Dhttps%253A%252F%252Fplatform.sb.biodatacatalyst.nhlbi.nih.gov%252F%26scope%3Dopenid%26nonce%3D151170011845002108041701286760), click "Log in with eRA Commons," and enter their eRA credentials.
+
+## Build a Cohort for Analysis (Optional)
+
+To build a cohort for analysis using data available in BDC, researchers must have eRA Commons credentials and approved data access requests from dbGaP for each dataset they want to use to build the cohort. See the "Requirements for Accessing BDC Hosted Data" section on the [Explore Data in BDC webpage](/use-bdc/explore) for more information.
+
+Users building cohorts will see exact counts and can import the selected data into a BDC workspace. The ["Select and Package Data" section in the BDC documentation](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/written-documentation/explore-available-data/pic-sure-for-biodata-catalyst-user-guide/pic-sure-open-access-vs.-pic-sure-authorized-access/search-authorized-access\#select-and-package-data+) provides more information about importing a cohort to a BDC workspace.
+
+<Button to="https://picsure.biodatacatalyst.nhlbi.nih.gov/login" className="GTM-button" id="cohort-analysis">Build a Cohort for Analysis</Button>
+
+## Import Data to a BDC Workspace
+
+Users who do not build cohorts may import the raw data files into their BDC workspace(s) by [following these instructions](https://sb-biodatacatalyst.readme.io/docs/import-data-from-biodata-catalyst-powered-by-gen3) once they have access to the data (open- and/or controlled-access data).
+
+*If you are using a Terra Workspace, please scroll to the bottom of this webpage for more information. Read more about* [the differences between BDC’s standard workspaces (*BDC Powered by Seven Bridges*) and those provided by *BDC Powered by Terra*](/use-bdc/analyze-data/bdc-workspaces).
+
+## Utilize Analysis Tools
+
+<Link to="https://accounts.sb.biodatacatalyst.nhlbi.nih.gov/auth/login" className="GTM-inline-link" id="bdc-workspaces-analyze">BDC workspaces</Link> are equipped with a breadth of pre-installed tools designed to perform complex bioinformatics analyses of both phenotypic and multi-omics data, including genomics, transcriptomics, metabolomics, proteomics, and imaging. BDC workspaces include the following features:
+
+* Interactive applications and environments, such as RStudio, SAS, and JupyterLab notebooks  
+* Options for single-variant and multiple-variant association tests, including a cloud-optimized version of the Genesis R package  
+* Annotation Explorer tool that supports both pre- and post-association testing steps, including the ability to create variant aggregations  
+* Collaborative environments that allow global teams to work together seamlessly on the same project in the cloud  
+* Ability to bring and share workflows in the cloud using Docker and the Common Workflow Language (CWL)  
+* Unified interface for work across Azure, Google Cloud Platform (GCP), and Amazon Web Services (AWS) with one account and a single billing system  
+* User account settings to monitor and control cloud expenditures
+
+## Bring Your Own Data (BYOD)
+
+As described in the [BDC Data Use Policy](/resources/usage-terms), researchers can upload data to a BDC workspace to share data with their collaborators via a consortium sharing model (account required; see [Prepare to Analyze Data](#prepare-to-analyze-data) above) if they have the appropriate approvals, provided researchers do not violate the terms of their Data Use Agreements, Limitations, or Institutional Review Board policies and guidelines.
+
+Data can be uploaded from local storage or an HTTP(S)/FTP server or imported from cloud storage. Read ["Upload your data" for more information.](https://sb-biodatacatalyst.readme.io/docs/upload-to-the-platform).
+
+## Terra Users
+
+- [Use this link to get to the platform](https://terra.biodatacatalyst.nhlbi.nih.gov/#workspaces/fc-product-demo/BioDataCatalyst-Gen3-data-on-Terra-Tutorial). 
+- [Use this link for instructions on importing BDC-hosted datasets into Terra workspaces](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/written-documentation/analyze-data-1/terra/bringing-data-into-a-workspace/bringing-in-data-from-gen3).

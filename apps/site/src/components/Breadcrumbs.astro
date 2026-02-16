@@ -1,0 +1,31 @@
+---
+import Icon from '@components/Icon.astro';
+import Link from '@components/link/Link.astro';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+
+const { items } = Astro.props as { items: Crumb[] };
+---
+
+<nav class="usa-breadcrumb" aria-label="Breadcrumbs">
+  <ol class="usa-breadcrumb__list">
+    <li class="usa-breadcrumb__list-item">
+      <Link to="/" class="usa-breadcrumb__link">Home</Link>
+    </li>
+    {items.map((item, i) => {
+      const isLast = i === items.length - 1;
+      return (
+        <li class="usa-breadcrumb__list-item">
+          {isLast ? (
+            <span aria-current="page">{item.label}</span>
+          ) : (
+            <Link to={item.href} class="usa-breadcrumb__link">{item.label}</Link>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</nav>

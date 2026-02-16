@@ -1,0 +1,33 @@
+---
+import Link from '@components/link/Link.astro';
+
+const { items } = Astro.props;
+---
+<ul class="usa-list usa-list--unstyled">
+  {items.map(pub => (
+    <li class="usa-collection__item">
+      <div class="usa-collection__body">
+        <h4 class="usa-collection__heading">
+          <Link to={pub.data.url}>
+            {pub.data.title}
+          </Link>
+        </h4>
+
+        <ul class="usa-collection__meta">
+          <li class="usa-collection__meta-item">
+            <time datetime={pub.data.date.toISOString()}>
+              {pub.data.date.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            </time>
+          </li>
+          <li class="usa-collection__meta-item">
+            {pub.data.location}
+          </li>
+        </ul>
+      </div>
+    </li>
+  ))}
+</ul>

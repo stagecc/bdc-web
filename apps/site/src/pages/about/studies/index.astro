@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Link from '@components/link/Link.astro';
+import Base from '@layouts/Base.astro';
+
+const programs = (await getCollection('programs')).sort(
+  (a, b) => a.data.name.localeCompare(b.data.name),
+);
+---
+
+<Base title="Programs">
+
+  <section class="usa-section">
+    <div class="grid-container">
+
+      <h1>Research Community Data</h1>
+
+      <table class="usa-table usa-table--borderless usa-table--striped width-full">
+        <thead>
+          <tr>
+            <th scope="col">Program</th>
+            <th scope="col">Description</th>
+            <th scope="col">Datasets</th>
+          </tr>
+        </thead>
+        <tbody>
+          {programs.map(program => (
+            <tr>
+              <th scope="row">
+                <Link to={`/about/studies/${program.id}`}>
+                  {program.data.name}
+                </Link>
+              </th>
+              <td>{program.data.description}</td>
+              <td>{program.data.numberOfStudies}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+    </div>
+  </section>
+
+</Base>

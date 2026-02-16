@@ -1,0 +1,199 @@
+-
+  title: "Multimodal data curation via interoperability: use cases with the Medical Imaging and Data Resource Center"
+  date: 2025-08-01
+  location: Scientific Data
+  url: https://www.nature.com/articles/s41597-025-05678-2
+-
+  title: "Whole genome sequencing based analysis of inflammation biomarkers in the Trans-Omics for Precision Medicine (TOPMed) consortium"
+  date: 2024-08-06
+  location: Human Molecular Genetics
+  url: https://pubmed.ncbi.nlm.nih.gov/38747556/
+-
+  title: "Standardized Measurement of Type 1 Diabetes Polygenic Risk Across Multiancestry Population Cohorts"
+  date: 2025-04-23
+  location: Diabetes Care
+  url: https://doi.org/10.2337/dc25-0142
+-
+  title: "Sequencing in over 50,000 cases identifies coding and structural variation underlying atrial fibrillation risk"
+  date: 2025-03-06
+  location: Nature Genetics
+  url: https://www.nature.com/articles/s41588-025-02074-9
+-
+  title: "Best Practices for Clinical Trials Data Harmonization and Sharing on NHLBI BioData Catalyst (BDC) Learned from CONNECTS Network COVID-19 Studies"
+  date: 2025-03-26
+  location: Journal of Clinical and Translational Science
+  url: https://www.cambridge.org/core/services/aop-cambridge-core/content/view/790583F6D473634FD94995324A361752/S2059866125000524a.pdf/best-practices-for-clinical-trials-data-harmonization-and-sharing-on-nhlbi-biodata-catalyst-bdc-learned-from-connects-network-covid-19-studies.pdf
+-
+  title: "Classifying COVID-19 hospitalizations in epidemiology cohort studies: The C4R study"
+  date: 2025-02-10
+  location: PLOS One
+  url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0316198
+-
+  title: "Whole-genome sequencing uncovers two loci for coronary artery calcification and identifies ARSE as a regulator of vascular calcification"
+  date: 2023-12-04
+  location: Nature Cardiovascular Research
+  url: https://pubmed.ncbi.nlm.nih.gov/38817323/
+-
+  title: "Novel risk loci encompassing genes influencing STAT3, GPCR, and oxidative stress signaling are associated with co-morbid GERD and COPD"
+  date: 2025-02-07
+  location: PLOS Genetics
+  url: https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1011531#abstract0
+-
+  title: "The Circulating Renin-Angiotensin System and Mortality among Patients Hospitalized for COVID-19: A Mechanistic Substudy of the ACTIV-4 Host Tissue Trials"
+  date: 2025-01-24
+  location: American Journal of Physiology
+  url: https://journals.physiology.org/doi/epdf/10.1152/ajplung.00372.2024
+-
+  title: "Type 1 diabetes genetic risk score variation across ancestries using whole genome sequencing and array-based approaches"
+  date: 2024-12-28
+  location: Nature
+  url: https://www.nature.com/articles/s41598-024-82278-x
+- title: "Increased frequency of repeat expansion mutations across different populations"
+  date: 2024-10-01
+  location: Nature Medicine
+  url: https://www.nature.com/articles/s41591-024-03190-5
+-
+  title: "Genetic determinants and phenotypic consequences of blood T-cell proportions in 207,000 diverse individuals"
+  date: 2024-08-07
+  location: Nature Communications
+  url: https://www.nature.com/articles/s41467-024-51095-1
+-
+  title: "The National Sleep Research Resource: making data findable, accessible, interoperable, reusable and promoting sleep science"
+  date: 2024-04-30
+  location: SLEEP
+  url: https://academic.oup.com/sleep/advance-article-abstract/doi/10.1093/sleep/zsae088/7660531
+-
+  title: "Elucidating a genomic signature associated with behavioral and executive function after moderate to severe pediatric TBI: a systems biology informed approach"
+  date: 2024-04-24
+  location: Frontiers in Systems Biology
+  url: https://www.frontiersin.org/journals/systems-biology/articles/10.3389/fsysb.2024.1293265
+-
+  title: "Discrimination, smoking, and cardiovascular disease risk: A moderated mediation analysis with the Multi-Ethnic Study of Atherosclerosis"
+  date: 2024-02-23
+  location: Journal of the American Heart Association
+  url: https://www.ahajournals.org/doi/full/10.1161/JAHA.123.032659
+-
+  title: "Novel functional insights into ischemic stroke biology provided by the first genome-wide association study of stroke in indigenous Africans"
+  date: 2024-02-05
+  location: Genome Medicine
+  url: https://link.springer.com/article/10.1186/s13073-023-01273-5
+-
+  title: "Building a collaborative cloud platform to accelerate heart, lung, blood, and sleep research"
+  date: 2023-06-20
+  location: Journal of American Medical Informatics Association
+  url: https://pubmed.ncbi.nlm.nih.gov/37192819/
+-
+  title: "Deep learning on graphs for multi-omics classification of COPD"
+  date: 2023-04-21
+  location: PLOS One
+  url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0284563
+-
+  title: "Identification of novel and rare variants associated with handgrip strength using whole genome sequence data from the NHLBI Trans-Omics in Precision Medicine (TOPMed) Program"
+  date: 2021-07-02
+  location: PLOS One
+  url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0253611
+-
+  title: "BinomiRare: A robust test for association of a rare genetic variant with a binary outcome for mixed models and any case-control proportion"
+  date: 2021-07-08
+  location: Human Genetics and Genomics Advances
+  url: https://www.sciencedirect.com/science/article/pii/S266624772100021X?via%3Dihub
+-
+  title: "Investigating Gene–Diet Interactions Impacting the Association Between Macronutrient Intake and Glycemic Traits"
+  date: 2023-02-15
+  location: Diabetes
+  url: https://diabetesjournals.org/diabetes/article-abstract/72/5/653/148451/Investigating-Gene-Diet-Interactions-Impacting-the?redirectedFrom=fulltext
+-
+  title: "STAAR workflow: a cloud-based workflow for scalable and reproducible rare variant analysis"
+  date: 2022-05-26
+  location: Bioinformatics
+  url: https://academic.oup.com/bioinformatics/article/38/11/3116/6571143?login=false
+-
+  title: "Dug: a semantic search engine leveraging peer-reviewed knowledge to query biomedical data repositories"
+  date: 2022-06-13
+  location: Bioinformatics
+  url: https://academic.oup.com/bioinformatics/article/38/12/3252/6571145?login=false
+-
+  title: "Elucidating the genetic architecture of DNA methylation to identify promising molecular mechanisms of disease"
+  date: 2022-11-15
+  location: Scientific Reports
+  url: https://www.nature.com/articles/s41598-022-24100-0
+-
+  title: "Whole genome DNA and RNA sequencing of whole blood elucidates the genetic architecture of gene expression underlying a wide range of diseases"
+  date: 2022-11-23
+  location: Scientific Reports
+  url: https://www.nature.com/articles/s41598-022-24611-w
+-
+  title: "The genetic determinants of recurrent somatic mutations in 43,693 blood genomes"
+  date: 2023-04-26
+  location: Science Advances
+  url: https://www.science.org/doi/10.1126/sciadv.abm4945
+-
+  title: "Cloud-based biomedical data storage and analysis for genomic research: Landscape analysis of data governance in emerging NIH-supported platforms"
+  date: 2023-04-11
+  location: HGG Advances
+  url: https://www.cell.com/hgg-advances/fulltext/S2666-2477(23)00028-3
+-
+  title: "Direct estimation of regional lung volume change from paired and single CT images using residual regression neural network"
+  date: 2023-03-17
+  location: Medical Physics
+  url: https://doi.org/10.1002/mp.16365
+-
+  title: "Genetic Modifiers of Cystic Fibrosis Lung Disease Severity: Whole-Genome Analysis of 7,840 Patients"
+  date: 2023-02-27
+  location: American Journal of Respiratory and Critical Care Medicine
+  url: https://www.atsjournals.org/doi/full/10.1164/rccm.202209-1653OC
+-
+  title: "Powerful, scalable and resource-efficient meta-analysis of rare variant associations in large whole genome sequencing studies"
+  date: 2022-12-23
+  location: Nature Genetics
+  url: https://www.nature.com/articles/s41588-022-01225-6
+-
+  title: "Whole genome sequencing identifies structural variants contributing to hematologic traits in the NHLBI TOPMed program"
+  date: 2022-12-08
+  location: Nature Communications
+  url: https://www.nature.com/articles/s41467-022-35354-7
+-
+  title: "Global perspectives on CYP2D6 associations with primaquine metabolism and Plasmodium vivax radical cure"
+  date: 2022-11-15
+  location: Frontiers in Pharmacology
+  url: https://www.frontiersin.org/articles/10.3389/fphar.2022.752314/full
+-
+  title: "GAWMerge expands GWAS sample size and diversity by combining array-based genotyping and whole-genome sequencing"
+  date: 2022-08-11
+  location: Communications Biology
+  url: https://www.nature.com/articles/s42003-022-03738-6
+-
+  title: "AFA: Ancestry-specific allele frequency estimation in admixed populations: The Hispanic Community Health Study/Study of Latinos"
+  date: 2022-04-14
+  location: Human Genetics and Genomics Advances
+  url: https://www.sciencedirect.com/science/article/pii/S2666247722000124?via%3Dihub
+-
+  title: An Augmented High-Dimensional Graphical Lasso Method to Incorporate Prior Biological Knowledge for Global Network Learning
+  date: 2022-01-27
+  location: Frontiers in Genetics
+  url: https://www.frontiersin.org/articles/10.3389/fgene.2021.760299/full
+-
+  title: "Streamlining statistical reproducibility: NHLBI ORCHID clinical trial results reproduction"
+  date: 2022-01-14
+  location: JAMIA OPEN
+  url: https://academic.oup.com/jamiaopen/article/5/1/ooac001/6507447
+-
+  title: Pangenomics enables genotyping of known structural variants in 5202 diverse genomes
+  date: 2021-12-17
+  location: Science
+  url: https://www.science.org/doi/10.1126/science.abg8871
+-
+  title: Identifying miRNA-mRNA Networks Associated With COPD Phenotypes
+  date: 2021-10-28
+  location: Frontiers in Genetics
+  url: https://www.frontiersin.org/articles/10.3389/fgene.2021.748356/full
+-
+  title: Multiethnic genome-wide and HLA association study of total serum IgE level
+  date: 2021-09-13
+  location: The Journal of Allergy and Clinical Immunology
+  url: https://www.jacionline.org/article/S0091-6749(21)01397-X/fulltext
+-
+  title: "Genome Wide Association Analysis of Iron Overload in the Trans-Omics for Precision Medicine (TOPMed) Sickle Cell Disease Cohorts"
+  date: 2020-11-05
+  location: "Blood | American Society of Hematology"
+  url: https://ashpublications.org/blood/article/136/Supplement%201/52/472221/Genome-Wide-Association-Analysis-of-Iron-Overload

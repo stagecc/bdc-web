@@ -1,0 +1,54 @@
+---
+import { getCollection } from 'astro:content';
+import Link from '@components/link/Link.astro';
+import Base from '@layouts/Base.astro';
+
+export async function getStaticPaths() {
+  const programs = await getCollection('programs');
+
+  return programs.map((program) => ({
+    params: { slug: program.id },
+    props: { program },
+  }));
+}
+
+const { program } = Astro.props;
+const { name, description, studies } = program.data;
+---
+
+<Base title={name}>
+
+  <section class="usa-section">
+    <div class="grid-container">
+
+      <h1>{name}</h1>
+      <p class="usa-prose">{description}</p>
+
+      <Link to="/about/studies">← All Programs</Link>
+
+      <table class="usa-table usa-table--borderless usa-table--striped width-full margin-top-4">
+        <thead>
+          <tr>
+            <th scope="col">Study Name</th>
+            <th scope="col">dbGaP Accession</th>
+          </tr>
+        </thead>
+        <tbody>
+          {studies.map(study => (
+            <tr>
+              <td>{study.name}</td>
+              <td>
+                {study.url
+                  ? <Link to={study.url}>{study.id}</Link>
+                  : study.id
+                }
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+    </div>
+  </section>
+
+</Base>

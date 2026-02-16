@@ -1,0 +1,40 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  items: CollectionEntry<'faqs'>[];
+}
+
+const { items } = Astro.props;
+---
+
+<div class="usa-accordion usa-accordion--bordered" data-allow-multiple>
+  {items.map(faq => (
+    <>
+      <h4 class="usa-accordion__heading">
+        <button
+          type="button"
+          class="usa-accordion__button"
+          aria-expanded="false"
+          aria-controls={`faq-${faq.id}`}
+        >
+          {faq.data.title}
+        </button>
+      </h4>
+      <div id={`faq-${faq.id}`} class="usa-accordion__content usa-prose" hidden>
+        <Fragment set:html={faq.data.description} />
+      </div>
+    </>
+  ))}
+</div>
+
+<script>
+  document.querySelectorAll('.usa-accordion__button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const expanded = btn.getAttribute('aria-expanded') === 'true';
+      const content = document.getElementById(btn.getAttribute('aria-controls')!);
+      btn.setAttribute('aria-expanded', String(!expanded));
+      if (content) content.hidden = expanded;
+    });
+  });
+</script>

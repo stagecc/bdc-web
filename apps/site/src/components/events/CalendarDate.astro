@@ -1,0 +1,60 @@
+---
+const { date, endDate } = Astro.props;
+
+const startMonth = date
+  .toLocaleString('en-US', { month: 'short' })
+  .toUpperCase();
+
+const startDay = date.getDate();
+
+const endMonth = endDate
+  ?.toLocaleString('en-US', { month: 'short' })
+  .toUpperCase();
+
+const endDay = endDate?.getDate();
+
+const isoStart = date.toISOString();
+const isoEnd = endDate?.toISOString();
+
+// Same month?
+const sameMonth =
+  endDate &&
+  date.getMonth() === endDate.getMonth() &&
+  date.getFullYear() === endDate.getFullYear();
+---
+
+<div class="usa-collection__calendar-date">
+
+  {endDate ? (
+
+    <time datetime={`${isoStart}/${isoEnd}`}>
+
+      <span class="usa-collection__calendar-date-month">
+        {sameMonth ? startMonth : `${startMonth}–${endMonth}`}
+      </span>
+
+      <span class="usa-collection__calendar-date-day">
+        {sameMonth
+          ? `${startDay}–${endDay}`
+          : startDay}
+      </span>
+
+    </time>
+
+  ) : (
+
+    <time datetime={isoStart}>
+
+      <span class="usa-collection__calendar-date-month">
+        {startMonth}
+      </span>
+
+      <span class="usa-collection__calendar-date-day">
+        {startDay}
+      </span>
+
+    </time>
+
+  )}
+
+</div>

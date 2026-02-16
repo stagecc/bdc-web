@@ -1,0 +1,43 @@
+---
+import TagLink from '@components/link/TagLink.astro';
+
+const { items } = Astro.props;
+---
+<ul class="usa-list usa-list--unstyled">
+  {items.map(post => (
+    <li class="usa-collection__item">
+      <div class="usa-collection__body">
+        <h4 class="usa-collection__heading">
+          <a href={`/news/${post.id}/`} class="usa-link">
+            {post.data.title}
+          </a>
+        </h4>
+
+        <ul class="usa-collection__meta">
+          {/* date */}
+          <li class="usa-collection__meta-item">
+            <time datetime={post.data.date.toISOString()}>
+              {post.data.date.toLocaleDateString('en-US', {
+                month: 'long',
+                day: 'numeric'
+              })}
+            </time>
+          </li>
+
+          {/* tags */}
+          {
+            post.data.tags.length > 0 && (
+            <li class="usa-collection__meta-item">
+              <div class="display-flex flex-wrap gap-05">
+                {post.data.tags.map(tag => (
+                  <TagLink tag={tag} />
+                ))}
+              </div>
+            </li>
+          )}
+
+        </ul>
+      </div>
+    </li>
+  ))}
+</ul>

@@ -1,0 +1,44 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import PublicationsList from '@components/publications/PublicationsList.astro';
+import Base from '@layouts/Base.astro';
+
+const publications = (await getCollection('publications')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const pubsByYear: Record<number, CollectionEntry<'publications'>[]> = {};
+
+for (const pub of publications) {
+  const year = pub.data.date.getFullYear();
+
+  if (!pubsByYear[year]) {
+    pubsByYear[year] = [];
+  }
+
+  pubsByYear[year].push(pub);
+}
+
+const years = Object.keys(pubsByYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+<Base title="Publications">
+
+  <section class="usa-section">
+    <div class="grid-container">
+
+      <h1>Publications</h1>
+      {years.map(year => (
+        <section class="margin-top-4">
+          <h2 class="font-heading-lg margin-bottom-2">
+            {year}
+          </h2>
+          <PublicationsList items={pubsByYear[year]} />
+        </section>
+      ))}
+    </div>
+  </section>
+
+</Base>

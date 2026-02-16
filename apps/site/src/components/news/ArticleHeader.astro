@@ -1,0 +1,29 @@
+---
+const { title, date, tags = [] } = Astro.props;
+
+import TagLink from '@components/link/TagLink.astro';
+---
+
+<header class="article__header">
+
+  <h1>{title}</h1>
+
+  <div class="display-flex flex-justify flex-align-center border-bottom">
+    
+    <time datetime={date.toISOString()} class="publish-date">
+      Published on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+    </time>
+
+    {tags.length > 0 && (
+      <div class="tags display-flex padding-0 margin-y-1">
+        {tags.map(tag => <TagLink tag={tag} />)}
+      </div>
+    )}
+  </div>
+</header>
+
+<style>
+  .publish-date {
+    color: gray;
+  }
+</style>
