@@ -86,8 +86,10 @@ const coverage = defineCollection({
 
 const faqs = defineCollection({
   loader: async () => {
+    const proxyBase = process.env.FRESHDESK_PROXY_URL
+      ?? 'https://epxuifil2cc4sqfqws62zejcwi0cgfds.lambda-url.us-east-1.on.aws';
     const response = await fetch(
-      'https://epxuifil2cc4sqfqws62zejcwi0cgfds.lambda-url.us-east-1.on.aws/faqs',
+      `${proxyBase}/faqs`,
       {
         headers: {
           Accept: 'application/json',
