@@ -1,48 +1,11 @@
+@use "@bdc/uswds-theme/src/uswds-init" as core;
 @use "@bdc/uswds-theme/src/settings" as *;
-
-@use "uswds-core" as core with (
-  $theme-color-primary: $theme-color-primary,
-  $theme-color-primary-dark: $theme-color-primary-dark,
-  $theme-color-primary-darker: $theme-color-primary-darker,
-  $theme-color-primary-light: $theme-color-primary-light,
-  $theme-color-primary-lighter: $theme-color-primary-lighter,
-  $theme-color-primary-lightest: $theme-color-primary-lightest,
-  $theme-color-secondary: $theme-color-secondary,
-  $theme-color-secondary-dark: $theme-color-secondary-dark,
-  $theme-color-secondary-light: $theme-color-secondary-light,
-  $theme-color-accent-cool: $theme-color-accent-cool,
-  $theme-color-accent-warm: $theme-color-accent-warm,
-  $theme-color-base-lightest: $theme-color-base-lightest,
-  $theme-color-base-lighter: $theme-color-base-lighter,
-  $theme-color-base-light: $theme-color-base-light,
-  $theme-color-base: $theme-color-base,
-  $theme-color-base-dark: $theme-color-base-dark,
-  $theme-color-base-darker: $theme-color-base-darker,
-  $theme-color-base-darkest: $theme-color-base-darkest,
-  $theme-color-base-ink: $theme-color-base-ink,
-  $theme-font-type-sans: $theme-font-type-sans,
-  $theme-font-type-serif: $theme-font-type-serif,
-  $theme-font-type-mono: $theme-font-type-mono,
-  $theme-font-role-heading: $theme-font-role-heading,
-  $theme-font-role-body: $theme-font-role-body,
-  $theme-font-role-ui: $theme-font-role-ui,
-  $theme-font-role-code: $theme-font-role-code,
-  $theme-body-font-size: $theme-body-font-size,
-  $theme-h1-font-size: $theme-h1-font-size,
-  $theme-h2-font-size: $theme-h2-font-size,
-  $theme-h3-font-size: $theme-h3-font-size,
-  $theme-font-weight-light: $theme-font-weight-light,
-  $theme-font-weight-normal: $theme-font-weight-normal,
-  $theme-font-weight-bold: $theme-font-weight-bold,
-  $theme-image-path: "/img",
-  $theme-show-notifications: false
-);
 
 /* Map USWDS tokens to Starlight CSS custom properties */
 :root {
-  --sl-color-accent-low: #{core.color($theme-color-primary-lightest)};
-  --sl-color-accent: #{core.color($theme-color-primary)};
-  --sl-color-accent-high: #{core.color($theme-color-primary-darker)};
-  --sl-font-system: #{core.font-family('sans')};
-  --sl-font-system-mono: #{core.font-family('mono')};
+  --sl-color-accent-low: #{core.core-color($theme-color-primary-lightest)};
+  --sl-color-accent: #{core.core-color($theme-color-primary)};
+  --sl-color-accent-high: #{core.core-color($theme-color-primary-darker)};
+  --sl-font-system: #{core.core-font-family('sans')};
+  --sl-font-system-mono: #{core.core-font-family('mono')};
 }
