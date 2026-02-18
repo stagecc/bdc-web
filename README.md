@@ -81,7 +81,7 @@ These documents define:
 * Astro-first
 * MDX for pages
 * USWDS-first styling
-* Zero client JavaScript unless required
+* Zero client JavaScript, unless required
 * File-based routing
 * Performance-focused
 
