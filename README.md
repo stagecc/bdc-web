@@ -89,7 +89,29 @@ These documents define:
 
 ## Contributing
 
-Before opening a PR:
+### Workflow
+
+All contributions follow a **fork-based workflow** with squash merges:
+
+1. **Fork** this repository to your own GitHub account.
+2. **Clone your fork** and create a feature branch for your work.
+3. **Develop** on your fork, committing as often as you like — commit history on your branch is for your benefit during development.
+4. **Open a pull request** from your fork's branch to `stagecc/bdc-web:main`.
+5. **Address review feedback** — all PRs require at least one approving review before merge.
+6. **Squash and merge** — once approved, the PR is merged using GitHub's _Squash and merge_ option. This collapses all commits into a single commit on `main`, keeping the project history clean and linear.
+
+> **Why squash merge?** Each commit on `main` corresponds to exactly one PR, making history easy to read, bisect, and revert if needed.
+
+### CI
+
+Pull requests are automatically validated by CI, which runs:
+
+- **Lint** — Biome checks for code quality and formatting issues (results appear as inline annotations on the PR diff)
+- **Build** — the app is built to catch compilation errors
+
+Both checks must pass before a PR can be merged.
+
+### Before opening a PR
 
 * Review `/docs/architecture.md`
 * Confirm React is only used when necessary
