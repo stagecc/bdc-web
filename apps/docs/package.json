@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@astrojs/starlight": "^0.32.0",
-    "@bdc/ui": "*",
     "@bdc/uswds-theme": "*",
     "@uswds/uswds": "^3.13.0",
     "astro": "^5.1.0",

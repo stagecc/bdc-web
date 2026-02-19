@@ -1,6 +1,6 @@
 import { GovBanner } from '@components/layout/GovBanner';
 import { SearchInput } from '@components/layout/SearchInput';
-import bdcLogo from '@bdc/ui/assets/bdc-logo.svg';
+import bdcLogo from '../../assets/bdc-logo.svg';
 import {
   Header,
   Menu,

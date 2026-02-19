@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import Link from '@bdc/ui/components/link/Link.astro';
+import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 
 const programs = (await getCollection('programs')).sort((a, b) =>

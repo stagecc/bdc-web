@@ -12,7 +12,7 @@ export default defineConfig({
 		starlight({
 			title: 'Documentation',
 			logo: {
-				src: '@bdc/ui/assets/bdc-logo.svg',
+				src: './src/assets/bdc-logo.svg',
 				alt: 'BDC logo',
 			},
 			social: {
