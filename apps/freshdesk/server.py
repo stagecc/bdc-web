@@ -3,12 +3,17 @@ Local development server that wraps the Lambda handler
 with a standard HTTP server.
 
 Usage:
-  FRESHDESK_API_KEY=xxx FRESHDESK_DOMAIN=xxx RECAPTCHA_SECRET_KEY=xxx python server.py
+  pip install -r requirements.txt
+  # fill in .env with your credentials
+  python server.py
 """
 
-import json
+from pathlib import Path
 from http.server import HTTPServer, BaseHTTPRequestHandler
-from app import lambda_handler
+from dotenv import load_dotenv
+from handler import lambda_handler
+
+load_dotenv(Path(__file__).resolve().parent / '.env', override=True)
 
 PORT = 8787
 
