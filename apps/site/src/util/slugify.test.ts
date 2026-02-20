@@ -7,7 +7,9 @@ describe('slugify', () => {
   });
 
   it('extracts the acronym when parenthesized', () => {
-    expect(slugify('Trans-Omics for Precision Medicine (TOPMed)')).toBe('topmed');
+    expect(slugify('Trans-Omics for Precision Medicine (TOPMed)')).toBe(
+      'topmed',
+    );
   });
 
   it('strips special characters', () => {
