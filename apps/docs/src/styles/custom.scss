@@ -95,13 +95,14 @@
   /* ── Fonts ── */
   --sl-font-system: #{theme.core-font-family('sans')};
   --sl-font-system-mono: #{theme.core-font-family('mono')};
+  --sl-font-heading: #{theme.core-font-family('serif')};
   // --sl-font: var(--sl-font-system);
   // --sl-font-mono: var(--sl-font-system-mono);
 
   /* ── Layout ── */
-  --sl-nav-height: 80px;
+  --sl-nav-height: 72px;
   // --sl-nav-pad-x: 1rem;
-  // --sl-nav-pad-y: 0.75rem;
+  --sl-nav-pad-y: 1rem;
   // --sl-mobile-toc-height: 3rem;
   // --sl-sidebar-width: 18.75rem;
   // --sl-sidebar-pad-x: 1rem;
@@ -135,4 +136,13 @@
   // --sl-color-hairline-light: var(--sl-color-gray-6);
   // --sl-color-hairline-shade: var(--sl-color-gray-6);
   // --sl-color-backdrop-overlay: hsla(225, 9%, 36%, 0.66);
+}
+
+/* ── Heading font (Merriweather, matching USWDS serif role) ── */
+:where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--sl-font-heading);
+}
+
+.site-title span {
+  align-self: flex-end;
 }
