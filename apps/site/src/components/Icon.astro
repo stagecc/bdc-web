@@ -1,4 +1,6 @@
 ---
+import spriteUrl from '../assets/sprite.svg?url';
+
 interface Props {
   name: string;
   label?: string;
@@ -20,5 +22,5 @@ const sizeClass = size ? `usa-icon--size-${size}` : '';
   focusable="false"
 >
   {label && <title>{label}</title>}
-  <use href={`/img/sprite.svg#${name}`} />
+  <use href={`${spriteUrl}#${name}`} />
 </svg>

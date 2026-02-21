@@ -16,9 +16,9 @@ The platform is built using:
 ```
 apps/
 - site/     → Public-facing website
-- docs/     → Documentation site (future)
+- docs/     → Documentation site
 docs/       → Developer documentation
-packages/   → Shared code (future)
+packages/   → Shared code
 
 ````
 
@@ -52,7 +52,24 @@ npm run preview -w @bdc/site
 
 ### apps/docs
 
-TBD
+Run local development server:
+
+```bash
+npm run dev -w @bdc/docs
+````
+
+Build:
+
+```bash
+npm run build -w @bdc/docs
+```
+
+
+Preview:
+
+```bash
+npm run preview -w @bdc/docs
+```
 
 ---
 
