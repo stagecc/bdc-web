@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import EventsList from '@components/events/EventsList.astro';
 import NewsList from '@components/news/NewsList.astro';
 import Base from '@layouts/Base.astro';
+import { groupByTag } from '../../util/group-by-tag';
 
 export async function getStaticPaths() {
   const [allNews, allEvents] = await Promise.all([
@@ -10,34 +11,19 @@ export async function getStaticPaths() {
     getCollection('events'),
   ]);
 
-  const tagMap = new Map<
-    string,
-    {
-      news: typeof allNews;
-      events: typeof allEvents;
-    }
-  >();
+  const newsMap = groupByTag(allNews);
+  const eventsMap = groupByTag(allEvents);
 
-  for (const post of allNews) {
-    for (const tag of post.data.tags) {
-      if (!tagMap.has(tag)) tagMap.set(tag, { news: [], events: [] });
-      tagMap.get(tag)?.news.push(post);
-    }
-  }
+  const allTags = new Set([...newsMap.keys(), ...eventsMap.keys()]);
 
-  for (const event of allEvents) {
-    for (const tag of event.data.tags) {
-      if (!tagMap.has(tag)) tagMap.set(tag, { news: [], events: [] });
-      tagMap.get(tag)?.events.push(event);
-    }
-  }
-
-  return [...tagMap.entries()].map(([tag, { news, events }]) => ({
+  return [...allTags].map((tag) => ({
     params: { slug: tag },
     props: {
       tag,
-      news: news.sort((a, b) => b.data.date.getTime() - a.data.date.getTime()),
-      events: events.sort(
+      news: (newsMap.get(tag) ?? []).sort(
+        (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+      ),
+      events: (eventsMap.get(tag) ?? []).sort(
         (a, b) => b.data.date.getTime() - a.data.date.getTime(),
       ),
     },

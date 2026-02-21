@@ -12,7 +12,7 @@ import Testimonial from '@components/Testimonial.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
 import Base from '@layouts/Base.astro';
-import { slugify } from '../content.config.ts';
+import { slugify } from '../util/slugify';
 
 // fetch and sort recent news & events
 const news = (await getCollection('news'))

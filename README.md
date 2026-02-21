@@ -65,6 +65,7 @@ Start here:
 * [Architecture Guide](docs/arch.md)
 * [Component Guidelines](docs/components.md)
 * [Content Authoring Guide](docs/content.md)
+* [Testing & TDD Workflow](docs/testing.md)
 
 These documents define:
 
@@ -73,6 +74,7 @@ These documents define:
 * Where content belongs
 * USWDS usage rules
 * Client JavaScript policies
+* Test-driven development workflow
 
 ---
 

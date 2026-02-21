@@ -50,7 +50,8 @@
   $theme-in-page-nav-margin-left: $theme-in-page-nav-margin-left,
   $theme-in-page-nav-margin-top: $theme-in-page-nav-margin-top,
   $theme-in-page-nav-top: $theme-in-page-nav-top,
-  $theme-image-path: "/img"
+  $theme-image-path: "/img",
+  $theme-show-notifications: false
 );
 
 @use "uswds";
