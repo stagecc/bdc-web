@@ -26,10 +26,26 @@ jobs:
 
       - run: npx biome check --reporter=github .
 
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm test
+
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: lint
+    needs: [lint, test]
     strategy:
       matrix:
         app: [site]
