@@ -76,4 +76,4 @@ jobs:
         run: |
           npx astro preview &
           npx wait-on http://localhost:4321
-          npx pa11y-ci --sitemap http://localhost:4321/sitemap-0.xml --sitemap-find https://biodatacatalyst.nhlbi.nih.gov --sitemap-replace http://localhost:4321
+          npx pa11y-ci --config pa11y/full.json --sitemap http://localhost:4321/sitemap-0.xml --sitemap-find https://biodatacatalyst.nhlbi.nih.gov --sitemap-replace http://localhost:4321
