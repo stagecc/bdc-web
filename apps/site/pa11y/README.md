@@ -16,3 +16,12 @@ The primary navigation dropdown button labels are hidden from pa11y via `hideEle
 `axe-core` cannot reliably determine the background color for these elements due to,
 i think, the sticky-positioned header's stacking context, resulting in false color-contrast
 failures. The actual rendered contrast has been manually verified and meets WCAG AA requirements.
+
+## Dependency Override
+
+`pa11y-ci` transitively depends on an older `minimatch` (via `globby` → `glob`)
+that has a high-severity ReDoS vulnerability ([GHSA-3ppc-4f35-3m26](https://github.com/advisories/GHSA-3ppc-4f35-3m26)).
+This is mitigated by an `overrides` entry in the root `package.json` that forces
+`minimatch@>=10.2.1`. The vulnerability only applies when untrusted input is used
+as a glob pattern, which is not the case here, but the override keeps `npm audit`
+clean. This override can be removed once `pa11y-ci` updates its dependency chain.
