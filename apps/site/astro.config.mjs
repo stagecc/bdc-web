@@ -3,8 +3,8 @@ import { fileURLToPath } from 'node:url';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
-import { loadEnv } from 'vite';
 import favicons from 'astro-favicons';
+import { loadEnv } from 'vite';
 
 const rootDir = dirname(fileURLToPath(import.meta.url));
 Object.assign(process.env, loadEnv('', rootDir, ''));
