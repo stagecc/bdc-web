@@ -53,7 +53,24 @@ npm run preview -w @bdc/site
 
 ### apps/docs
 
-TBD
+Run local development server:
+
+```bash
+npm run dev -w @bdc/docs
+````
+
+Build:
+
+```bash
+npm run build -w @bdc/docs
+```
+
+
+Preview:
+
+```bash
+npm run preview -w @bdc/docs
+```
 
 ---
 

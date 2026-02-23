@@ -2,41 +2,97 @@
 
 Shared USWDS design tokens and Sass configuration for BDC projects.
 
-## What this package is
+This package provides a single source of truth for colors, typography, and component settings so that any app in the monorepo (or external project) can adopt the BDC design system with minimal setup.
 
-A centralized collection of design decisions — colors, fonts, spacing, and layout — expressed as USWDS Sass variables and a framework-agnostic `tokens.json` file. Any team or framework can consume these values to stay aligned with the BDC design system.
+## What's included
 
-## What this package does NOT do
+| File | Purpose |
+|---|---|
+| `src/_colors.scss` | Color token overrides (primary, secondary, accent, base) |
+| `src/_typography.scss` | Font families, roles, sizes, and weights |
+| `src/_in-page-nav-bar.scss` | In-page navigation component settings |
+| `src/_settings.scss` | Aggregates all settings partials |
+| `src/_uswds-init.scss` | Configures and forwards `uswds-core` with all BDC settings |
 
-- **Does not emit CSS.** Every file is a Sass partial or JSON. There is no compiled output.
-- **Does not import USWDS.** It only defines variable values that USWDS consumers pass to `uswds-core`.
-- **Does not export or wrap USWDS components.** Component usage is the consumer's responsibility.
-- **Does not depend on React, Astro, or any framework.**
+## Quick start
 
-## Usage
+### 1. Add dependencies
 
-### In a Sass consumer (e.g., an Astro site)
+Your app needs `@bdc/uswds-theme`, `@uswds/uswds`, and a Sass compiler:
 
-```scss
-@use '@bdc/uswds-theme/src/settings' as *;
-
-@use 'uswds-core' with (
-  $theme-color-primary: $theme-color-primary,
-  $theme-font-type-sans: $theme-font-type-sans
-  // ...add more overrides as needed
-);
-
-@use 'uswds';
+```json
+{
+  "dependencies": {
+    "@bdc/uswds-theme": "*",
+    "@uswds/uswds": "^3.13.0",
+    "sass-embedded": "^1.83.0"
+  }
+}
 ```
 
-### In JavaScript or design tools
+### 2. Configure Sass load paths
 
-Import `src/tokens.json` for framework-agnostic color and font values:
+USWDS resolves its internal packages via Sass `loadPaths`. Add this to your bundler config (Vite example shown):
 
 ```js
-import tokens from '@bdc/uswds-theme/src/tokens.json';
+// astro.config.mjs (or vite.config.js)
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+
+const rootDir = dirname(fileURLToPath(import.meta.url));
+const uswdsPackages = join(rootDir, '../../node_modules/@uswds/uswds/packages');
+
+export default {
+  vite: {
+    css: {
+      preprocessorOptions: {
+        scss: {
+          loadPaths: [uswdsPackages],
+          silenceDeprecations: ['import', 'global-builtin', 'if-function'],
+        },
+      },
+    },
+  },
+};
 ```
 
-## Why no component exports?
+> Adjust the relative path to `node_modules` based on where your app lives in the monorepo.
 
-Wrapping or re-exporting USWDS components couples this package to a specific framework and version. By limiting scope to tokens and settings, this package remains safe to use across React, Astro, plain HTML, or any future framework without risk of breakage.
+### 3. Import in your stylesheet
+
+**Full USWDS compilation** (includes all USWDS component styles):
+
+```scss
+@use "@bdc/uswds-theme/src/uswds-init";
+@use "uswds";
+```
+
+**Core only** (tokens and utilities, no component CSS — useful for Starlight or lightweight apps):
+
+```scss
+@use "@bdc/uswds-theme/src/uswds-init" as core;
+```
+
+You can then use forwarded `uswds-core` functions with the `core-` prefix:
+
+```scss
+.my-element {
+  color: core.core-color('primary');
+  font-family: core.core-font-family('sans');
+}
+```
+
+That's it. Two lines of Sass to get the full BDC design system.
+
+## Static assets
+
+USWDS expects certain assets (icon sprite, fonts, images) to be served from your app's `public/` directory. Copy or symlink these from `@uswds/uswds/dist`:
+
+- `public/img/` — USWDS images and the icon sprite (`sprite.svg`)
+- `public/fonts/` — USWDS webfonts
+
+## Examples
+
+See the existing apps for working examples:
+- **`apps/site`** — Full USWDS compilation with component styles
+- **`apps/docs`** — Core-only import with Starlight CSS custom property mapping

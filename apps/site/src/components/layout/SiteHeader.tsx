@@ -1,6 +1,5 @@
 import { GovBanner } from '@components/layout/GovBanner';
 import { SearchInput } from '@components/layout/SearchInput';
-import bdcLogo from '@images/bdc-logo.svg';
 import {
   Header,
   Menu,
@@ -10,7 +9,10 @@ import {
   Title,
 } from '@trussworks/react-uswds';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import bdcLogo from '../../assets/bdc-logo.svg';
 import classes from './layout.module.css';
+
+const isProd = import.meta.env.PROD;
 
 interface NavItem {
   label: string;
@@ -39,7 +41,9 @@ const navConfig: NavItem[] = [
       { label: 'Usage Costs', href: '/resources/costs' },
       {
         label: 'Documentation',
-        href: 'https://bdcatalyst.gitbook.io/biodata-catalyst-documentation',
+        href: isProd
+          ? 'https://bdcatalyst.gitbook.io/biodata-catalyst-documentation'
+          : 'http://localhost:4322/',
         external: true,
       },
       { label: 'Terms of Use', href: '/resources/terms' },
