@@ -1,0 +1,8 @@
+{
+  "runners": ["axe"],
+  "timeout": 30000,
+  "chromeLaunchConfig": {
+    "args": ["--no-sandbox"]
+  },
+  "hideElements": ".usa-nav__primary-item button span"
+}

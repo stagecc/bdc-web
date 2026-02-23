@@ -1,10 +1,6 @@
 @use "@bdc/uswds-theme/src/uswds-init" as core;
 @use "uswds";
 
-.usa-nav__primary button {
-  color: core.color('base-dark');
-}
-
 h1, h2, h3, h4, h5, h6 {
   font-family: core.core-font-family('heading');
 }

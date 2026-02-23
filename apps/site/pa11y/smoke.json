@@ -1,0 +1,15 @@
+{
+  "defaults": {
+    "runners": ["axe"],
+    "timeout": 30000,
+    "chromeLaunchConfig": {
+      "args": ["--no-sandbox"]
+    },
+    "hideElements": ".usa-nav__primary-item button span"
+  },
+  "urls": [
+    "http://localhost:4321/",
+    "http://localhost:4321/resources/costs",
+    "http://localhost:4321/about/overview"
+  ]
+}
