@@ -2,6 +2,14 @@
 
 This directory contains configuration for [pa11y](https://pa11y.org/) accessibility checks.
 
+## Compliance Target
+
+Our goal is [Section 508](https://www.section508.gov/) compliance. The revised Section 508
+standard (2017) incorporates [WCAG 2.0 Level AA](https://www.w3.org/TR/WCAG20/) by reference,
+so meeting WCAG 2.0 AA satisfies 508 requirements. Our current setup uses the `axe` runner
+with its default tag set, which covers WCAG 2.0 and 2.1 at Levels A and AA, safely covering
+everything needed for 508.
+
 ## Configs
 
 - **page.json**: Single-page check. Usage: `npm run a11y:page -- http://localhost:4321/path-to/page`
