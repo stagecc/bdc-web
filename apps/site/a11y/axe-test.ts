@@ -1,5 +1,5 @@
-import { test as base, expect } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
+import { test as base, expect } from '@playwright/test';
 
 type A11yFixtures = {
   makeAxeBuilder: () => AxeBuilder;
@@ -17,7 +17,7 @@ export const test = base.extend<A11yFixtures>({
     await use(() =>
       new AxeBuilder({ page })
         .withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'])
-        .disableRules(['frame-tested'])
+        .disableRules(['frame-tested']),
     );
   },
 });

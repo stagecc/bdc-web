@@ -1,10 +1,6 @@
-import { test, expect } from './axe-test';
+import { expect, test } from './axe-test';
 
-const paths = [
-  '/',
-  '/resources/costs',
-  '/about/overview',
-];
+const paths = ['/', '/resources/costs', '/about/overview'];
 
 for (const path of paths) {
   test(path, async ({ page, makeAxeBuilder }) => {

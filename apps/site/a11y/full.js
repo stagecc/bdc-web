@@ -5,7 +5,7 @@ const sitemapPath = process.argv[2] ?? 'dist/sitemap-0.xml';
 const baseUrl = 'http://localhost:4321';
 
 const xml = readFileSync(sitemapPath, 'utf-8');
-const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(match => {
+const urls = [...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map((match) => {
   const parsed = new URL(match[1]);
   return `${baseUrl}${parsed.pathname}`;
 });
