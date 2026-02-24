@@ -4,5 +4,6 @@
   "chromeLaunchConfig": {
     "args": ["--no-sandbox"]
   },
-  "hideElements": ".usa-nav__primary-item button span"
+  "hideElements": ".usa-nav__primary-item button span",
+  "ignore": ["frame-tested"]
 }

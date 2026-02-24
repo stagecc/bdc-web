@@ -17,6 +17,14 @@ The primary navigation dropdown button labels are hidden from pa11y via `hideEle
 i think, the sticky-positioned header's stacking context, resulting in false color-contrast
 failures. The actual rendered contrast has been manually verified and meets WCAG AA requirements.
 
+## Ignored Rules
+
+### `frame-tested`
+
+The `frame-tested` rule is ignored because axe-core cannot inject into cross-origin
+iframes (e.g., YouTube embeds via `YouTubeEmbed.astro`). This is a tooling limitation,
+not an accessibility issue. See [dequeuniversity.com/rules/axe/4.11/frame-tested](https://dequeuniversity.com/rules/axe/4.11/frame-tested).
+
 ## Dependency Override
 
 `pa11y-ci` transitively depends on an older `minimatch` (via `globby` → `glob`)
