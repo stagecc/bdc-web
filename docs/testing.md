@@ -2,11 +2,12 @@
 
 ## Overview
 
-Tests live alongside the code they exercise, and currently only the website app has tests.
-The test harness uses [Vitest](https://vitest.dev) with `jsdom` for component tests and plain Node for utility/config tests.
+Tests live alongside the code they exercise.
+A [Vitest projects](https://vitest.dev/guide/projects) configuration at the repo root discovers each app's `vitest.config.ts`, so tests for all apps run from a single command.
+The site app uses `jsdom` for component tests and plain Node for utility/config tests; the docs app uses plain Node for config tests.
 
 ```
-src/
+apps/site/src/
   config/
     navigation.ts
     navigation.test.ts      <- data-driven config tests
@@ -17,19 +18,28 @@ src/
     layout/
       SearchInput.tsx
       SearchInput.test.tsx  <- React component tests
+
+apps/docs/src/
+  config/
+    sidebar.ts
+    sidebar.test.ts         <- sidebar structure tests
 ```
 
 ### Running tests
 
 ```bash
-# single run
-npm test -w apps/site
+# single run (all projects)
+npm test
 
 # watch mode
-npm run test:watch -w apps/site
+npm run test:watch
 
 # browser UI
-npm run test:ui -w apps/site
+npm run test:ui
+
+# single project only
+npx vitest run --project @bdc/site
+npx vitest run --project @bdc/docs
 ```
 
 ---
