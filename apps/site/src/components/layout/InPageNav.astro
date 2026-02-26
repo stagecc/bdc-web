@@ -29,7 +29,9 @@ interface Props {
 }
 
 const { headings, title = 'On this page' } = Astro.props;
-const filtered = headings.filter((h) => h.depth === 2 || h.depth === 3);
+const filtered = headings.filter(
+  (h: MarkdownHeading) => h.depth === 2 || h.depth === 3,
+);
 ---
 
 <div class="usa-in-page-nav-container">
