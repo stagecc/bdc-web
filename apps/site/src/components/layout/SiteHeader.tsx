@@ -1,7 +1,6 @@
 import { GovBanner } from '@components/layout/GovBanner';
 import { SearchInput } from '@components/layout/SearchInput';
 import { navConfig } from '@config/navigation';
-import bdcLogo from '../../assets/bdc-logo.svg';
 import {
   Header,
   Menu,
@@ -11,6 +10,7 @@ import {
   Title,
 } from '@trussworks/react-uswds';
 import { useCallback, useEffect, useRef, useState } from 'react';
+import bdcLogo from '../../assets/bdc-logo.svg';
 import classes from './layout.module.css';
 
 export function SiteHeader() {
