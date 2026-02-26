@@ -1,0 +1,148 @@
+@use "@bdc/uswds-theme/src/uswds-init" as theme;
+
+/*
+ * Map USWDS tokens → Starlight CSS custom properties.
+ *
+ * Starlight defines dark-mode defaults on `:root` and light-mode overrides on
+ * `:root[data-theme='light']`.  The meanings of "low" and "high" flip between
+ * modes: in dark mode low = dark / high = light; in light mode low = light /
+ * high = dark.  We must set values in both selectors so they aren't
+ * overwritten by Starlight's built-in light-mode block.
+ */
+
+/* ── Dark mode (default) ── */
+:root {
+  /* ── Colors (gray scale ← USWDS base) ── */
+  // --sl-color-white: hsl(0, 0%, 100%);
+  // --sl-color-gray-1: hsl(224, 20%, 94%);
+  // --sl-color-gray-2: hsl(224, 6%, 77%);
+  // --sl-color-gray-3: hsl(224, 6%, 56%);
+  // --sl-color-gray-4: hsl(224, 7%, 36%);
+  // --sl-color-gray-5: hsl(224, 10%, 23%);
+  // --sl-color-gray-6: hsl(224, 14%, 16%);
+  // --sl-color-black: hsl(224, 10%, 10%);
+
+  /* ── Semantic colors ── */
+  // --sl-hue-orange: 41;
+  // --sl-color-orange-low: hsl(var(--sl-hue-orange), 39%, 22%);
+  // --sl-color-orange: hsl(var(--sl-hue-orange), 82%, 63%);
+  // --sl-color-orange-high: hsl(var(--sl-hue-orange), 82%, 87%);
+  // --sl-hue-green: 101;
+  // --sl-color-green-low: hsl(var(--sl-hue-green), 39%, 22%);
+  // --sl-color-green: hsl(var(--sl-hue-green), 82%, 63%);
+  // --sl-color-green-high: hsl(var(--sl-hue-green), 82%, 80%);
+  // --sl-hue-blue: 234;
+  // --sl-color-blue-low: hsl(var(--sl-hue-blue), 54%, 20%);
+  // --sl-color-blue: hsl(var(--sl-hue-blue), 100%, 60%);
+  // --sl-color-blue-high: hsl(var(--sl-hue-blue), 100%, 87%);
+  // --sl-hue-purple: 281;
+  // --sl-color-purple-low: hsl(var(--sl-hue-purple), 39%, 22%);
+  // --sl-color-purple: hsl(var(--sl-hue-purple), 82%, 63%);
+  // --sl-color-purple-high: hsl(var(--sl-hue-purple), 82%, 89%);
+  // --sl-hue-red: 339;
+  // --sl-color-red-low: hsl(var(--sl-hue-red), 39%, 22%);
+  // --sl-color-red: hsl(var(--sl-hue-red), 82%, 63%);
+  // --sl-color-red-high: hsl(var(--sl-hue-red), 82%, 87%);
+
+  /* ── Accent (dark: low = dark shade, high = light shade) ── */
+  --sl-color-accent-low: #{theme.core-color(theme.$theme-color-primary-darker)};
+  --sl-color-accent: #{theme.core-color(theme.$theme-color-primary)};
+  --sl-color-accent-high: #{theme.core-color(theme.$theme-color-primary-lightest)};
+
+  /* ── Text / background aliases ── */
+  // --sl-color-text: var(--sl-color-gray-2);
+  // --sl-color-text-accent: var(--sl-color-accent-high);
+  // --sl-color-text-invert: var(--sl-color-accent-low);
+  // --sl-color-bg: var(--sl-color-black);
+  // --sl-color-bg-nav: var(--sl-color-gray-6);
+  // --sl-color-bg-sidebar: var(--sl-color-gray-6);
+  // --sl-color-bg-inline-code: var(--sl-color-gray-5);
+  // --sl-color-bg-accent: var(--sl-color-accent-high);
+  // --sl-color-hairline-light: var(--sl-color-gray-5);
+  // --sl-color-hairline: var(--sl-color-gray-6);
+  // --sl-color-hairline-shade: var(--sl-color-black);
+  // --sl-color-backdrop-overlay: hsla(223, 13%, 10%, 0.66);
+
+  /* ── Shadows ── */
+  // --sl-shadow-sm: 0px 1px 1px hsla(0, 0%, 0%, 0.12), 0px 2px 1px hsla(0, 0%, 0%, 0.24);
+  // --sl-shadow-md: 0px 8px 4px hsla(0, 0%, 0%, 0.08), 0px 5px 2px hsla(0, 0%, 0%, 0.08), 0px 3px 2px hsla(0, 0%, 0%, 0.12), 0px 1px 1px hsla(0, 0%, 0%, 0.15);
+  // --sl-shadow-lg: 0px 25px 7px hsla(0, 0%, 0%, 0.03), 0px 16px 6px hsla(0, 0%, 0%, 0.1), 0px 9px 5px hsla(223, 13%, 10%, 0.33), 0px 4px 4px hsla(0, 0%, 0%, 0.75), 0px 4px 2px hsla(0, 0%, 0%, 0.25);
+
+  /* ── Typography ── */
+  // --sl-text-2xs: 0.75rem;
+  // --sl-text-xs: 0.8125rem;
+  // --sl-text-sm: 0.875rem;
+  // --sl-text-base: 1rem;
+  // --sl-text-lg: 1.125rem;
+  // --sl-text-xl: 1.25rem;
+  // --sl-text-2xl: 1.5rem;
+  // --sl-text-3xl: 1.8125rem;
+  // --sl-text-4xl: 2.1875rem;
+  // --sl-text-5xl: 2.625rem;
+  // --sl-text-6xl: 4rem;
+  // --sl-text-body: var(--sl-text-base);
+  // --sl-text-body-sm: var(--sl-text-xs);
+  // --sl-text-code: var(--sl-text-sm);
+  // --sl-text-code-sm: var(--sl-text-xs);
+  // --sl-text-h1: var(--sl-text-4xl);
+  // --sl-text-h2: var(--sl-text-3xl);
+  // --sl-text-h3: var(--sl-text-2xl);
+  // --sl-text-h4: var(--sl-text-xl);
+  // --sl-text-h5: var(--sl-text-lg);
+  // --sl-line-height: 1.75;
+  // --sl-line-height-headings: 1.2;
+
+  /* ── Fonts ── */
+  --sl-font-system: #{theme.core-font-family('sans')};
+  --sl-font-system-mono: #{theme.core-font-family('mono')};
+  --sl-font-heading: #{theme.core-font-family('serif')};
+  // --sl-font: var(--sl-font-system);
+  // --sl-font-mono: var(--sl-font-system-mono);
+
+  /* ── Layout ── */
+  --sl-nav-height: 72px;
+  // --sl-nav-pad-x: 1rem;
+  --sl-nav-pad-y: 1rem;
+  // --sl-mobile-toc-height: 3rem;
+  // --sl-sidebar-width: 18.75rem;
+  // --sl-sidebar-pad-x: 1rem;
+  // --sl-content-width: 45rem;
+  // --sl-content-pad-x: 1rem;
+  // --sl-content-gap-y: 1rem;
+  // --sl-main-pad: 0 0 3vh 0;
+  // --sl-menu-button-size: 2rem;
+  // --sl-nav-gap: var(--sl-content-pad-x);
+  // --sl-outline-offset-inside: -0.1875rem;
+
+  /* ── Z-index ── */
+  // --sl-z-index-toc: 4;
+  // --sl-z-index-menu: 5;
+  // --sl-z-index-navbar: 10;
+  // --sl-z-index-skiplink: 20;
+}
+
+/* ── Light mode (low = light shade, high = dark shade) ── */
+:root[data-theme='light'] {
+  --sl-color-accent-low: #{theme.core-color(theme.$theme-color-primary-lightest)};
+  --sl-color-accent: #{theme.core-color(theme.$theme-color-primary)};
+  --sl-color-accent-high: #{theme.core-color(theme.$theme-color-primary-darker)};
+
+  // --sl-color-text-accent: var(--sl-color-accent);
+  // --sl-color-text-invert: var(--sl-color-black);
+  // --sl-color-bg-nav: var(--sl-color-gray-7);
+  // --sl-color-bg-sidebar: var(--sl-color-bg);
+  // --sl-color-bg-inline-code: var(--sl-color-gray-6);
+  // --sl-color-bg-accent: var(--sl-color-accent);
+  // --sl-color-hairline-light: var(--sl-color-gray-6);
+  // --sl-color-hairline-shade: var(--sl-color-gray-6);
+  // --sl-color-backdrop-overlay: hsla(225, 9%, 36%, 0.66);
+}
+
+/* ── Heading font (Merriweather, matching USWDS serif role) ── */
+:where(h1, h2, h3, h4, h5, h6) {
+  font-family: var(--sl-font-heading);
+}
+
+.site-title span {
+  align-self: flex-end;
+}
