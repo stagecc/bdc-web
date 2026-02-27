@@ -15,11 +15,12 @@ The platform is built using:
 
 ```
 apps/
-- site/     → Public-facing website
-- docs/     → Documentation site
-docs/       → Developer documentation
-packages/   → Shared code
-
+- site/       → Public-facing website
+- docs/       → Documentation site (future)
+services/
+- freshdesk/  → Freshdesk API proxy (Python/Lambda)
+docs/         → Developer documentation
+packages/     → Shared code (future)
 ````
 
 ---
@@ -70,6 +71,14 @@ Preview:
 ```bash
 npm run preview -w @bdc/docs
 ```
+
+---
+
+## Services
+
+### services/freshdesk
+
+Source of truth for the AWS Lambda that proxies requests to the Freshdesk API. Only needed locally when developing the Lambda itself. See [services/freshdesk/README.md](services/freshdesk/README.md) for setup and usage.
 
 ---
 
