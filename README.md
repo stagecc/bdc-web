@@ -134,10 +134,11 @@ All contributions follow a **fork-based workflow** with squash merges:
 
 Pull requests are automatically validated by CI, which runs:
 
-- **Lint** — Biome checks for code quality and formatting issues (results appear as inline annotations on the PR diff)
-- **Build** — the app is built to catch compilation errors
+- **Lint**: Biome checks for code quality and formatting issues (results appear as inline annotations on the PR diff)
+- **Build**: the app is built to catch compilation errors
+- **Tests**: Vitest runs automated test suites to validate application behavior
 
-Both checks must pass before a PR can be merged.
+All checks must pass before a PR can be merged.
 
 ### Before opening a PR
 
