@@ -9,7 +9,10 @@
     "preview": "astro preview",
     "a11y:page": "node a11y/page.js",
     "a11y:smoke": "astro build && playwright test a11y/smoke.test.ts",
-    "a11y:full": "astro build && node a11y/full.js"
+    "a11y:full": "astro build && node a11y/full.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui"
   },
   "dependencies": {
     "@astrojs/mdx": "^4.3.13",
