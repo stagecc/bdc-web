@@ -25,7 +25,13 @@ const robotsTxtConfig = {
 
 export default defineConfig({
   site: siteUrl,
-  integrations: [mdx(), react(), sitemap(), favicons(), robotsTxt(robotsTxtConfig)],
+  integrations: [
+    mdx(),
+    react(),
+    sitemap(),
+    favicons(),
+    robotsTxt(robotsTxtConfig),
+  ],
   markdown: {
     remarkPlugins: [['remark-excerpt', { remove: true }]],
   },
