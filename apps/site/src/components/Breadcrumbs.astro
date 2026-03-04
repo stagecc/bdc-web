@@ -13,7 +13,7 @@ const { items } = Astro.props as { items: Crumb[] };
 <nav class="usa-breadcrumb" aria-label="Breadcrumbs">
   <ol class="usa-breadcrumb__list">
     <li class="usa-breadcrumb__list-item">
-      <Link to="/" class="usa-breadcrumb__link">Home</Link>
+      <Link to="/" class="usa-breadcrumb__link text-underline">Home</Link>
     </li>
     {items.map((item, i) => {
       const isLast = i === items.length - 1;
@@ -22,7 +22,7 @@ const { items } = Astro.props as { items: Crumb[] };
           {isLast ? (
             <span aria-current="page">{item.label}</span>
           ) : (
-            <Link to={item.href} class="usa-breadcrumb__link">{item.label}</Link>
+            <Link to={item.href} class="usa-breadcrumb__link text-underline">{item.label}</Link>
           )}
         </li>
       );

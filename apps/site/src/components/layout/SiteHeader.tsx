@@ -18,6 +18,7 @@ export function SiteHeader() {
   const [openDropdownIndex, setOpenDropdownIndex] = useState<number | null>(
     null,
   );
+  const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
 
   const toggleMobileNav = () => setMobileNavOpen((prev) => !prev);
@@ -30,6 +31,13 @@ export function SiteHeader() {
   const toggleDropdown = (index: number) => {
     setOpenDropdownIndex((prev) => (prev === index ? null : index));
   };
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 0);
+    handleScroll();
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -103,7 +111,10 @@ export function SiteHeader() {
   });
 
   return (
-    <div ref={headerRef} className={classes.siteHeaderContainer}>
+    <div
+      ref={headerRef}
+      className={`${classes.siteHeaderContainer} ${scrolled ? classes.scrolled : ''}`}
+    >
       <GovBanner />
       <Header basic showMobileOverlay={mobileNavOpen}>
         <div className="usa-nav-container height-full">

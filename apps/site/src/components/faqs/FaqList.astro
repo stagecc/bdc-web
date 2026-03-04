@@ -11,16 +11,16 @@ const { items } = Astro.props;
 <div class="usa-accordion usa-accordion--bordered" data-allow-multiple>
   {items.map(faq => (
     <>
-      <h4 class="usa-accordion__heading">
+      <h2 class="usa-accordion__heading">
         <button
           type="button"
-          class="usa-accordion__button"
+          class="usa-accordion__button bg-base-lightest text-base-darkest"
           aria-expanded="false"
           aria-controls={`faq-${faq.id}`}
         >
           {faq.data.title}
         </button>
-      </h4>
+      </h2>
       <div id={`faq-${faq.id}`} class="usa-accordion__content usa-prose" hidden>
         <Fragment set:html={faq.data.description} />
       </div>

@@ -7,7 +7,7 @@ import Base from '@layouts/Base.astro';
 const { frontmatter } = Astro.props;
 
 const crumbs = [
-  { label: 'News', href: '/news/' },
+  { label: 'News', href: '/updates/news/' },
   { label: frontmatter.title },
 ];
 
@@ -58,7 +58,7 @@ const { title, date, tags, heroImage, heroAlt } = frontmatter;
       span.attribution {
         display: block;
         margin-top: 1rem;
-        color: #999;
+        color: #565c65; /* .text-base-dark */
         text-align: right;
         font-size: 75%;
         &::before {
