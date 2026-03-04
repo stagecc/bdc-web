@@ -84,3 +84,22 @@ Avoid testing framework internals, Astro's build pipeline, or third-party librar
 - Use `describe` / `it` blocks with human-readable descriptions.
 - Prefer `@testing-library/react` for component tests: query by role, label, or text, not implementation details.
 - Keep tests focused. One behavior per `it` block.
+
+---
+
+## Accessibility Testing
+
+Automated accessibility audits run in CI using [Playwright](https://playwright.dev/) and [axe-core](https://github.com/dequelabs/axe-core). Every page in the built site is tested against WCAG 2.0/2.1 Level AA to satisfy [Section 508](https://www.section508.gov/) requirements.
+
+```bash
+# audit specific pages against a running dev server
+npm run a11y:page -w @bdc/site -- http://localhost:4321/about
+
+# build & test key pages
+npm run a11y:smoke -w @bdc/site
+
+# build & test every page in the sitemap
+npm run a11y:full -w @bdc/site
+```
+
+See [apps/site/a11y/README.md](../apps/site/a11y/README.md) for configuration details, compliance targets, and how to add exceptions.

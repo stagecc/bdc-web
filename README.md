@@ -137,6 +137,7 @@ Pull requests are automatically validated by CI, which runs:
 - **Lint**: Biome checks for code quality and formatting issues (results appear as inline annotations on the PR diff)
 - **Build**: the app is built to catch compilation errors
 - **Tests**: Vitest runs automated test suites to validate application behavior
+- **Accessibility**: Playwright + axe-core audits every page against WCAG 2.0/2.1 AA (Section 508)
 
 All checks must pass before a PR can be merged.
 
