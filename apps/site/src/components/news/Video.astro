@@ -16,7 +16,7 @@ const { src, caption } = Astro.props;
       allowfullscreen
     ></iframe>
   </div>
-  {caption && <figcaption>{caption}</figcaption>}
+  {caption && <figcaption class="text-base-darker">{caption}</figcaption>}
 </figure>
 
 <style>
@@ -37,7 +37,6 @@ const { src, caption } = Astro.props;
   }
 
   .video figcaption {
-    color: gray;
     font-style: italic;
     font-size: 85%;
     margin-top: 0.5rem;
