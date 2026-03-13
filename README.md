@@ -21,7 +21,18 @@ services/
 - freshdesk/  → Freshdesk API proxy (Python/Lambda)
 docs/         → Developer documentation
 packages/     → Shared code (future)
-````
+```
+
+---
+
+## Getting Started
+
+**Dependency Management:**
+
+- Always use `npm ci` to install dependencies locally (respects lock file exactly).
+- Only use `npm install <package>` when explicitly adding or removing a dependency.
+- Commit the updated `package-lock.json` after dependency changes.
+- Running bare `npm install` can cause platform-specific drift in the lock file (macOS vs Ubuntu).
 
 ---
 
@@ -34,16 +45,15 @@ Primary public-facing marketing website. Built with Astro and MDX.
 Run local development server:
 
 ```bash
-npm install
+npm ci
 npm run dev -w @bdc/site
-````
+```
 
 Build:
 
 ```bash
 npm run build -w @bdc/site
 ```
-
 
 Preview:
 
@@ -56,15 +66,15 @@ npm run preview -w @bdc/site
 Run local development server:
 
 ```bash
+npm ci
 npm run dev -w @bdc/docs
-````
+```
 
 Build:
 
 ```bash
 npm run build -w @bdc/docs
 ```
-
 
 Preview:
 
@@ -88,30 +98,30 @@ All architectural rules and development standards are documented in `/docs`.
 
 Start here:
 
-* [Architecture Guide](docs/arch.md)
-* [Component Guidelines](docs/components.md)
-* [Content Authoring Guide](docs/content.md)
-* [Testing & TDD Workflow](docs/testing.md)
+- [Architecture Guide](docs/arch.md)
+- [Component Guidelines](docs/components.md)
+- [Content Authoring Guide](docs/content.md)
+- [Testing & TDD Workflow](docs/testing.md)
 
 These documents define:
 
-* When to use Astro vs React
-* How to create components
-* Where content belongs
-* USWDS usage rules
-* Client JavaScript policies
-* Test-driven development workflow
+- When to use Astro vs React
+- How to create components
+- Where content belongs
+- USWDS usage rules
+- Client JavaScript policies
+- Test-driven development workflow
 
 ---
 
 ## Guiding Principles
 
-* Astro-first
-* MDX for pages
-* USWDS-first styling
-* Zero client JavaScript, unless required
-* File-based routing
-* Performance-focused
+- Astro-first
+- MDX for pages
+- USWDS-first styling
+- Zero client JavaScript, unless required
+- File-based routing
+- Performance-focused
 
 ---
 
@@ -143,7 +153,7 @@ All checks must pass before a PR can be merged.
 
 ### Before opening a PR
 
-* Review `/docs/architecture.md`
-* Confirm React is only used when necessary
-* Confirm no unnecessary client hydration
-* Confirm USWDS conventions are followed
+- Review `/docs/architecture.md`
+- Confirm React is only used when necessary
+- Confirm no unnecessary client hydration
+- Confirm USWDS conventions are followed
