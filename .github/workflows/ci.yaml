@@ -67,7 +67,7 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.app }}-dist-${{ matrix.os }}
+          name: site-dist
           path: apps/${{ matrix.app }}/dist
 
   a11y:
@@ -86,7 +86,7 @@ jobs:
 
       - uses: actions/download-artifact@v4
         with:
-          name: site-dist-ubuntu-latest
+          name: site-dist
           path: apps/site/dist
 
       - name: Install Playwright browsers
