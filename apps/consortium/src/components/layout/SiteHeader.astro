@@ -1,29 +1,50 @@
 ---
-import { Image } from 'astro:assets';
-import bdcLogo from '../../assets/bdc-logo.svg';
+import { Image } from "astro:assets";
+import bdcLogo from "../../assets/bdc-logo.svg";
+
+const nav = [
+  {
+    label: "Consortium Resources",
+    href: "/consortium-resources",
+  },
+  {
+    label: "Consortium Directory",
+    href: "/consortium-directory",
+  },
+  {
+    label: "Monitor Dashboard",
+    href: "/monitor-dashboard",
+  },
+  {
+    label: "April 2026 Bi-Annual Meeting",
+    href: "/april-2026-meeting",
+  },
+];
+
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
 ---
 
-<div>
-  <header class="usa-header usa-header--basic margin-y-4">
-    <div class="usa-nav-container flex-column">
-      <a href="/" class="display-flex flex-column flex-align-center app-home-link padding-top-3">
-        <div class="usa-logo display-none">BioData Catalyst Consortium</div>
-        <Image src={bdcLogo} height="75" alt="BDC3 home" />
-        <span class="font-serif-3xl text-base-darker">Consortium</span>
-      </a>
-      <div class="usa-navbar flex-justify-center display-flex desktop:display-none">
-        <a href="/directory">Directory</a>
-        <a href="/resources">Resources</a>
-        <a href="/monitor">Monitor</a>
-      </div>
+<header class="usa-header usa-header--basic bg-base-lightest padding-y-2">
+  <div class="usa-nav-container display-flex flex-column">
+    <a href="/" class="display-flex flex-align-center app-home-link" style="align-self: flex-start;">
+      <div class="usa-logo display-none">BioData Catalyst Consortium</div>
+      <Image src={bdcLogo} height="75" alt="BDC3 home" />
+      <!-- <span class="font-serif-3xl text-base-darker">Consortium</span> -->
+    </a>
+    <div class="display-flex flex-align-center header-links" style="gap: 0.5rem; align-self: flex-end; margin-top: 1rem;">
+      {
+        nav.map((item) => (
+          <a href={item.href} class={isActive(item.href) ? "active-link" : ""}>
+            <span class={isActive(item.href) ? "text-primary" : "text-base"}>{item.label}</span>
+          </a>
+        ))
+      }
     </div>
-  </header>
-</div>
+  </div>
+</header>
 
 <style>
-  .usa-nav-container {
-    align-items: center;
-  }
   .usa-navbar {
     gap: 2rem;
     padding: 2rem;
@@ -33,5 +54,14 @@ import bdcLogo from '../../assets/bdc-logo.svg';
   }
   .font-serif-3xl {
     letter-spacing: 6px;
+  }
+  .header-links a {
+    width: 132px;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+  }
+  .active-link {
+    font-weight: 700;
   }
 </style>

@@ -1,17 +1,14 @@
 ---
-import '../styles/global.scss';
-import { ViewTransitions } from 'astro:transitions';
-import Sidebar from '@components/layout/Sidebar.astro';
-import SiteHeader from '@components/layout/SiteHeader.astro';
+import "../styles/global.scss";
+import { ViewTransitions } from "astro:transitions";
+import SiteHeader from "@components/layout/SiteHeader.astro";
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
-const displayTitle = title.includes('BioData Catalyst')
-  ? title
-  : `${title} | BioData Catalyst Consortium`;
+const displayTitle = title.includes("BioData Catalyst") ? title : `${title} | BioData Catalyst Consortium`;
 ---
 
 <!doctype html>
@@ -22,17 +19,17 @@ const displayTitle = title.includes('BioData Catalyst')
     <title>{displayTitle}</title>
     <ViewTransitions />
   </head>
-  <body>
+  <body class="display-flex flex-column" style="min-height: 100vh;">
     <a class="usa-skipnav" href="#main-content">Skip to main content</a>
     <SiteHeader transition:persist />
-    <div class="grid-container">
-      <div class="grid-row grid-gap">
-        <div class="usa-layout-docs__sidenav desktop:display-block desktop:grid-col-3 display-none">
-          <Sidebar transition:persist />
-        </div>
-        <main class="desktop:grid-col-9 usa-prose" id="main-content">
-          <slot />
-        </main>
+    <main id="main-content" class="grid-container" style="flex: 1; width: 100%;">
+      <slot />
+    </main>
+    <div class="bg-base-lightest padding-y-4 margin-top-4">
+      <div class="grid-container">
+        <footer class="usa-footer">
+          <p>For general inquiries, contact <a href="mailto:bdc3@renci.org">bdc3@renci.org</a></p>
+        </footer>
       </div>
     </div>
   </body>

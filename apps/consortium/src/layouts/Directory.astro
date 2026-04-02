@@ -1,0 +1,21 @@
+---
+import Base from "@layouts/Base.astro";
+import Sidebar from "@components/common/Sidebar.astro";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Base title={title}>
+  <div class="grid-row grid-gap">
+    <div class="usa-layout-docs__sidenav desktop:display-block desktop:grid-col-3 display-none">
+      <Sidebar transition:persist />
+    </div>
+    <div class="desktop:grid-col-9 usa-prose" id="main-content">
+      <slot />
+    </div>
+  </div>
+</Base>

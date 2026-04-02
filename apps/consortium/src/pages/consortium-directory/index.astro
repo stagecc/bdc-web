@@ -1,0 +1,44 @@
+---
+import { getCollection } from "astro:content";
+import Base from "@layouts/Base.astro";
+
+const members = await getCollection("members");
+members.sort((a, b) => a.data.surname.localeCompare(b.data.surname));
+---
+
+<Base title="Consortium Directory">
+  <h1>Consortium Directory</h1>
+
+  <table id="directory-table" class="usa-table usa-table--borderless usa-table--striped width-full">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Email</th>
+        <th scope="col">STAGE Team</th>
+        <th scope="col">Project Role</th>
+        <th scope="col">Employer/Affiliation</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        members.map((member) => (
+          <tr>
+            <td class="text-bold">
+              {member.data.firstName} {member.data.surname}
+            </td>
+            <td>{member.data.email}</td>
+            <td>{member.data.team}</td>
+            <td>{member.data.projectRole}</td>
+            <td>{member.data.affiliation}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</Base>
+
+<style is:global>
+  #directory-table tbody td {
+    border-bottom-color: transparent;
+  }
+</style>

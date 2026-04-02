@@ -1,0 +1,68 @@
+---
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+
+type NavChild = { label: string; href: string };
+type NavItem = { label: string; href: string; exact?: boolean; children?: NavChild[] };
+
+const nav: NavItem[] = [
+  {
+    label: "Consortium Resources",
+    href: "/consortium-resources",
+    exact: true,
+  },
+  {
+    label: "Meeting Materials",
+    href: "/consortium-resources/meeting-materials",
+    children: [
+      { label: "Directory", href: "/consortium-resources/meeting-materials/directory" },
+      { label: "Add a Member", href: "/consortium-resources/meeting-materials/directory/add" },
+      { label: "Remove a Member", href: "/consortium-resources/meeting-materials/directory/remove" },
+    ],
+  },
+  {
+    label: "Publications and Engagement",
+    href: "/consortium-resources/publications",
+  },
+  {
+    label: "BDC Branding",
+    href: "/consortium-resources/bdc-branding",
+  },
+];
+
+function isActive(href: string, exact = false) {
+  if (exact) return pathname === href;
+  return pathname === href || pathname.startsWith(href + "/");
+}
+
+function isSectionActive(item: NavItem) {
+  if (isActive(item.href, item.exact)) return true;
+  return item.children?.some((c) => isActive(c.href)) ?? false;
+}
+---
+
+<div>
+  <nav aria-label="Secondary navigation" class="bg-gray-10 radius-md padding-y-2 margin-top-6">
+    <ul class="usa-sidenav">
+      {
+        nav.map((section) => (
+          <li class="usa-sidenav__item">
+            <a href={section.href} class={isSectionActive(section) ? "usa-current" : ""}>
+              {section.label}
+            </a>
+            {section.children && isSectionActive(section) && (
+              <ul class="usa-sidenav__sublist bg-gray-5">
+                {section.children.map((child) => (
+                  <li class="usa-sidenav__item">
+                    <a href={child.href} class={isActive(child.href) ? "usa-current" : ""}>
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</div>
