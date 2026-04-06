@@ -1,0 +1,53 @@
+---
+title: "June 2023 Hybrid 'F2F' Meeting"
+parent: "2023-quarterly-meetings"
+order: 1
+description: "Meeting materials for the June 2023 Hybrid 'F2F' Meeting."
+files:
+  - name: "BDC June 1-2 Hybrid Quarterly Meeting Homepage and Meeting Notes"
+    url: "https://docs.google.com/document/d/1dYpGO45b-QaAuD4lhRd8RpjhFmX6K6y4LMXfpJUzNx4/edit#heading=h.45agb0fbk8gw"
+  - name: "BDC Spring Quarterly Meeting Slides"
+    url: "https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g1041c2f1c2b_0_161"
+  - name: "June BDC QM Feedback Form"
+    url: "https://docs.google.com/forms/d/e/1FAIpQLSeg5rjLDo3aiDAp0Hjh8zi7hNxOgdnyI753mEDJg4wvn2URgA/viewform"
+  - name: "BDC3 Report on BDC Spring 2023 Virtual Quarterly Meeting"
+    url: "https://biodatacatalyst.nhlbi.nih.gov/assets/BDC-VQM-Reports/2023_06_01-Report-on-BDC-Spring-2023-Virtual-Quarterly-Meeting.pdf"
+---
+
+## Overview
+
+## Virtual Meeting Recordings
+
+- [BDC June QM Day One Recording](https://www.dropbox.com/s/c2d8fsz0fkl8t48/BDC%20June%202023%20QM%20at%20RTI_Day%201.mp4?dl=0)
+- [BDC June QM Day Two Recording](https://www.dropbox.com/s/wi136be09gn24f7/BDC%20June%202023%20QM%20at%20RTI_Day%202.mp4?dl=0)
+
+## Day 1 Presentations (03/03/25)
+
+- [Welcome and Housekeeping](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g1041c2f1c2b_0_168)
+- [Goals for the Meeting](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g115c1f24559_0_330)
+- [WP4.0 Release 1-4 New Development Updates](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_0)
+- [WP4.0 Release 5-8: Proposal Cycle Update](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_7)
+- [Updating/Modifying Lean Canvas Proposals](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_14)
+- [DMC Debrief on Ambra/Flywheel Pilot](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g22561cbaea5_0_8)
+- [Breakouts](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_21)
+- [Breakout Report Backs](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_28)
+- [GA4GH Driver Project](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g24a3cadda8a_33_0)
+- [Implementation of DOIs in BDC](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_35)
+- [Data Access: Lessons Learned and Next Steps](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_42)
+- [Cloud Cost Estimation Feature Demo](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_56)
+- [ECO Update](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g24a3cadda8a_33_64)
+- [Day 1 Recap](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g115c1f24559_0_360)
+
+## Day 2 Presentations (03/04/25)
+
+- [Welcome and Day 1 Recap](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g24494fd5876_0_7)
+- [WG/TT Updates](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g115c1f24559_0_18)
+- [Metrics Report TT Update](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_90)
+- [2024 QM Scheduling Update](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_97)
+- [DMC Updates](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_104)
+- [Developing Third-Party Fellowship Support](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g24e239e936d_2_0)
+- [Building upon high-priority users - lessons learned](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_118)
+- [Consortium Updates](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g245e1541a8d_1_125)
+- [External Expert Panel Retrospective](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g117e0c68eba_3_0)
+- [NHLBI Fireside Chat](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g108cca5080c_0_459)
+- [Day 2 / Meeting Recap](https://docs.google.com/presentation/d/1u_2wj3owphSHPsMj8LA1Zv3a6dqXQ9pG3tC8CtrMPyw/edit#slide=id.g108cca5080c_0_475)

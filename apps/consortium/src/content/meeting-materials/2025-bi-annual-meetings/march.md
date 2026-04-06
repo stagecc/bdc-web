@@ -1,0 +1,55 @@
+---
+title: "March 2025 Bi-Annual Meeting"
+parent: "2025-bi-annual-meetings"
+order: 1
+description: "Meeting materials for the March 2025 Bi-Annual Meeting."
+files:
+  - name: "BDC March 2025 Bi-Annual Meeting Homepage and Meeting Notes"
+    url: "https://docs.google.com/document/d/1XYt6abl-oFaQRpgcs6na-wHYV7h8CP2CyVAIp-UlF5U/edit?tab=t.0#heading=h.49bx9arq8qkl"
+  - name: "BDC March 2025 Bi-Annual Meeting Slides"
+    url: "https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?usp=sharing"
+  - name: "BDC March 2025 Bi-Annual Feedback Form"
+    url: "https://docs.google.com/forms/d/e/1FAIpQLScc4DimkKqaEdEhpkUToTfLfbmcyibW5Ux81TPn888A2HrSug/viewform"
+  - name: "BDC March 2025 Bi-Annual Meeting Report"
+    url: "https://docs.google.com/document/d/1s4LmgDMz_aiazXXx9KqGddE0X6bwfSg8QGTd5UXfA9M/edit?usp=sharing"
+---
+
+## Overview
+
+The NHLBI BioData Catalyst (BDC)® March 2025 Bi-Annual Meeting was held virtually via Microsoft Teams on **March 3-4, 2025** bringing together key stakeholders, researchers, and technical teams to discuss ongoing projects, recent advancements, and strategic priorities. Across both days this meeting was attended by 112 individuals.
+
+**Day 1** of this meeting featured updates on key initiatives to expand BDC’s footprint in the NHLBI research community. These updates focused on addressing feedback from recent engagements with the TOPMed community, as well as hearing updates on consortium efforts to build the ecosystem’s capabilities via migration of the TOPMed Exchange Area, expanding BDC’s AI capabilities, and three ARPA-H BDF initiatives which heavily feature BDC in their research. Additionally, this day saw the meeting attendees splitting up into breakout sessions to discuss high-value topics to project leadership and development.
+
+**Day 2** featured an emphasis in hearing updates from the BDC Data Management Core (DMC), NHLBI ECO team, and BDC3 User Engagement team on their combined efforts within the last six months. This day also featured a debrief from BDC3 on the outcomes of the Imaging Tiger Team, as well as an update from NHLBI staff on the recent changes to the NIH Genomic Data Sharing Policy (and the potential positive impacts to BDC growth and usage), as well as a refresher presentation on empowering “Apps” to be brought into the BDC Ecosystem by researchers.
+
+## Virtual Meeting Recordings
+
+- BDC March '25 Virtual Bi-Annual Meeting Day One Recordings
+  - [Part 1](https://drive.google.com/file/d/1sk3fXa6sGXBFhFTC0p4y0uiY0Vfdz1CY/view?usp=sharing)
+  - [Part 2](https://drive.google.com/file/d/1BHN4DY_r4kCe6ksJXCZbfwJKE4p99QVn/view?usp=sharing)
+- BDC March '25 Virtual Bi-Annual Meeting Day Two Recordings
+  - [Part 1](https://drive.google.com/file/d/1hVwoaXySy3rebBiYQpTHJOvPj6BkSmr5/view?usp=sharing)
+  - [Part 2](https://drive.google.com/file/d/1jPxeavz-3lQ7QUmyLDS-U6irlbQM7zBo/view?usp=sharing)
+
+## Day 1 Presentations (03/03/25)
+
+- [Welcome & Housekeeping](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_278#slide=id.g3396916cdda_0_278)
+- [September '24 QM Recap](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1706#slide=id.g3396916cdda_0_1706)
+- [TOPMed Strategic Alignment & Exchange Area Migration](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g33b9c555890_2_181#slide=id.g33b9c555890_2_181)
+- [Breakout Reportbacks](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_580#slide=id.g3396916cdda_0_580)
+- [ARPA-H BDF Performers Updates](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1825#slide=id.g3396916cdda_0_1825)
+- [BDC AI Next Steps](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1837#slide=id.g3396916cdda_0_1837)
+- [Day 1 Recap](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1844#slide=id.g3396916cdda_0_1844)
+
+## Day 2 Presentations (03/04/25)
+
+- [Welcome and Housekeeping](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_985#slide=id.g3396916cdda_0_985)
+- [Genomics Data Sharing Policy Change Updates](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g33be283a544_23_323#slide=id.g33be283a544_23_323)
+- [BDC User Presentation](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g33a83636e7c_15_647#slide=id.g33a83636e7c_15_647)
+- [ECO Updates](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_880#slide=id.g3396916cdda_0_880)
+- [Imaging Next Steps](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1367#slide=id.g3396916cdda_0_1367)
+- [Data Ingestion Metrics](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1387#slide=id.g3396916cdda_0_1387)
+- [Data Harmonization Applications](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1396#slide=id.g3396916cdda_0_1396)
+- [Applications & Architecture within BDC](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1400#slide=id.g3396916cdda_0_1400)
+- [NHLBI, ESC Chair Fireside Chat](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1419#slide=id.g3396916cdda_0_1419)
+- [Day 2 Meeting Recap](https://docs.google.com/presentation/d/1rgJ7Ww15mY5O_4A1Z-PBABRZPyFlw-TXf7nLrx2vn7I/edit?slide=id.g3396916cdda_0_1512#slide=id.g3396916cdda_0_1512)
