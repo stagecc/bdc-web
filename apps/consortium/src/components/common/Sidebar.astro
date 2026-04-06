@@ -1,8 +1,30 @@
 ---
+import { getCollection } from "astro:content";
+
 const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
 
-type NavChild = { label: string; href: string };
-type NavItem = { label: string; href: string; exact?: boolean; children?: NavChild[] };
+type NavItem = { label: string; href: string; exact?: boolean; children?: NavItem[] };
+
+const materials = await getCollection("meeting-materials");
+
+// Sort parents by order (or title) and create hierarchy
+const materialParents = materials.filter((m) => !m.data.parent).sort((a, b) => b.data.order - a.data.order);
+
+const meetingMaterialsChildren: NavItem[] = materialParents.map((parent) => {
+  const children = materials
+    .filter((m) => m.data.parent === parent.id || m.data.parent === parent.id.split("/")[0])
+    .sort((a, b) => a.data.order - b.data.order)
+    .map((child) => ({
+      label: child.data.title,
+      href: `/consortium-resources/meeting-materials/${child.id}`,
+    }));
+
+  return {
+    label: parent.data.title,
+    href: `/consortium-resources/meeting-materials/${parent.id}`,
+    children: children.length > 0 ? children : undefined,
+  };
+});
 
 const nav: NavItem[] = [
   {
@@ -13,11 +35,7 @@ const nav: NavItem[] = [
   {
     label: "Meeting Materials",
     href: "/consortium-resources/meeting-materials",
-    children: [
-      { label: "Directory", href: "/consortium-resources/meeting-materials/directory" },
-      { label: "Add a Member", href: "/consortium-resources/meeting-materials/directory/add" },
-      { label: "Remove a Member", href: "/consortium-resources/meeting-materials/directory/remove" },
-    ],
+    children: meetingMaterialsChildren,
   },
   {
     label: "Publications and Engagement",
@@ -34,9 +52,9 @@ function isActive(href: string, exact = false) {
   return pathname === href || pathname.startsWith(href + "/");
 }
 
-function isSectionActive(item: NavItem) {
+function isSectionActive(item: NavItem): boolean {
   if (isActive(item.href, item.exact)) return true;
-  return item.children?.some((c) => isActive(c.href)) ?? false;
+  return item.children?.some((c) => isSectionActive(c)) ?? false;
 }
 ---
 
@@ -53,9 +71,20 @@ function isSectionActive(item: NavItem) {
               <ul class="usa-sidenav__sublist bg-gray-5">
                 {section.children.map((child) => (
                   <li class="usa-sidenav__item">
-                    <a href={child.href} class={isActive(child.href) ? "usa-current" : ""}>
+                    <a href={child.href} class={isSectionActive(child) ? "usa-current" : ""}>
                       {child.label}
                     </a>
+                    {child.children && isSectionActive(child) && (
+                      <ul class="usa-sidenav__sublist bg-gray-5">
+                        {child.children.map((subchild) => (
+                          <li class="usa-sidenav__item">
+                            <a href={subchild.href} class={isActive(subchild.href) ? "usa-current" : ""}>
+                              {subchild.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </li>
                 ))}
               </ul>

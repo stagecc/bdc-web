@@ -72,10 +72,31 @@ const rfcs = defineCollection({
   }),
 });
 
+const meetingMaterials = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./src/content/meeting-materials" }),
+  schema: z.object({
+    title: z.string(),
+    parent: z.string().optional(),
+    order: z.number().default(0),
+    date: z.coerce.date().optional(),
+    description: z.string().optional(),
+    files: z
+      .array(
+        z.object({
+          name: z.string(),
+          url: z.string(),
+          type: z.enum(["pdf", "forms", "docs", "slides", "zip"]).optional(),
+        }),
+      )
+      .optional(),
+  }),
+});
+
 export const collections = {
   members,
   "working-groups": workingGroups,
   "recurring-meetings": recurringMeetings,
   bams,
   rfcs,
+  "meeting-materials": meetingMaterials,
 };

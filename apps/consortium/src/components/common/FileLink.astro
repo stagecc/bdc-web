@@ -9,10 +9,25 @@ import zipIcon from "../../assets/icons/zip.png";
 
 interface Props {
   href: string;
-  type: "pdf" | "forms" | "docs" | "slides" | "zip";
+  type?: "pdf" | "forms" | "docs" | "slides" | "zip";
 }
 
-const { href, type } = Astro.props;
+let { href, type } = Astro.props;
+
+if (!type) {
+  const lowerHref = href.toLowerCase();
+  if (lowerHref.includes("docs.google.com/document")) {
+    type = "docs";
+  } else if (lowerHref.includes("docs.google.com/presentation")) {
+    type = "slides";
+  } else if (lowerHref.includes("docs.google.com/forms")) {
+    type = "forms";
+  } else if (lowerHref.endsWith(".pdf") || lowerHref.includes(".pdf?")) {
+    type = "pdf";
+  } else if (lowerHref.endsWith(".zip") || lowerHref.includes(".zip?")) {
+    type = "zip";
+  }
+}
 
 const ICONS = {
   pdf: pdfIcon,
@@ -22,7 +37,7 @@ const ICONS = {
   zip: zipIcon,
 };
 
-const icon = ICONS[type];
+const icon = type ? ICONS[type] : undefined;
 ---
 
 <a href={href} class="usa-link display-inline-flex flex-align-center text-no-underline hover:text-underline padding-y-1" target="_blank" rel="noopener noreferrer">

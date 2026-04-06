@@ -1,0 +1,38 @@
+---
+import { getEntry, render } from "astro:content";
+import Directory from "@layouts/Directory.astro";
+import FileLink from "@components/common/FileLink.astro";
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect("/404");
+const entry = await getEntry("meeting-materials", slug);
+if (!entry) return Astro.redirect("/404");
+
+const { Content } = await render(entry);
+---
+
+<Directory title={entry.data.title}>
+  <div>
+    <h1>{entry.data.title}</h1>
+    {entry.data.date && <p class="text-base text-gray-50">Date: {entry.data.date.toLocaleDateString()}</p>}
+
+    {
+      entry.data.files && entry.data.files.length > 0 && (
+        <div class="margin-y-4">
+          <h2 class="margin-top-0">Overview</h2>
+          <ul class="usa-list usa-list--unstyled">
+            {entry.data.files.map((file) => (
+              <li class="margin-bottom-2">
+                <FileLink href={file.url} type={file.type}>
+                  {file.name}
+                </FileLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+
+    <Content />
+  </div>
+</Directory>
