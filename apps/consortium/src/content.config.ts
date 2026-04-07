@@ -7,15 +7,48 @@ const members = defineCollection({
   loader: async () => {
     const text = await readFile("./src/content/members.yaml", "utf-8");
     const items = loadYaml(text) as Array<Record<string, unknown>>;
-    return items.map((item, i) => ({ id: String(i), ...item }));
+    return items
+      .filter((item) => item.hideFromDirectory !== true)
+      .map((item, i) => {
+        const id = String(item.id ?? i + 1);
+        return { id, ...item, idValue: id };
+      });
   },
   schema: z.object({
-    email: z.string(),
+    idValue: z.string(),
+    hideFromDirectory: z.boolean().optional(),
+    consortiumWideEmailOptOut: z.boolean().optional(),
     firstName: z.string(),
     surname: z.string(),
+    specialTitle: z.string().optional(),
+    email: z.string(),
+    alternateEmail: z.string().optional(),
+    projectRole: z.string(),
     team: z.string(),
     affiliation: z.string(),
-    projectRole: z.string(),
+    gitHubHandle: z.string().optional(),
+    nihEraCommonsId: z.string().optional(),
+    orcId: z.string().optional(),
+    professionalTitle: z.string().optional(),
+    externalProfileLink: z.string().optional(),
+    collaborationGroups: z.string().optional(),
+    chairForCollaborationGroup: z.string().optional(),
+    parents: z.string().optional(),
+    children: z.string().optional(),
+    onboardingFormSubmitted: z.string().optional(),
+    codeOfConduct: z.string().optional(),
+    consortiumCharter: z.string().optional(),
+    privacyPolicy: z.string().optional(),
+    controlledAccessData: z.string().optional(),
+    cloudServices: z.string().optional(),
+    dashboard: z.string().optional(),
+    teamCollaborationMtg: z.string().optional(),
+    steeringCommMtg: z.string().optional(),
+    projectManagerMtg: z.string().optional(),
+    projectManagerName: z.string().optional(),
+    projectManagerEmail: z.string().optional(),
+    executiveAssistantName: z.string().optional(),
+    executiveAssistantEmail: z.string().optional(),
   }),
 });
 
