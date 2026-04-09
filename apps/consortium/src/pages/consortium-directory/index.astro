@@ -29,6 +29,28 @@ const filteredMembers = members.filter((member) => {
 
   return true;
 });
+
+const emailableMembers = filteredMembers.filter((m) => !m.data.consortiumWideEmailOptOut);
+const emailableEmails = emailableMembers.map((m) => m.data.email);
+const emailsComma = emailableEmails.join(", ");
+const emailsSemicolon = emailableEmails.join("; ");
+
+const filterParts: string[] = [];
+if (firstNameQuery) filterParts.push(`FirstName-${firstNameQuery}`);
+if (surnameQuery) filterParts.push(`Surname-${surnameQuery}`);
+if (emailQuery) filterParts.push(`Email-${emailQuery}`);
+if (teamQuery) filterParts.push(`Team-${teamQuery}`);
+if (affiliationQuery) filterParts.push(`Affiliation-${affiliationQuery}`);
+if (projectRoleQuery) filterParts.push(`Role-${projectRoleQuery}`);
+if (collaborationGroupQuery) filterParts.push(`Group-${collaborationGroupQuery}`);
+const filterLabel = filterParts.length > 0 ? filterParts.join("_") : "All";
+
+const csvHeaders = ["First Name", "Last Name", "Email", "Team", "Project Role", "Affiliation"];
+const toCsvRow = (m: (typeof filteredMembers)[number]) => {
+  return [m.data.firstName, m.data.surname, m.data.email, m.data.team, m.data.projectRole, m.data.affiliation].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",");
+};
+const csvAll = [csvHeaders.join(","), ...filteredMembers.map(toCsvRow)].join("\n");
+const csvNoOptOut = [csvHeaders.join(","), ...emailableMembers.map(toCsvRow)].join("\n");
 ---
 
 <Base title="Consortium Directory">
@@ -120,32 +142,108 @@ const filteredMembers = members.filter((member) => {
 
   <p class="font-sans-sm margin-top-0">Showing {filteredMembers.length} of {members.length} members.</p>
 
-  <table id="directory-table" class="usa-table usa-table--borderless usa-table--striped width-full">
-    <thead>
-      <tr>
-        <th scope="col">Name</th>
-        <th scope="col">Email</th>
-        <th scope="col">STAGE Team</th>
-        <th scope="col">Project Role</th>
-        <th scope="col">Employer/Affiliation</th>
-      </tr>
-    </thead>
-    <tbody>
-      {
-        filteredMembers.map((member) => (
-          <tr>
-            <td class="text-bold">
-              {member.data.firstName} {member.data.surname}
-            </td>
-            <td>{member.data.email}</td>
-            <td>{member.data.team}</td>
-            <td>{member.data.projectRole}</td>
-            <td>{member.data.affiliation}</td>
-          </tr>
-        ))
-      }
-    </tbody>
-  </table>
+  <div class="directory-table-wrapper">
+    <table id="directory-table" class="usa-table usa-table--borderless usa-table--striped width-full">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">STAGE Team</th>
+          <th scope="col">Project Role</th>
+          <th scope="col">Employer/Affiliation</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          filteredMembers.map((member) => (
+            <tr>
+              <td class="text-bold">
+                {member.data.firstName} {member.data.surname}
+              </td>
+              <td>{member.data.email}</td>
+              <td>{member.data.team}</td>
+              <td>{member.data.projectRole}</td>
+              <td>{member.data.affiliation}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="usa-alert usa-alert--info margin-top-4">
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">Use the download options below to obtain contact lists based on your search results above. Note that, while the DataSTAGE Consortium Directory is updated through this website, any downloaded content might become outdated.</p>
+    </div>
+  </div>
+
+  <div class="margin-top-3">
+    <h3>Email Actions</h3>
+    <p class="font-sans-sm">To quickly copy email addresses from the search results above, right click one of the buttons below and select "Copy Email Address" from the menu. Note email lists generated do not include members who have opted out of Consortium-wide emails.</p>
+    <div class="display-flex flex-wrap gap-2">
+      <a href={`mailto:?bcc=${emailsComma}`} class="usa-button" target="_blank" rel="noopener noreferrer">Email All</a>
+      <button type="button" class="usa-button usa-button--outline copy-btn" data-emails={emailsComma} data-separator="comma">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="margin-right-05" viewBox="0 0 16 16" aria-hidden="true">
+          <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"></path>
+        </svg>
+        Copy Emails (comma)
+      </button>
+      <button type="button" class="usa-button usa-button--outline copy-btn" data-emails={emailsSemicolon} data-separator="semicolon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="margin-right-05" viewBox="0 0 16 16" aria-hidden="true">
+          <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"></path>
+        </svg>
+        Copy Emails (semicolon)
+      </button>
+    </div>
+  </div>
+
+  <div class="margin-top-4">
+    <h3>Download CSV</h3>
+    <p class="font-sans-sm">The title, time & date stamp for the downloaded CSV files reflect the search parameters and filter options you've selected.</p>
+    <div class="grid-row grid-gap margin-top-2">
+      <div class="tablet:grid-col-6 display-flex flex-align-center gap-2">
+        <p class="font-sans-sm margin-y-0">To obtain a copy of the search results table in CSV format, click the button at right.</p>
+        <button type="button" class="usa-button csv-download-btn flex-auto" data-csv-type="all"> Download CSV </button>
+      </div>
+      <div class="tablet:grid-col-6 display-flex flex-align-center gap-2">
+        <p class="font-sans-sm margin-y-0">To obtain a copy of the search results table in CSV format <strong>without</strong> members who have opted out of receiving Consortium-wide emails, click the button at right.</p>
+        <button type="button" class="usa-button usa-button--outline csv-download-btn flex-auto" data-csv-type="no-optout"> Download CSV </button>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline define:vars={{ csvAll, csvNoOptOut, filterLabel }}>
+    document.querySelectorAll(".copy-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const emails = btn.getAttribute("data-emails");
+        navigator.clipboard.writeText(emails).then(() => {
+          const original = btn.innerHTML;
+          btn.textContent = "Copied!";
+          setTimeout(() => {
+            btn.innerHTML = original;
+          }, 2000);
+        });
+      });
+    });
+
+    document.querySelectorAll(".csv-download-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const type = btn.getAttribute("data-csv-type");
+        const csv = type === "all" ? csvAll : csvNoOptOut;
+        const now = new Date();
+        const stamp = now.toISOString().slice(0, 16).replace("T", "_").replace(":", "-");
+        const suffix = type === "all" ? "" : "_no-email-optout";
+        const filename = `BDC-Directory_${filterLabel}_${stamp}${suffix}.csv`;
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    });
+  </script>
 </Base>
 
 <style is:global>
@@ -153,12 +251,27 @@ const filteredMembers = members.filter((member) => {
     gap: 0.75rem;
   }
 
-  #directory-table tbody td {
-    border-bottom-color: transparent;
+  .directory-table-wrapper {
+    max-height: 70vh;
+    overflow-y: auto;
+    border: 1px solid #dfe1e2;
+    border-radius: 4px;
   }
 
   #directory-table {
     table-layout: fixed;
+    margin: 0;
+  }
+
+  #directory-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f0f0f0;
+    z-index: 1;
+  }
+
+  #directory-table tbody td {
+    border-bottom-color: transparent;
   }
 
   #directory-table th,
