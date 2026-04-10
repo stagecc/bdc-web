@@ -6,10 +6,11 @@ import formsIcon from "../../assets/icons/google-forms.jpg";
 import docsIcon from "../../assets/icons/google-docs.png";
 import slidesIcon from "../../assets/icons/google-slides.png";
 import zipIcon from "../../assets/icons/zip.png";
+import spreadsheetsIcon from "../../assets/icons/google-sheets.png";
 
 interface Props {
   href: string;
-  type?: "pdf" | "forms" | "docs" | "slides" | "zip";
+  type?: "pdf" | "forms" | "docs" | "slides" | "zip" | "spreadsheets";
 }
 
 let { href, type } = Astro.props;
@@ -20,6 +21,8 @@ if (!type) {
     type = "docs";
   } else if (lowerHref.includes("docs.google.com/presentation")) {
     type = "slides";
+  } else if (lowerHref.includes("docs.google.com/spreadsheets")) {
+    type = "spreadsheets";
   } else if (lowerHref.includes("docs.google.com/forms")) {
     type = "forms";
   } else if (lowerHref.endsWith(".pdf") || lowerHref.includes(".pdf?")) {
@@ -35,6 +38,7 @@ const ICONS = {
   docs: docsIcon,
   slides: slidesIcon,
   zip: zipIcon,
+  spreadsheets: spreadsheetsIcon,
 };
 
 const icon = type ? ICONS[type] : undefined;

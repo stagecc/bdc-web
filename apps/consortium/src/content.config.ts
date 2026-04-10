@@ -92,16 +92,11 @@ const bams = defineCollection({
 });
 
 const rfcs = defineCollection({
-  loader: async () => {
-    const text = await readFile("./src/content/rfcs.yaml", "utf-8");
-    const items = loadYaml(text) as Array<Record<string, unknown>>;
-    return items.map((item, i) => ({ id: String(i), ...item }));
-  },
+  loader: glob({ pattern: "**/*.mdx", base: "./src/content/rfcs" }),
   schema: z.object({
     title: z.string(),
-    date: z.coerce.date(),
-    status: z.string(),
-    url: z.string(),
+    description: z.string().optional(),
+    order: z.number().default(0),
   }),
 });
 

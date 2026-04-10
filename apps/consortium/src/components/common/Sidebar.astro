@@ -6,9 +6,17 @@ const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
 type NavItem = { label: string; href: string; exact?: boolean; children?: NavItem[] };
 
 const materials = await getCollection("meeting-materials");
+const rfcs = await getCollection("rfcs");
 
 // Sort parents by order (or title) and create hierarchy
 const materialParents = materials.filter((m) => !m.data.parent).sort((a, b) => b.data.order - a.data.order);
+
+const rfcChildren: NavItem[] = rfcs
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((rfc) => ({
+    label: rfc.data.title,
+    href: `/consortium-resources/rfcs/${rfc.id}`,
+  }));
 
 const meetingMaterialsChildren: NavItem[] = materialParents.map((parent) => {
   const children = materials
@@ -36,6 +44,11 @@ const nav: NavItem[] = [
     label: "Meeting Materials",
     href: "/consortium-resources/meeting-materials",
     children: meetingMaterialsChildren,
+  },
+  {
+    label: "RFCs",
+    href: "/consortium-resources/rfcs",
+    children: rfcChildren.length > 0 ? rfcChildren : undefined,
   },
   {
     label: "New Member Form",
