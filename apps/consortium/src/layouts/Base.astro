@@ -2,6 +2,7 @@
 import "../styles/global.scss";
 import { ViewTransitions } from "astro:transitions";
 import SiteHeader from "@components/layout/SiteHeader.astro";
+import favicon from "../assets/favicon.png";
 
 interface Props {
   title: string;
@@ -16,6 +17,7 @@ const displayTitle = title.includes("BioData Catalyst") ? title : `${title} | Bi
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href={favicon.src} />
     <title>{displayTitle}</title>
     <ViewTransitions />
   </head>

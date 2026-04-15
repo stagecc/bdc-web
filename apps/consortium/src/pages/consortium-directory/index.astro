@@ -158,9 +158,13 @@ const csvNoOptOut = [csvHeaders.join(","), ...emailableMembers.map(toCsvRow)].jo
           filteredMembers.map((member) => (
             <tr>
               <td class="text-bold">
-                {member.data.firstName} {member.data.surname}
+                <a href={`/consortium-directory/${member.id}`}>
+                  {member.data.firstName} {member.data.surname}
+                </a>
               </td>
-              <td>{member.data.email}</td>
+              <td>
+                <a href={`mailto:${member.data.email}`}>{member.data.email}</a>
+              </td>
               <td>{member.data.team}</td>
               <td>{member.data.projectRole}</td>
               <td>{member.data.affiliation}</td>

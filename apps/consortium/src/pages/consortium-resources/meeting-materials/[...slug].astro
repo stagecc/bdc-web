@@ -1,5 +1,5 @@
 ---
-import { getEntry, render } from "astro:content";
+import { getCollection, getEntry, render } from "astro:content";
 import Directory from "@layouts/Directory.astro";
 import FileLink from "@components/common/FileLink.astro";
 
@@ -8,31 +8,42 @@ if (!slug) return Astro.redirect("/404");
 const entry = await getEntry("meeting-materials", slug);
 if (!entry) return Astro.redirect("/404");
 
+const isParent = !entry.data.parent;
+
+let children: { title: string; href: string }[] = [];
+if (isParent) {
+  const all = await getCollection("meeting-materials");
+  children = all
+    .filter((m) => m.data.parent === entry.id)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map((m) => ({
+      title: m.data.title,
+      href: `/consortium-resources/meeting-materials/${m.id}`,
+    }));
+}
+
+const year = entry.data.title.match(/\d{4}/)?.[0] ?? "";
+
 const { Content } = await render(entry);
 ---
 
 <Directory title={entry.data.title}>
   <div>
     <h1>{entry.data.title}</h1>
-    {entry.data.date && <p class="text-base text-gray-50">Date: {entry.data.date.toLocaleDateString()}</p>}
 
-    {
-      entry.data.files && entry.data.files.length > 0 && (
-        <div class="margin-y-4">
-          <h2 class="margin-top-0">Links</h2>
-          <ul class="usa-list usa-list--unstyled">
-            {entry.data.files.map((file) => (
-              <li class="margin-bottom-2">
-                <FileLink href={file.url} type={file.type}>
-                  {file.name}
-                </FileLink>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )
-    }
-
-    <Content />
+    {isParent ? (
+      <div>
+        <p>The following meetings were presented throughout {year}. To view materials from a meeting, please click on a date below or select the date under the dropdown menu on the left.</p>
+        <ul class="usa-list">
+          {children.map((child) => (
+            <li>
+              <a href={child.href} class="usa-link">{child.title}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <Content components={{ a: FileLink }} />
+    )}
   </div>
 </Directory>
