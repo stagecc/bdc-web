@@ -8,7 +8,6 @@ type NavItem = { label: string; href: string; exact?: boolean; children?: NavIte
 const materials = await getCollection("meeting-materials");
 const rfcs = await getCollection("rfcs");
 
-// Sort parents by order (or title) and create hierarchy
 const materialParents = materials.filter((m) => !m.data.parent).sort((a, b) => b.data.order - a.data.order);
 
 const rfcChildren: NavItem[] = rfcs
@@ -84,7 +83,7 @@ function isSectionActive(item: NavItem): boolean {
 ---
 
 <div>
-  <nav aria-label="Secondary navigation" class="bg-gray-10 radius-md padding-y-2 margin-top-6">
+  <nav aria-label="Secondary navigation" class="bg-gray-10 radius-md padding-y-2">
     <ul class="usa-sidenav">
       {
         nav.map((section) => (
