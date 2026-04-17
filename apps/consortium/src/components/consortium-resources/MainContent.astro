@@ -1,0 +1,116 @@
+---
+import { Image } from 'astro:assets';
+import GitHub from '../../assets/logos/github.jpg';
+import GoogleDrive from '../../assets/logos/google-drive.png';
+import Jira from '../../assets/logos/jira.png';
+import Slack from '../../assets/logos/slack.png';
+---
+
+<div>
+  <h1>Consortium Resources</h1>
+  <h2>BDC Consortium Onboarding Process</h2>
+  <p>
+    NHLBI, Principal Investigators, Co-Investigators, Institution Leads, and Project Managers can <a href="/consortium-resources/new-member-form-page" class="usa-link">Request A New Member</a> to the BDC consortium, initiating the on-boarding process. This process adds new consortium members to consortium
+    collaboration and communication tools including: website, Slack, GitHub, Google share drive, and recurring meetings. <b><i>*Please contact <a href="mailto:bdc3@renci.org" target="_blank">bdc3@renci.org</a> if a Jira account is needed.</i></b>
+  </p>
+  <p>When a new member is requested, the new member will receive an email with instructions to establish a website password and complete the onboarding form.</p>
+  <h2>Offboarding</h2>
+  <p>If you are leaving the consortium, or are aware of someone who is, please complete <a href="/consortium-resources/consortium-offboarding" class="usa-link">the offboarding form</a>.</p>
+  <p>Should you have any questions regarding this process, please contact <a href="mailto:bdc3@renci.org" target="_blank">bdc3@renci.org</a>.</p>
+  <div class="resource-list">
+    <div class="resource-item">
+      <div class="resource-logo">
+        <Image src={GoogleDrive} alt="Google Drive" height={80} />
+      </div>
+      <div class="resource-link">
+        <a href="https://drive.google.com/drive/folders/18UokS037lJ3rHZHkQhnAYgtCTWOpYfsK" target="_blank">BDC Consortium Shared Google Drive</a>
+      </div>
+      <div class="resource-desc">
+        <p><b>Updated GD URL 12/2025</b> -- Shared documents, agendas, and other project materials.</p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="resource-logo">
+        <Image src={Slack} alt="Slack" height={80} />
+      </div>
+      <div class="resource-link">
+        <a href="https://nhlbi-datastage.slack.com/" target="_blank">BDC Slack Workspace</a>
+      </div>
+      <div class="resource-desc">
+        <p>Platform for real-time conversations with individual/groups of team members</p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="resource-logo">
+        <Image src={Jira} alt="Jira" width={80} />
+      </div>
+      <div class="resource-link">
+        <a href="https://nhlbijira.nhlbi.nih.gov/secure/BrowseProjects.jspa?selectedCategory=all&selectedProjectType=all" target="_blank">BDC Jira Projects</a>
+      </div>
+      <div class="resource-desc">
+        <p>NHLBI's Jira Instance (account required) - used for tracking and managing new development, reporting, data ingestion progress, Change Requests, monitoring project risks, issues, blockers, and action items.</p>
+        <p>See the <a href="https://docs.google.com/document/d/1g8oh0lEeduxnYF5PSPqAahkMHnqgT-KVbxAcoRVKpWQ/edit#heading=h.calrjqv8ativ" target="_blank">BDC Jira SOP</a> for additional guidance.</p>
+      </div>
+    </div>
+    <div class="resource-item">
+      <div class="resource-logo">
+        <Image src={GitHub} alt="GitHub" height={80} />
+      </div>
+      <div class="resource-link">
+        <a href="https://github.com/nhlbidatastage" target="_blank">GitHub</a>
+      </div>
+      <div class="resource-desc">
+        <p>Code, software development, date release/manifest, issue tracking.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style lang="scss">
+  @use "@bdc/uswds-theme/src/uswds-init" as core;
+
+  .resource-item {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1rem;
+    align-items: start;
+    border-bottom: 1px solid core.core-color('base-lighter');
+    padding: 1.25rem 0;
+  }
+  .resource-item:last-child {
+    border-bottom: none;
+  }
+  .resource-logo {
+    display: flex;
+    justify-content: center;
+    grid-row: 1 / 3;
+  }
+  .resource-link a {
+    font-size: 1.125rem;
+    color: core.core-color('primary');
+    text-decoration: none;
+  }
+  .resource-link a:hover {
+    text-decoration: underline;
+    color: core.core-color('primary-dark');
+  }
+  .resource-desc p {
+    margin: 0;
+    color: core.core-color('base-dark');
+  }
+  .resource-desc p + p {
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 40em) {
+    .resource-item {
+      grid-template-columns: 7.5rem 12.5rem 1fr;
+      gap: 2rem;
+      align-items: center;
+      padding: 1.5rem 0;
+    }
+    .resource-logo {
+      grid-row: auto;
+    }
+  }
+</style>

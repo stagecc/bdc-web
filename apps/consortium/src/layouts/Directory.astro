@@ -1,0 +1,114 @@
+---
+import Sidebar from '@components/common/Sidebar.astro';
+import Base from '@layouts/Base.astro';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Base title={title}>
+  <div class="directory-layout">
+    <aside class="directory-layout__sidebar">
+      <button type="button" class="sidebar-toggle" aria-expanded="false" aria-controls="sidebar-nav">
+        <span class="sidebar-toggle__label">Browse sections</span>
+        <svg class="sidebar-toggle__icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9" /></svg>
+      </button>
+      <div id="sidebar-nav" class="sidebar-collapse">
+        <Sidebar transition:persist />
+      </div>
+    </aside>
+    <div class="directory-layout__content usa-prose">
+      <slot />
+    </div>
+  </div>
+</Base>
+
+<script>
+  function initSidebarToggle() {
+    const toggle = document.querySelector<HTMLButtonElement>('.sidebar-toggle');
+    const panel = document.getElementById('sidebar-nav');
+    if (!toggle || !panel) return;
+
+    toggle.addEventListener('click', () => {
+      const expanded = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', String(!expanded));
+      panel.classList.toggle('is-open');
+    });
+  }
+
+  initSidebarToggle();
+  document.addEventListener('astro:after-swap', initSidebarToggle);
+</script>
+
+<style lang="scss">
+  @use "@bdc/uswds-theme/src/uswds-init" as core;
+
+  .directory-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .directory-layout__sidebar {
+    margin-top: 1.5rem;
+  }
+
+  .sidebar-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    font-weight: 700;
+    color: core.core-color('base-darkest');
+    background: core.core-color('base-lightest');
+    border: 1px solid core.core-color('base-lighter');
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s ease;
+  }
+  .sidebar-toggle:hover {
+    background: core.core-color('base-lighter');
+  }
+  .sidebar-toggle__icon {
+    transition: transform 0.25s ease;
+  }
+  .sidebar-toggle[aria-expanded="true"] .sidebar-toggle__icon {
+    transform: rotate(180deg);
+  }
+
+  .sidebar-collapse {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s ease;
+  }
+  .sidebar-collapse > :global(*) {
+    overflow: hidden;
+  }
+  .sidebar-collapse.is-open {
+    grid-template-rows: 1fr;
+  }
+
+  .directory-layout__content {
+    min-width: 0;
+  }
+
+  @media (min-width: 64em) {
+    .directory-layout {
+      grid-template-columns: 15rem 1fr;
+      gap: 2rem;
+    }
+
+    .sidebar-toggle {
+      display: none;
+    }
+
+    .sidebar-collapse {
+      display: block;
+    }
+  }
+</style>

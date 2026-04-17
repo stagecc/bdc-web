@@ -1,0 +1,16 @@
+---
+import MainContent from '@components/april-2026-meeting/MainContent.astro';
+import Sidebar from '@components/april-2026-meeting/Sidebar.astro';
+import Base from '@layouts/Base.astro';
+---
+
+<Base title="April 2026 Bi-Annual Meeting">
+  <div class="grid-row grid-gap">
+    <div class="usa-layout-docs__sidenav desktop:display-block desktop:grid-col-3 display-none">
+      <Sidebar transition:persist />
+    </div>
+    <div class="desktop:grid-col-9 usa-prose" id="main-content">
+      <MainContent />
+    </div>
+  </div>
+</Base>

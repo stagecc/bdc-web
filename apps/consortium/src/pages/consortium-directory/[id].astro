@@ -1,0 +1,67 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content';
+import Base from '@layouts/Base.astro';
+
+interface Props {
+  member: CollectionEntry<'members'>;
+}
+
+export async function getStaticPaths() {
+  const members = await getCollection('members');
+  return members.map((member) => ({
+    params: { id: member.id },
+    props: { member },
+  }));
+}
+
+const props = Astro.props as Partial<Props>;
+const memberFromProps = props.member;
+const members = await getCollection('members');
+const member =
+  memberFromProps ?? members.find((entry) => entry.id === Astro.params.id);
+
+if (!member) {
+  return Astro.redirect('/consortium-directory/');
+}
+
+const fullName = `${member.data.firstName} ${member.data.surname}`.trim();
+---
+
+<Base title={fullName}>
+  <h1>{fullName}</h1>
+
+  <p>
+    <strong>Project Role:</strong>
+    {member.data.projectRole}
+    <br />
+    <br />
+    <strong>Team:</strong>
+    {member.data.team}
+    <br />
+    <br />
+    <strong>Affiliation/Employer:</strong>
+    {member.data.affiliation}
+    {
+      member.data.professionalTitle && (
+        <>
+          , <em>{member.data.professionalTitle}</em>
+        </>
+      )
+    }
+    <br />
+    <br />
+    <strong>Email:</strong>
+    <a href={`mailto:${member.data.email}`}>{member.data.email}</a>
+  </p>
+
+  {
+    member.data.gitHubHandle && (
+      <p>
+        <strong>GitHub Handle:</strong>
+        {member.data.gitHubHandle}
+      </p>
+    )
+  }
+
+  <a href="/consortium-directory/" class="usa-button margin-top-2">RETURN TO CONSORTIUM DIRECTORY</a>
+</Base>
