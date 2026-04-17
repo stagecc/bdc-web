@@ -33,7 +33,7 @@ const nav: NavItem[] = [
 ];
 
 function isActive(href: string) {
-  return pathname === href || pathname.startsWith(href + '/');
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 function isSectionActive(item: NavItem) {

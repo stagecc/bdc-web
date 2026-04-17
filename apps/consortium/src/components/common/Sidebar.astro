@@ -84,7 +84,7 @@ const nav: NavItem[] = [
 
 function isActive(href: string, exact = false) {
   if (exact) return pathname === href;
-  return pathname === href || pathname.startsWith(href + '/');
+  return pathname === href || pathname.startsWith(`${href}/`);
 }
 
 function isSectionActive(item: NavItem): boolean {
