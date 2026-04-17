@@ -1,18 +1,18 @@
 ---
-import { getCollection, getEntry, render } from "astro:content";
-import Directory from "@layouts/Directory.astro";
-import FileLink from "@components/common/FileLink.astro";
+import { getCollection, getEntry, render } from 'astro:content';
+import FileLink from '@components/common/FileLink.astro';
+import Directory from '@layouts/Directory.astro';
 
 const { slug } = Astro.params;
-if (!slug) return Astro.redirect("/404");
-const entry = await getEntry("meeting-materials", slug);
-if (!entry) return Astro.redirect("/404");
+if (!slug) return Astro.redirect('/404');
+const entry = await getEntry('meeting-materials', slug);
+if (!entry) return Astro.redirect('/404');
 
 const isParent = !entry.data.parent;
 
 let children: { title: string; href: string }[] = [];
 if (isParent) {
-  const all = await getCollection("meeting-materials");
+  const all = await getCollection('meeting-materials');
   children = all
     .filter((m) => m.data.parent === entry.id)
     .sort((a, b) => a.data.order - b.data.order)
@@ -22,7 +22,7 @@ if (isParent) {
     }));
 }
 
-const year = entry.data.title.match(/\d{4}/)?.[0] ?? "";
+const year = entry.data.title.match(/\d{4}/)?.[0] ?? '';
 
 const { Content } = await render(entry);
 ---

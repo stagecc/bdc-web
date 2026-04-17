@@ -1,13 +1,13 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
-import Base from "@layouts/Base.astro";
+import { type CollectionEntry, getCollection } from 'astro:content';
+import Base from '@layouts/Base.astro';
 
 interface Props {
-  member: CollectionEntry<"members">;
+  member: CollectionEntry<'members'>;
 }
 
 export async function getStaticPaths() {
-  const members = await getCollection("members");
+  const members = await getCollection('members');
   return members.map((member) => ({
     params: { id: member.id },
     props: { member },
@@ -16,11 +16,12 @@ export async function getStaticPaths() {
 
 const props = Astro.props as Partial<Props>;
 const memberFromProps = props.member;
-const members = await getCollection("members");
-const member = memberFromProps ?? members.find((entry) => entry.id === Astro.params.id);
+const members = await getCollection('members');
+const member =
+  memberFromProps ?? members.find((entry) => entry.id === Astro.params.id);
 
 if (!member) {
-  return Astro.redirect("/consortium-directory/");
+  return Astro.redirect('/consortium-directory/');
 }
 
 const fullName = `${member.data.firstName} ${member.data.surname}`.trim();

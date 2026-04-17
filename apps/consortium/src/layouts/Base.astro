@@ -1,15 +1,17 @@
 ---
-import "../styles/global.scss";
-import { ViewTransitions } from "astro:transitions";
-import SiteHeader from "@components/layout/SiteHeader.astro";
-import favicon from "../assets/favicon.png";
+import '../styles/global.scss';
+import { ViewTransitions } from 'astro:transitions';
+import SiteHeader from '@components/layout/SiteHeader.astro';
+import favicon from '../assets/favicon.png';
 
 interface Props {
   title: string;
 }
 
 const { title } = Astro.props;
-const displayTitle = title.includes("BioData Catalyst") ? title : `${title} | BioData Catalyst Consortium`;
+const displayTitle = title.includes('BioData Catalyst')
+  ? title
+  : `${title} | BioData Catalyst Consortium`;
 ---
 
 <!doctype html>

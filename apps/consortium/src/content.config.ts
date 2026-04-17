@@ -1,11 +1,11 @@
-import { defineCollection, z } from "astro:content";
-import { readFile } from "node:fs/promises";
-import { glob } from "astro/loaders";
-import { load as loadYaml } from "js-yaml";
+import { defineCollection, z } from 'astro:content';
+import { readFile } from 'node:fs/promises';
+import { glob } from 'astro/loaders';
+import { load as loadYaml } from 'js-yaml';
 
 const members = defineCollection({
   loader: async () => {
-    const text = await readFile("./src/content/members.yaml", "utf-8");
+    const text = await readFile('./src/content/members.yaml', 'utf-8');
     const items = loadYaml(text) as Array<Record<string, unknown>>;
     return items
       .filter((item) => item.hideFromDirectory !== true)
@@ -53,10 +53,10 @@ const members = defineCollection({
 });
 
 const workingGroups = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/working-groups" }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/working-groups' }),
   schema: z.object({
     title: z.string(),
-    status: z.string().default("active"),
+    status: z.string().default('active'),
     charter: z.string().url().optional(),
     drive: z.string().url().optional(),
     agenda: z.string().url().optional(),
@@ -65,7 +65,10 @@ const workingGroups = defineCollection({
 
 const recurringMeetings = defineCollection({
   loader: async () => {
-    const text = await readFile("./src/content/recurring-meetings.yaml", "utf-8");
+    const text = await readFile(
+      './src/content/recurring-meetings.yaml',
+      'utf-8',
+    );
     const items = loadYaml(text) as Array<Record<string, unknown>>;
     return items.map((item, i) => ({ id: String(i), ...item }));
   },
@@ -79,7 +82,7 @@ const recurringMeetings = defineCollection({
 });
 
 const bams = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./src/content/bams" }),
+  loader: glob({ pattern: '**/*.md', base: './src/content/bams' }),
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
@@ -92,7 +95,7 @@ const bams = defineCollection({
 });
 
 const rfcs = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/rfcs" }),
+  loader: glob({ pattern: '**/*.mdx', base: './src/content/rfcs' }),
   schema: z.object({
     title: z.string(),
     description: z.string().optional(),
@@ -101,7 +104,10 @@ const rfcs = defineCollection({
 });
 
 const meetingMaterials = defineCollection({
-  loader: glob({ pattern: "**/*.mdx", base: "./src/content/meeting-materials" }),
+  loader: glob({
+    pattern: '**/*.mdx',
+    base: './src/content/meeting-materials',
+  }),
   schema: z.object({
     title: z.string(),
     parent: z.string().optional(),
@@ -111,9 +117,9 @@ const meetingMaterials = defineCollection({
 
 export const collections = {
   members,
-  "working-groups": workingGroups,
-  "recurring-meetings": recurringMeetings,
+  'working-groups': workingGroups,
+  'recurring-meetings': recurringMeetings,
   bams,
   rfcs,
-  "meeting-materials": meetingMaterials,
+  'meeting-materials': meetingMaterials,
 };

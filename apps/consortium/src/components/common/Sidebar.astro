@@ -1,14 +1,21 @@
 ---
-import { getCollection } from "astro:content";
+import { getCollection } from 'astro:content';
 
-const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 
-type NavItem = { label: string; href: string; exact?: boolean; children?: NavItem[] };
+type NavItem = {
+  label: string;
+  href: string;
+  exact?: boolean;
+  children?: NavItem[];
+};
 
-const materials = await getCollection("meeting-materials");
-const rfcs = await getCollection("rfcs");
+const materials = await getCollection('meeting-materials');
+const rfcs = await getCollection('rfcs');
 
-const materialParents = materials.filter((m) => !m.data.parent).sort((a, b) => b.data.order - a.data.order);
+const materialParents = materials
+  .filter((m) => !m.data.parent)
+  .sort((a, b) => b.data.order - a.data.order);
 
 const rfcChildren: NavItem[] = rfcs
   .sort((a, b) => a.data.order - b.data.order)
@@ -19,7 +26,11 @@ const rfcChildren: NavItem[] = rfcs
 
 const meetingMaterialsChildren: NavItem[] = materialParents.map((parent) => {
   const children = materials
-    .filter((m) => m.data.parent === parent.id || m.data.parent === parent.id.split("/")[0])
+    .filter(
+      (m) =>
+        m.data.parent === parent.id ||
+        m.data.parent === parent.id.split('/')[0],
+    )
     .sort((a, b) => a.data.order - b.data.order)
     .map((child) => ({
       label: child.data.title,
@@ -35,45 +46,45 @@ const meetingMaterialsChildren: NavItem[] = materialParents.map((parent) => {
 
 const nav: NavItem[] = [
   {
-    label: "Consortium Resources",
-    href: "/consortium-resources",
+    label: 'Consortium Resources',
+    href: '/consortium-resources',
     exact: true,
   },
   {
-    label: "Meeting Materials",
-    href: "/consortium-resources/meeting-materials",
+    label: 'Meeting Materials',
+    href: '/consortium-resources/meeting-materials',
     children: meetingMaterialsChildren,
   },
   {
-    label: "RFCs",
-    href: "/consortium-resources/rfcs",
+    label: 'RFCs',
+    href: '/consortium-resources/rfcs',
     children: rfcChildren.length > 0 ? rfcChildren : undefined,
   },
   {
-    label: "Consortium New Member Form",
-    href: "/consortium-resources/new-member-form-page",
+    label: 'Consortium New Member Form',
+    href: '/consortium-resources/new-member-form-page',
   },
   {
-    label: "Consortium Onboarding Form",
-    href: "/consortium-resources/onboarding-form",
+    label: 'Consortium Onboarding Form',
+    href: '/consortium-resources/onboarding-form',
   },
   {
-    label: "Consortium Offboarding Form",
-    href: "/consortium-resources/consortium-offboarding",
+    label: 'Consortium Offboarding Form',
+    href: '/consortium-resources/consortium-offboarding',
   },
   {
-    label: "Publications and Engagement",
-    href: "/consortium-resources/publications",
+    label: 'Publications and Engagement',
+    href: '/consortium-resources/publications',
   },
   {
-    label: "BDC Branding",
-    href: "/consortium-resources/bdc-branding",
+    label: 'BDC Branding',
+    href: '/consortium-resources/bdc-branding',
   },
 ];
 
 function isActive(href: string, exact = false) {
   if (exact) return pathname === href;
-  return pathname === href || pathname.startsWith(href + "/");
+  return pathname === href || pathname.startsWith(href + '/');
 }
 
 function isSectionActive(item: NavItem): boolean {

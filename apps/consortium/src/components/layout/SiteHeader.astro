@@ -1,28 +1,29 @@
 ---
-import { Image } from "astro:assets";
-import bdcLogo from "../../assets/bdc-logo.svg";
+import { Image } from 'astro:assets';
+import bdcLogo from '../../assets/bdc-logo.svg';
 
 const nav = [
   {
-    label: "Consortium Resources",
-    href: "/consortium-resources",
+    label: 'Consortium Resources',
+    href: '/consortium-resources',
   },
   {
-    label: "Consortium Directory",
-    href: "/consortium-directory",
+    label: 'Consortium Directory',
+    href: '/consortium-directory',
   },
   {
-    label: "Monitor Dashboard",
-    href: "/monitor-dashboard",
+    label: 'Monitor Dashboard',
+    href: '/monitor-dashboard',
   },
   {
-    label: "April 2026 Bi-Annual Meeting",
-    href: "/april-2026-meeting",
+    label: 'April 2026 Bi-Annual Meeting',
+    href: '/april-2026-meeting',
   },
 ];
 
-const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
-const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isActive = (href: string) =>
+  pathname === href || pathname.startsWith(href + '/');
 ---
 
 <header class="site-header bg-base-lightest">

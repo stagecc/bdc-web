@@ -1,39 +1,59 @@
 ---
-import { getCollection } from "astro:content";
-import Base from "@layouts/Base.astro";
-import { affiliationOptions, collaborationGroups, projectRoleOptions, teamOptions } from "@components/common/formOptions";
+import { getCollection } from 'astro:content';
+import {
+  affiliationOptions,
+  collaborationGroups,
+  projectRoleOptions,
+  teamOptions,
+} from '@components/common/formOptions';
+import Base from '@layouts/Base.astro';
 
-const members = await getCollection("members");
+const members = await getCollection('members');
 members.sort((a, b) => a.data.surname.localeCompare(b.data.surname));
 
 const searchParams = Astro.url.searchParams;
 
-const firstNameQuery = searchParams.get("FirstName")?.trim() ?? "";
-const surnameQuery = searchParams.get("Surname")?.trim() ?? "";
-const emailQuery = searchParams.get("Email")?.trim() ?? "";
-const teamQuery = searchParams.get("Team")?.trim() ?? "";
-const affiliationQuery = searchParams.get("Affiliation")?.trim() ?? "";
-const projectRoleQuery = searchParams.get("ProjectRole")?.trim() ?? "";
-const collaborationGroupQuery = searchParams.get("CollaborationGroup")?.trim() ?? "";
+const firstNameQuery = searchParams.get('FirstName')?.trim() ?? '';
+const surnameQuery = searchParams.get('Surname')?.trim() ?? '';
+const emailQuery = searchParams.get('Email')?.trim() ?? '';
+const teamQuery = searchParams.get('Team')?.trim() ?? '';
+const affiliationQuery = searchParams.get('Affiliation')?.trim() ?? '';
+const projectRoleQuery = searchParams.get('ProjectRole')?.trim() ?? '';
+const collaborationGroupQuery =
+  searchParams.get('CollaborationGroup')?.trim() ?? '';
 
-const includesText = (source: string, query: string) => source.toLowerCase().includes(query.toLowerCase());
+const includesText = (source: string, query: string) =>
+  source.toLowerCase().includes(query.toLowerCase());
 
 const filteredMembers = members.filter((member) => {
-  if (firstNameQuery && !includesText(member.data.firstName, firstNameQuery)) return false;
-  if (surnameQuery && !includesText(member.data.surname, surnameQuery)) return false;
+  if (firstNameQuery && !includesText(member.data.firstName, firstNameQuery))
+    return false;
+  if (surnameQuery && !includesText(member.data.surname, surnameQuery))
+    return false;
   if (emailQuery && !includesText(member.data.email, emailQuery)) return false;
   if (teamQuery && member.data.team !== teamQuery) return false;
-  if (affiliationQuery && member.data.affiliation !== affiliationQuery) return false;
-  if (projectRoleQuery && member.data.projectRole !== projectRoleQuery) return false;
-  if (collaborationGroupQuery && !includesText(String(member.data.collaborationGroups ?? ""), collaborationGroupQuery)) return false;
+  if (affiliationQuery && member.data.affiliation !== affiliationQuery)
+    return false;
+  if (projectRoleQuery && member.data.projectRole !== projectRoleQuery)
+    return false;
+  if (
+    collaborationGroupQuery &&
+    !includesText(
+      String(member.data.collaborationGroups ?? ''),
+      collaborationGroupQuery,
+    )
+  )
+    return false;
 
   return true;
 });
 
-const emailableMembers = filteredMembers.filter((m) => !m.data.consortiumWideEmailOptOut);
+const emailableMembers = filteredMembers.filter(
+  (m) => !m.data.consortiumWideEmailOptOut,
+);
 const emailableEmails = emailableMembers.map((m) => m.data.email);
-const emailsComma = emailableEmails.join(", ");
-const emailsSemicolon = emailableEmails.join("; ");
+const emailsComma = emailableEmails.join(', ');
+const emailsSemicolon = emailableEmails.join('; ');
 
 const filterParts: string[] = [];
 if (firstNameQuery) filterParts.push(`FirstName-${firstNameQuery}`);
@@ -42,15 +62,37 @@ if (emailQuery) filterParts.push(`Email-${emailQuery}`);
 if (teamQuery) filterParts.push(`Team-${teamQuery}`);
 if (affiliationQuery) filterParts.push(`Affiliation-${affiliationQuery}`);
 if (projectRoleQuery) filterParts.push(`Role-${projectRoleQuery}`);
-if (collaborationGroupQuery) filterParts.push(`Group-${collaborationGroupQuery}`);
-const filterLabel = filterParts.length > 0 ? filterParts.join("_") : "All";
+if (collaborationGroupQuery)
+  filterParts.push(`Group-${collaborationGroupQuery}`);
+const filterLabel = filterParts.length > 0 ? filterParts.join('_') : 'All';
 
-const csvHeaders = ["First Name", "Last Name", "Email", "Team", "Project Role", "Affiliation"];
+const csvHeaders = [
+  'First Name',
+  'Last Name',
+  'Email',
+  'Team',
+  'Project Role',
+  'Affiliation',
+];
 const toCsvRow = (m: (typeof filteredMembers)[number]) => {
-  return [m.data.firstName, m.data.surname, m.data.email, m.data.team, m.data.projectRole, m.data.affiliation].map((v) => `"${String(v).replace(/"/g, '""')}"`).join(",");
+  return [
+    m.data.firstName,
+    m.data.surname,
+    m.data.email,
+    m.data.team,
+    m.data.projectRole,
+    m.data.affiliation,
+  ]
+    .map((v) => `"${String(v).replace(/"/g, '""')}"`)
+    .join(',');
 };
-const csvAll = [csvHeaders.join(","), ...filteredMembers.map(toCsvRow)].join("\n");
-const csvNoOptOut = [csvHeaders.join(","), ...emailableMembers.map(toCsvRow)].join("\n");
+const csvAll = [csvHeaders.join(','), ...filteredMembers.map(toCsvRow)].join(
+  '\n',
+);
+const csvNoOptOut = [
+  csvHeaders.join(','),
+  ...emailableMembers.map(toCsvRow),
+].join('\n');
 ---
 
 <Base title="Consortium Directory">
