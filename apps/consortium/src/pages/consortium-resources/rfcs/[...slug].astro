@@ -1,0 +1,21 @@
+---
+import { getEntry, render } from 'astro:content';
+import FileLink from '@components/common/FileLink.astro';
+import Directory from '@layouts/Directory.astro';
+
+const { slug } = Astro.params;
+if (!slug) return Astro.redirect('/404');
+const entry = await getEntry('rfcs', slug);
+if (!entry) return Astro.redirect('/404');
+
+const { Content } = await render(entry);
+---
+
+<Directory title={entry.data.title}>
+  <div>
+    <h1>{entry.data.title}</h1>
+    {entry.data.description && <p class="text-base text-gray-50">{entry.data.description}</p>}
+
+    <Content components={{ a: FileLink }} />
+  </div>
+</Directory>

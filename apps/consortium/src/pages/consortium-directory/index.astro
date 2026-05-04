@@ -1,0 +1,340 @@
+---
+import { getCollection } from 'astro:content';
+import {
+  affiliationOptions,
+  collaborationGroups,
+  projectRoleOptions,
+  teamOptions,
+} from '@components/common/formOptions';
+import Base from '@layouts/Base.astro';
+
+const members = await getCollection('members');
+members.sort((a, b) => a.data.surname.localeCompare(b.data.surname));
+
+const searchParams = Astro.url.searchParams;
+
+const firstNameQuery = searchParams.get('FirstName')?.trim() ?? '';
+const surnameQuery = searchParams.get('Surname')?.trim() ?? '';
+const emailQuery = searchParams.get('Email')?.trim() ?? '';
+const teamQuery = searchParams.get('Team')?.trim() ?? '';
+const affiliationQuery = searchParams.get('Affiliation')?.trim() ?? '';
+const projectRoleQuery = searchParams.get('ProjectRole')?.trim() ?? '';
+const collaborationGroupQuery =
+  searchParams.get('CollaborationGroup')?.trim() ?? '';
+
+const includesText = (source: string, query: string) =>
+  source.toLowerCase().includes(query.toLowerCase());
+
+const filteredMembers = members.filter((member) => {
+  if (firstNameQuery && !includesText(member.data.firstName, firstNameQuery))
+    return false;
+  if (surnameQuery && !includesText(member.data.surname, surnameQuery))
+    return false;
+  if (emailQuery && !includesText(member.data.email, emailQuery)) return false;
+  if (teamQuery && member.data.team !== teamQuery) return false;
+  if (affiliationQuery && member.data.affiliation !== affiliationQuery)
+    return false;
+  if (projectRoleQuery && member.data.projectRole !== projectRoleQuery)
+    return false;
+  if (
+    collaborationGroupQuery &&
+    !includesText(
+      String(member.data.collaborationGroups ?? ''),
+      collaborationGroupQuery,
+    )
+  )
+    return false;
+
+  return true;
+});
+
+const emailableMembers = filteredMembers.filter(
+  (m) => !m.data.consortiumWideEmailOptOut,
+);
+const emailableEmails = emailableMembers.map((m) => m.data.email);
+const emailsComma = emailableEmails.join(', ');
+const emailsSemicolon = emailableEmails.join('; ');
+
+const filterParts: string[] = [];
+if (firstNameQuery) filterParts.push(`FirstName-${firstNameQuery}`);
+if (surnameQuery) filterParts.push(`Surname-${surnameQuery}`);
+if (emailQuery) filterParts.push(`Email-${emailQuery}`);
+if (teamQuery) filterParts.push(`Team-${teamQuery}`);
+if (affiliationQuery) filterParts.push(`Affiliation-${affiliationQuery}`);
+if (projectRoleQuery) filterParts.push(`Role-${projectRoleQuery}`);
+if (collaborationGroupQuery)
+  filterParts.push(`Group-${collaborationGroupQuery}`);
+const filterLabel = filterParts.length > 0 ? filterParts.join('_') : 'All';
+
+const csvHeaders = [
+  'First Name',
+  'Last Name',
+  'Email',
+  'Team',
+  'Project Role',
+  'Affiliation',
+];
+const toCsvRow = (m: (typeof filteredMembers)[number]) => {
+  return [
+    m.data.firstName,
+    m.data.surname,
+    m.data.email,
+    m.data.team,
+    m.data.projectRole,
+    m.data.affiliation,
+  ]
+    .map((v) => `"${String(v).replace(/"/g, '""')}"`)
+    .join(',');
+};
+const csvAll = [csvHeaders.join(','), ...filteredMembers.map(toCsvRow)].join(
+  '\n',
+);
+const csvNoOptOut = [
+  csvHeaders.join(','),
+  ...emailableMembers.map(toCsvRow),
+].join('\n');
+---
+
+<Base title="Consortium Directory">
+  <h1>Consortium Directory</h1>
+
+  <form id="directory-filter-form" class="usa-form maxw-none margin-bottom-4" action="/consortium-directory/" method="get">
+    <fieldset class="usa-fieldset">
+      <legend class="usa-legend">Directory Filters</legend>
+
+      <div class="grid-row grid-gap">
+        <div class="tablet:grid-col-4">
+          <label class="usa-label" for="FirstName">First Name</label>
+          <input class="usa-input" type="text" name="FirstName" id="FirstName" value={firstNameQuery} />
+        </div>
+        <div class="tablet:grid-col-4">
+          <label class="usa-label" for="Surname">Last Name</label>
+          <input class="usa-input" type="text" name="Surname" id="Surname" value={surnameQuery} />
+        </div>
+        <div class="tablet:grid-col-4">
+          <label class="usa-label" for="Email">Email</label>
+          <input class="usa-input" type="text" name="Email" id="Email" value={emailQuery} />
+        </div>
+      </div>
+
+      <div class="grid-row grid-gap margin-top-2">
+        <div class="tablet:grid-col-6">
+          <label class="usa-label" for="Team">Team</label>
+          <select class="usa-select" name="Team" id="Team">
+            <option value="">Select a team</option>
+            {
+              teamOptions.map((option) => (
+                <option selected={option === teamQuery} value={option}>
+                  {option}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+        <div class="tablet:grid-col-6">
+          <label class="usa-label" for="Affiliation">Affiliation/Employer</label>
+          <select class="usa-select" name="Affiliation" id="Affiliation">
+            <option value="">Select an Affiliation/Employer</option>
+            {
+              affiliationOptions.map((option) => (
+                <option selected={option === affiliationQuery} value={option}>
+                  {option}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+
+      <div class="grid-row grid-gap margin-top-2">
+        <div class="tablet:grid-col-6">
+          <label class="usa-label" for="ProjectRole">Project Role</label>
+          <select class="usa-select" name="ProjectRole" id="ProjectRole">
+            <option value="">Select a Project Role</option>
+            {
+              projectRoleOptions.map((option) => (
+                <option selected={option === projectRoleQuery} value={option}>
+                  {option}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+        <div class="tablet:grid-col-6">
+          <label class="usa-label" for="CollaborationGroup">Collaboration Group</label>
+          <select class="usa-select" name="CollaborationGroup" id="CollaborationGroup">
+            <option value="">Select a Collaboration Group</option>
+            {
+              collaborationGroups.map((option) => (
+                <option selected={option === collaborationGroupQuery} value={option}>
+                  {option}
+                </option>
+              ))
+            }
+          </select>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="margin-top-3 display-flex flex-wrap gap-2">
+      <button type="submit" class="usa-button">Search</button>
+      <a href="/consortium-directory/" class="usa-button usa-button--outline">Reset</a>
+    </div>
+  </form>
+
+  <p class="font-sans-sm margin-top-0">Showing {filteredMembers.length} of {members.length} members.</p>
+
+  <div class="directory-table-wrapper">
+    <table id="directory-table" class="usa-table usa-table--borderless usa-table--striped width-full">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">STAGE Team</th>
+          <th scope="col">Project Role</th>
+          <th scope="col">Employer/Affiliation</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          filteredMembers.map((member) => (
+            <tr>
+              <td class="text-bold">
+                <a href={`/consortium-directory/${member.id}`}>
+                  {member.data.firstName} {member.data.surname}
+                </a>
+              </td>
+              <td>
+                <a href={`mailto:${member.data.email}`}>{member.data.email}</a>
+              </td>
+              <td>{member.data.team}</td>
+              <td>{member.data.projectRole}</td>
+              <td>{member.data.affiliation}</td>
+            </tr>
+          ))
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="usa-alert usa-alert--info margin-top-4">
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">Use the download options below to obtain contact lists based on your search results above. Note that, while the DataSTAGE Consortium Directory is updated through this website, any downloaded content might become outdated.</p>
+    </div>
+  </div>
+
+  <div class="margin-top-3">
+    <h3>Email Actions</h3>
+    <p class="font-sans-sm">To quickly copy email addresses from the search results above, right click one of the buttons below and select "Copy Email Address" from the menu. Note email lists generated do not include members who have opted out of Consortium-wide emails.</p>
+    <div class="display-flex flex-wrap gap-2">
+      <a href={`mailto:?bcc=${emailsComma}`} class="usa-button" target="_blank" rel="noopener noreferrer">Email All</a>
+      <button type="button" class="usa-button usa-button--outline copy-btn" data-emails={emailsComma} data-separator="comma">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="margin-right-05" viewBox="0 0 16 16" aria-hidden="true">
+          <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"></path>
+        </svg>
+        Copy Emails (comma)
+      </button>
+      <button type="button" class="usa-button usa-button--outline copy-btn" data-emails={emailsSemicolon} data-separator="semicolon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="margin-right-05" viewBox="0 0 16 16" aria-hidden="true">
+          <path fill-rule="evenodd" d="M4 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1h1v1a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h1v1z"></path>
+        </svg>
+        Copy Emails (semicolon)
+      </button>
+    </div>
+  </div>
+
+  <div class="margin-top-4">
+    <h3>Download CSV</h3>
+    <p class="font-sans-sm">The title, time & date stamp for the downloaded CSV files reflect the search parameters and filter options you've selected.</p>
+    <div class="grid-row grid-gap margin-top-2">
+      <div class="tablet:grid-col-6 display-flex flex-align-center gap-2">
+        <p class="font-sans-sm margin-y-0">To obtain a copy of the search results table in CSV format, click the button at right.</p>
+        <button type="button" class="usa-button csv-download-btn flex-auto" data-csv-type="all"> Download CSV </button>
+      </div>
+      <div class="tablet:grid-col-6 display-flex flex-align-center gap-2">
+        <p class="font-sans-sm margin-y-0">To obtain a copy of the search results table in CSV format <strong>without</strong> members who have opted out of receiving Consortium-wide emails, click the button at right.</p>
+        <button type="button" class="usa-button usa-button--outline csv-download-btn flex-auto" data-csv-type="no-optout"> Download CSV </button>
+      </div>
+    </div>
+  </div>
+
+  <script is:inline define:vars={{ csvAll, csvNoOptOut, filterLabel }}>
+    document.querySelectorAll(".copy-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const emails = btn.getAttribute("data-emails");
+        navigator.clipboard.writeText(emails).then(() => {
+          const original = btn.innerHTML;
+          btn.textContent = "Copied!";
+          setTimeout(() => {
+            btn.innerHTML = original;
+          }, 2000);
+        });
+      });
+    });
+
+    document.querySelectorAll(".csv-download-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const type = btn.getAttribute("data-csv-type");
+        const csv = type === "all" ? csvAll : csvNoOptOut;
+        const now = new Date();
+        const stamp = now.toISOString().slice(0, 16).replace("T", "_").replace(":", "-");
+        const suffix = type === "all" ? "" : "_no-email-optout";
+        const filename = `BDC-Directory_${filterLabel}_${stamp}${suffix}.csv`;
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+      });
+    });
+  </script>
+</Base>
+
+<style is:global>
+  .gap-2 {
+    gap: 0.75rem;
+  }
+
+  .directory-table-wrapper {
+    max-height: 70vh;
+    overflow-y: auto;
+    border: 1px solid #dfe1e2;
+    border-radius: 4px;
+  }
+
+  #directory-table {
+    table-layout: fixed;
+    margin: 0;
+  }
+
+  #directory-table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #f0f0f0;
+    z-index: 1;
+  }
+
+  #directory-table tbody td {
+    border-bottom-color: transparent;
+  }
+
+  #directory-table th,
+  #directory-table td {
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    vertical-align: top;
+  }
+
+  #directory-table th:nth-child(2),
+  #directory-table td:nth-child(2) {
+    width: 24%;
+  }
+
+  #directory-table th:nth-child(5),
+  #directory-table td:nth-child(5) {
+    width: 24%;
+  }
+</style>

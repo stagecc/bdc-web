@@ -9,6 +9,7 @@
     "preview": "astro preview"
   },
   "dependencies": {
+    "@astrojs/mdx": "^4.2.0",
     "@astrojs/react": "^4.2.0",
     "@bdc/uswds-theme": "*",
     "@trussworks/react-uswds": "^11.0.0",
