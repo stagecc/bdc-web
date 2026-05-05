@@ -9,10 +9,10 @@
     "preview": "astro preview"
   },
   "dependencies": {
-    "@astrojs/starlight": "^0.32.0",
+    "@astrojs/starlight": "^0.38.4",
     "@bdc/uswds-theme": "*",
     "@uswds/uswds": "^3.13.0",
-    "astro": "^5.1.0",
+    "astro": "^6.2.2",
     "sass-embedded": "^1.83.0",
     "sharp": "^0.33.5"
   }
