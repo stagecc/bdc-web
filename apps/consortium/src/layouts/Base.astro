@@ -1,6 +1,6 @@
 ---
 import '../styles/global.scss';
-import { ViewTransitions } from 'astro:transitions';
+import { ClientRouter } from 'astro:transitions';
 import SiteHeader from '@components/layout/SiteHeader.astro';
 import favicon from '../assets/favicon.png';
 
@@ -21,7 +21,7 @@ const displayTitle = title.includes('BioData Catalyst')
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/png" href={favicon.src} />
     <title>{displayTitle}</title>
-    <ViewTransitions />
+    <ClientRouter />
   </head>
   <body class="display-flex flex-column" style="min-height: 100vh;">
     <a class="usa-skipnav" href="#main-content">Skip to main content</a>

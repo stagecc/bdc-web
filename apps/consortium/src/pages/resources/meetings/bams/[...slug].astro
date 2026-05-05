@@ -1,15 +1,20 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { type CollectionEntry, getCollection, render } from 'astro:content';
 import Base from '@layouts/Base.astro';
 
-const { slug } = Astro.params;
-const bams = await getCollection('bams');
-const bam = bams.find((b) => b.id === slug);
-
-if (!bam) {
-  return Astro.redirect('/resources/meetings');
+interface Props {
+  bam: CollectionEntry<'bams'>;
 }
 
+export async function getStaticPaths() {
+  const bams = await getCollection('bams');
+  return bams.map((bam) => ({
+    params: { slug: bam.id },
+    props: { bam },
+  }));
+}
+
+const { bam } = Astro.props;
 const { Content } = await render(bam);
 ---
 
