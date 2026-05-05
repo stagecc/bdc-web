@@ -1,13 +1,21 @@
 ---
-import { getEntry, render } from 'astro:content';
+import { type CollectionEntry, getCollection, render } from 'astro:content';
 import FileLink from '@components/common/FileLink.astro';
 import Directory from '@layouts/Directory.astro';
 
-const { slug } = Astro.params;
-if (!slug) return Astro.redirect('/404');
-const entry = await getEntry('rfcs', slug);
-if (!entry) return Astro.redirect('/404');
+interface Props {
+  entry: CollectionEntry<'rfcs'>;
+}
 
+export async function getStaticPaths() {
+  const rfcs = await getCollection('rfcs');
+  return rfcs.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
 const { Content } = await render(entry);
 ---
 

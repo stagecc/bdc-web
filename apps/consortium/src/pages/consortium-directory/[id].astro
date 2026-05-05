@@ -14,16 +14,7 @@ export async function getStaticPaths() {
   }));
 }
 
-const props = Astro.props as Partial<Props>;
-const memberFromProps = props.member;
-const members = await getCollection('members');
-const member =
-  memberFromProps ?? members.find((entry) => entry.id === Astro.params.id);
-
-if (!member) {
-  return Astro.redirect('/consortium-directory/');
-}
-
+const { member } = Astro.props;
 const fullName = `${member.data.firstName} ${member.data.surname}`.trim();
 ---
 

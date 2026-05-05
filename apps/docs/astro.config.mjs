@@ -18,9 +18,13 @@ export default defineConfig({
         dark: './src/assets/bdc-logo-dark.svg',
         alt: 'BDC logo',
       },
-      social: {
-        github: 'https://github.com/stagecc/bdc-web',
-      },
+      social: [
+        {
+          icon: 'github',
+          label: 'GitHub',
+          href: 'https://github.com/stagecc/bdc-web',
+        },
+      ],
       customCss: ['./src/styles/custom.scss'],
       sidebar,
     }),
