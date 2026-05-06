@@ -1,0 +1,30 @@
+---
+import Base from '@layouts/Base.astro';
+
+const links = [
+  { label: 'Current Workplan', href: '/resources/workplan' },
+  { label: 'Consortium Google Drive', href: '/resources/google-drive' },
+  { label: 'Working Groups & Tiger Teams', href: '/resources/working-groups' },
+  { label: 'Meeting Materials', href: '/resources/meetings' },
+  { label: 'RFCs & Memos', href: '/resources/rfcs' },
+  { label: 'Marketing', href: '/resources/marketing' },
+];
+---
+
+<Base title="Consortium Resources">
+  <h1>Resources</h1>
+
+  <ul class="usa-card-group">
+    {links.map((link) => (
+      <li class="usa-card tablet:grid-col-4">
+        <div class="usa-card__container">
+          <div class="usa-card__body">
+            <a href={link.href} class="usa-link">
+              {link.label}
+            </a>
+          </div>
+        </div>
+      </li>
+    ))}
+  </ul>
+</Base>

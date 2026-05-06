@@ -1,0 +1,76 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import Base from '@layouts/Base.astro';
+
+interface Props {
+  bam: CollectionEntry<'bams'>;
+}
+
+export async function getStaticPaths() {
+  const bams = await getCollection('bams');
+  return bams.map((bam) => ({
+    params: { slug: bam.id },
+    props: { bam },
+  }));
+}
+
+const { bam } = Astro.props;
+const { Content } = await render(bam);
+---
+
+<Base title={bam.data.title}>
+  <h1>{bam.data.title}</h1>
+
+  <dl class="margin-bottom-4">
+    <dt class="text-bold">Date</dt>
+    <dd>
+      {bam.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+    </dd>
+
+    {bam.data.location && (
+      <>
+        <dt class="text-bold margin-top-2">Location</dt>
+        <dd>{bam.data.location}</dd>
+      </>
+    )}
+  </dl>
+
+  <ul class="usa-list">
+    {bam.data.notes && (
+      <li>
+        <a href={bam.data.notes} class="usa-link" target="_blank" rel="noopener noreferrer">
+          Meeting Notes
+        </a>
+      </li>
+    )}
+    {bam.data.slides && (
+      <li>
+        <a href={bam.data.slides} class="usa-link" target="_blank" rel="noopener noreferrer">
+          Slides
+        </a>
+      </li>
+    )}
+    {bam.data.reportout && (
+      <li>
+        <a href={bam.data.reportout} class="usa-link" target="_blank" rel="noopener noreferrer">
+          Report Out
+        </a>
+      </li>
+    )}
+    {bam.data.recording && (
+      <li>
+        <a href={bam.data.recording} class="usa-link" target="_blank" rel="noopener noreferrer">
+          Recording
+        </a>
+      </li>
+    )}
+  </ul>
+
+  <div class="margin-top-4">
+    <Content />
+  </div>
+
+  <p class="margin-top-4">
+    <a href="/resources/meetings" class="usa-link">&larr; Back to Meeting Materials</a>
+  </p>
+</Base>

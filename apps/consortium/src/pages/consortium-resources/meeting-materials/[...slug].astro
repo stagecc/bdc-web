@@ -1,0 +1,58 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import FileLink from '@components/common/FileLink.astro';
+import Directory from '@layouts/Directory.astro';
+
+interface Props {
+  entry: CollectionEntry<'meeting-materials'>;
+}
+
+export async function getStaticPaths() {
+  const all = await getCollection('meeting-materials');
+  return all.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+
+const isParent = !entry.data.parent;
+
+let children: { title: string; href: string }[] = [];
+if (isParent) {
+  const all = await getCollection('meeting-materials');
+  children = all
+    .filter((m) => m.data.parent === entry.id)
+    .sort((a, b) => a.data.order - b.data.order)
+    .map((m) => ({
+      title: m.data.title,
+      href: `/consortium-resources/meeting-materials/${m.id}`,
+    }));
+}
+
+const year = entry.data.title.match(/\d{4}/)?.[0] ?? '';
+
+const { Content } = await render(entry);
+---
+
+<Directory title={entry.data.title}>
+  <div>
+    <h1>{entry.data.title}</h1>
+
+    {isParent ? (
+      <div>
+        <p>The following meetings were presented throughout {year}. To view materials from a meeting, please click on a date below or select the date under the dropdown menu on the left.</p>
+        <ul class="usa-list">
+          {children.map((child) => (
+            <li>
+              <a href={child.href} class="usa-link">{child.title}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ) : (
+      <Content components={{ a: FileLink }} />
+    )}
+  </div>
+</Directory>

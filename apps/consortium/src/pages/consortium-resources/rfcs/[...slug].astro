@@ -1,0 +1,29 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import FileLink from '@components/common/FileLink.astro';
+import Directory from '@layouts/Directory.astro';
+
+interface Props {
+  entry: CollectionEntry<'rfcs'>;
+}
+
+export async function getStaticPaths() {
+  const rfcs = await getCollection('rfcs');
+  return rfcs.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Directory title={entry.data.title}>
+  <div>
+    <h1>{entry.data.title}</h1>
+    {entry.data.description && <p class="text-base text-gray-50">{entry.data.description}</p>}
+
+    <Content components={{ a: FileLink }} />
+  </div>
+</Directory>

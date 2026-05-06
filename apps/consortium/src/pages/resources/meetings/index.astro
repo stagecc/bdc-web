@@ -1,0 +1,64 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@layouts/Base.astro';
+
+const recurringMeetings = await getCollection('recurring-meetings');
+const bams = (await getCollection('bams')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+---
+
+<Base title="Meeting Materials">
+  <h1>Meeting Materials</h1>
+
+  <h2>Recurring Meetings</h2>
+
+  <table class="usa-table usa-table--borderless width-full">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Schedule</th>
+        <th scope="col">Time</th>
+        <th scope="col">Links</th>
+      </tr>
+    </thead>
+    <tbody>
+      {recurringMeetings.map((meeting) => (
+        <tr>
+          <td>{meeting.data.name}</td>
+          <td>{meeting.data.schedule}</td>
+          <td>{meeting.data.time}</td>
+          <td>
+            {meeting.data.agenda && (
+              <a href={meeting.data.agenda} class="usa-link" target="_blank" rel="noopener noreferrer">
+                Agenda
+              </a>
+            )}
+            {meeting.data.agenda && meeting.data.notes && ' | '}
+            {meeting.data.notes && (
+              <a href={meeting.data.notes} class="usa-link" target="_blank" rel="noopener noreferrer">
+                Notes
+              </a>
+            )}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+
+  <h2>Bi-Annual Meetings</h2>
+
+  <ul class="usa-list">
+    {bams.map((bam) => (
+      <li>
+        <a href={`/resources/meetings/bams/${bam.id}`} class="usa-link">
+          {bam.data.title}
+        </a>
+        {' '}
+        <span class="text-base">
+          — {bam.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </span>
+      </li>
+    ))}
+  </ul>
+</Base>

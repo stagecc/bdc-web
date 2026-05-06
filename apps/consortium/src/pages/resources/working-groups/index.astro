@@ -1,0 +1,44 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '@layouts/Base.astro';
+
+const workingGroups = await getCollection('working-groups');
+---
+
+<Base title="Working Groups & Tiger Teams">
+  <h1>Working Groups & Tiger Teams</h1>
+
+  <ul class="usa-list">
+    {workingGroups.map((wg) => (
+      <li>
+        <h2 class="font-heading-lg margin-bottom-05">{wg.data.title}</h2>
+        <p class="margin-top-0">
+          <span class="usa-tag">{wg.data.status}</span>
+        </p>
+        <ul class="usa-list">
+          {wg.data.charter && (
+            <li>
+              <a href={wg.data.charter} class="usa-link" target="_blank" rel="noopener noreferrer">
+                Charter
+              </a>
+            </li>
+          )}
+          {wg.data.drive && (
+            <li>
+              <a href={wg.data.drive} class="usa-link" target="_blank" rel="noopener noreferrer">
+                Google Drive
+              </a>
+            </li>
+          )}
+          {wg.data.agenda && (
+            <li>
+              <a href={wg.data.agenda} class="usa-link" target="_blank" rel="noopener noreferrer">
+                Agenda
+              </a>
+            </li>
+          )}
+        </ul>
+      </li>
+    ))}
+  </ul>
+</Base>

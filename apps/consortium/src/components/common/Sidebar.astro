@@ -1,0 +1,132 @@
+---
+import { getCollection } from 'astro:content';
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+type NavItem = {
+  label: string;
+  href: string;
+  exact?: boolean;
+  children?: NavItem[];
+};
+
+const materials = await getCollection('meeting-materials');
+const rfcs = await getCollection('rfcs');
+
+const materialParents = materials
+  .filter((m) => !m.data.parent)
+  .sort((a, b) => b.data.order - a.data.order);
+
+const rfcChildren: NavItem[] = rfcs
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((rfc) => ({
+    label: rfc.data.title,
+    href: `/consortium-resources/rfcs/${rfc.id}`,
+  }));
+
+const meetingMaterialsChildren: NavItem[] = materialParents.map((parent) => {
+  const children = materials
+    .filter(
+      (m) =>
+        m.data.parent === parent.id ||
+        m.data.parent === parent.id.split('/')[0],
+    )
+    .sort((a, b) => a.data.order - b.data.order)
+    .map((child) => ({
+      label: child.data.title,
+      href: `/consortium-resources/meeting-materials/${child.id}`,
+    }));
+
+  return {
+    label: parent.data.title,
+    href: `/consortium-resources/meeting-materials/${parent.id}`,
+    children: children.length > 0 ? children : undefined,
+  };
+});
+
+const nav: NavItem[] = [
+  {
+    label: 'Consortium Resources',
+    href: '/consortium-resources',
+    exact: true,
+  },
+  {
+    label: 'Meeting Materials',
+    href: '/consortium-resources/meeting-materials',
+    children: meetingMaterialsChildren,
+  },
+  {
+    label: 'RFCs',
+    href: '/consortium-resources/rfcs',
+    children: rfcChildren.length > 0 ? rfcChildren : undefined,
+  },
+  {
+    label: 'Consortium New Member Form',
+    href: '/consortium-resources/new-member-form-page',
+  },
+  {
+    label: 'Consortium Onboarding Form',
+    href: '/consortium-resources/onboarding-form',
+  },
+  {
+    label: 'Consortium Offboarding Form',
+    href: '/consortium-resources/consortium-offboarding',
+  },
+  {
+    label: 'Publications and Engagement',
+    href: '/consortium-resources/publications',
+  },
+  {
+    label: 'BDC Branding',
+    href: '/consortium-resources/bdc-branding',
+  },
+];
+
+function isActive(href: string, exact = false) {
+  if (exact) return pathname === href;
+  return pathname === href || pathname.startsWith(`${href}/`);
+}
+
+function isSectionActive(item: NavItem): boolean {
+  if (isActive(item.href, item.exact)) return true;
+  return item.children?.some((c) => isSectionActive(c)) ?? false;
+}
+---
+
+<div>
+  <nav aria-label="Secondary navigation" class="bg-gray-10 radius-md padding-y-2">
+    <ul class="usa-sidenav">
+      {
+        nav.map((section) => (
+          <li class="usa-sidenav__item">
+            <a href={section.href} class={isSectionActive(section) ? "usa-current" : ""}>
+              {section.label}
+            </a>
+            {section.children && isSectionActive(section) && (
+              <ul class="usa-sidenav__sublist bg-gray-5">
+                {section.children.map((child) => (
+                  <li class="usa-sidenav__item">
+                    <a href={child.href} class={isSectionActive(child) ? "usa-current" : ""}>
+                      {child.label}
+                    </a>
+                    {child.children && isSectionActive(child) && (
+                      <ul class="usa-sidenav__sublist bg-gray-5">
+                        {child.children.map((subchild) => (
+                          <li class="usa-sidenav__item">
+                            <a href={subchild.href} class={isActive(subchild.href) ? "usa-current" : ""}>
+                              {subchild.label}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</div>
