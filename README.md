@@ -15,8 +15,9 @@ The platform is built using:
 
 ```
 apps/
-- site/       → Public-facing website
-- docs/       → Documentation site (future)
+- site/        → Public-facing website
+- docs/        → Documentation site
+- consortium/  → Internal consortium portal
 services/
 - freshdesk/  → Freshdesk API proxy (Python/Lambda)
 docs/         → Developer documentation
@@ -63,6 +64,8 @@ npm run preview -w @bdc/site
 
 ### apps/docs
 
+Documentation site. Built with Astro + [Starlight](https://starlight.astro.build/).
+
 Run local development server:
 
 ```bash
@@ -80,6 +83,31 @@ Preview:
 
 ```bash
 npm run preview -w @bdc/docs
+```
+
+### apps/consortium
+
+Internal-facing portal for the BDC consortium. Surfaces the member directory, working groups, recurring meetings, BAMs (bi-annual meetings), RFCs, and other consortium resources sourced from local YAML and MDX content.
+
+Built with Astro + MDX + USWDS as a fully static site (no SSR adapter, no server runtime). All dynamic routes (member pages, RFCs, meeting materials, BAMs) are prerendered at build time via `getStaticPaths()`.
+
+Run local development server:
+
+```bash
+npm ci
+npm run dev -w @bdc/consortium
+```
+
+Build:
+
+```bash
+npm run build -w @bdc/consortium
+```
+
+Preview:
+
+```bash
+npm run preview -w @bdc/consortium
 ```
 
 ---
