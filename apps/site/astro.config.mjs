@@ -14,6 +14,21 @@ const rootDir = dirname(fileURLToPath(import.meta.url));
 Object.assign(process.env, loadEnv('', rootDir, ''));
 const uswdsPackages = join(rootDir, '../../node_modules/@uswds/uswds/packages');
 
+// Build timestamp pinned to America/New_York so the footer "site last
+// updated" date matches the project's home time zone regardless of where
+// the build runs (local laptop, CI, etc.).
+const now = new Date();
+const buildDate = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/New_York',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+}).format(now); // e.g. "May 27, 2026"
+const buildYear = new Intl.DateTimeFormat('en-US', {
+  timeZone: 'America/New_York',
+  year: 'numeric',
+}).format(now); // e.g. "2026"
+
 const robotsTxtConfig = {
   policy: [
     {
@@ -61,6 +76,10 @@ export default defineConfig({
     rehypePlugins: [externalLinks],
   },
   vite: {
+    define: {
+      __BUILD_DATE__: JSON.stringify(buildDate),
+      __BUILD_YEAR__: JSON.stringify(buildYear),
+    },
     optimizeDeps: {
       include: ['react', 'react-dom', '@trussworks/react-uswds'],
     },

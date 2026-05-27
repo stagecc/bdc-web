@@ -1,91 +1,110 @@
 ---
-import Link from '@components/link/Link.astro';
+import { Image } from 'astro:assets';
+import CardCta from '@bdc/ui-astro/card/CardCta.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
+import nhlbiLogo from '../../assets/NHLBI-logo.svg';
+
+// __BUILD_DATE__ / __BUILD_YEAR__ are pinned to America/New_York at build
+// time — see vite.define in astro.config.mjs.
+const year = __BUILD_YEAR__;
 ---
 
-<footer class="usa-footer usa-footer--big">
+<footer class="usa-footer usa-footer--medium">
   <div class="grid-container usa-footer__return-to-top">
-    <Link to="#">Return to top</Link>
+    <a href="#main-content">Return to top</a>
   </div>
-  <div class="usa-footer__primary-section">
+
+  <div class="usa-footer__primary-section bg-base-lightest border-top border-bottom border-base-lighter">
     <div class="grid-container">
-      <div class="grid-row grid-gap">
-        <div class="tablet:grid-col-8">
-          <nav class="usa-footer__nav" aria-label="Footer navigation">
-            <div class="grid-row grid-gap-4">
-              <div class="mobile-lg:grid-col-4 desktop:grid-col-4">
-                <section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
-                  <h2 class="usa-footer__primary-link">Use BDC</h2>
+      <div class="grid-row">
+        <div class="desktop:grid-col-9 display-flex">
+          <nav class="usa-footer__nav width-full padding-left-0" aria-label="Footer navigation">
+            <div class="grid-row grid-gap-2 desktop:grid-gap-4 height-full">
+              <div class="mobile-lg:grid-col-6 tablet:grid-col-3 desktop:grid-col-3 margin-bottom-3 desktop:margin-bottom-0 minw-0 desktop:border-left desktop:border-base-lighter ">
+                <section class="usa-footer__primary-content overflow-wrap-anywhere">
+                  <h3 class="usa-footer__primary-link margin-bottom-105 text-base-dark font-ui-2xs text-uppercase">Data</h3>
                   <ul class="usa-list usa-list--unstyled">
-                    <li class="usa-footer__secondary-link"><Link to="/use-bdc/explore">Explore</Link></li>
-                    <li class="usa-footer__secondary-link"><Link to="/use-bdc/analyze">Analyze</Link></li>
-                    <li class="usa-footer__secondary-link"><Link to="/use-bdc/share">Share</Link></li>
-                    <li class="usa-footer__secondary-link"><Link to="https://imputation.biodatacatalyst.nhlbi.nih.gov/#!">Impute Genotypes</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/use-bdc/explore">Explore</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/use-bdc/analyze">Analyze</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/use-bdc/share">Share</Link></li>
                   </ul>
                 </section>
               </div>
-              <div class="mobile-lg:grid-col-4 desktop:grid-col-4">
-                <section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
-                  <h2 class="usa-footer__primary-link">Resources</h2>
+              <div class="mobile-lg:grid-col-6 tablet:grid-col-3 desktop:grid-col-3 margin-bottom-3 desktop:margin-bottom-0 minw-0 desktop:border-left desktop:border-base-lighter desktop:padding-left-2">
+                <section class="usa-footer__primary-content overflow-wrap-anywhere">
+                  <h3 class="usa-footer__primary-link margin-bottom-105 text-base-dark font-ui-2xs text-uppercase">Learn</h3>
                   <ul class="usa-list usa-list--unstyled">
-                    <li class="usa-footer__secondary-link"><Link to="/resources/faqs">FAQs</Link></li>
-                    <li class="usa-footer__secondary-link"><Link to="/resources/costs">Usage Costs</Link></li>
-                    <li class="usa-footer__secondary-link"><Link to="/resources/terms">Terms of Use</Link></li>
-                    <li class="usa-footer__secondary-link"><Link to="https://bdcatalyst.gitbook.io/biodata-catalyst-documentation">Documentation</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="https://bdcatalyst.gitbook.io/biodata-catalyst-documentation">Documentation</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/help/faqs">FAQs</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/help/costs">Usage Costs</Link></li>
                   </ul>
                 </section>
               </div>
-              <div class="mobile-lg:grid-col-4 desktop:grid-col-4">
-                <section class="usa-footer__primary-content usa-footer__primary-content--collapsible">
-                  <h2 class="usa-footer__primary-link">Support</h2>
+              <div class="mobile-lg:grid-col-6 tablet:grid-col-3 desktop:grid-col-3 margin-bottom-3 desktop:margin-bottom-0 minw-0 desktop:border-left desktop:border-base-lighter desktop:padding-left-2">
+                <section class="usa-footer__primary-content overflow-wrap-anywhere">
+                  <h3 class="usa-footer__primary-link margin-bottom-105 text-base-dark font-ui-2xs text-uppercase">About</h3>
                   <ul class="usa-list usa-list--unstyled">
-                    <li class="usa-footer__secondary-link"><Link to="/support/contact">Contact Us</Link></li>
-                    <li class="usa-footer__secondary-link"><Link to="/support/guidance">Guidance</Link></li>
-                    <li class="usa-footer__secondary-link"><Link to="/accessibility">Accessibility</Link></li>
-                    <li class="usa-footer__secondary-link"><Link to="/privacy">Privacy</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/about/bdc">About BDC</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/news/latest-updates">News</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/news/bdc-enabled-research">Publications</Link></li>
+                  </ul>
+                </section>
+              </div>
+              <div class="mobile-lg:grid-col-6 tablet:grid-col-3 desktop:grid-col-3 margin-bottom-3 desktop:margin-bottom-0 minw-0 desktop:border-left desktop:border-right desktop:border-base-lighter desktop:padding-left-2">
+                <section class="usa-footer__primary-content overflow-wrap-anywhere">
+                  <h3 class="usa-footer__primary-link margin-bottom-105 text-base-dark font-ui-2xs text-uppercase">Connect</h3>
+                  <ul class="usa-list usa-list--unstyled">
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/help/contact-and-support">Contact Us</Link></li>
+                    <li class="usa-footer__secondary-link margin-bottom-1 line-height-body-4"><Link to="/help/terms">Terms of Use</Link></li>
                   </ul>
                 </section>
               </div>
             </div>
           </nav>
         </div>
-        <div class="tablet:grid-col-4">
-          <div class="usa-sign-up">
-            <h3 class="usa-sign-up__heading">Stay informed</h3>
-            <p class="text-base-dark font-ui-xs">
-              <Link to="#">Sign up</Link> for our newsletter to receive the latest BDC updates and news.
-            </p>
-          </div>
+
+        <div class="desktop:grid-col-3 desktop:padding-y-3 tablet:padding-3">
+          <CardCta
+            icon="campaign"
+            title="Stay Informed"
+            text=" Get the latest BDC updates and news in your inbox. "
+            href="/support/contact"
+            cta="Sign Up"
+            border
+          />
         </div>
       </div>
     </div>
   </div>
+
   <div class="usa-footer__secondary-section">
     <div class="grid-container">
       <div class="grid-row grid-gap">
         <div class="usa-footer__logo grid-row mobile-lg:grid-col-6 mobile-lg:grid-gap-2">
           <div class="mobile-lg:grid-col-auto">
-            <img class="usa-footer__logo-img" alt="BioData Catalyst logo" src="/img/logo-img.png" />
-          </div>
-          <div class="mobile-lg:grid-col-auto">
-            <p class="usa-footer__logo-heading">BioData Catalyst</p>
+            <p class="usa-footer__logo-heading">NHLBI BioData Catalyst<sup>&reg;</sup></p>
+            <p class="text-base font-ui-2xs">
+              Funded by the National Heart, Lung, and Blood Institute.
+            </p>
           </div>
         </div>
         <div class="usa-footer__contact-links mobile-lg:grid-col-6">
           <div class="usa-footer__social-links">
-            <div class="grid-row grid-gap-1">
+            <div class="grid-row grid-gap-1 flex-justify-end">
               <div class="grid-col-auto">
-                <a class="usa-social-link" href="https://twitter.com" aria-label="Go to the BDC Twitter profile">
-                  <img class="usa-social-link__icon" src="/img/usa-icons/x.svg" alt="X (formerly Twitter)" />
+                <a class="usa-social-link" href="https://twitter.com/BioDataCatalyst" aria-label="BDC on X (formerly Twitter)">
+                  <img class="usa-social-link__icon" src="/img/usa-icons/x.svg" alt="" />
                 </a>
               </div>
               <div class="grid-col-auto">
-                <a class="usa-social-link" href="https://youtube.com" aria-label="Go to the BDC YouTube page">
-                  <img class="usa-social-link__icon" src="/img/usa-icons/youtube.svg" alt="YouTube" />
+                <a class="usa-social-link" href="https://www.youtube.com/@BioDataCatalyst" aria-label="BDC on YouTube">
+                  <img class="usa-social-link__icon" src="/img/usa-icons/youtube.svg" alt="" />
                 </a>
               </div>
             </div>
           </div>
-          <p class="usa-footer__contact-heading">BDC Contact Center</p>
+          <h3 class="usa-footer__contact-heading">BDC Contact Center</h3>
           <address class="usa-footer__address">
             <div class="usa-footer__contact-info grid-row grid-gap">
               <div class="grid-col-auto">
@@ -94,6 +113,98 @@ import Link from '@components/link/Link.astro';
             </div>
           </address>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    USWDS agency identifier block.
+    Pattern: https://designsystem.digital.gov/components/identifier/
+  -->
+  <div class="usa-identifier">
+    <section
+      class="usa-identifier__section usa-identifier__section--masthead"
+      aria-label="Agency identifier"
+    >
+      <div class="usa-identifier__container">
+        <div class="usa-identifier__logos">
+          <a href="https://www.nhlbi.nih.gov/" class="usa-identifier__logo" rel="noopener noreferrer" target="_blank">
+            <Image
+              class="usa-identifier__logo-img"
+              src={nhlbiLogo}
+              alt="National Heart, Lung, and Blood Institute logo"
+            />
+          </a>
+        </div>
+        <section
+          class="usa-identifier__identity"
+          aria-label="Agency description"
+        >
+          <p class="usa-identifier__identity-domain">biodatacatalyst.nhlbi.nih.gov</p>
+          <p class="usa-identifier__identity-disclaimer">
+            An official website of the
+            <Link to="https://www.nhlbi.nih.gov/">National Heart, Lung, and Blood Institute (NHLBI)</Link>
+            at the
+            <Link to="https://www.nih.gov/">National Institutes of Health (NIH)</Link>,
+            part of the
+            <Link to="https://www.hhs.gov/">U.S. Department of Health &amp; Human Services</Link>.
+          </p>
+        </section>
+      </div>
+    </section>
+
+    <nav
+      class="usa-identifier__section usa-identifier__section--required-links"
+      aria-label="Important links"
+    >
+      <div class="usa-identifier__container">
+        <ul class="usa-identifier__required-links-list">
+          <li class="usa-identifier__required-links-item">
+            <Link to="https://www.nhlbi.nih.gov/about" class="usa-identifier__required-link">About NHLBI</Link>
+          </li>
+          <li class="usa-identifier__required-links-item">
+            <Link to="/accessibility" class="usa-identifier__required-link">Accessibility</Link>
+          </li>
+          <li class="usa-identifier__required-links-item">
+            <Link to="https://www.nih.gov/institutes-nih/nih-office-director/office-communications-public-liaison/freedom-information-act-office" class="usa-identifier__required-link">FOIA requests</Link>
+          </li>
+          <li class="usa-identifier__required-links-item">
+            <Link to="https://www.hhs.gov/about/agencies/asa/eeo/no-fear-act/index.html" class="usa-identifier__required-link">No FEAR Act data</Link>
+          </li>
+          <li class="usa-identifier__required-links-item">
+            <Link to="https://oig.hhs.gov/" class="usa-identifier__required-link">Office of the Inspector General</Link>
+          </li>
+          <li class="usa-identifier__required-links-item">
+            <Link to="https://www.hhs.gov/about/budget/index.html" class="usa-identifier__required-link">Performance reports</Link>
+          </li>
+          <li class="usa-identifier__required-links-item">
+            <Link to="/privacy" class="usa-identifier__required-link">Privacy policy</Link>
+          </li>
+          <li class="usa-identifier__required-links-item">
+            <Link to="https://www.hhs.gov/vulnerability-disclosure-policy/index.html" class="usa-identifier__required-link">Vulnerability disclosure</Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <section
+      class="usa-identifier__section usa-identifier__section--usagov"
+      aria-label="U.S. government information and services"
+    >
+      <div class="usa-identifier__container">
+        <div class="usa-identifier__usagov-description">
+          Looking for U.S. government information and services?
+        </div>
+        <a href="https://www.usa.gov/" class="usa-link">Visit USA.gov</a>
+      </div>
+    </section>
+
+    <div class="grid-container display-flex flex-justify font-ui-3xs text-base">
+      <div>
+        &copy; {year} NHLBI BioData Catalyst <sup>&reg;</sup>
+      </div>
+      <div>
+        Site last updated {__BUILD_DATE__}.
       </div>
     </div>
   </div>
