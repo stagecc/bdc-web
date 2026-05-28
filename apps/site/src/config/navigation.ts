@@ -37,7 +37,7 @@ export const navConfig: NavItem[] = [
     ],
   },
   {
-    label: 'Resources',
+    label: 'Help',
     items: [
       {
         label: 'Documentation',
