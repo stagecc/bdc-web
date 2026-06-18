@@ -6,9 +6,13 @@ import { SiteHeader } from '@components/layout/SiteHeader';
 
 interface Props {
   title: string;
+  // Pass enableRecaptcha on any page that includes a form.
+  // Scopes the reCAPTCHA script to only pages that need it,
+  // avoiding unnecessary Google script loading sitewide.
+  enableRecaptcha?: boolean;
 }
 
-const { title } = Astro.props;
+const { title, enableRecaptcha = false } = Astro.props;
 const displayTitle = title.includes('BioData Catalyst')
   ? title
   : `${title} | BioData Catalyst`;
@@ -22,6 +26,13 @@ const displayTitle = title.includes('BioData Catalyst')
     <title>{displayTitle}</title>
     <link rel="sitemap" href="/sitemap-index.xml" />
     <ClientRouter />
+    {enableRecaptcha && (
+      <script
+        src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
+        async
+        defer
+      />
+    )}
     <style>
       body {
         display: flex;
