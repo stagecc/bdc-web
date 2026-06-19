@@ -1,0 +1,5 @@
+# Build-time synced GitBook content
+src/content/docs/
+public/gitbook-assets/
+src/config/sidebar.generated.ts
+src/generated/gitbook-manifest.json

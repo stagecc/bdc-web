@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "dev:sync": "npm run sync:content && astro dev",
+    "sync:content": "GITBOOK_ALLOW_OVERWRITE=1 node ./scripts/sync-gitbook.mjs",
+    "build": "npm run sync:content && astro build",
     "preview": "astro preview"
   },
   "dependencies": {
