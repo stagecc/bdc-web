@@ -13,26 +13,32 @@
  * Data flow:
  *   1. Astro page fetches field config from Freshdesk API at build time
  *   2. Filtered fields array is passed as props to this component
- *   3. This component maps field types to USWDS components and renders the form
+ *   3. renderField maps each field type to the appropriate USWDS component
  *   4. On submit, buildPayload transforms RHF values into a Freshdesk ticket shape
- *   5. Payload is POSTed to the Lambda proxy, which forwards to Freshdesk tickets API
+ *   5. Payload (including reCAPTCHA token) is POSTed to the Lambda proxy,
+ *      which verifies reCAPTCHA and forwards the ticket to Freshdesk
+ *
+ * Dynamic sections:
+ *   Dropdown fields with dynamic sections track their selected value in
+ *   sectionSelections state. renderField uses this to show/hide section
+ *   fields inline below the dropdown. Hidden section fields are unregistered
+ *   from RHF so their values are excluded from the payload.
  *
  * Error fallback:
  *   If getFormFields throws at build time, the Astro page catches it and passes
  *   error={true}. This component renders a fallback message instead of the form.
  */
 
-
-import { useRef, useState } from 'react'
+import { useRef, useState, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import type { FieldError } from 'react-hook-form'
 import type { FreshdeskField } from '../../util/freshdesk/types'
 import { buildPayload } from '../../util/freshdesk/buildPayload'
-import TextField from './fields/TextField.tsx'
-import TextareaField from './fields/TextareaField.tsx'
-import DateField from './fields/DateField.tsx'
-import HoneypotField from './HoneypotField.tsx'
-import ConsentField, { CONSENT_FIELD_NAME } from './ConsentField.tsx'
+import { getSectionFieldIds } from '../../util/freshdesk/getFormFields'
+import { getRecaptchaToken } from '../../util/recaptcha'
+import { renderField } from './helpers/renderField'
+import HoneypotField from './HoneypotField'
+import ConsentField, { CONSENT_FIELD_NAME } from './ConsentField'
 
 // ---------------------------------------------------------------------------
 // Types
@@ -41,135 +47,24 @@ import ConsentField, { CONSENT_FIELD_NAME } from './ConsentField.tsx'
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error'
 
 interface DynamicFormProps {
-  // Filtered field config from getFormFields — only fields where
-  // displayed_to_customers is true and archived is false.
+  // Filtered, enriched field config from getFormFields — only fields where
+  // displayed_to_customers is true and archived is false. Dropdown fields
+  // include choices and sections populated at build time.
   fields: FreshdeskField[]
   // The Freshdesk ticket type string for this form
   // (e.g. "Published Research Submission").
-  // Used as both ticket `type` and ticket `subject`.
+  // Used as both ticket `type` and ticket `subject` in buildPayload.
   formType: string
   // The URL of the Lambda proxy endpoint.
   // Provided by the Astro page so it can vary per environment.
+  // Set via FRESHDESK_PROXY_URL in apps/site/.env.
   submitUrl: string
-  // The reCAPTCHA site key for the current environment, passed from the Astro page.
+  // The reCAPTCHA v3 site key for the current environment.
+  // Passed from the Astro page via import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY.
+  // Used to obtain a token before submission — the Lambda verifies it.
   recaptchaSiteKey: string
   // True if getFormFields threw at build time — renders fallback UI.
   error?: boolean
-}
-
-// ---------------------------------------------------------------------------
-// Field type → component mapping
-// ---------------------------------------------------------------------------
-
-/**
- * Renders the appropriate USWDS component for a given Freshdesk field type.
- *
- * Most fields use raw USWDS CSS classes on plain HTML elements.
- * DateField is the one exception — it uses Trussworks DatePicker because
- * the USWDS date picker requires JS initialization that conflicts with
- * React's DOM control in a client island. See DateField.tsx for details.
- */
-function renderField(
-  field: FreshdeskField,
-  register: ReturnType<typeof useForm<Record<string, unknown>>>['register'],
-  control: ReturnType<typeof useForm<Record<string, unknown>>>['control'],
-  errors: ReturnType<typeof useForm<Record<string, unknown>>>['formState']['errors']
-) {
-const commonProps = {
-  name: field.name,
-  label: field.label_for_customers,
-  hint: field.hint_for_customers,
-  required: field.required_for_customers,
-  error: errors[field.name] as FieldError | undefined,
-}
-
-  switch (field.type) {
-    case 'default_requester':
-      return (
-        <TextField
-          key={field.name}
-          {...commonProps}
-          inputType="email"
-          register={register(field.name, {
-            required: field.required_for_customers
-              ? 'Please enter a valid email address (e.g. name@example.com).'
-              : false,
-            pattern: {
-              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-              message: 'Please enter a valid email address (e.g. name@example.com).',
-            },
-          })}
-        />
-      )
-
-    case 'default_subject':
-      // Subject is always set programmatically via formType in buildPayload.
-      // It should never be rendered as a visible field, even if
-      // displayed_to_customers is true in Freshdesk.
-      return null
-
-    case 'custom_text':
-    case 'default_company':
-      return (
-        <TextField
-          key={field.name}
-          {...commonProps}
-          register={register(field.name, {
-            required: field.required_for_customers
-              ? `Please enter your ${field.label_for_customers.toLowerCase()}.`
-              : false,
-          })}
-        />
-      )
-
-    case 'custom_paragraph':
-    case 'default_description':
-      return (
-        <TextareaField
-          key={field.name}
-          {...commonProps}
-          register={register(field.name, {
-            required: field.required_for_customers
-              ? `Please enter your ${field.label_for_customers.toLowerCase()}.`
-              : false,
-          })}
-        />
-      )
-
-    case 'custom_date':
-      return (
-        <DateField
-          key={field.name}
-          {...commonProps}
-          control={control}
-        />
-      )
-
-    default:
-      // Log unknown field types during development so they're visible
-      // in the console without silently dropping fields from the form.
-      console.warn(`DynamicForm: unhandled field type "${(field as FreshdeskField).type}" for field "${field.name}"`)
-      return null
-  }
-}
-
-// ---------------------------------------------------------------------------
-// reCAPTCHA integration
-// ---------------------------------------------------------------------------
-
-/**
- * reCAPTCHA v3 is loaded via a script tag in Base.astro when enableRecaptcha
- * is true. It attaches to window.grecaptcha — we declare it here so TypeScript
- * knows it exists at runtime without needing a full type package.
-*/
-
-declare global {
-  interface Window {
-    grecaptcha: {
-      execute: (siteKey: string, options: { action: string }) => Promise<string>
-      ready: (callback: () => void) => void
-    }
-  }
 }
 
 // ---------------------------------------------------------------------------
@@ -188,16 +83,35 @@ export default function DynamicForm({
   const errorSummaryRef = useRef<HTMLDivElement>(null)
   const confirmationRef = useRef<HTMLDivElement>(null)
 
+  // Tracks the currently selected value for each dropdown that has sections.
+  // Keyed by field name, value is the selected choice value string.
+  // Updated by onSectionChange when the user selects a dropdown option.
+  const [sectionSelections, setSectionSelections] = useState<Record<string, string>>({})
+
   const {
     register,
     control,
     handleSubmit,
     reset,
+    unregister,
     formState: { errors },
   } = useForm<Record<string, unknown>>({
-    mode: 'onSubmit',    // Validate on submit, not while typing
+    mode: 'onSubmit',       // Validate on submit, not while typing
     reValidateMode: 'onChange', // Clear errors in real time as user fixes them
   })
+
+  // Called by SelectField (via renderField) when a section-controlling
+  // dropdown changes. Updates sectionSelections which triggers a re-render,
+  // showing or hiding the appropriate section fields.
+  // useCallback prevents unnecessary re-renders of child components.
+  const onSectionChange = useCallback((fieldName: string, value: string) => {
+    setSectionSelections((prev) => ({ ...prev, [fieldName]: value }))
+  }, [])
+
+  // IDs of fields that belong to dynamic sections.
+  // These are skipped during top-level rendering — they only appear
+  // inline below their parent dropdown when their section is triggered.
+  const sectionFieldIds = getSectionFieldIds(fields)
 
   // ---------------------------------------------------------------------------
   // Fallback — shown when getFormFields failed at build time
@@ -242,6 +156,7 @@ export default function DynamicForm({
             className="usa-button usa-button--outline margin-right-2"
             onClick={() => {
               reset()
+              setSectionSelections({})
               setStatus('idle')
             }}
           >
@@ -265,19 +180,9 @@ export default function DynamicForm({
 
     try {
       // Get reCAPTCHA token before building payload.
-      // grecaptcha.ready ensures the script has fully loaded before executing.
-      const recaptchaToken = await new Promise<string>((resolve, reject) => {
-        window.grecaptcha.ready(async () => {
-          try {
-            const token = await window.grecaptcha.execute(recaptchaSiteKey, {
-              action: 'submit',
-            })
-            resolve(token)
-          } catch (err) {
-            reject(err)
-          }
-        })
-      })
+      // The Lambda proxy verifies this token with Google before forwarding
+      // the ticket to Freshdesk. See services/freshdesk/handler.py.
+      const recaptchaToken = await getRecaptchaToken(recaptchaSiteKey)
 
       const payload = {
         ...buildPayload(values, fields, formType),
@@ -313,14 +218,10 @@ export default function DynamicForm({
   }
 
   // ---------------------------------------------------------------------------
-  // Required field names for error summary jump links
+  // Render
   // ---------------------------------------------------------------------------
 
   const errorFields = Object.keys(errors)
-
-  // ---------------------------------------------------------------------------
-  // Render
-  // ---------------------------------------------------------------------------
 
   return (
     <form
@@ -337,7 +238,9 @@ export default function DynamicForm({
         </div>
       )}
 
-      {/* Validation error summary — shown after a failed submit attempt */}
+      {/* Validation error summary — shown after a failed submit attempt.
+          Focus moves here programmatically via onError so screen reader
+          users hear the summary immediately. */}
       {errorFields.length > 0 && (
         <div
           ref={errorSummaryRef}
@@ -370,12 +273,24 @@ export default function DynamicForm({
         Enter the required information below to complete your submission.
       </p>
 
-      {/* Dynamic fields — rendered from Freshdesk field config */}
-      {fields.map((field) =>
-        renderField(field, register, control, errors)
-      )}
+      {/* Dynamic fields — rendered from Freshdesk field config.
+          Fields that belong to dynamic sections are skipped here —
+          they are rendered inline below their parent dropdown by renderField. */}
+      {fields
+        .filter((field) => !sectionFieldIds.has(field.id))
+        .map((field) =>
+          renderField(
+            field,
+            register,
+            control,
+            errors,
+            unregister,
+            sectionSelections,
+            onSectionChange
+          )
+        )}
 
-      {/* Hardcoded fields — not from Freshdesk config */}
+      {/* Hardcoded fields — not derived from Freshdesk config */}
       <ConsentField
         register={register(CONSENT_FIELD_NAME, {
           required: 'You must agree before submitting.',
@@ -385,7 +300,8 @@ export default function DynamicForm({
 
       <HoneypotField register={register('website')} />
 
-      {/* Submit button */}
+      {/* Submit button — disabled while submitting to prevent double submission.
+          Label changes to "Submitting…" so users know something is happening. */}
       <button
         type="submit"
         className="usa-button margin-top-3"

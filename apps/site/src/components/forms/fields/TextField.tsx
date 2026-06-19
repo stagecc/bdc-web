@@ -2,9 +2,22 @@
  * TextField
  *
  * Renders a USWDS single-line text input for Freshdesk field types:
- *   - custom_text
- *   - default_requester (email — pass type="email" via inputType prop)
- *   - default_company
+ *   - custom_text      — plain text input
+ *   - default_requester — email input (pass inputType="email")
+ *   - default_company  — plain text input
+ *   - custom_number    — integer input (pass inputType="number")
+ *   - custom_decimal   — decimal input (pass inputType="decimal")
+ *   - custom_url       — URL input (pass inputType="url")
+ *
+ * All numeric and URL variants reuse this component via the inputType prop
+ * rather than having separate components — the HTML element and USWDS styling
+ * are identical. The only differences are input type, step attribute (for
+ * decimals), and validation rules, which are handled by DynamicForm's
+ * renderField when registering with React Hook Form.
+ *
+ * Styling differences between variants (e.g. unit labels for numbers,
+ * prefix icons for URLs) can be added later without changing this component's
+ * core structure.
  *
  * Uses raw USWDS CSS classes rather than Trussworks, consistent with the
  * project pattern of using Trussworks only when a component requires
@@ -15,6 +28,12 @@
  */
 
 import type { UseFormRegister, FieldError } from 'react-hook-form'
+
+// The full set of input types this component supports.
+// 'decimal' is a semantic alias for type="number" with step="any" —
+// it's not a native HTML input type but used internally to distinguish
+// custom_decimal from custom_number in the step attribute logic below.
+type TextFieldInputType = 'text' | 'email' | 'number' | 'decimal' | 'url'
 
 interface TextFieldProps {
   // The Freshdesk field name (e.g. "requester", "cf_journal_name").
@@ -27,8 +46,10 @@ interface TextFieldProps {
   hint?: string
   // Whether the field is required — derived from required_for_customers.
   required?: boolean
-  // Input type — defaults to "text". Pass "email" for default_requester fields.
-  inputType?: 'text' | 'email'
+  // Input type — defaults to "text".
+  // Pass "email" for default_requester, "number" for custom_number,
+  // "decimal" for custom_decimal, "url" for custom_url.
+  inputType?: TextFieldInputType
   // React Hook Form's register function, bound to this field by the parent.
   register: ReturnType<UseFormRegister<Record<string, unknown>>>
   // The React Hook Form error for this field, if any.
@@ -50,6 +71,12 @@ export default function TextField({
   // aria-describedby wires the input to both hint and error text for screen readers.
   // Both may be present simultaneously — hint is always shown, error only on failure.
   const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined
+
+  // 'decimal' is an internal alias — the HTML input type is always 'number'.
+  // We use it to set step="any", which allows decimal values.
+  // custom_number uses step="1" (integers only) by default.
+  const htmlType = inputType === 'decimal' ? 'number' : inputType
+  const step = inputType === 'decimal' ? 'any' : inputType === 'number' ? '1' : undefined
 
   return (
     <div className={`usa-form-group${error ? ' usa-form-group--error' : ''}`}>
@@ -77,7 +104,8 @@ export default function TextField({
       <input
         id={name}
         className={`usa-input${error ? ' usa-input--error' : ''}`}
-        type={inputType}
+        type={htmlType}
+        step={step}
         aria-required={required}
         aria-describedby={describedBy}
         {...register}
