@@ -169,6 +169,20 @@ const programs = defineCollection({
   }),
 });
 
+const eep = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/eep' }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      signifier: z.string().optional(),
+      slug: z.string(),
+      roles: z.array(z.string()),
+      term_start: z.coerce.date(),
+      photo: image().optional(),
+      adhoc: z.boolean().optional().default(false),
+    }),
+});
+
 export const collections = {
   news,
   events,
@@ -176,4 +190,5 @@ export const collections = {
   coverage,
   faqs,
   programs,
+  eep,
 };
