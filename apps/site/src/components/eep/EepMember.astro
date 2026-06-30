@@ -1,0 +1,185 @@
+---
+/**
+ * EepMember.astro
+ *
+ * Renders a single EEP member with headshot, name, roles, term start, and bio.
+ * If no headshot is provided (adhoc member), photo is skipped and text flows full width.
+ * Stacks vertically on mobile, side by side on tablet and above.
+ * Bio content is passed via slot and can be any markdown/HTML content.
+ *
+ * Props:
+ *   name       — Member name including signifier (e.g. "First Last")
+ *   signifier  — Optional credentials (e.g. "Ph.D., M.D.")
+ *   roles      — Array of freeform role/org strings
+ *   term_start — Date object for term start date
+ *   photo      — Optional resolved ImageMetadata (omit for adhoc members)
+ *
+ * TODO: Replace hardcoded hex colors with CSS custom properties once
+ * USWDS Sass tokens are mapped to :root variables in the global stylesheet.
+ * Tokens to replace:
+ *   #5d6f7b → color($theme-color-base-dark) → var(--color-base-dark)
+ *   #dce4ef → color($theme-color-base-lighter) → var(--color-base-lighter)
+ */
+
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  name: string;
+  signifier?: string;
+  slug?: string;
+  roles: string[];
+  term_start: Date;
+  photo?: ImageMetadata;
+  adhoc?: boolean;
+}
+
+const {
+  name,
+  signifier,
+  slug,
+  roles,
+  term_start,
+  photo,
+  adhoc = false,
+} = Astro.props;
+
+const formattedDate = term_start.toLocaleDateString('en-US', {
+  month: 'long',
+  year: 'numeric',
+});
+---
+
+<div class="eep-member" id={slug} >
+  {photo && (
+    <div class="eep-member__headshot">
+      <Image
+        src={photo}
+        alt={name}
+        width={200}
+        height={200}
+        class="eep-member__headshot-img"
+      />
+    </div>
+  )}
+  <div class="eep-member__content">
+    <h2 class="eep-member__name">
+      {adhoc && <span class="eep-member__adhoc-label">Ad-hoc EEP Member: </span>}
+      {name}{signifier && <span class="eep-member__signifier">, {signifier}</span>}
+    </h2>
+    <div class="eep-member__meta">
+      <ul class="eep-member__roles">
+        {roles.map((role) => (
+          <li>{role}</li>
+        ))}
+      </ul>
+      <p class="eep-member__term">
+        {/* Calendar icon placeholder — swap for Icon component when available */}
+        <span aria-hidden="true">📅</span>
+        <span>Term Start: {formattedDate}</span>
+      </p>
+    </div>
+    <div class="eep-member__bio usa-prose usa-prose--full-width">
+      <slot />
+    </div>
+    <a href="#top" class="eep-member__return-top">↑ Return to top</a>
+  </div>
+</div>
+
+<style>
+  .eep-member {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid #dce4ef; /* TODO: var(--color-base-lighter) */
+    scroll-margin-top: 130px; /* adjust based on your sticky header height */
+  }
+
+  .eep-member:last-child {
+    border-bottom: none;
+  }
+
+  @media (min-width: 640px) {
+    .eep-member {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  .eep-member__headshot {
+    display: flex;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .eep-member__headshot-img {
+    width: 200px;
+    height: 200px;
+    min-width: 200px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .eep-member__name {
+    margin-top: 0;
+    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+  }
+
+  .eep-member__meta {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .eep-member__meta {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 3rem;
+    }
+  }
+
+  .eep-member__roles {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .eep-member__roles li {
+    margin-bottom: 0.25rem;
+  }
+
+  .eep-member__term {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    margin: 0;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  .eep-member__bio {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    max-width: none;
+  }
+
+  .eep-member__bio :global(p:first-child) {
+    margin-block-start: 0;
+  }
+  .eep-member__return-top {
+  display: block;
+  margin-top: 1rem;
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-align: right;
+}
+</style>
