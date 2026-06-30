@@ -2,16 +2,28 @@
 /**
  * InlineAlert.astro
  *
- * A full-width inline alert component based on the USWDS usa-alert pattern.
+ * A full-width inline alert based on the USWDS usa-alert pattern.
  * Supports four variants (info, warning, success, error), an optional slim
- * style, and an optional no-icon mode.
+ * style, and an optional no-icon mode. Not dismissible — stays on the page.
+ *
+ * Accessibility:
+ *   - If a `heading` is provided, the alert renders as a <section> with
+ *     aria-labelledby pointing to the heading's auto-generated id. This
+ *     follows MDN guidance: <section> only gets a valid accessible name
+ *     (and thus a valid "region" landmark role) when paired with a heading.
+ *   - If no `heading` is provided, the alert renders as a <div role="status">
+ *     instead. role="status" is appropriate for advisory, non-urgent content
+ *     (per the official USWDS ARIA roles table) and does not require a label
+ *     to be valid, unlike role="region".
+ *   - Heading ids are generated with crypto.randomUUID() per the team's
+ *     agreed approach for linking elements for screen reader accessibility.
  *
  * Props:
  *   variant      — Alert type ('info' | 'warning' | 'success' | 'error'). Required.
- *   slim         — Renders slim variant (less padding). Defaults to false.
+ *   slim         — Renders the slim variant (less padding). Defaults to false.
  *   noIcon       — Suppresses the icon. Defaults to false.
  *   heading      — Optional heading text. Rendered at headingLevel.
- *   headingLevel — Heading level (2 | 3 | 4). Defaults to 3.
+ *   headingLevel — Heading level for heading prop (2 | 3 | 4). Defaults to 3.
  *
  * Usage in MDX:
  *   <InlineAlert variant="info">
@@ -21,6 +33,11 @@
  *   <InlineAlert variant="warning" heading="Heads up" headingLevel={4}>
  *     Some alert text with a heading.
  *   </InlineAlert>
+ *
+ * Notes:
+ *   - This component is not dismissible.
+ *   - Do not add headings inside the slot — use the heading prop instead,
+ *     so heading hierarchy stays under the page author's control.
  */
 
 interface Props {
@@ -39,6 +56,7 @@ const {
   headingLevel = 3,
 } = Astro.props;
 
+// Build USWDS class string
 const classes = [
   'usa-alert',
   `usa-alert--${variant}`,
@@ -48,73 +66,96 @@ const classes = [
   .filter(Boolean)
   .join(' ');
 
+// Dynamic heading tag based on headingLevel prop.
+// Keeps heading hierarchy in the hands of the page author, not the component.
 const Heading = `h${headingLevel}` as 'h2' | 'h3' | 'h4';
+
+// Unique id linking the heading to the alert via aria-labelledby.
+// Only generated when a heading is present — see accessibility notes above.
+const headingId = heading ? `alert-heading-${crypto.randomUUID()}` : undefined;
 ---
 
-<div class={classes} role="region">
-  <div class="usa-alert__body">
-    <div>
-      {heading && (
-        <Heading class="usa-alert__heading">{heading}</Heading>
-      )}
-      <slot />
-
+{heading ? (
+  <section class={classes} aria-labelledby={headingId}>
+    <div class="usa-alert__body">
+      {/*
+        Wrapping heading + slot content in a single flex child so the icon
+        (rendered via ::before on usa-alert__body) sits in a row with this
+        wrapper, while the heading and body text stack vertically inside it.
+      */}
+      <div class="usa-alert__content">
+        <Heading id={headingId} class="usa-alert__heading">{heading}</Heading>
+        <slot />
+      </div>
+    </div>
+  </section>
+) : (
+  <div class={classes} role="status">
+    <div class="usa-alert__body">
+      <div class="usa-alert__content">
+        <slot />
+      </div>
     </div>
   </div>
-</div>
+)}
 
 <style>
   /*
-   * Reset the absolute positioning USWDS applies to the icon via ::before.
-   * This ensures the icon aligns with the first line of content regardless
-   * of whether a heading is present or not.
+   * Reset the absolute positioning USWDS applies to the icon via ::before
+   * on usa-alert__body. This ensures the icon aligns with the first line
+   * of content regardless of whether a heading is present or not.
    */
- .usa-alert .usa-alert__body {
-  display: flex !important;
-  flex-direction: row !important;
-  align-items: flex-start !important;
-  justify-content: flex-start !important;
-  gap: 0.75rem;
-}
+  .usa-alert .usa-alert__body {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start !important;
+    justify-content: flex-start !important;
+    gap: 0.75rem;
+  }
 
   /*
-   * The ::before pseudo-element renders the icon.
-   * Remove absolute positioning and let flexbox handle alignment.
+   * The ::before pseudo-element renders the icon. Remove absolute
+   * positioning and let flexbox handle alignment instead.
    */
   .usa-alert .usa-alert__body::before {
     position: relative !important;
     top: auto !important;
     left: auto !important;
     flex-shrink: 0;
-    margin-top: 0.1rem; /* Optical adjustment to align icon with first line of text */
-  }
+    margin-top: 0.1rem;
+    transform: scale(0.70);
+    transform-origin: left top;  }
 
   /*
-   * Remove margin-left that USWDS applies to body children to make
-   * room for the absolutely positioned icon — no longer needed with flex.
+   * Remove the margin-left USWDS applies to body children to make room
+   * for the absolutely positioned icon — no longer needed with flexbox.
    */
   .usa-alert .usa-alert__body > * {
     margin-left: 0 !important;
   }
 
   /*
-   * Remove default paragraph margins from slotted content.
-   * :global() required because slot content is outside this component's scope.
+   * Content wrapper stacks heading and slot content vertically.
+   * Without this, heading + slot paragraphs would sit side by side as
+   * flex siblings of usa-alert__body, since that's a row-direction flex
+   * container.
    */
-  .usa-alert .usa-alert__body :global(p) {
+  .usa-alert .usa-alert__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /*
+   * Remove default browser top/bottom margins from slotted paragraphs.
+   * :global() is required because slot content is rendered outside this
+   * component's scope — Astro's scoped styles won't reach it otherwise.
+   */
+  .usa-alert .usa-alert__content :global(p) {
     margin-top: 0;
     margin-bottom: 0;
   }
 
-  .usa-alert .usa-alert__body :global(p + p) {
+  .usa-alert .usa-alert__content :global(p + p) {
     margin-top: 0.5rem;
   }
-
-  .usa-alert .usa-alert__body :global(p:first-child) {
-  margin-block-start: 0;
-}
-
-.usa-alert .usa-alert__body :global(p:last-child) {
-  margin-block-end: 0;
-}
 </style>
