@@ -18,8 +18,8 @@
  */
 
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
 import Icon from '@components/Icon.astro';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   name: string;
@@ -31,7 +31,15 @@ interface Props {
   adhoc?: boolean;
 }
 
-const { name, signifier, slug, roles, term_start, photo, adhoc = false } = Astro.props;
+const {
+  name,
+  signifier,
+  slug,
+  roles,
+  term_start,
+  photo,
+  adhoc = false,
+} = Astro.props;
 
 const formattedDate = term_start.toLocaleDateString('en-US', {
   month: 'long',

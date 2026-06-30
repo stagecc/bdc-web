@@ -3,9 +3,9 @@ import { getCollection, render } from 'astro:content';
 import Callout from '@components/Callout.astro';
 import EepMember from '@components/eep/EepMember.astro';
 import EepNav from '@components/eep/EepNav.astro';
+import SummaryCard from '@components/SummaryCard.astro';
 import Base from '@layouts/Base.astro';
 import { sortByLastName } from '../../../util/sort-by-lastName';
-import SummaryCard from '@components/SummaryCard.astro'
 
 // Fetch all EEP members
 const members = await getCollection('eep');
