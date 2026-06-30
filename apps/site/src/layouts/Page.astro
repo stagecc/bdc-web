@@ -6,6 +6,7 @@ import type { MarkdownHeading } from 'astro';
 interface Props {
   frontmatter: {
     title: string;
+    lastReviewed?: string;
     in_page_nav?: boolean;
   };
   headings: MarkdownHeading[];
@@ -20,12 +21,20 @@ const showNav = frontmatter.in_page_nav !== false;
     <div class="grid-container">
       <h1>{frontmatter.title}</h1>
       {
+        frontmatter.lastReviewed && (
+          <p style=" font-size: 0.875rem; margin-top:0">
+            Last Reviewed: {frontmatter.lastReviewed}
+          </p>
+        )
+      }
+
+      {
         showNav ? (
           <InPageNav headings={headings}>
             <slot />
           </InPageNav>
         ) : (
-          <div class="usa-prose">
+          <div class="usa-prose--full-width usa-prose">
             <slot />
           </div>
         )

@@ -20,3 +20,13 @@ h3 {
 h4 {
   font-size: clamp(1.125rem, 1.8vw, 1.5rem);
 }
+.usa-prose--full-width p {
+  max-width: 100%;
+}
+.usa-modal--lg .usa-modal__main {
+  max-width: 1000px !important;
+}
+.usa-modal--lg .usa-modal__heading {
+  font-size: 1.5rem;
+  margin-bottom: 0
+}

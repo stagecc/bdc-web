@@ -1,5 +1,6 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
+import Icon from '@components/Icon.astro';
 import CoverageList from '@components/news/CoverageList.astro';
 import Base from '@layouts/Base.astro';
 
@@ -29,6 +30,14 @@ const years = Object.keys(coverageByYear)
   <section class="usa-section">
     <div class="grid-container">
       <h1>News Coverage</h1>
+      <div class="usa-prose usa-prose--full-width">
+        <p>
+          Explore external news articles and media coverage featuring BDC. Articles on this page are published by third-party organizations and will open on external websites. Some articles may require a subscription or login to access and are identified with a paywall notice (<Icon name="shield" />). 
+        </p>
+        <p style="font-weight:800">
+          Showing {coverage.length} {coverage.length === 1 ? 'external news article' : 'external news articles'}
+        </p>
+      </div>
       {
         years.map((year) => (
           <section class="margin-top-4">
