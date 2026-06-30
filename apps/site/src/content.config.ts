@@ -169,6 +169,17 @@ const programs = defineCollection({
   }),
 });
 
+const banners = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/banners' }),
+  schema: z.object({
+    variant: z.enum(['info', 'emergency']),
+    active: z.boolean().default(false),
+    importance: z.number(),
+    homeOnly: z.boolean().default(false),
+  }),
+});
+
+
 const eep = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/eep' }),
   schema: ({ image }) =>
@@ -191,4 +202,5 @@ export const collections = {
   faqs,
   programs,
   eep,
+  banners,
 };
