@@ -6,6 +6,11 @@
  * underline indicating a tooltip is available. Shows tooltip text on
  * hover or focus (keyboard accessible).
  *
+ * Accessibility:
+ *   - aria-describedby links the trigger to the tooltip bubble via a
+ *     generated unique id, so assistive technology announces the tooltip
+ *     content when the trigger receives focus.
+ *
  * Props:
  *   text — The tooltip content shown on hover/focus.
  *
@@ -18,12 +23,11 @@ interface Props {
 }
 
 const { text } = Astro.props;
+const tooltipId = `tooltip-${crypto.randomUUID()}`;
 ---
 
-<span class="tooltip-trigger" tabindex="0">
-  <slot />
-  <span class="tooltip-bubble" role="tooltip">{text}</span>
-</span>
+<span class="tooltip-trigger" tabindex="0" aria-describedby={tooltipId}
+><slot /><span class="tooltip-bubble" role="tooltip" id={tooltipId}>{text}</span></span>
 
 <style>
   .tooltip-trigger {
