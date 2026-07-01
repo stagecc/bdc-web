@@ -3,7 +3,7 @@ import { getCollection } from 'astro:content';
 import PublicationsFilter from '@components/publications/PublicationsFilter';
 import Base from '@layouts/Base.astro';
 
-const publications = (await getCollection('publications')).map(pub => ({
+const publications = (await getCollection('publications')).map((pub) => ({
   ...pub.data,
   date: pub.data.date.toISOString(),
 }));

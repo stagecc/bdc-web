@@ -4,18 +4,6 @@ type Props = {
   pub: CollectionEntry<'publications'>['data'] & { date: string };
 };
 
-const MetaRow = ({ label, values }: { label: string; values: string[] }) => {
-  if (!values || values.length === 0) return null;
-  return (
-    <span>
-      <span style={{ color: 'var(--text-muted)', fontSize: '13px' }}>{label}: </span>
-      <span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-        {values.join(' · ')}
-      </span>
-    </span>
-  );
-};
-
 export default function PublicationCard({ pub }: Props) {
   const formattedDate = new Date(pub.date).toLocaleDateString('en-US', {
     month: 'long',
@@ -25,16 +13,27 @@ export default function PublicationCard({ pub }: Props) {
 
   const metaRows = [
     pub.status ? { label: 'Status', values: [pub.status] } : null,
-    pub.researchCommunity?.length ? { label: 'Research Community', values: pub.researchCommunity } : null,
-    pub.researchArea?.length ? { label: 'Research Area', values: pub.researchArea } : null,
-    pub.bdcContribution?.length ? { label: 'BDC Contribution', values: pub.bdcContribution } : null,
+    pub.researchCommunity?.length
+      ? { label: 'Research Community', values: pub.researchCommunity }
+      : null,
+    pub.researchArea?.length
+      ? { label: 'Research Area', values: pub.researchArea }
+      : null,
+    pub.bdcContribution?.length
+      ? { label: 'BDC Contribution', values: pub.bdcContribution }
+      : null,
   ].filter(Boolean) as { label: string; values: string[] }[];
 
   return (
-    <li className="usa-collection__item" style={{maxWidth: '100%'}}>
+    <li className="usa-collection__item" style={{ maxWidth: '100%' }}>
       <div className="usa-collection__body">
         <h4 className="usa-collection__heading">
-          <a href={pub.url} className="usa-link" target="_blank" rel="noopener noreferrer">
+          <a
+            href={pub.url}
+            className="usa-link"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             {pub.title}
           </a>
         </h4>
@@ -49,7 +48,9 @@ export default function PublicationCard({ pub }: Props) {
             {metaRows.map((row, i) => (
               <span key={row.label}>
                 <span className="text-base-dark">{row.label}: </span>
-                <span className="text-base" style={{ fontStyle: 'italic' }}>{row.values.join('; ')}</span>
+                <span className="text-base" style={{ fontStyle: 'italic' }}>
+                  {row.values.join('; ')}
+                </span>
                 {i < metaRows.length - 1 && (
                   <span className="text-base-light margin-x-1">|</span>
                 )}
