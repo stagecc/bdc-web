@@ -1,0 +1,389 @@
+import PublicationCard from './PublicationCard';
+import {
+  type Filters,
+  type Publication,
+  type SortOption,
+  usePublications,
+} from './usePublications';
+
+type Props = {
+  publications: Publication[];
+};
+
+const SORT_OPTIONS: { value: SortOption; label: string }[] = [
+  { value: 'most-recent', label: 'Most Recent' },
+  { value: 'least-recent', label: 'Least Recent' },
+  { value: 'title-az', label: 'Title, A–Z' },
+  { value: 'title-za', label: 'Title, Z–A' },
+];
+
+function FilterGroup({
+  legend,
+  options,
+  selected,
+  onToggle,
+}: {
+  legend: string;
+  options: Map<string, number>;
+  selected: string[];
+  onToggle: (value: string) => void;
+}) {
+  if (options.size === 0) return null;
+
+  return (
+    <fieldset className="usa-fieldset margin-bottom-3">
+      <legend className="usa-legend text-bold">{legend}</legend>
+      {[...options.entries()].map(([value, count]) => {
+        const id = `filter-${legend.toLowerCase().replace(/\s+/g, '-')}-${value.toLowerCase().replace(/\s+/g, '-')}`;
+        return (
+          <div key={value} className="usa-checkbox">
+            <input
+              className="usa-checkbox__input"
+              type="checkbox"
+              id={id}
+              name={`filter-${legend.toLowerCase().replace(/\s+/g, '-')}`}
+              value={value}
+              checked={selected.includes(value)}
+              onChange={() => onToggle(value)}
+            />
+            <label className="usa-checkbox__label" htmlFor={id}>
+              {value} <span className="text-base-light">({count})</span>
+            </label>
+          </div>
+        );
+      })}
+    </fieldset>
+  );
+}
+
+const ActiveChip = ({
+  label,
+  onRemove,
+}: {
+  label: string;
+  onRemove: () => void;
+}) => (
+  <button
+    onClick={onRemove}
+    type="button"
+    className="usa-button usa-button--unstyled"
+    style={{
+      display: 'inline-flex',
+      alignItems: 'center',
+      gap: '4px',
+      padding: '2px 8px',
+      borderRadius: '999px',
+      fontSize: '13px',
+      border: '1px solid',
+      borderColor: '#005ea2',
+      backgroundColor: '#d9e8f6',
+      color: '#005ea2',
+      cursor: 'pointer',
+      whiteSpace: 'nowrap',
+    }}
+    aria-label={`Remove filter: ${label}`}
+  >
+    {label} <span style={{ fontSize: '11px', opacity: 0.7 }}>×</span>
+  </button>
+);
+
+const Separator = () => (
+  <span className="text-base-light" style={{ margin: '0 4px' }}>
+    |
+  </span>
+);
+
+export default function PublicationsFilter({ publications }: Props) {
+  const {
+    search,
+    filters,
+    sort,
+    filtered,
+    visible,
+    filterOptions,
+    hasActiveFilters,
+    hasMore,
+    updateSearch,
+    toggleFilter,
+    clearFilters,
+    updateSort,
+    loadMore,
+  } = usePublications(publications);
+
+  const hasAnyActive = hasActiveFilters || !!search;
+
+  const groupsAfter = (current: keyof Filters) => {
+    const order: (keyof Filters)[] = [
+      'year',
+      'researchCommunity',
+      'researchArea',
+      'bdcContribution',
+    ];
+    const idx = order.indexOf(current);
+    return order.slice(idx + 1).some((k) => filters[k].length > 0);
+  };
+
+  return (
+    <div
+      className="grid-row grid-gap"
+      style={{ maxWidth: '1000px', margin: '0 auto' }}
+    >
+      {/* Left sidebar — search + filters */}
+      <aside className="tablet:grid-col-4" style={{ padding: 0 }}>
+        <div className="usa-card__container padding-x-3 padding-y-1" style={{}}>
+          {/* Search */}
+          <div className="margin-bottom-3">
+            <label
+              className="usa-label"
+              htmlFor="pub-search"
+              style={{ fontWeight: 600 }}
+            >
+              Search
+            </label>
+            <p className="usa-hint" style={{ fontSize: '13px' }}>
+              Search by title, journal, DOI/PMID, or research community
+            </p>
+            <input
+              className="usa-input width-full"
+              id="pub-search"
+              type="search"
+              value={search}
+              onChange={(e) => updateSearch(e.target.value)}
+              placeholder="Search publications..."
+            />
+          </div>
+
+          {/* Filters header */}
+          <div className="display-flex flex-justify flex-align-center margin-bottom-0">
+            <h2 className="usa-legend margin-0" style={{ fontWeight: 600 }}>
+              Filters
+            </h2>
+            {hasActiveFilters && (
+              <button
+                type="button"
+                className="usa-button usa-button--unstyled"
+                onClick={clearFilters}
+              >
+                Clear all
+              </button>
+            )}
+          </div>
+
+          <FilterGroup
+            legend="Year"
+            options={filterOptions.years}
+            selected={filters.year}
+            onToggle={(v) => toggleFilter('year', v)}
+          />
+          <FilterGroup
+            legend="Research Community"
+            options={filterOptions.researchCommunities}
+            selected={filters.researchCommunity}
+            onToggle={(v) => toggleFilter('researchCommunity', v)}
+          />
+          <FilterGroup
+            legend="Research Area"
+            options={filterOptions.researchAreas}
+            selected={filters.researchArea}
+            onToggle={(v) => toggleFilter('researchArea', v)}
+          />
+          <FilterGroup
+            legend="BDC Contribution"
+            options={filterOptions.bdcContributions}
+            selected={filters.bdcContribution}
+            onToggle={(v) => toggleFilter('bdcContribution', v)}
+          />
+        </div>
+      </aside>
+
+      {/* Right — results */}
+      <div className="tablet:grid-col-8">
+        {/* Active filter chips */}
+        {hasAnyActive && (
+          <div
+            className="bg-base-lightest border border-base-light radius-md padding-105 margin-bottom-2"
+            style={{
+              display: 'flex',
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              gap: '6px',
+            }}
+          >
+            {search && (
+              <>
+                <span
+                  className="text-base font-body-xs text-bold"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  Search:
+                </span>
+                <span
+                  className="text-base-dark font-body-xs"
+                  style={{ fontStyle: 'italic' }}
+                >
+                  {search}
+                </span>
+                {hasActiveFilters && <Separator />}
+              </>
+            )}
+            {filters.year.length > 0 && (
+              <>
+                <span
+                  className="text-base font-body-xs text-bold"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  Year:
+                </span>
+                {filters.year.map((v) => (
+                  <ActiveChip
+                    key={v}
+                    label={v}
+                    onRemove={() => toggleFilter('year', v)}
+                  />
+                ))}
+                {groupsAfter('year') && <Separator />}
+              </>
+            )}
+            {filters.researchCommunity.length > 0 && (
+              <>
+                <span
+                  className="text-base font-body-xs text-bold"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  Community:
+                </span>
+                {filters.researchCommunity.map((v) => (
+                  <ActiveChip
+                    key={v}
+                    label={v}
+                    onRemove={() => toggleFilter('researchCommunity', v)}
+                  />
+                ))}
+                {groupsAfter('researchCommunity') && <Separator />}
+              </>
+            )}
+            {filters.researchArea.length > 0 && (
+              <>
+                <span
+                  className="text-base font-body-xs text-bold"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  Research area:
+                </span>
+                {filters.researchArea.map((v) => (
+                  <ActiveChip
+                    key={v}
+                    label={v}
+                    onRemove={() => toggleFilter('researchArea', v)}
+                  />
+                ))}
+                {groupsAfter('researchArea') && <Separator />}
+              </>
+            )}
+            {filters.bdcContribution.length > 0 && (
+              <>
+                <span
+                  className="text-base font-body-xs text-bold"
+                  style={{ whiteSpace: 'nowrap' }}
+                >
+                  BDC contribution:
+                </span>
+                {filters.bdcContribution.map((v) => (
+                  <ActiveChip
+                    key={v}
+                    label={v}
+                    onRemove={() => toggleFilter('bdcContribution', v)}
+                  />
+                ))}
+              </>
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                clearFilters();
+                updateSearch('');
+              }}
+              className="usa-button usa-button--unstyled text-base-dark font-body-xs"
+              style={{
+                textDecoration: 'underline',
+                whiteSpace: 'nowrap',
+                marginLeft: '4px',
+              }}
+            >
+              Clear all
+            </button>
+          </div>
+        )}
+
+        {/* Sort + results count */}
+        <div className="display-flex flex-justify flex-align-center margin-bottom-2">
+          <span className="text-base">
+            Showing {filtered.length} publication
+            {filtered.length !== 1 ? 's' : ''}
+          </span>
+          <div className="display-flex flex-align-center">
+            <label
+              className="usa-label display-inline margin-right-1 margin-top-0"
+              htmlFor="pub-sort"
+            >
+              Sort by
+            </label>
+            <select
+              className="usa-select display-inline width-auto margin-top-0"
+              id="pub-sort"
+              value={sort}
+              onChange={(e) => updateSort(e.target.value as SortOption)}
+            >
+              {SORT_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Publications list */}
+        {visible.length === 0 ? (
+          <div>
+            <h3>No results found</h3>
+            <p>No publications match your current search or filters.</p>
+            <button
+              type="button"
+              className="usa-button"
+              onClick={() => {
+                clearFilters();
+                updateSearch('');
+              }}
+            >
+              {hasActiveFilters && search
+                ? 'Clear search and filters'
+                : hasActiveFilters
+                  ? 'Clear filters'
+                  : 'Clear search'}
+            </button>
+          </div>
+        ) : (
+          <ul className="usa-collection">
+            {visible.map((pub, i) => (
+              <PublicationCard key={`${pub.url}-${i}`} pub={pub} />
+            ))}
+          </ul>
+        )}
+
+        {/* Load more */}
+        {hasMore && (
+          <div className="margin-top-4 text-center">
+            <button
+              type="button"
+              className="usa-button usa-button--outline"
+              onClick={loadMore}
+            >
+              Load more
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}

@@ -63,8 +63,12 @@ const publications = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
-    location: z.string(),
+    journalName: z.string(),
     url: z.string(),
+    status: z.enum(['Published', 'Preprint', 'Other']).optional(),
+    bdcContribution: z.array(z.string()).optional(),
+    researchArea: z.array(z.string()).optional(),
+    researchCommunity: z.array(z.string()).optional(),
   }),
 });
 
