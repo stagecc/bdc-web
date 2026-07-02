@@ -1,0 +1,84 @@
+---
+/**
+ * EepNav.astro
+ *
+ * Quick navigation list for the EEP page.
+ * Renders an anchor link for each member that jumps to their section.
+ * Adhoc members are included at the end (assumes sorted array is passed in).
+ *
+ * Props:
+ *   members — sorted array of EEP collection entries
+ */
+
+interface Member {
+  id: string;
+  data: {
+    name: string;
+    signifier?: string;
+    slug?: string;
+    adhoc?: boolean;
+  };
+}
+
+interface Props {
+  members: Member[];
+}
+
+const { members } = Astro.props;
+---
+
+<nav class="eep-nav" aria-label="Jump to EEP member">
+  <p class="eep-nav__heading">Jump to EEP member</p>
+  <ul class="eep-nav__list" style=" ">
+    {members.map((member) => (
+      <li class="eep-nav__item">
+        <a href={`#${member.data.slug}`} class="eep-nav__link">
+          {member.data.adhoc && 'Ad-hoc Member: '}{member.data.name}
+        </a>
+      </li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .eep-nav {
+    margin: 2.5rem auto 1.5rem;
+    max-width: 1000px;
+    background-color: #f1f6f6; 
+    padding: 1.5rem 2.5rem;
+    border-radius: 5px;
+  }
+  .eep-nav__heading {
+    margin: 0 0 0.75rem;
+    font-weight: 600;
+  }
+  .eep-nav__list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    columns: 1;
+    gap: 1rem;
+  }
+
+  .eep-nav__item {
+    margin-bottom: 0.5rem;
+    break-inside: avoid;
+  }
+
+  .eep-nav__link {
+    text-decoration: underline;
+    font-size: 0.9rem;
+  }
+
+  @media (min-width: 480px) {
+    .eep-nav__list {
+      columns: 2;
+    }
+  }
+
+  @media (min-width: 640px) {
+    .eep-nav__list {
+      columns: 3;
+    }
+  }
+</style>

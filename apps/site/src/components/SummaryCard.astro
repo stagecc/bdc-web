@@ -1,0 +1,113 @@
+---
+/**
+ * SummaryCard.astro
+ *
+ * A floating stat callout — icon, number, and qualifier text stacked vertically.
+ * Wraps inline with surrounding prose, similar to Callout.astro.
+ * Reusable across pages (e.g. EEP panel member count, home page stats bar).
+ *
+ * Props:
+ *   icon       — Icon identifier. Uses placeholder until icon system is finalized.
+ *   number     — The stat value (string or number, e.g. "7" or "1,200+").
+ *   qualifier  — Label describing the number (e.g. "panel members").
+ *   width      — Width of the card on tablet+. Defaults to '180px'.
+ *   background — Background color. Defaults to a neutral light gray.
+ *   float      — Float direction ('left' | 'right'). Defaults to 'left'.
+ *
+ * Slot:
+ *   Optional additional content rendered below the qualifier
+ *   (e.g. a short description or link).
+ *
+ * Usage:
+ *   <SummaryCard icon="people" number="7" qualifier="panel members">
+ *     Meet the team
+ *   </SummaryCard>
+ *
+ * TODO: Replace placeholder icon with USWDS icon sprite or Icon component
+ * once icon system is finalized.
+ */
+import Icon from '@components/Icon.astro';
+
+interface Props {
+  icon?: string;
+  number: string | number;
+  qualifier: string;
+  width?: string;
+  background?: string;
+  float?: 'left' | 'right';
+}
+
+const {
+  icon,
+  number,
+  qualifier,
+  width = '350px',
+  background = '#e7f6f8', // TODO: var(--color-base-lightest)
+  float = 'left',
+} = Astro.props;
+---
+
+<div
+  class={`summary-card summary-card--${float}`}
+  style={`--summary-card-width: ${width}; background: ${background};`}
+>
+  {icon && (
+    <Icon name="people" size={4}/>
+  )}
+  <div class="summary-card__number">{number}</div>
+  <div class="summary-card__qualifier">{qualifier}</div>
+  <div class="summary-card__content">
+    <slot />
+  </div>
+</div>
+
+<style>
+  .summary-card {
+    width: 100% !important;
+    float: none;
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .summary-card--left {
+      float: left;
+      width: var(--summary-card-width) !important;
+      margin-right: 1.5rem;
+    }
+
+    .summary-card--right {
+      float: right;
+      width: var(--summary-card-width) !important;
+      margin-left: 1.5rem;
+    }
+  }
+
+  /* .summary-card__icon {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  } */
+
+  .summary-card__number {
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .summary-card__qualifier {
+    font-size: 1.1rem;
+    margin-top: 0.15rem;
+    font-weight: 600;
+  }
+
+  .summary-card__content {
+    margin-top: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .summary-card__content:empty {
+    display: none;
+    margin-top: 0;
+  }
+</style>

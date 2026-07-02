@@ -1,0 +1,74 @@
+---
+import { getCollection, render } from 'astro:content';
+import Callout from '@components/Callout.astro';
+import EepMember from '@components/eep/EepMember.astro';
+import EepNav from '@components/eep/EepNav.astro';
+import SummaryCard from '@components/SummaryCard.astro';
+import Base from '@layouts/Base.astro';
+import { sortByLastName } from '../../../util/sort-by-lastName';
+
+// Fetch all EEP members
+const members = await getCollection('eep');
+
+// Sort: alphabetical by last name, adhoc members last
+const sorted = sortByLastName(
+  members,
+  (member) => member.data.slug,
+  (member) => member.data.adhoc,
+);
+
+// Render markdown body for each member
+const rendered = await Promise.all(
+  sorted.map(async (member) => {
+    const { Content } = await render(member);
+    return { member, Content };
+  }),
+);
+---
+
+<Base title="BDC External Expert Panel">
+  <section class="usa-section">
+    <div class="grid-container">
+      <h1>BDC External Expert Panel</h1>
+      <div class="usa-prose usa-prose--full-width">
+        <!-- <Callout title="7 Panel Members" float="right" width="250px">
+          <hr/>
+          Independent experts advising NHLBI leadership on the BDC ecosystem
+        </Callout> -->
+        <SummaryCard icon="people" number="7" qualifier="Panel Members" float="right">
+          Plus 1 Ad-hoc Member
+          <hr/>
+          Independent experts advising NHLBI leadership on the BDC ecosystem
+        </SummaryCard>
+        <p>
+          The BDC External Expert Panel (EEP) is an independent body of experts that informs and advises NHLBI Leadership about the development of the ecosystem.
+        </p>
+        <p>
+          EEP members represent diverse expertise across biomedical informatics, artificial intelligence, genomics, data science, cyberinfrastructure, education, and clinical research. Members volunteer their time and insights over multi-year terms to help ensure BDC continues to meet the needs of the research community.
+        </p>
+        <p>
+          The individuals listed below are current members of the BDC EEP.
+        </p>
+      </div>
+      <EepNav members={sorted} />
+      
+      <br/>
+      <hr/>
+      <br/>
+
+      {rendered.map(({ member, Content }) => (
+        <EepMember
+          name={member.data.name}
+          slug={member.data.slug}
+          signifier={member.data.signifier}
+          roles={member.data.roles}
+          term_start={member.data.term_start}
+          photo={member.data.photo}
+          adhoc={member.data.adhoc}
+        >
+          <Content />
+        </EepMember>
+      ))}
+    </div>
+  </section>
+</Base>

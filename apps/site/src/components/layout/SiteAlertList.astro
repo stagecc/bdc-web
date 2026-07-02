@@ -1,0 +1,35 @@
+---
+import { getCollection, render } from 'astro:content';
+import SiteAlert from '@components/layout/SiteAlert.astro';
+
+interface Props {
+  isHomePage?: boolean;
+}
+
+const { isHomePage = false } = Astro.props;
+
+const allBanners = await getCollection('banners', ({ data }) => data.active);
+
+// Filter: show homeOnly banners only on home page; show non-homeOnly everywhere
+const visibleBanners = allBanners.filter(
+  (banner) => !banner.data.homeOnly || isHomePage,
+);
+
+// Sort by importance ascending (lower number = higher priority, matches old pattern)
+const sorted = visibleBanners.sort(
+  (a, b) => a.data.importance - b.data.importance,
+);
+
+const rendered = await Promise.all(
+  sorted.map(async (banner) => {
+    const { Content } = await render(banner);
+    return { banner, Content };
+  }),
+);
+---
+
+{rendered.map(({ banner, Content }) => (
+  <SiteAlert variant={banner.data.variant} noIcon>
+    <Content />
+  </SiteAlert>
+))}

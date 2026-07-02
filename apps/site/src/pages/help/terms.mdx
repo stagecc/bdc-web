@@ -1,21 +1,33 @@
 ---
-title: Terms of Use
+title: Terms of Use & Policies
+lastReviewed: June 2026
 layout: ../../layouts/Page.astro
 ---
+import Callout from '@components/Callout.astro';
+import InlineAlert from '@components/InlineAlert.astro';
+import Tooltip from '@components/Tooltip.astro'
+
+<InlineAlert variant="info">
+These Terms of Use describe the conditions governing use of BDC and related resources. By accessing or using this website, users agree to comply with these terms.
+
+Additional terms may apply to specific tools, platforms, or datasets. 
+</InlineAlert>
 
 ## Data Use Policy Statement
 
 BDC adheres to internationally recognized policies for data access and release developed to enable broad access to data on the BDC ecosystem. Data on the BDC ecosystem are subject to general and data-set-specific data use policies, and access to controlled data is restricted to authorized users. Each BDC user is solely responsible for adhering to Data Use Agreement(s), Institutional Review Board policies and guidelines, and other Data Use Limitations when uploading, importing, or downloading data on the BDC ecosystem.
 
 Whether working with hosted or their own data, BDC users are obligated to protect participant privacy and follow NIH data protection policies. User institutions are accountable and may be subject to sanctions if policies are violated.
+<br/>
+<hr/>
 
 ## Hosted Data Access Controls
 
-All hosted data within BDC is de-identified.
+All hosted data within BDC is de-identified. De-identified data is information that has been stripped of direct and indirect identifiers so it can no longer be linked to a specific person.
 
 ### Authorization of Use
 
-Access to hosted data is controlled through the [Database of Genotypes and Phenotypes](https://dbgap.ncbi.nlm.nih.gov/) (dbGaP) system by authorization of the appropriate Data Access Committee (DAC). Data Access Committees are established based on programmatic areas of interest as well as technical and ethical expertise. All DACs operate through common principles and under similar mechanisms to ensure the consistency and transparency of the controlled data access process. Use of industry-standard [OAuth 2.0](https://oauth.net/) and [Open ID Connect](https://openid.net/connect/) (OIDC) services, which are connected to [NIH's electronic Research Administration](https://era.nih.gov/) (eRA) infrastructure for authentication and authorization, ensures that only data objects approved for access by NIH DACs and approved in dbGaP are available to a user in BDC.
+Access to hosted data is controlled through the [Database of Genotypes and Phenotypes](https://dbgap.ncbi.nlm.nih.gov/home/) <Tooltip text="NIH system used to manage access to controlled-access datasets">(dbGaP)</Tooltip> system, by authorization of the appropriate Data Access Committee <Tooltip text="Responsible for reviewing and approving requests to controlled-access datasets">(DAC)</Tooltip>. Data Access Committees are established based on programmatic areas of interest as well as technical and ethical expertise. All DACs operate through common principles and under similar mechanisms to ensure the consistency and transparency of the controlled data access process. Use of industry-standard [OAuth 2.0](https://oauth.net/) and [Open ID Connect](https://openid.net/developers/how-connect-works/) (OIDC) services, which are connected to [NIH's electronic Research Administration](https://www.era.nih.gov//) (eRA) infrastructure for authentication and authorization, ensures that only data objects approved for access by NIH DACs and approved in dbGaP are available to a user in BDC.
 
 ### Access to Individual Level Data and Download Functionality
 
@@ -23,8 +35,27 @@ All data transfers are made using standard Transport Layer Security (TLS) encryp
 
 ### Data Download Restrictions
 
-Download capabilities are limited to metadata and analysis results, and the latter must comply with restrictions defined by NIH for [Summary Results](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-19-023.html). Downloading sequences, variants, images, phenotypes, and other individual data is prohibited. BDC notifies and repeatedly reminds users that they may not download individual-level data, including when they receive cloud credits, login, and request downloads. Monitoring of data egress adds another layer of security.
+<InlineAlert variant="warning">
+Important: Individual-level data may not be downloaded from BDC.
+</InlineAlert>
+
+Download capabilities are limited to metadata and analysis results, and the latter must comply with restrictions defined by NIH for [Summary Results](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-19-023.html). **Downloading sequences, variants, images, phenotypes, and other individual data is prohibited.** BDC notifies and repeatedly reminds users that they may not download individual-level data, including when they receive cloud credits, login, and request downloads. Monitoring of data egress adds another layer of security.
+
+<br/>
+<hr/>
 
 ## Citing and Acknowledging BDC
 
-BDC users are expected to cite ecosystem usage. They will mention its utilization and how BDC contributed to their work in the main sections of their resulting research publications and external presentations. NHLBI BDC Pilot Funding Program and Cloud Credit Support Program recipients also agree to acknowledge the funding in all publications and external presentations resulting from that work. The standard [BDC Citation and Acknowledgement language](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement) is available in BDC documentation.
+Researchers who use BDC resources, services, tools, funding, or cloud credits are expected to appropriately acknowledge BDC’s contribution to their work. Acknowledgement and citation should be included in publications, preprints, posters, presentations, and other scholarly outputs resulting from the use of BDC.  
+
+Recipients of support through programs such as NHLBI BDC Pilot Funding Program or Cloud Credit Support Program are also expected to acknowledge that support in any resulting scholarly outputs. 
+
+Standard [citation and acknowledgement language](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement) is available in BDC documentation.
+
+<InlineAlert heading="Citing BDC" variant="info" noIcon>
+  [View BDC Citation and Acknowledgement Guidance →](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement)
+
+  [Explore BDC-Enabled Research →](/news/bdc-enabled-research) 
+
+  [Submit Your Publication →](/news/bdc-enabled-research/submit-publication)
+</InlineAlert>
