@@ -11,12 +11,19 @@ const publications = (await getCollection('publications')).map((pub) => ({
 
 <Base title="BDC-Enabled Research">
   <section class="usa-section">
-    <div class="grid-container">
+    <div class="grid-container usa-prose usa-prose--full-width">
       <h1>BDC-Enabled Research</h1>
-      <p>Browse research enabled by BDC resources. Use the filters and search to find publications relevant to your work.</p>
-      <a href="/publications/submit" class="usa-button margin-bottom-4">
-        Submit a Publication
-      </a>
+      <p>
+        Explore how the BDC ecosystem enables research through data access, advanced analysis, funding opportunities, and more to accelerate discoveries.
+      </p>
+      <p>
+        Remember to include BDC's citation/acknowledgment in the manuscripts you submit to journals.
+      </p>
+      <div style="display: flex; justify-content:flex-end">
+        <a href="/publications/submit" class="usa-button margin-bottom-4">
+          Submit a Publication
+        </a>
+      </div>
     </div>
     <PublicationsFilter client:load publications={publications} />
   </section>

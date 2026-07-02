@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import PublicationCard from './PublicationCard';
 import {
   type Filters,
@@ -22,18 +23,33 @@ function FilterGroup({
   options,
   selected,
   onToggle,
+  threshold = 5,
 }: {
   legend: string;
   options: Map<string, number>;
   selected: string[];
   onToggle: (value: string) => void;
+  threshold?: number;
 }) {
+  const [showAll, setShowAll] = useState(false);
+
   if (options.size === 0) return null;
+
+  const entries = [...options.entries()];
+  const selectedEntries = entries.filter(([value]) => selected.includes(value));
+  const unselectedEntries = entries.filter(
+    ([value]) => !selected.includes(value),
+  );
+  const hiddenCount = Math.max(0, unselectedEntries.length - threshold);
+  const needsTruncation = hiddenCount > 0;
+  const visibleEntries = showAll
+    ? entries
+    : [...selectedEntries, ...unselectedEntries.slice(0, threshold)];
 
   return (
     <fieldset className="usa-fieldset margin-bottom-3">
       <legend className="usa-legend text-bold">{legend}</legend>
-      {[...options.entries()].map(([value, count]) => {
+      {visibleEntries.map(([value, count]) => {
         const id = `filter-${legend.toLowerCase().replace(/\s+/g, '-')}-${value.toLowerCase().replace(/\s+/g, '-')}`;
         return (
           <div key={value} className="usa-checkbox">
@@ -52,6 +68,15 @@ function FilterGroup({
           </div>
         );
       })}
+      {needsTruncation && (
+        <button
+          type="button"
+          className="usa-button usa-button--unstyled font-body-xs margin-top-1"
+          onClick={() => setShowAll((prev) => !prev)}
+        >
+          {showAll ? 'Show less' : `Show ${hiddenCount} more`}
+        </button>
+      )}
     </fieldset>
   );
 }
@@ -80,6 +105,7 @@ const ActiveChip = ({
       color: '#005ea2',
       cursor: 'pointer',
       whiteSpace: 'nowrap',
+      textDecoration: 'none',
     }}
     aria-label={`Remove filter: ${label}`}
   >
@@ -130,7 +156,7 @@ export default function PublicationsFilter({ publications }: Props) {
     >
       {/* Left sidebar — search + filters */}
       <aside className="tablet:grid-col-4" style={{ padding: 0 }}>
-        <div className="usa-card__container padding-x-3 padding-y-1" style={{}}>
+        <div className="usa-card__container padding-x-3 padding-y-1">
           {/* Search */}
           <div className="margin-bottom-3">
             <label
@@ -144,7 +170,7 @@ export default function PublicationsFilter({ publications }: Props) {
               Search by title, journal, DOI/PMID, or research community
             </p>
             <input
-              className="usa-input width-full"
+              className="usa-input usa-search__input--no-button width-full"
               id="pub-search"
               type="search"
               value={search}

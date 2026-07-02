@@ -1,660 +1,1346 @@
 -
-  title: "Multimodal data curation via interoperability: use cases with the Medical Imaging and Data Resource Center"
-  date: 2025-08-01
-  journalName: Scientific Data
-  url: https://www.nature.com/articles/s41597-025-05678-2
-  status: Published
-  researchCommunity:
-    - "TOPMed"
-    - "RECOVER"
-  researchArea:
-    - "Heart"
-  bdcContribution:
-    - "Data Analysis/Tool Usage"
-    - "Data Deposition (Data Access and/or Storage)"
--
-  title: "Whole genome sequencing based analysis of inflammation biomarkers in the Trans-Omics for Precision Medicine (TOPMed) consortium"
-  date: 2024-08-06
-  journalName: Human Molecular Genetics
-  url: https://pubmed.ncbi.nlm.nih.gov/38747556/
-  status: Preprint
-  researchCommunity:
-    - "Bench to Bassinet"
-    - "BioLINCC"
-  researchArea:
-    - "Lung"
-  bdcContribution:
-    - "Standards/Practices"
-    - "Funding Source"
--
-  title: "Standardized Measurement of Type 1 Diabetes Polygenic Risk Across Multiancestry Population Cohorts"
-  date: 2025-04-23
-  journalName: Diabetes Care
-  url: https://doi.org/10.2337/dc25-0142
-  status: Published
-  researchCommunity:
-    - "TopMed"
-    - "BioLINCC"
-  researchArea:
-    - "Blood"
-  bdcContribution:
-    - "Data Analysis/Tool Usage"
-    - "Funding Source"
--
-  title: "Sequencing in over 50,000 cases identifies coding and structural variation underlying atrial fibrillation risk"
-  date: 2025-03-06
-  journalName: Nature Genetics
-  url: https://www.nature.com/articles/s41588-025-02074-9
-  status: Published
-  researchCommunity:
-    - "TopMed"
-    - "BioLINCC"
-  researchArea:
-    - "Heart"
-  bdcContribution:
-    - "Data Analysis/Tool Usage"
-    - "Data Deposition (Data Access and/or Storage)"
--
   title: "Whole Genome Sequence Analysis of Weight Loss in 16 972 Participants With COPD Reveals Novel Risk Loci in DRAIC and RFX3"
   date: 2026-04-23
   journalName: "Journal of Cachexia, Sarcopenia and Muscle"
   url: https://onlinelibrary.wiley.com/doi/10.1002/jcsm.70293
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "GWAS of Hematuria"
   date: 2022-05-01
   journalName: "Clinical journal of the American Society of Nephrology"
   url: https://pubmed.ncbi.nlm.nih.gov/35474271/
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Colocalization of eQTLs With Type 2 Diabetes and Glycemic Traits Using Whole-Genome Sequences in Diverse Populations From the NHLBI Trans-Omics in Precision Medicine (TOPMed) Program"
   date: 2026-06-11
   journalName: "Diabetes"
   url: https://diabetesjournals.org/diabetes/article/doi/10.2337/db25-0557/172031
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Dietary sources of sodium intake in nigerian adults: A population-based cross-sectional study"
   date: 2025-11-17
   journalName: "Scientific Reports"
   url: https://www.nature.com/articles/s41598-025-23828-9
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Genetic determinants and genomic consequences of non-leukemogenic somatic point mutations"
   date: 2025-10-16
   journalName: "Nature Communications"
   url: https://www.nature.com/articles/s41467-025-64236-x
+  status: "Published"
+  researchArea:
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Mosaic chromosomal alterations in blood across ancestries using whole-genome sequencing"
   date: 2023-10-30
   journalName: "Nature Genetics"
   url: https://doi.org/10.1038/s41588-023-01553-1
+  status: "Published"
+  researchArea:
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Rapid kidney function decline and increased risk of heart failure in patients with type 2 diabetes: findings from the ACCORD cohort"
   date: 2023-10-30
   journalName: "Cardiovascular Diabotology"
   url: https://link.springer.com/article/10.1186/s12933-023-01869-6
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Development and validation of a trans-ancestry polygenic risk score for type 2 diabetes in diverse populations"
   date: 2022-06-29
   journalName: "Genome Medicine"
   url: https://link.springer.com/article/10.1186/s13073-022-01074-2
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Rare tandem repeat expansions associate with genes involved in synaptic and neuronal signaling functions in schizophrenia"
   date: 2022-11-16
   journalName: "Molecular Psychiatry"
   url: https://www.nature.com/articles/s41380-022-01857-4
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Pleiotropic modifiers of age-related diabetes and neonatal intestinal obstruction in cystic fibrosis"
   date: 2022-10-06
   journalName: "Cell Genomics"
-  url: https://www.cell.com/ajhg/fulltext/S0002-9297(22)00407-4?\_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS0002929722004074%3Fshowall%3Dtrue
--
-  title: "CureSCi Metadata Catalog-Making sickle cell studies findable"
-  date: 2022-12-12
-  journalName: "PLOS One"
-  url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0256248
+  url: https://www.cell.com/ajhg/fulltext/S0002-9297(22)00407-4
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Long-term Survival after Hematopoietic Cell Transplant for Sickle Cell Disease Compared to the United States Population"
   date: 2022-03-15
   journalName: "Transplantation and Cellular Therapy"
   url: https://www.sciencedirect.com/science/article/pii/S2666636722011605
+  status: "Published"
+  researchCommunity:
+    - "Cure Sickle Cell"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "A Model of Minor Histocompatibility Antigens in Allogeneic Hematopoietic Cell Transplantation"
   date: 2021-11-17
   journalName: "Frontiers in Immunology"
   url: https://www.frontiersin.org/journals/immunology/articles/10.3389/fimmu.2021.782152/full
+  status: "Published"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Body Weight Correlates with Molecular Variances in Patients with Cancer"
   date: 2024-03-01
   journalName: "Cancer Research"
   url: https://aacrjournals.org/cancerres/article/84/5/757/734931/Body-Weight-Correlates-with-Molecular-Variances-in
+  status: "Published"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Association of Polygenic Risk Score With Blood Pressure and Adverse Cardiovascular Outcomes in Individuals With Type II Diabetes: Insights From the ACCORD Trial"
   date: 2022-04-04
   journalName: "Hypertension"
   url: https://www.ahajournals.org/doi/10.1161/HYPERTENSIONAHA.122.18976
+  status: "Published"
+  researchArea:
+    - "Blood"
+    - "Heart"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Collaborative Cohort of Cohorts for COVID-19 Research (C4R) Study: Study Design"
   date: 2022-03-12
   journalName: "American Journal of Epidemiology"
   url: https://academic.oup.com/aje/article/191/7/1153/6547556
+  status: "Published"
+  researchCommunity:
+    - "C4R"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Age-Related Changes in the Clinical Picture of Long COVID"
   date: 2025-09-01
   journalName: "Journal of the American Geriatrics Society"
   url: https://agsjournals.onlinelibrary.wiley.com/doi/10.1111/jgs.70043
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Development and implementation of the National Heart, Lung, and Blood Institute COVID-19 common data elements"
   date: 2022-09-26
   journalName: "Journal of Clinical and Translational Science"
   url: https://www.cambridge.org/core/journals/journal-of-clinical-and-translational-science/article/development-and-implementation-of-the-national-heart-lung-and-blood-institute-covid19-common-data-elements/DF687DD8150997358AF78F4DCDFA5C55
+  status: "Published"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Wearable-derived Sleep Measurements are Associated with Long-COVID in the RECOVER Adult Cohort"
   date: 2025-09-03
   journalName: "Research Square"
   url: https://www.researchsquare.com/article/rs-7422764/v1
+  status: "PrePrint"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+    - "Sleep"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Federated analysis of BRCA1 and BRCA2 variation in a Japanese cohort"
   date: 2022-03-09
   journalName: "Cell Genomics"
   url: https://www.cell.com/cell-genomics/fulltext/S2666-979X(22)00029-5
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Genetic determinants of telomere length from 109,122 ancestrally diverse whole-genome sequences in TOPMed"
   date: 2022-01-12
   journalName: "Cell Genomics"
   url: https://www.cell.com/cell-genomics/fulltext/S2666-979X(21)00105-1
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Inverting the model of genomics data sharing with the NHGRI Genomic Data Science Analysis, Visualization, and Informatics Lab-space"
   date: 2022-01-12
   journalName: "Cell Genomics"
   url: https://www.cell.com/cell-genomics/fulltext/S2666-979X(21)00106-3
+  status: "Published"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Pan-African genome demonstrates how population-specific genome graphs improve high-throughput sequencing data analysis"
   date: 2022-08-04
   journalName: "Nature Communications"
   url: https://doi.org/10.1038/s41467-022-31724-3
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Sequencing of 53,831 diverse genomes from the NHLBI TOPMed Program"
   date: 2021-02-10
   journalName: "Nature"
   url: https://www.nature.com/articles/s41586-021-03205-y
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "A phenome-wide association study of methylated GC-rich repeats identifies a GCC repeat expansion in AFF3 associated with intellectual disability"
   date: 2024-09-23
   journalName: "Nature Genetics"
   url: https://www.nature.com/articles/s41588-024-01917-1
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Aberrant activation of TCL1A promotes stem cell expansion in clonal haematopoiesis"
   date: 2023-04-12
   journalName: "Nature"
   url: https://www.nature.com/articles/s41586-023-05806-1
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Accounting for population structure in genetic studies of cystic fibrosis"
   date: 2022-07-14
   journalName: "HGG Advances"
   url: https://www.cell.com/hgg-advances/fulltext/S2666-2477(22)00033-1
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Opportunities and challenges for the use of common controls in sequencing studies"
   date: 2022-05-17
   journalName: "Nature Reviews Genetics"
   url: https://www.nature.com/articles/s41576-022-00487-4
+  status: "Published"
+  researchArea:
+    - "Genomics"
+    - "Management"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "B-assembler: a circular bacterial genome assembler"
   date: 2022-05-11
   journalName: "BMC Genomics"
   url: https://link.springer.com/article/10.1186/s12864-022-08577-7
+  status: "Published"
+  researchArea:
+    - "Genomics"
+    - "Technology"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Clinical and genetic associations of deep learning-derived cardiac magnetic resonance-based left ventricular mass"
   date: 2023-03-21
   journalName: "Nature Communications"
   url: https://doi.org/10.1038/s41467-023-37173-w
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Association of Rare Protein-Truncating DNA Variants in APOB or PCSK9 With Low-density Lipoprotein Cholesterol Level and Risk of Coronary Heart Disease"
   date: 2023-02-01
   journalName: "JAMA Cardiology"
   url: https://jamanetwork.com/journals/jamacardiology/fullarticle/2801002
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Neutralizing COVID-19 Convalescent Plasma in Adults Hospitalized With COVID-19"
   date: 2022-06-30
   journalName: "Chest Journal"
   url: https://journal.chestnet.org/article/S0012-3692(22)01201-6/fulltext
+  status: "Published"
+  researchArea:
+    - "Lung"
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "A System for Phenotype Harmonization in the National Heart, Lung, and Blood Institute Trans-Omics for Precision Medicine (TOPMed) Program"
   date: 2021-04-16
   journalName: "American Journal of Epidemiology"
   url: https://academic.oup.com/aje/article/190/10/1977/6228144
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Management"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "FAVOR: functional annotation of variants online resource and annotator for variation across the human genome"
   date: 2022-11-09
   journalName: "Nucleic Acids Research"
   url: https://academic.oup.com/nar/article/51/D1/D1300/6814464
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Management"
+    - "Technology"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Sleep and circadian informatics data harmonization: a workshop report from the Sleep Research Society and Sleep Research Network"
   date: 2022-01-14
   journalName: "Sleep"
   url: https://academic.oup.com/sleep/article/45/6/zsac002/6507734?guestAccessKey=
+  status: "Published"
+  researchCommunity:
+    - "NSRR"
+  researchArea:
+    - "Sleep"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Expanding the pool of public controls for GWAS via a method for combining genotypes from arrays and sequencing"
   date: 2021-10-20
   journalName: "bioRxiv"
   url: https://www.biorxiv.org/content/10.1101/2021.10.19.464854v1
+  status: "PrePrint"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "From biomedical cloud platforms to microservices: next steps in FAIR data and analysis"
   date: 2022-09-08
   journalName: "Scientific Data"
   url: https://www.nature.com/articles/s41597-022-01619-5
+  status: "Published"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "MultiSTAAR delivers multi-trait rare variant analysis of biobank-scale sequencing data"
   date: 2025-02-07
   journalName: "Nature Computational Science"
   url: https://www.nature.com/articles/s43588-025-00766-0
+  status: "Published"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Accurate long-read de novo assembly evaluation with Inspector"
   date: 2021-11-14
   journalName: "Genome Biology"
   url: https://link.springer.com/article/10.1186/s13059-021-02527-4
+  status: "Published"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "A Dynamic Framework for Semantic Grouping of Common Data Elements (CDE) Using Embeddings and Clustering"
   date: 2025-06-02
   journalName: "arXiv"
   url: https://arxiv.org/abs/2506.02160
+  status: "PrePrint"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "Technology"
+    - "AI/ML"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Empower an End-to-end Scalable and Interpretable Data Science Ecosystem using Statistics, AI and Domain Scien"
   date: 2024-08-24
   journalName: "KDD '24: Proceedings of the 30th ACM SIGKDD Conference on Knowledge Discovery and Data Mining"
   url: https://dl.acm.org/doi/abs/10.1145/3637528.3672194
+  status: "Other"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "Technology"
+    - "Management"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Genomic analysis of 11,555 probands identifies 60 dominant congenital heart disease genes"
   date: 2025-03-24
-  journalName: PNAS
+  journalName: "PNAS"
   url: https://doi.org/10.1073/pnas.2420343122
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Sparse Bernoulli mixture modeling with negative-unlabeled data: an approach to identify and characterize long COVID"
   date: 2025-03-12
-  journalName: Biometrics
+  journalName: "Biometrics"
   url: https://academic.oup.com/biometrics/article/81/1/ujaf021/8071659
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Association of Cardiologist Clinic Visits With Cardiovascular Primary Prevention Outcomes Among People With HIV From Underrepresented Racial and Ethnic Groups in the Southern United States"
   date: 2025-03-07
-  journalName: Journal of the American Heart Association
+  journalName: "Journal of the American Heart Association"
   url: https://www.ahajournals.org/doi/10.1161/JAHA.124.038462
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Recessive genetic contribution to congenital heart disease in 5,424 probands"
   date: 2025-03-03
-  journalName: PNAS
+  journalName: "PNAS"
   url: https://www.pnas.org/doi/10.1073/pnas.2419992122
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "The circulating renin-angiotensin system and mortality among patients hospitalized for COVID-19: a mechanistic substudy of the ACTIV-4 Host Tissue trials"
   date: 2025-02-27
-  journalName: American Journal of Physiology-Lung Cellular and Molecular Physiology
+  journalName: "American Journal of Physiology-Lung Cellular and Molecular Physiology"
   url: https://journals.physiology.org/doi/full/10.1152/ajplung.00372.2024
+  status: "Published"
+  researchCommunity:
+    - "Bench2Bassinet"
+  researchArea:
+    - "Lung"
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Shock prediction with dipeptidyl peptidase-3 and renin (SPiDeR) in hypoxemic patients with COVID-19"
   date: 2024-11-14
-  journalName: Journal of Critical Care
-  url: https://www.sciencedirect.com/science/article/abs/pii/S0883944124004374?via%3Dihub
+  journalName: "Journal of Critical Care"
+  url: https://www.sciencedirect.com/science/article/abs/pii/S0883944124004374
+  status: "Published"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Whole-genome analysis of plasma fibrinogen reveals population-differentiated genetic regulators with putative liver roles"
   date: 2024-11-21
-  journalName: Blood
+  journalName: "Blood"
   url: https://ashpublications.org/blood/article/144/21/2248/517658/Whole-genome-analysis-of-plasma-fibrinogen-reveals
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Pre-pregnancy substance use and first trimester cardiovascular health among nulliparous pregnant people: The nuMoM2b Study"
   date: 2024-09-03
-  journalName: Paediatric and Perinatal Epidemiology
+  journalName: "Paediatric and Perinatal Epidemiology"
   url: https://onlinelibrary.wiley.com/doi/10.1111/ppe.13119
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Effect of sodium–glucose co-transporter-2 inhibitors on survival free of organ support in patients hospitalised for COVID-19 (ACTIV-4a): a pragmatic, multicentre, open-label, randomised, controlled, platform trial"
   date: 2024-09-06
-  journalName: The Lancet Diabetes & Endocrinology
+  journalName: "The Lancet Diabetes & Endocrinology"
   url: https://www.thelancet.com/journals/landia/article/PIIS2213-8587(24)00218-3/fulltext
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Post–Acute Sequelae of Severe Acute Respiratory Syndrome Coronavirus 2 (SARS-CoV-2) After Infection During Pregnancy"
   date: 2024-09-01
-  journalName: Obstetrics & Gynecology
+  journalName: "Obstetrics & Gynecology"
   url: https://journals.lww.com/greenjournal/abstract/2024/09000/post_acute_sequelae_of_severe_acute_respiratory.15.aspx
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "Lung"
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Proteomics and machine learning in the prediction and explanation of low pectoralis muscle area"
   date: 2024-08-03
-  journalName: Scientific Reports
+  journalName: "Scientific Reports"
   url: https://www.nature.com/articles/s41598-024-68447-y
+  status: "Published"
+  researchArea:
+    - "Technology"
+    - "AI/ML"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "RECOVER-NEURO: study protocol for a multi-center, multi-arm, phase 2, randomized, active comparator trial evaluating three interventions for cognitive dysfunction in post-acute sequelae of SARS-CoV-2 infection (PASC)"
   date: 2024-05-17
-  journalName: Trials
+  journalName: "Trials"
   url: https://link.springer.com/article/10.1186/s13063-024-08156-z
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Demographic and Clinical Factors Associated With SARS-CoV-2 Spike 1 Antibody Response Among Vaccinated US Adults: the C4R Study"
   date: 2024-02-19
-  journalName: Nature Communications
+  journalName: "Nature Communications"
   url: https://www.nature.com/articles/s41467-024-45468-9
+  status: "Published"
+  researchCommunity:
+    - "C4R"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Researching COVID to enhance recovery (RECOVER) tissue pathology study protocol: Rationale, objectives, and design"
   date: 2024-01-10
-  journalName: PLOS One
+  journalName: "PLOS One"
   url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0285645
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Clinically stable covid-19 patients presenting to acute unscheduled episodic care venues have increased risk of hospitalization: secondary analysis of a randomized control trial"
   date: 2023-05-15
-  journalName: BMC Infections Diseases
+  journalName: "BMC Infections Diseases"
   url: https://link.springer.com/article/10.1186/s12879-023-08295-9
+  status: "Published"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Survival After Invasive or Conservative Management of Stable Coronary Disease"
   date: 2022-11-06
-  journalName: Circulation
+  journalName: "Circulation"
   url: https://www.ahajournals.org/doi/10.1161/CIRCULATIONAHA.122.062714
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Whole genome sequence association analysis of brain structural volume measures in the NHLBI TOPMed Program highlights novel loci in diverse participants"
   date: 2025-06-13
-  journalName: medRxiv
+  journalName: "medRxiv"
   url: https://pubmed.ncbi.nlm.nih.gov/40568677/
+  status: "PrePrint"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Preventive effect of vaccination on long COVID in adolescents with SARS-CoV-2 infection"
   date: 2025-12-05
-  journalName: Vaccine
-  url: https://www.sciencedirect.com/science/article/pii/S0264410X25012046?via%3Dihub
+  journalName: "Vaccine"
+  url: https://www.sciencedirect.com/science/article/pii/S0264410X25012046
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Effects of Maternal Feeding Style and Child Eating Behaviors on Body Mass Index in Young Children in the Hispanic Community Health Study/Study of Latinos Family Lifestyle Outcomes Research Study"
   date: 2026-01-01
-  journalName: Current Developments in Nutrition
+  journalName: "Current Developments in Nutrition"
   url: https://cdn.nutrition.org/article/S2475-2991(25)03073-2/fulltext
+  status: "Published"
+  researchArea:
+    - "Other"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Long COVID trajectories in the prospectively followed RECOVER-Adult US cohort"
   date: 2025-11-17
-  journalName: Nature Communications
+  journalName: "Nature Communications"
   url: https://www.nature.com/articles/s41467-025-65239-4
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "A multi-ethnic polygenic risk score for chronic kidney disease is associated with increased risk of hypertension in African American individuals"
   date: 2025-09-26
-  journalName: BMC Nephrology
+  journalName: "BMC Nephrology"
   url: https://link.springer.com/article/10.1186/s12882-025-04425-4
+  status: "PrePrint"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Transthyretin Cardiac Amyloidosis in Older Black and Hispanic Individuals With Heart Failure"
   date: 2025-09-10
-  journalName: JAMA Cardiology
-  url: https://jamanetwork.com/journals/jamacardiology/article-abstract/2838853#250577066
+  journalName: "JAMA Cardiology"
+  url: https://jamanetwork.com/journals/jamacardiology/article-abstract/2838853
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "2D Speckle Tracking Strain Echocardiography in Multisystem Inflammatory Syndrome in Children: A Multicenter Analysis From the MUSIC Study"
   date: 2025-09-03
   journalName: "Circulation: Cardiovascular Imaging"
   url: https://www.ahajournals.org/doi/10.1161/CIRCIMAGING.124.017620
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Molecular Phenogroups in Heart Failure: Large-Scale Proteomics in a Population-Based Cohort"
   date: 2025-07-16
   journalName: "Circulation: Genomic and Precision Medicine"
   url: https://www.ahajournals.org/doi/10.1161/CIRCGEN.124.004953
--
-  title: "CureSCi Metadata Catalog-finding and harmonizing studies for secondary analysis of hydroxyurea use for sickle cell disease"
-  date: 2024-08-19
-  journalName: bioRxiv
-  url: https://doi.org/10.1371/journal.pone.0309572
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Genetic Architecture and Analysis Practices of Circulating Metabolites in the NHLBI Trans-Omics for Precision Medicine (TOPMed) Program"
   date: 2025-11-06
-  journalName: American Journal of Human Genetics
+  journalName: "American Journal of Human Genetics"
   url: http://dx.doi.org/10.1016/j.ajhg.2025.08.022
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Associations of Prepandemic Lung Function and Structure with COVID-19 Outcomes: The C4R Study"
   date: 2025-07-01
-  journalName: American Journal of Respiratory and Critical Care Medicine
+  journalName: "American Journal of Respiratory and Critical Care Medicine"
   url: https://doi.org/10.1164/rccm.202408-1656OC
+  status: "Published"
+  researchCommunity:
+    - "C4R"
+  researchArea:
+    - "Lung"
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Predicting heart failure from 12-lead ECGs using AI"
   date: 2026-03-03
-  journalName: Journal of the American College of Cardiology
+  journalName: "Journal of the American College of Cardiology"
   url: https://doi.org/10.1016/j.jacc.2025.10.065
+  status: "Published"
+  researchCommunity:
+    - "HeartShare"
+  researchArea:
+    - "Heart"
+    - "AI/ML"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Metagenomic Study of the MESA: Detection of Gemella Morbillorum and Association With Coronary Heart Disease"
   date: 2024-10-01
-  journalName: Journal of the American Heart Association
+  journalName: "Journal of the American Heart Association"
   url: https://doi.org/10.1161/jaha.124.035693
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "An individualized Bayesian method for estimating genomic variants of hypertension"
   date: 2023-11-07
-  journalName: BMC Genomics
+  journalName: "BMC Genomics"
   url: https://doi.org/10.1186/s12864-023-09757-9
+  status: "Published"
+  researchArea:
+    - "Blood"
+    - "Genetics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Towards self-describing and FAIR bulk formats for biomedical data"
   date: 2023-03-13
-  journalName: PLoS Computational Biology
+  journalName: "PLoS Computational Biology"
   url: https://doi.org/10.1371/journal.pcbi.1010944
+  status: "Published"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Leveraging TOPMed Imputation Server and Constructing a Cohort-Specific Imputation Reference Panel to Enhance Genotype Imputation among Cystic Fibrosis Patients"
   date: 2022-01-11
-  journalName: HGG Advances
+  journalName: "HGG Advances"
   url: https://doi.org/10.1016/j.xhgg.2022.100090
+  status: "Published"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Secondary Neoplasms After Hematopoietic Cell Transplant for Sickle Cell Disease"
   date: 2023-01-09
-  journalName: Journal of Clinical Oncology
+  journalName: "Journal of Clinical Oncology"
   url: https://doi.org/10.1200/jco.22.01203
+  status: "Published"
+  researchCommunity:
+    - "Cure Sickle Cell"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Centralized clinical research operations reporting for a multi-network, multi-study research program: The NHLBI COVID-19 CONNECTS experience"
   date: 2025-11-11
-  journalName: Journal of Clinical and Translational Science
+  journalName: "Journal of Clinical and Translational Science"
   url: https://doi.org/10.1017/cts.2025.10189
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Sleep and Big Data: harnessing data, technology, and analytics for monitoring sleep and improving diagnostics, prediction, and interventions—an era for Sleep-Omics?"
   date: 2021-04-24
-  journalName: Sleep
+  journalName: "Sleep"
   url: https://doi.org/10.1093/sleep/zsab107
+  status: "Published"
+  researchCommunity:
+    - "NSRR"
+  researchArea:
+    - "Sleep"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Data sharing in the PRIMED consortium: Design, implementation, and recommendations for future policymaking"
   date: 2025-08-07
-  journalName: American Journal of Human Genetics
+  journalName: "American Journal of Human Genetics"
   url: https://doi.org/10.1016/j.ajhg.2025.06.004
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Management"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Streamlining large-scale genomic data management: Insights from the UK Biobank whole-genome sequencing data"
   date: 2025-12-10
-  journalName: Cell Genomics
+  journalName: "Cell Genomics"
   url: https://doi.org/10.1016/j.xgen.2025.101009
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Integrating whole genome and transcriptome sequencing to characterize the genetic architecture of isoform variation"
   date: 2025-11-22
-  journalName: Nature Communications
+  journalName: "Nature Communications"
   url: https://doi.org/10.1038/s41467-025-64336-8
+  status: "Published"
+  researchArea:
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Relationships among host genetics, gut microbiota, and asthma in US Hispanic/Latino adults"
   date: 2025-11-20
-  journalName: Nature Communications
+  journalName: "Nature Communications"
   url: https://www.nature.com/articles/s41467-025-65028-z
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Lung"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "PIC-SURE: an open-source platform for integrating clinical and genomic data"
   date: 2025-12-30
-  journalName: npj Digital Medicine
+  journalName: "npj Digital Medicine"
   url: https://www.nature.com/articles/s41746-025-02284-9
+  status: "Published"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Multimodal data curation via interoperability: use cases with the Medical Imaging and Data Resource Center"
   date: 2025-08-01
-  journalName: Scientific Data
+  journalName: "Scientific Data"
   url: https://www.nature.com/articles/s41597-025-05678-2
+  status: "Published"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Whole genome sequencing based analysis of inflammation biomarkers in the Trans-Omics for Precision Medicine (TOPMed) consortium"
   date: 2024-08-06
-  journalName: Human Molecular Genetics
+  journalName: "Human Molecular Genetics"
   url: https://pubmed.ncbi.nlm.nih.gov/38747556/
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genetics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Standardized Measurement of Type 1 Diabetes Polygenic Risk Across Multiancestry Population Cohorts"
   date: 2025-04-23
-  journalName: Diabetes Care
+  journalName: "Diabetes Care"
   url: https://doi.org/10.2337/dc25-0142
+  status: "Published"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Sequencing in over 50,000 cases identifies coding and structural variation underlying atrial fibrillation risk"
   date: 2025-03-06
-  journalName: Nature Genetics
+  journalName: "Nature Genetics"
   url: https://www.nature.com/articles/s41588-025-02074-9
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Best Practices for Clinical Trials Data Harmonization and Sharing on NHLBI BioData Catalyst (BDC) Learned from CONNECTS Network COVID-19 Studies"
   date: 2025-03-26
-  journalName: Journal of Clinical and Translational Science
-  url: https://www.cambridge.org/core/services/aop-cambridge-core/content/view/790583F6D473634FD94995324A361752/S2059866125000524a.pdf/best-practices-for-clinical-trials-data-harmonization-and-sharing-on-nhlbi-biodata-catalyst-bdc-learned-from-connects-network-covid-19-studies.pdf
+  journalName: "Journal of Clinical and Translational Science"
+  url: https://www.cambridge.org/core/services/aop-cambridge-core/content/view/790583F6D473634FD94995324A361752/S2059866125000524a.pdf
+  status: "Published"
+  researchCommunity:
+    - "Other"
+  researchArea:
+    - "Management"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Classifying COVID-19 hospitalizations in epidemiology cohort studies: The C4R study"
   date: 2025-02-10
-  journalName: PLOS One
+  journalName: "PLOS One"
   url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0316198
+  status: "Published"
+  researchCommunity:
+    - "C4R"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Whole-genome sequencing uncovers two loci for coronary artery calcification and identifies ARSE as a regulator of vascular calcification"
   date: 2023-12-04
-  journalName: Nature Cardiovascular Research
+  journalName: "Nature Cardiovascular Research"
   url: https://pubmed.ncbi.nlm.nih.gov/38817323/
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Novel risk loci encompassing genes influencing STAT3, GPCR, and oxidative stress signaling are associated with co-morbid GERD and COPD"
   date: 2025-02-07
-  journalName: PLOS Genetics
-  url: https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1011531#abstract0
+  journalName: "PLOS Genetics"
+  url: https://journals.plos.org/plosgenetics/article?id=10.1371/journal.pgen.1011531
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Lung"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "The Circulating Renin-Angiotensin System and Mortality among Patients Hospitalized for COVID-19: A Mechanistic Substudy of the ACTIV-4 Host Tissue Trials"
   date: 2025-01-24
-  journalName: American Journal of Physiology
+  journalName: "American Journal of Physiology"
   url: https://journals.physiology.org/doi/epdf/10.1152/ajplung.00372.2024
+  status: "Published"
+  researchCommunity:
+    - "Bench2Bassinet"
+  researchArea:
+    - "Lung"
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Type 1 diabetes genetic risk score variation across ancestries using whole genome sequencing and array-based approaches"
   date: 2024-12-28
-  journalName: Nature
+  journalName: "Nature"
   url: https://www.nature.com/articles/s41598-024-82278-x
-- title: "Increased frequency of repeat expansion mutations across different populations"
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
+-
+  title: "Increased frequency of repeat expansion mutations across different populations"
   date: 2024-10-01
-  journalName: Nature Medicine
+  journalName: "Nature Medicine"
   url: https://www.nature.com/articles/s41591-024-03190-5
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Genetic determinants and phenotypic consequences of blood T-cell proportions in 207,000 diverse individuals"
   date: 2024-08-07
-  journalName: Nature Communications
+  journalName: "Nature Communications"
   url: https://www.nature.com/articles/s41467-024-51095-1
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "The National Sleep Research Resource: making data findable, accessible, interoperable, reusable and promoting sleep science"
   date: 2024-04-30
-  journalName: SLEEP
+  journalName: "SLEEP"
   url: https://academic.oup.com/sleep/advance-article-abstract/doi/10.1093/sleep/zsae088/7660531
+  status: "Published"
+  researchCommunity:
+    - "NSRR"
+  researchArea:
+    - "Sleep"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Elucidating a genomic signature associated with behavioral and executive function after moderate to severe pediatric TBI: a systems biology informed approach"
   date: 2024-04-24
-  journalName: Frontiers in Systems Biology
+  journalName: "Frontiers in Systems Biology"
   url: https://www.frontiersin.org/journals/systems-biology/articles/10.3389/fsysb.2024.1293265
 -
   title: "Discrimination, smoking, and cardiovascular disease risk: A moderated mediation analysis with the Multi-Ethnic Study of Atherosclerosis"
   date: 2024-02-23
-  journalName: Journal of the American Heart Association
+  journalName: "Journal of the American Heart Association"
   url: https://www.ahajournals.org/doi/full/10.1161/JAHA.123.032659
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Novel functional insights into ischemic stroke biology provided by the first genome-wide association study of stroke in indigenous Africans"
   date: 2024-02-05
-  journalName: Genome Medicine
+  journalName: "Genome Medicine"
   url: https://link.springer.com/article/10.1186/s13073-023-01273-5
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Building a collaborative cloud platform to accelerate heart, lung, blood, and sleep research"
   date: 2023-06-20
-  journalName: Journal of American Medical Informatics Association
+  journalName: "Journal of American Medical Informatics Association"
   url: https://pubmed.ncbi.nlm.nih.gov/37192819/
+  status: "Published"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "Management"
+    - "Technology"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Deep learning on graphs for multi-omics classification of COPD"
   date: 2023-04-21
-  journalName: PLOS One
+  journalName: "PLOS One"
   url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0284563
+  status: "Published"
+  researchArea:
+    - "Technology"
+    - "Lung"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Identification of novel and rare variants associated with handgrip strength using whole genome sequence data from the NHLBI Trans-Omics in Precision Medicine (TOPMed) Program"
   date: 2021-07-02
-  journalName: PLOS One
+  journalName: "PLOS One"
   url: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0253611
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "BinomiRare: A robust test for association of a rare genetic variant with a binary outcome for mixed models and any case-control proportion"
   date: 2021-07-08
-  journalName: Human Genetics and Genomics Advances
-  url: https://www.sciencedirect.com/science/article/pii/S266624772100021X?via%3Dihub
+  journalName: "Human Genetics and Genomics Advances"
+  url: https://www.sciencedirect.com/science/article/pii/S266624772100021X
+  status: "Published"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Investigating Gene–Diet Interactions Impacting the Association Between Macronutrient Intake and Glycemic Traits"
   date: 2023-02-15
-  journalName: Diabetes
-  url: https://diabetesjournals.org/diabetes/article-abstract/72/5/653/148451/Investigating-Gene-Diet-Interactions-Impacting-the?redirectedFrom=fulltext
+  journalName: "Diabetes"
+  url: https://diabetesjournals.org/diabetes/article-abstract/72/5/653/148451
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "STAAR workflow: a cloud-based workflow for scalable and reproducible rare variant analysis"
   date: 2022-05-26
-  journalName: Bioinformatics
-  url: https://academic.oup.com/bioinformatics/article/38/11/3116/6571143?login=false
+  journalName: "Bioinformatics"
+  url: https://academic.oup.com/bioinformatics/article/38/11/3116/6571143
+  status: "Published"
+  researchArea:
+    - "Technology"
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Dug: a semantic search engine leveraging peer-reviewed knowledge to query biomedical data repositories"
   date: 2022-06-13
-  journalName: Bioinformatics
-  url: https://academic.oup.com/bioinformatics/article/38/12/3252/6571145?login=false
+  journalName: "Bioinformatics"
+  url: https://academic.oup.com/bioinformatics/article/38/12/3252/6571145
+  status: "Published"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "AI/ML"
+    - "Technology"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Elucidating the genetic architecture of DNA methylation to identify promising molecular mechanisms of disease"
   date: 2022-11-15
-  journalName: Scientific Reports
+  journalName: "Scientific Reports"
   url: https://www.nature.com/articles/s41598-022-24100-0
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "Whole genome DNA and RNA sequencing of whole blood elucidates the genetic architecture of gene expression underlying a wide range of diseases"
   date: 2022-11-23
-  journalName: Scientific Reports
+  journalName: "Scientific Reports"
   url: https://www.nature.com/articles/s41598-022-24611-w
+  status: "Published"
+  researchArea:
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition (Data Access and/or Storage)"
 -
   title: "The genetic determinants of recurrent somatic mutations in 43,693 blood genomes"
   date: 2023-04-26
-  journalName: Science Advances
+  journalName: "Science Advances"
   url: https://www.science.org/doi/10.1126/sciadv.abm4945
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Cloud-based biomedical data storage and analysis for genomic research: Landscape analysis of data governance in emerging NIH-supported platforms"
   date: 2023-04-11
-  journalName: HGG Advances
+  journalName: "HGG Advances"
   url: https://www.cell.com/hgg-advances/fulltext/S2666-2477(23)00028-3
+  status: "Published"
+  researchCommunity:
+    - "Not Applicable"
+  researchArea:
+    - "Management"
+  bdcContribution:
+    - "Standards/Practices"
 -
   title: "Direct estimation of regional lung volume change from paired and single CT images using residual regression neural network"
   date: 2023-03-17
-  journalName: Medical Physics
+  journalName: "Medical Physics"
   url: https://doi.org/10.1002/mp.16365
+  status: "Published"
+  researchArea:
+    - "AI/ML"
+    - "Lung"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Genetic Modifiers of Cystic Fibrosis Lung Disease Severity: Whole-Genome Analysis of 7,840 Patients"
   date: 2023-02-27
-  journalName: American Journal of Respiratory and Critical Care Medicine
+  journalName: "American Journal of Respiratory and Critical Care Medicine"
   url: https://www.atsjournals.org/doi/full/10.1164/rccm.202209-1653OC
+  status: "Published"
+  researchArea:
+    - "Lung"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Powerful, scalable and resource-efficient meta-analysis of rare variant associations in large whole genome sequencing studies"
   date: 2022-12-23
-  journalName: Nature Genetics
+  journalName: "Nature Genetics"
   url: https://www.nature.com/articles/s41588-022-01225-6
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Whole genome sequencing identifies structural variants contributing to hematologic traits in the NHLBI TOPMed program"
   date: 2022-12-08
-  journalName: Nature Communications
+  journalName: "Nature Communications"
   url: https://www.nature.com/articles/s41467-022-35354-7
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Global perspectives on CYP2D6 associations with primaquine metabolism and Plasmodium vivax radical cure"
   date: 2022-11-15
-  journalName: Frontiers in Pharmacology
+  journalName: "Frontiers in Pharmacology"
   url: https://www.frontiersin.org/articles/10.3389/fphar.2022.752314/full
+  status: "Published"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "GAWMerge expands GWAS sample size and diversity by combining array-based genotyping and whole-genome sequencing"
   date: 2022-08-11
-  journalName: Communications Biology
+  journalName: "Communications Biology"
   url: https://www.nature.com/articles/s42003-022-03738-6
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "AFA: Ancestry-specific allele frequency estimation in admixed populations: The Hispanic Community Health Study/Study of Latinos"
   date: 2022-04-14
-  journalName: Human Genetics and Genomics Advances
-  url: https://www.sciencedirect.com/science/article/pii/S2666247722000124?via%3Dihub
+  journalName: "Human Genetics and Genomics Advances"
+  url: https://www.sciencedirect.com/science/article/pii/S2666247722000124
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Blood"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
-  title: An Augmented High-Dimensional Graphical Lasso Method to Incorporate Prior Biological Knowledge for Global Network Learning
+  title: "An Augmented High-Dimensional Graphical Lasso Method to Incorporate Prior Biological Knowledge for Global Network Learning"
   date: 2022-01-27
-  journalName: Frontiers in Genetics
+  journalName: "Frontiers in Genetics"
   url: https://www.frontiersin.org/articles/10.3389/fgene.2021.760299/full
+  status: "Published"
+  researchArea:
+    - "AI/ML"
+    - "Technology"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Streamlining statistical reproducibility: NHLBI ORCHID clinical trial results reproduction"
   date: 2022-01-14
-  journalName: JAMIA OPEN
+  journalName: "JAMIA OPEN"
   url: https://academic.oup.com/jamiaopen/article/5/1/ooac001/6507447
+  status: "Published"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
-  title: Pangenomics enables genotyping of known structural variants in 5202 diverse genomes
+  title: "Pangenomics enables genotyping of known structural variants in 5202 diverse genomes"
   date: 2021-12-17
-  journalName: Science
+  journalName: "Science"
   url: https://www.science.org/doi/10.1126/science.abg8871
+  status: "Published"
+  researchArea:
+    - "Technology"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
-  title: Identifying miRNA-mRNA Networks Associated With COPD Phenotypes
+  title: "Identifying miRNA-mRNA Networks Associated With COPD Phenotypes"
   date: 2021-10-28
-  journalName: Frontiers in Genetics
+  journalName: "Frontiers in Genetics"
   url: https://www.frontiersin.org/articles/10.3389/fgene.2021.748356/full
+  status: "Published"
+  researchArea:
+    - "Lung"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
-  title: Multiethnic genome-wide and HLA association study of total serum IgE level
+  title: "Multiethnic genome-wide and HLA association study of total serum IgE level"
   date: 2021-09-13
-  journalName: The Journal of Allergy and Clinical Immunology
+  journalName: "The Journal of Allergy and Clinical Immunology"
   url: https://www.jacionline.org/article/S0091-6749(21)01397-X/fulltext
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
 -
   title: "Genome Wide Association Analysis of Iron Overload in the Trans-Omics for Precision Medicine (TOPMed) Sickle Cell Disease Cohorts"
   date: 2020-11-05
   journalName: "Blood | American Society of Hematology"
   url: https://ashpublications.org/blood/article/136/Supplement%201/52/472221/Genome-Wide-Association-Analysis-of-Iron-Overload
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"

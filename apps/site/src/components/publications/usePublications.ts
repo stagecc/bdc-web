@@ -42,7 +42,6 @@ export function usePublications(publications: Publication[]) {
   const filtered = useMemo(() => {
     let result = publications;
 
-    // Apply filters first
     if (filters.year.length > 0) {
       result = result.filter((pub) =>
         filters.year.includes(String(new Date(pub.date).getFullYear())),
@@ -66,7 +65,6 @@ export function usePublications(publications: Publication[]) {
       );
     }
 
-    // Then search within filtered set
     if (search.trim()) {
       const term = search.trim().toLowerCase();
       result = result.filter(
@@ -78,7 +76,6 @@ export function usePublications(publications: Publication[]) {
       );
     }
 
-    // Then sort
     result = [...result].sort((a, b) => {
       switch (sort) {
         case 'most-recent':
@@ -97,7 +94,6 @@ export function usePublications(publications: Publication[]) {
     return result;
   }, [publications, search, filters, sort]);
 
-  // Reset visible count when search/filters/sort change
   const visible = useMemo(() => {
     return filtered.slice(0, visibleCount);
   }, [filtered, visibleCount]);
@@ -132,15 +128,13 @@ export function usePublications(publications: Publication[]) {
     setVisibleCount(PAGE_SIZE);
   }
 
-  // Derive filter options with counts from the currently filtered set
-  // (ignoring the filter dimension being counted, so counts reflect other active filters)
   const filterOptions = useMemo(() => {
-    // Seed all known values from the full dataset with 0 counts
     const years = new Map<string, number>();
     const researchCommunities = new Map<string, number>();
     const researchAreas = new Map<string, number>();
     const bdcContributions = new Map<string, number>();
 
+    // Seed all known values from the full dataset with 0 counts
     for (const pub of publications) {
       const year = String(new Date(pub.date).getFullYear());
       if (!years.has(year)) years.set(year, 0);
@@ -266,7 +260,28 @@ export function usePublications(publications: Publication[]) {
       }
     }
 
-    return { years, researchCommunities, researchAreas, bdcContributions };
+    // Sort years descending
+    const sortedYears = new Map(
+      [...years.entries()].sort((a, b) => Number(b[0]) - Number(a[0])),
+    );
+
+    // Sort everything else by count descending
+    const sortedCommunities = new Map(
+      [...researchCommunities.entries()].sort((a, b) => b[1] - a[1]),
+    );
+    const sortedAreas = new Map(
+      [...researchAreas.entries()].sort((a, b) => b[1] - a[1]),
+    );
+    const sortedOrgs = new Map(
+      [...bdcContributions.entries()].sort((a, b) => b[1] - a[1]),
+    );
+
+    return {
+      years: sortedYears,
+      researchCommunities: sortedCommunities,
+      researchAreas: sortedAreas,
+      bdcContributions: sortedOrgs,
+    };
   }, [publications, search, filters]);
 
   const hasActiveFilters = Object.values(filters).some((f) => f.length > 0);

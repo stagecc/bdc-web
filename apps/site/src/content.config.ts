@@ -65,7 +65,7 @@ const publications = defineCollection({
     date: z.coerce.date(),
     journalName: z.string(),
     url: z.string(),
-    status: z.enum(['Published', 'Preprint', 'Other']).optional(),
+    status: z.enum(['Published', 'PrePrint', 'Other']).optional(),
     bdcContribution: z.array(z.string()).optional(),
     researchArea: z.array(z.string()).optional(),
     researchCommunity: z.array(z.string()).optional(),

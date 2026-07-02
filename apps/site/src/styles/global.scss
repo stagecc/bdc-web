@@ -20,3 +20,8 @@ h3 {
 h4 {
   font-size: clamp(1.125rem, 1.8vw, 1.5rem);
 }
+.usa-search__input--no-button {
+  border-right: 1px solid !important;
+  border-bottom-right-radius: 2px !important;
+  border-top-right-radius: 2px !important;
+}
