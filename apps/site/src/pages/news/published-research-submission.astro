@@ -1,0 +1,67 @@
+---
+/**
+ * Published Research Submission Form
+ *
+ * Fetches form field configuration from Freshdesk at build time and passes
+ * it to DynamicForm as props. The form itself renders as a React island
+ * (client:load) so React Hook Form can handle validation and submission
+ * state in the browser.
+ *
+ * If the Freshdesk API is unreachable at build time, formError is set to
+ * true and DynamicForm renders a fallback message instead of a broken form.
+ *
+ * Environment variables required:
+ *   FRESHDESK_FORM_PUBLISHED_RESEARCH — Freshdesk form ID
+ *   FRESHDESK_PROXY_URL               — Lambda proxy endpoint for ticket submission
+ */
+
+import Base from '@layouts/Base.astro';
+import DynamicForm from '@components/forms/DynamicForm.tsx';
+import { getFormFields } from '../../util/freshdesk/getFormFields';
+import type { FreshdeskField } from '../../util/freshdesk/types';
+
+let fields: FreshdeskField[] = [];
+let formError = false;
+
+try {
+  fields = await getFormFields(import.meta.env.FRESHDESK_FORM_PUBLISHED_RESEARCH);
+} catch (e) {
+  // Log at build time so the error is visible in CI/build output.
+  // DynamicForm will render the fallback UI for users.
+  console.error('Failed to fetch published research form fields:', e);
+  formError = true;
+}
+---
+
+<Base title="Submit BDC-Enabled Research" enableRecaptcha>
+  <section class="usa-section">
+    <div class="grid-container">
+      <div class="grid-row">
+        <div class="grid-col-12">
+
+          <h1>Submit BDC-Enabled Research</h1>
+
+          <p class="usa-intro">
+            {/*
+              TODO: Intro copy — confirm with content team.
+              Per UX spec: standalone form destinations may need more context
+              than the default "Enter the required information below" copy.
+            */}
+            Use this form to notify us of a publication that used our data or
+            resources. We'll add it to our published research record.
+          </p>
+
+          <DynamicForm
+            fields={fields}
+            formType="Published Research Submission"
+            submitUrl={import.meta.env.FRESHDESK_PROXY_URL}
+            recaptchaSiteKey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
+            error={formError}
+            client:load
+          />
+
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
