@@ -1,5 +1,5 @@
 ---
-import spriteUrl from '../assets/sprite.svg?url';
+import SharedIcon from '@bdc/ui-astro/icon/Icon.astro';
 
 interface Props {
   name: string;
@@ -8,19 +8,7 @@ interface Props {
   class?: string;
 }
 
-const { name, label, size, class: className = '' } = Astro.props;
-
-const isDecorative = !label;
-
-const sizeClass = size ? `usa-icon--size-${size}` : '';
+const props = Astro.props as Props;
 ---
 
-<svg
-  class={`usa-icon ${sizeClass} ${className}`}
-  aria-hidden={isDecorative ? 'true' : undefined}
-  role={isDecorative ? undefined : 'img'}
-  focusable="false"
->
-  {label && <title>{label}</title>}
-  <use href={`${spriteUrl}#${name}`} />
-</svg>
+<SharedIcon {...props} />

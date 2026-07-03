@@ -1,0 +1,94 @@
+---
+import Button from '../button/Button.astro';
+
+interface Props {
+  eyebrow?: string;
+  title: string;
+  description: string;
+  ctaLabel?: string;
+  ctaHref?: string;
+}
+
+const { eyebrow, title, description, ctaLabel, ctaHref } = Astro.props;
+const showButton = ctaLabel && ctaHref && ctaHref !== 'TBD';
+---
+
+<section class="two-column-feature home-section padding-y-10 border-top border-base-lighter">
+  <div class="grid-container">
+    <div class="two-column-feature__grid">
+      <div class="two-column-feature__media display-flex flex-align-center flex-justify-center" aria-hidden="true">
+        <div class="two-column-feature__media-plate"></div>
+      </div>
+
+      <div class="margin-y-auto">
+        {eyebrow && <p class="two-column-feature__eyebrow text-uppercase text-bold text-ls-2 font-sans-2xs text-primary margin-0 margin-bottom-2">{eyebrow}</p>}
+        <h2 class="two-column-feature__title text-primary-darker margin-0">{title}</h2>
+        <p class="two-column-feature__description margin-top-2 margin-bottom-3">{description}</p>
+        {showButton && (
+          <div class="display-flex flex-justify-center">
+            <Button to={ctaHref}>{ctaLabel}</Button>
+          </div>
+        )}
+        {!showButton && ctaLabel && (
+          <p class="margin-top-2 margin-bottom-0 text-base-light">{ctaLabel} (TBD)</p>
+        )}
+
+        <div class="margin-top-2">
+          <slot />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "@bdc/uswds-theme/src/uswds-init" as core;
+
+  $copy: core.core-color("blue-70");
+  $border-soft: core.core-color("blue-10");
+
+  .two-column-feature__grid {
+    align-items: stretch;
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: 1fr;
+  }
+
+  .two-column-feature__media {
+    background:
+      radial-gradient(circle at 82% 16%, rgb(236 173 87 / 14%) 0%, transparent 34%),
+      linear-gradient(145deg, #ebf6ff 0%, #f7fbff 100%);
+    border: 1px solid $border-soft;
+    border-radius: 16px;
+    min-height: 220px;
+    padding: 1rem;
+  }
+
+  .two-column-feature__media-plate {
+    background:
+      radial-gradient(circle at 14% 18%, rgb(31 132 173 / 34%) 0%, transparent 36%),
+      radial-gradient(circle at 80% 74%, rgb(84 173 255 / 26%) 0%, transparent 40%),
+      radial-gradient(circle at 62% 34%, rgb(246 172 87 / 18%) 0%, transparent 32%),
+      linear-gradient(135deg, #ddf0fb 0%, #ebf4ff 100%);
+    border-radius: 10px;
+    height: 100%;
+    min-height: 190px;
+    width: 100%;
+  }
+
+  .two-column-feature__description {
+    color: $copy;
+    max-width: 62ch;
+  }
+
+  @media (min-width: 64em) {
+    .two-column-feature__grid {
+      gap: 2rem;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+    }
+
+    .two-column-feature__media {
+      min-height: 280px;
+    }
+  }
+</style>

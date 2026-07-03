@@ -1,20 +1,12 @@
 ---
-import { isExternalUrl } from '../../util/url';
+import SharedLink from '@bdc/ui-astro/link/Link.astro';
 
 interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   to: string;
+  inheritColor?: boolean;
 }
 
-const { to, class: className, className: classNameProp, ...rest } = Astro.props;
-const isExternal = isExternalUrl(to);
-const classes = [
-  className,
-  classNameProp,
-  'usa-link',
-  isExternal && 'usa-link--external',
-]
-  .filter(Boolean)
-  .join(' ');
+const props = Astro.props as Props;
 ---
 
-<a href={to} class={classes} {...isExternal && { rel: 'noopener', target: '_blank' }} {...rest}><slot /></a>
+<SharedLink {...props}><slot /></SharedLink>

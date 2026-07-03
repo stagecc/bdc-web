@@ -1,186 +1,506 @@
 ---
 import { getCollection } from 'astro:content';
 import Button from '@components/Button.astro';
-import Card from '@components/Card.astro';
-import EventsList from '@components/events/EventsList.astro';
-import Icon from '@components/Icon.astro';
-import Hero from '@components/layout/Hero.astro';
-import BlockLink from '@components/link/BlockLink.astro';
-import Link from '@components/link/Link.astro';
-import NewsList from '@components/news/NewsList.astro';
-import Testimonial from '@components/Testimonial.astro';
+import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
+import HappeningCard from '@components/cards/HappeningCard.astro';
+import CardCta from '@bdc/ui-astro/card/CardCta.astro';
+import CardCopy from '@bdc/ui-astro/card/CardCopy.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
+import QuoteCard from '@components/cards/QuoteCard.astro';
+import ProcessSteps from '@components/home/ProcessSteps.astro';
+import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
+import TwoColumnSection from '@bdc/ui-astro/layout/TwoColumnSection.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import Icon from '@components/Icon.astro';
+import Link from '@components/link/Link.astro';
 import programs from '@content/programs.json';
 import Base from '@layouts/Base.astro';
 import { slugify } from '../util/slugify';
 
-// fetch and sort recent news & events
 const news = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 2);
-const events = (await getCollection('events'))
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 2)
-  .map((event) => ({ event, excerpt: null }));
+  .slice(0, 3);
 
-// find latest publication
+const upcomingEvents = (await getCollection('events'))
+  .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
+  .filter((event) => event.data.date >= new Date());
+
+const events = (
+  upcomingEvents.length > 0
+    ? upcomingEvents
+    : (await getCollection('events')).sort(
+        (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+      )
+).slice(0, 3);
+
 const publications = (await getCollection('publications')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
-const latestPublication = publications[0].data;
+const featuredPublications = publications.slice(0, 2).map((publication) => publication.data);
 
-// select random programs
-const randomPrograms = programs.sort(() => 0.5 - Math.random()).slice(0, 3);
+const featuredCommunities = programs.sort(() => 0.5 - Math.random()).slice(0, 4);
+
+const quickActions = [
+  {
+    icon: 'search',
+    title: 'Explore',
+    text: 'Learn where and how to search available datasets and review access requirements.',
+    href: '/data/explore',
+    cta: 'Explore data',
+  },
+  {
+    icon: 'lock_outline',
+    title: 'Confirm or request access',
+    text: 'Use your eRA Commons account for access to approved data or submit a DAR in dbGaP.',
+    href: '/data/explore#check-access',
+    cta: 'Check access',
+  },
+  {
+    icon: 'lock',
+    title: 'Analyze securely',
+    text: 'Work with data, tools, and workflows in a secure, FISMA-moderate cloud environment.',
+    href: '/data/analyze',
+    cta: 'Analyze data',
+  },
+  {
+    icon: 'help_outline',
+    title: 'Get help',
+    text: 'Find documentation, office hours information, and support for working in BDC.',
+    href: '/help/contact-and-support',
+    cta: 'Get support',
+  },
+];
+
+const testimonials = [
+  {
+    quote:
+      'DESeq2 helped us identify expression changes quickly while keeping our workflow reproducible across teams.',
+    person: 'John K.',
+    affiliation: 'University of Michigan',
+  },
+  {
+    quote:
+      'The STAAR pipeline made variant analyses faster and gave our team confidence in each iteration.',
+    person: 'Casey G.',
+    affiliation: 'Stanford University',
+  },
+  {
+    quote:
+      'BDC workspaces reduced setup time dramatically, so we could focus on interpreting results instead of tooling.',
+    person: 'Sam R.',
+    affiliation: 'Harvard University',
+  },
+];
+
+const testimonialTones: Array<'secondary' | 'cool' | 'warm'> = ['secondary', 'cool', 'warm'];
+
+const lifecycleSteps = [
+  {
+    number: '01',
+    title: 'Find data',
+    description:
+      'Discover BDC-hosted datasets or identify data you are already authorized to use.',
+  },
+  {
+    number: '02',
+    title: 'Confirm or request access',
+    description:
+      'Use your eRA Commons account to access approved datasets or submit a DAR through dbGaP.',
+  },
+  {
+    number: '03',
+    title: 'Analyze securely',
+    description:
+      'Work with data, tools, and workflows in a secure, FISMA-moderate cloud environment.',
+  },
+  {
+    number: '04',
+    title: 'Advance and share research',
+    description:
+      'Collaborate, reproduce analyses, and publish research outputs across teams and institutions.',
+  },
+];
+
+const dateFormat = new Intl.DateTimeFormat('en-US', {
+  month: 'short',
+  day: 'numeric',
+  year: 'numeric',
+});
+
+const leadNews = news[0];
+const secondaryNews = news[1];
+const nextEvent = events[0];
 ---
 
 <Base title="BioData Catalyst">
-  <Hero
-    image="https://picsum.photos/1600"
-    title="Keeping data and analysis safe and secure"
-    text="NHLBI BioData Catalyst® (BDC) is a cloud-based ecosystem that offers Researchers data, analytic tools, applications, and workflows in secure workspaces"
-  />
-  <div class="grid-container">
-    <Card mediaPosition="left">
-      <div slot="content">
-        <h2 class="margin-0">What is BDC?</h2>
-        <p>
-          It is a <strong>community</strong> where researchers can find, access, store,
-          share, and analyze heart, lung, blood, and sleep data resources.
+  <div class="home-page">
+    <Hero
+      eyebrow="NHLBI BioData Catalyst (BDC)&#174;"
+      titleLines={['Explore data.', 'Run analyses.', 'Advance science.']}
+      description="BDC brings together NHLBI studies, cloud-based analysis tools, and secure collaborative workspaces for heart, lung, blood, and sleep research - from discovery to output."
+      primaryCta={{ label: 'Learn About BDC', href: '/about/bdc', variant: 'accent-warm' }}
+      tone="dark"
+    />
 
-          And it is one of NHLBI's data repositories, <strong>where researchers
-          share</strong> scientific data from NHLBI-funded research so they and others can
-          <strong>reproduce findings and reuse data</strong> to advance science.
+    <PageSection
+      eyebrow="Search Hosted Data"
+      title="Discover Data in BDC"
+      description="Search BDC-hosted data by disease, phenotype, biological process, or anatomical entity."
+      action={{ label: 'View All Ways to Explore Data', href: '/data/explore' }}
+    >
+      <div class="home-discover-search usa-search usa-search--big display-flex width-full">
+        <form class="usa-search__form display-flex width-full shadow-2" role="search" action="/search" method="get">
+          <label class="usa-sr-only" for="home-discover-search">Search BDC data</label>
+          <input
+            class="usa-input usa-search__input flex-1"
+            id="home-discover-search"
+            type="search"
+            name="q"
+            placeholder="Search BDC data"
+          />
+          <button class="usa-button usa-button--big usa-search__submit-button flex-shrink-0" type="submit">
+            <span class="usa-search__submit-text">Search BDC data</span>
+          </button>
+        </form>
+      </div>
+    </PageSection>
 
-          By increasing access to NHLBI data and innovative analytic capabilities,
-          <strong>BDC accelerates reproducible biomedical research</strong> to drive
-          scientific advances that can help prevent, diagnose, and treat heart, lung,
-          blood, and sleep disorders.
-        </p>
+    <PageSection
+      eyebrow="Get Started"
+      title="What Do You Want to Do?"
+      tone="muted"
+    >
+      <div class="grid-row grid-gap-2">
+        {quickActions.map((item) => (
+          <div class="tablet:grid-col-6 desktop:grid-col-3 margin-bottom-2">
+            <CardCta
+              icon={item.icon}
+              title={item.title}
+              text={item.text}
+              href={item.href}
+              cta={item.cta}
+            />
+          </div>
+        ))}
       </div>
 
-      <div slot="media">
-        <YouTubeEmbed id="enWIpA0aJb4" title="What is BioData Catalyst?" />
+      <div class="display-flex flex-justify-center flex-align-center margin-top-2 margin-bottom-0">
+        <IconBadge icon="attach_money" tone="cool" class="margin-right-1" />
+        <span>
+          Funding may be available for you to get started.&nbsp;
+          <Link to="/help/costs" class="text-bold">Learn about usage costs and funding</Link>.
+        </span>
       </div>
-    </Card>
+    </PageSection>
 
-    <section>
-      <h2 style={{ textAlign: 'center' }}>Get Started</h2>
-      <div class="grid-container padding-0">
-        <div class="grid-row">
-          <div class="tablet:grid-col-3 mobile-lg:grid-col-6 display-flex flex-justify-center flex-align-center padding-y-2">
-            <Link to="/use-bdc/explore"><Button size="big" icon="search">Explore</Button></Link>
-          </div>
-          <div class="tablet:grid-col-3 mobile-lg:grid-col-6 display-flex flex-justify-center flex-align-center padding-y-2">
-            <Link to="/use-bdc/analyze"><Button size="big" icon="assessment">Analyze</Button></Link>
-          </div>
-          <div class="tablet:grid-col-3 mobile-lg:grid-col-6 display-flex flex-justify-center flex-align-center padding-y-2">
-            <Link to="/use-bdc/share"><Button size="big" icon="share">Share</Button></Link>
-          </div>
-          <div class="tablet:grid-col-3 mobile-lg:grid-col-6 display-flex flex-justify-center flex-align-center padding-y-2">
-            <Link to="/use-bdc/explore#check-access"><Button size="big" icon="verified_user">Check Access</Button></Link>
+    <PageSection
+      title="How Research Comes to Life"
+      description="BDC is a research community where investigators can find, access, store, share, and analyze heart, lung, blood, and sleep data in secure cloud workspaces. As one of NHLBI's data repositories, BDC helps researchers share scientific data, reproduce findings, and reuse trusted resources to accelerate biomedical discovery."
+      centered
+      tone="dark"
+    >
+      <ProcessSteps steps={lifecycleSteps} />
+      <div class="margin-top-5 margin-bottom-0 text-center display-flex text-base-lightest flex-align-center flex-justify-center">
+        <Icon name="youtube" size={4} class="margin-right-1" />
+        <span class="text-bold margin-right-1">New to BDC?</span>{' '}
+        <button
+          type="button"
+          class="usa-button usa-button--unstyled text-bold text-base-lightest hover:text-base-light text-underline"
+          data-open-modal
+          aria-controls="home-overview-video-modal"
+        >
+          Watch the two-minute overview
+        </button>.
+      </div>
+
+      <div
+        class="usa-modal-wrapper is-hidden"
+        id="home-overview-video-modal"
+        aria-hidden="true"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="home-overview-video-title"
+      >
+        <div class="usa-modal-overlay" tabindex="-1">
+          <div class="usa-modal usa-modal--lg">
+            <div class="usa-modal__content">
+              <div class="usa-modal__main">
+                <h2 id="home-overview-video-title" class="usa-modal__heading">BDC Two-Minute Overview</h2>
+                <YouTubeEmbed id="enWIpA0aJb4" title="BDC two-minute overview" />
+              </div>
+              <button class="usa-button usa-modal__close" type="button" aria-label="Close video dialog" data-close-modal>
+                <Icon name="close" size={4} />
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </section>
+    </PageSection>
 
-    <section class="margin-y-10">
-      Data on BDC?
-    </section>
+    <PageSection
+      eyebrow="BDC Research Communities"
+      title="Explore Data by Research Community"
+      action={{ label: 'View All Communities', href: '/about/research-communities' }}
+      tone="muted"
+    >
+      <div class="grid-row grid-gap-3 margin-bottom-neg-3">
+        {featuredCommunities.map((program, index) => (
+          <div class="tablet:grid-col-6 desktop:grid-col-6 flex-align-stretch margin-bottom-3">
+            <ResearchCommunityCard
+              mediaVariant={Math.min(index + 1, 4) as 1 | 2 | 3 | 4}
+              title={program.key}
+              description="Approved datasets and tools for this research community."
+              badgeLabel={program.description}
+              metric={`${program.doc_count} dataset${program.doc_count === 1 ? '' : 's'}`}
+              href={`/about/studies/${slugify(program.key)}`}
+            />
+          </div>
+        ))}
+      </div>
 
-    <section class="margin-y-10">
-      <h2>Featured Datasets</h2>
-      <div class="grid-container padding-0">
-        <div class="grid-row grid-gap">
-          {
-            randomPrograms.map((study) => (
-              <div class="flex-center tablet:grid-col">
-                <div class="border border-base-lighter radius-lg display-flex flex-column padding-2">
-                  <Link to={ `/about/studies/${ slugify(study.key) }` }>{study.key}</Link>
-                  <p>
-                    Culpa est consequat reprehenderit commodo ut aliquip aliqua sed anim dolor occaecat in enim quis et.
-                    In enim minim veniam id irure culpa adipisicing sed aute sed.
-                  </p>
-                </div>
+      <p class="margin-y-2 display-flex flex-justify-center">
+        <Link class="text-bold" to="/about/studies">Explore data from all Research Communities</Link>
+      </p>
+    </PageSection>
+
+    {
+      featuredPublications.length > 0 && (
+        <PageSection
+          eyebrow="BDC-Enabled Publications"
+          title="Featured Research"
+          description="Read the most recent publications coming from BDC."
+          action={{ label: 'View All Publications', href: '/news/bdc-enabled-research' }}
+          tone="highlight"
+        >
+          <div class="display-flex flex-column">
+            {featuredPublications.map((publication) => (
+              <div class="margin-bottom-2">
+                <CardCopy
+                  eyebrow="Recent Publication"
+                  title={publication.title}
+                  description={`Published in ${publication.journalName} on ${dateFormat.format(publication.date)}`}
+                  href={publication.url}
+                  linkLabel="View Publication"
+                />
               </div>
-            ))
+            ))}
+          </div>
+        </PageSection>
+      )
+    }
+
+    <TwoColumnSection
+      eyebrow="Courses & Training"
+      title="BDC for Academic Settings & Trainees"
+      description="Use real or synthetic biomedical datasets and cloud-based analysis tools to support courses, workshops, trainee programs, and early-career research development."
+      ctaLabel="Explore BDC for Course and Training"
+      ctaHref="/about/courses-and-training"
+    >
+      <div class="display-flex flex-justify-center flex-align-center margin-top-2 margin-bottom-0">
+        <IconBadge icon="attach_money" tone="cool" class="margin-right-1" />
+        <span>
+          Funding may be available for academic use.&nbsp;
+          <Link to="/help/costs" class="text-bold">Learn more</Link>.
+        </span>
+      </div>
+    </TwoColumnSection>
+
+    <PageSection
+      eyebrow="News & Events"
+      title="What's Happening"
+      tone="muted"
+    >
+      <div class="grid-row grid-gap-3 flex-align-stretch">
+        <div class="tablet:grid-col-6 margin-bottom-2 tablet:margin-bottom-0">
+          {
+            leadNews && (
+              <HappeningCard
+                kind="news"
+                lead
+                meta={`Published · ${dateFormat.format(leadNews.data.date)}`}
+                title={leadNews.data.title}
+                summary={leadNews.data.subtitle ?? 'Lorem ipsum non eiusmod magna dolore irure laborum ad id voluptate do occaecat deserunt dolor duis officia mollit ex fugiat. Labore duis id commodo pariatur labore ut sint duis in excepteur consectetur in.'}
+                href={`/news/latest-updates/${leadNews.id}/`}
+                linkLabel="View full update"
+              />
+            )
           }
         </div>
-      </div>
-      <BlockLink to="#" flex="end">View all Datasets</BlockLink>
-    </section>
 
-    <Card mediaPosition="right">
-      <div slot="content">
-        <h2>New Published Research</h2>
-        <Link to={latestPublication.url}>
-          {latestPublication.title}
-        </Link>
-        <ul class="usa-list usa-list--unstyled font-body-3xs">
-          <li>Published on {
-            latestPublication.date.toLocaleDateString(
-              'en-US',
-              { year: 'numeric', month: 'long', day: 'numeric' },
-          )}</li>
-          <li>Published in <em>{latestPublication.journalName}</em></li>
-        </ul>
-        <BlockLink to="/updates/publications">View all published research</BlockLink>
-      </div>
-
-      <div slot="media">
-        <img src="https://picsum.photos/800/500" class="radius-lg" alt="" />
-      </div>
-    </Card>
-
-    <section class="margin-y-10">
-      <div class="grid-container padding-0">
-        <div class="grid-row grid-gap">
-          <div class="tablet:grid-col">
-            <h2>What's new in BDC?</h2>
-            <NewsList items={news} />
-          </div>
-          <div class="tablet:grid-col">
-            <h2>Events</h2>
-            <EventsList items={events} />
-          </div>
-        </div>
-        <div class="grid-row grid-gap">
-          <div class="tablet:grid-col">
-            <BlockLink to="/news" flex="end">View all News</BlockLink>
-          </div>
-          <div class="tablet:grid-col">
-            <BlockLink to="/events" flex="end">View all Events</BlockLink>
-          </div>
-      </div>
-    </section>
-
-    <section class="margin-y-10">
-      <h2 style={{ textAlign: 'center' }}>
-        What BDC Investigators are working on
-      </h2>
-      <div class="grid-container padding-0 margin-top-8">
-        <div class="grid-row grid-gap-md">
-          <div class="tablet:grid-col-4">
-            <Testimonial
-              quote="I used DESeq2 for RNA-seq differential expression analysis and found significant gene expression changes after adjusting for batch effects. The results offered clear biological insight and strong validation. "
-              attribution='John K.'
-            />
-          </div>
-          <div class="tablet:grid-col-4">
-            <Testimonial
-              quote="I used the STAAR Pipeline for RNA-seq data and found novel gene-trait associations that validated our hypotheses. It made the analysis both efficient and reproducible."
-              attribution='Casey G.'
-            />
-          </div>
-          <div class="tablet:grid-col-4">
-            <Testimonial
-              quote="I used the STAAR Pipeline for genomic data analysis and found significant associations that I couldn’t detect before. It streamlined my workflow and gave me results I could trust."
-              attribution='Casey G.'
-            />
+        <div class="tablet:grid-col-6">
+          <div class="display-grid">
+            {
+              secondaryNews && (
+                <div class="margin-bottom-2">
+                  <HappeningCard
+                    kind="news"
+                    meta={`Published · ${dateFormat.format(secondaryNews.data.date)}`}
+                    title={secondaryNews.data.title}
+                    href={`/news/latest-updates/${secondaryNews.id}/`}
+                    linkLabel="View full update"
+                  />
+                </div>
+              )
+            }
+            {
+              nextEvent && (
+                <HappeningCard
+                  kind="event"
+                  meta={`Upcoming · ${dateFormat.format(nextEvent.data.date)}`}
+                  title={nextEvent.data.title}
+                  href={`/news/events/${nextEvent.id}/`}
+                  linkLabel="View event details"
+                />
+              )
+            }
           </div>
         </div>
       </div>
-      <BlockLink to="#" flex="end">Learn how researchers are using BDC</BlockLink>
-    </section>
+    </PageSection>
 
+    <PageSection
+      eyebrow="Testimonials"
+      title="What BDC Researchers Are Saying"
+      class="border-top border-bottom border-base-lighter"
+      tone="muted"
+    >
+      <div class="grid-row grid-gap-2">
+        {testimonials.map((testimonial, index) => (
+          <div class="tablet:grid-col-6 desktop:grid-col-4 margin-bottom-2 desktop:margin-bottom-0">
+            <QuoteCard
+              quote={testimonial.quote}
+              person={testimonial.person}
+              affiliation={testimonial.affiliation}
+              tone={testimonialTones[index % testimonialTones.length]}
+            />
+          </div>
+        ))}
+      </div>
+    </PageSection>
+
+    <section class="cta-band padding-y-10">
+      <div class="grid-container cta-band__inner display-grid flex-align-center gap-2">
+        <div>
+          <h2 class="margin-0 text-base-lightest">Ready to Work in BDC?</h2>
+          <p class="cta-band__description margin-top-1 margin-bottom-0">
+            Find data for your research or begin analyzing in a secure cloud workspace.
+          </p>
+        </div>
+        <div class="usa-button-group margin-y-6">
+          <Button to="/data/explore" variant="accent-warm">Explore BDC Data</Button>
+          <Button to="/data/analyze" variant="outline-inverse">Start Analyzing</Button>
+        </div>
+        <div>
+          <Link class="text-bold text-base-lightest" inheritColor to="/help/contact-and-support">Get help choosing your next step</Link>
+        </div>
+      </div>
+    </section>
   </div>
 </Base>
+
+<style lang="scss">
+  .home-page {
+    background: linear-gradient(180deg, #f7fbff 0%, #ffffff 30%, #f8fbff 100%);
+  }
+
+  .home-discover-search.usa-search,
+  .home-discover-search.usa-search--big,
+  .home-discover-search .usa-search__form,
+  .home-discover-search .usa-input.usa-search__input {
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .cta-band {
+    background:
+      radial-gradient(circle at 10% 20%, rgb(63 122 212 / 42%) 0%, transparent 28%),
+      radial-gradient(circle at 86% 26%, rgb(239 158 70 / 30%) 0%, transparent 26%),
+      linear-gradient(130deg, #0b3168 0%, #0d4695 100%);
+    color: #fff;
+  }
+
+  .cta-band__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .cta-band__description {
+    max-width: 58ch;
+  }
+
+  @media (min-width: 64em) {
+    .cta-band__inner {
+      grid-template-columns: 1fr auto;
+    }
+  }
+</style>
+
+<script>
+  const initVideoModal = () => {
+    const modal = document.getElementById('home-overview-video-modal');
+    if (!modal || modal.dataset.bound === 'true') return;
+
+    const openers = document.querySelectorAll('[data-open-modal][aria-controls="home-overview-video-modal"]');
+    const closers = modal.querySelectorAll('[data-close-modal]');
+    const closeButton = modal.querySelector('[data-close-modal]');
+    const overlay = modal.querySelector('.usa-modal-overlay');
+    const iframe = modal.querySelector('iframe');
+    let activeOpener = null;
+    const baseSrc = iframe?.getAttribute('src') ?? '';
+    const autoplaySrc = (() => {
+      if (!baseSrc) return '';
+      try {
+        const url = new URL(baseSrc);
+        url.searchParams.set('autoplay', '1');
+        url.searchParams.set('rel', '0');
+        return url.toString();
+      } catch {
+        return `${baseSrc}${baseSrc.includes('?') ? '&' : '?'}autoplay=1`;
+      }
+    })();
+
+    const openModal = (event) => {
+      activeOpener = event?.currentTarget instanceof HTMLElement ? event.currentTarget : null;
+      modal.classList.remove('is-hidden');
+      modal.classList.add('is-visible');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('usa-js-modal--active');
+      if (closeButton instanceof HTMLElement) {
+        closeButton.focus();
+      }
+      if (iframe && autoplaySrc) {
+        iframe.setAttribute('src', autoplaySrc);
+      }
+    };
+
+    const closeModal = () => {
+      modal.classList.remove('is-visible');
+      modal.classList.add('is-hidden');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('usa-js-modal--active');
+      if (iframe && baseSrc) {
+        iframe.setAttribute('src', baseSrc);
+      }
+      if (activeOpener instanceof HTMLElement) {
+        activeOpener.focus();
+      }
+    };
+
+    openers.forEach((opener) => opener.addEventListener('click', openModal));
+    closers.forEach((closer) => closer.addEventListener('click', closeModal));
+    overlay?.addEventListener('click', (event) => {
+      if (event.target === overlay) closeModal();
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && modal.classList.contains('is-visible')) {
+        closeModal();
+      }
+    });
+
+    modal.dataset.bound = 'true';
+  };
+
+  document.addEventListener('astro:page-load', initVideoModal);
+  initVideoModal();
+</script>

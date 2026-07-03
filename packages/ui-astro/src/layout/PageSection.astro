@@ -1,0 +1,133 @@
+---
+import Link from '../link/Link.astro';
+
+interface SectionAction {
+  label: string;
+  href: string;
+}
+
+interface Props extends astroHTML.JSX.HTMLAttributes<'section'> {
+  eyebrow?: string;
+  title: string;
+  description?: string;
+  action?: SectionAction;
+  centered?: boolean;
+  tone?: 'default' | 'muted' | 'dark' | 'highlight';
+}
+
+const {
+  id,
+  class: className,
+  eyebrow,
+  title,
+  description,
+  action,
+  centered = false,
+  tone = 'default',
+  ...rest
+} = Astro.props;
+
+const classes = [
+  'page-section',
+  'padding-y-8',
+  tone === 'muted' && 'page-section--muted',
+  tone === 'dark' && 'page-section--dark',
+  tone === 'highlight' && 'page-section--highlight',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<section id={id} class={classes} {...rest}>
+  <div class="grid-container">
+    <div class="page-section__top display-flex flex-wrap flex-align-center flex-justify gap-2 margin-bottom-2">
+      {eyebrow && <p class="page-section__eyebrow text-uppercase text-bold text-ls-2 font-sans-2xs margin-0">{eyebrow}</p>}
+      {action && !centered && (
+        <Link to={action.href} class="page-section__action text-bold text-no-wrap">
+          {action.label} »
+        </Link>
+      )}
+    </div>
+    <header class:list={['page-section__head-main', centered && 'margin-x-auto text-center']}>
+      <h2 class="page-section__title margin-0 width-full">{title}</h2>
+      {description && <p class="page-section__description margin-0 margin-top-2 line-height-sans-5">{description}</p>}
+    </header>
+    {action && centered && (
+      <p class="page-section__action-centered margin-top-1 margin-bottom-3 text-center">
+        <Link to={action.href} class="page-section__action text-bold text-no-wrap">
+          {action.label}
+        </Link>
+      </p>
+    )}
+    <div class="page-section__content margin-top-3">
+      <slot />
+    </div>
+  </div>
+</section>
+
+<style lang="scss">
+  @use "@bdc/uswds-theme/src/uswds-init" as core;
+
+  $brand-900: core.core-color(core.$theme-color-primary-darker);
+  $brand-700: core.core-color(core.$theme-color-primary);
+  $secondary-700: core.core-color(core.$theme-color-secondary-dark);
+  $copy: core.core-color("blue-70");
+  $border-soft: core.core-color("blue-10");
+
+  .page-section--muted {
+    background:
+      radial-gradient(circle at 86% 18%, rgb(76 190 255 / 1%) 0%, transparent 75%),
+      radial-gradient(circle at 10% 80%, rgb(139 210 255 / 5%) 0%, transparent 75%),
+      linear-gradient(180deg, #edf6ff 0%, #f8fbff 100%);
+    border-bottom: 1px solid $border-soft;
+    border-top: 1px solid $border-soft;
+  }
+
+  .page-section--dark {
+    background: linear-gradient(130deg, #0a2d61 0%, #0d3f88 100%);
+    color: #fff;
+  }
+
+  .page-section--highlight {
+    background:
+      radial-gradient(circle at 8% 14%, rgba($brand-700, 0.2) 0%, transparent 36%),
+      radial-gradient(circle at 90% 18%, rgba($secondary-700, 0.16) 0%, transparent 34%),
+      linear-gradient(180deg, rgba($secondary-700, 0.06) 0%, #fffdf9 52%, rgba($brand-700, 0.08) 100%);
+    border-bottom: 1px solid $border-soft;
+    border-top: 1px solid $border-soft;
+  }
+
+  .page-section__eyebrow {
+    color: $brand-700;
+  }
+
+  .page-section__title {
+    color: $brand-900;
+    margin: 0;
+  }
+
+  .page-section__description {
+    color: $copy;
+  }
+
+  .page-section__action,
+  .page-section__action:visited {
+    color: $brand-700;
+  }
+
+  .page-section__top,
+  .page-section--dark .page-section__eyebrow,
+  .page-section--dark .page-section__title,
+  .page-section--dark .page-section__description,
+  .page-section--dark .page-section__action,
+  .page-section--dark .page-section__action:visited {
+    color: #fff;
+  }
+
+  .page-section--highlight .page-section__eyebrow,
+  .page-section--highlight .page-section__action,
+  .page-section--highlight .page-section__action:visited {
+    color: $secondary-700;
+  }
+</style>

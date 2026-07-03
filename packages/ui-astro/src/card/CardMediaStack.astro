@@ -1,0 +1,58 @@
+---
+import Card from './Card.astro';
+import TagPill from '../tag/TagPill.astro';
+
+interface Props {
+  title: string;
+  summary: string;
+  badgeLabel: string;
+  metric: string;
+  href: string;
+  mediaVariant?: 1 | 2 | 3 | 4;
+  border?: boolean;
+}
+
+const {
+  title,
+  summary,
+  badgeLabel,
+  metric,
+  href,
+  mediaVariant = 1,
+  border = true,
+} = Astro.props;
+---
+
+<Card variant="dataset" class="card-media-stack height-full display-flex flex-column" data-variant={mediaVariant} border={border}>
+  <div class="card-media-stack__media" aria-hidden="true"></div>
+  <div class="padding-2 display-flex flex-column flex-1">
+    <h3 class="margin-top-0 margin-bottom-1 text-primary-dark font-heading-md"><a class="usa-link" href={href}>{title}</a></h3>
+    <p class="margin-top-0 margin-bottom-2 text-base line-height-sans-5 flex-1">{summary}</p>
+    <div class="display-flex flex-justify flex-align-center gap-1">
+      <TagPill label={badgeLabel} />
+      <p class="margin-0 text-bold text-base-dark text-no-wrap">{metric}</p>
+    </div>
+  </div>
+</Card>
+
+<style>
+  .card-media-stack__media {
+    height: 110px;
+  }
+
+  .card-media-stack[data-variant='1'] .card-media-stack__media {
+    background: linear-gradient(135deg, #7bc4ff, #2866b8);
+  }
+
+  .card-media-stack[data-variant='2'] .card-media-stack__media {
+    background: linear-gradient(135deg, #8f98ff, #3f4eb5);
+  }
+
+  .card-media-stack[data-variant='3'] .card-media-stack__media {
+    background: linear-gradient(135deg, #62bad4, #0f5f80);
+  }
+
+  .card-media-stack[data-variant='4'] .card-media-stack__media {
+    background: linear-gradient(135deg, #79d6b5, #0f7a56);
+  }
+</style>

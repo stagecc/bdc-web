@@ -18,7 +18,6 @@
  */
 
 import { Image } from 'astro:assets';
-import Icon from '@components/Icon.astro';
 import type { ImageMetadata } from 'astro';
 
 interface Props {
@@ -45,143 +44,51 @@ const formattedDate = term_start.toLocaleDateString('en-US', {
   month: 'long',
   year: 'numeric',
 });
+
+const bioId = `eep-member-bio-${slug ?? name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 ---
 
-<div class="eep-member" id={slug}>
-  <div class="eep-member__headshot-col">
-    {photo ? (
-      <Image
-        src={photo}
-        alt={name}
-        width={200}
-        height={200}
-        class="eep-member__headshot"
-      />
-    ) : (
-      <div class="eep-member__headshot-placeholder" />
-    )}
-  </div>
+<article class="eep-member-anchor padding-0" id={slug}>
+  <div class="grid-row grid-gap-3">
+    <div class="grid-col-12 tablet:grid-col-4 desktop:grid-col-3 margin-bottom-4 tablet:margin-bottom-0">
+      <div class="margin-bottom-2 minh-15 display-flex flex-align-center flex-justify-center">
+        {photo && (
+          <Image src={photo} alt={name} width={176} height={176} class="radius-pill width-card height-card" />
+        )}
+      </div>
 
-  <div class="eep-member__content">
-    <h2 class="eep-member__name">
-      {adhoc && ("Ad-hoc Member: ")}
-      {name}{signifier && <span class="eep-member__signifier">, {signifier}</span>}
-    </h2>
+      <div class="padding-y-1 text-center font-sans-2xs">
+        <p class="text-base-dark margin-0">Term Start</p>
+        <p class="text-bold margin-top-05 margin-bottom-0">{formattedDate}</p>
+      </div>
+    </div>
 
-    <div class="eep-member__meta">
-      <ul class="eep-member__roles">
-        {roles.map((role) => <li>{role}</li>)}
+    <div class="grid-col-12 tablet:grid-col-8 desktop:grid-col-9">
+      <h3 class="margin-top-0 margin-bottom-2 font-heading-lg">
+        {adhoc && 'Ad-hoc Member: '}
+        {name}{signifier && <span class="text-base">, {signifier}</span>}
+      </h3>
+
+      <ul class="usa-list usa-list--unstyled font-sans-sm">
+        {roles.map((role) => <li>- {role}</li>)}
       </ul>
-      <p class="eep-member__term">
-        <Icon name="event" />
-        <span>Term Start: {formattedDate}</span>
-      </p>
-    </div>
 
-    <div class="eep-member__bio usa-prose usa-prose--full-width">
-      <slot />
-    </div>
+      <details class="margin-top-2" open={false}>
+        <summary class="bg-base-lightest hover:bg-base-light padding-1 text-bold text-primary-dark cursor-pointer">Bio</summary>
+        <div id={bioId} class="bg-base-lightest usa-prose usa-prose--full-width font-sans-sm line-height-sans-5 padding-x-2 padding-y-05">
+          <slot />
+        </div>
+      </details>
 
-    <a href="#top" class="eep-member__return-top">↑ Return to top</a>
+    </div>
   </div>
-</div>
+
+</article>
+
+<a href="#top" class="display-block margin-top-2 margin-bottom-3 text-right font-sans-2xs">↑ Return to top</a>
 
 <style>
-  .eep-member {
-    display: flex;
-    flex-direction: column;
-    gap: 2.5rem;
-    margin-bottom: 3rem;
-    padding-bottom: 3rem;
-    border-bottom: 1px solid #dce4ef;
-    scroll-margin-top: 130px;
-  }
-
-  .eep-member:last-child {
-    border-bottom: none;
-  }
-
-  @media (min-width: 640px) {
-    .eep-member {
-      flex-direction: row;
-      align-items: flex-start;
-    }
-  }
-
-  .eep-member__headshot-col {
-    flex-shrink: 0;
-    width: 200px;
-  }
-
-  .eep-member__headshot-placeholder {
-    width: 200px;
-    height: 200px;
-  }
-  .eep-member__headshot {
-    width: 200px;
-    height: 200px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-
-  .eep-member__name {
-    margin-top: 0;
-    margin-bottom: 0.75rem;
-    font-size: 1.25rem;
-  }
-
-  .eep-member__meta {
-    display: flex;
-    flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 0.75rem;
-  }
-
-  @media (min-width: 640px) {
-    .eep-member__meta {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 3rem;
-    }
-  }
-
-  .eep-member__roles {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-
-  .eep-member__roles li {
-    margin-bottom: 0.25rem;
-  }
-
-  .eep-member__term {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.875rem;
-    margin: 0;
-    white-space: nowrap;
-    flex-shrink: 0;
-  }
-
-  .eep-member__bio {
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-
-  .eep-member__bio :global(p:first-child) {
-    margin-block-start: 0;
-  }
-
-  .eep-member__return-top {
-    display: block;
-    margin-top: 1rem;
-    font-size: 0.875rem;
-    text-decoration: underline;
-    text-align: right;
+  .eep-member-anchor {
+    scroll-margin-top: 110px;
   }
 </style>

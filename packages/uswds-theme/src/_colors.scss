@@ -5,12 +5,41 @@ $theme-color-primary-light: "blue-40v";
 $theme-color-primary-lighter: "blue-20v";
 $theme-color-primary-lightest: "blue-5v";
 
-$theme-color-secondary: "red-cool-50v";
-$theme-color-secondary-dark: "red-cool-60v";
-$theme-color-secondary-light: "red-cool-40v";
+$theme-link-color: "primary";
+$theme-link-visited-color: "primary";
+$theme-link-hover-color: "primary-dark";
+$theme-link-active-color: "primary-darker";
+$theme-link-reverse-color: "base-lightest";
+$theme-link-reverse-hover-color: "white";
+$theme-link-reverse-active-color: "white";
 
-$theme-color-accent-cool: "cyan-30v";
-$theme-color-accent-warm: "orange-30v";
+$theme-color-secondary-family: "cyan";
+$theme-color-secondary-lightest: false;
+$theme-color-secondary-lighter: "cyan-5";
+$theme-color-secondary-light: "cyan-20v";
+$theme-color-secondary: "cyan-40v";
+$theme-color-secondary-vivid: "cyan-50v";
+$theme-color-secondary-dark: "cyan-50v";
+$theme-color-secondary-darker: "cyan-60v";
+$theme-color-secondary-darkest: false;
+
+$theme-color-accent-cool-family: "mint-cool";
+$theme-color-accent-cool-lightest: false;
+$theme-color-accent-cool-lighter: "mint-cool-10";
+$theme-color-accent-cool-light: "mint-cool-20v";
+$theme-color-accent-cool: "mint-cool-30v";
+$theme-color-accent-cool-dark: "mint-cool-40v";
+$theme-color-accent-cool-darker: "mint-cool-50v";
+$theme-color-accent-cool-darkest: false;
+
+$theme-color-accent-warm-family: "red-cool";
+$theme-color-accent-warm-lightest: false;
+$theme-color-accent-warm-lighter: "red-cool-10";
+$theme-color-accent-warm-light: "red-cool-30v";
+$theme-color-accent-warm: "red-cool-50";
+$theme-color-accent-warm-dark: "red-cool-60v";
+$theme-color-accent-warm-darker: "red-cool-70v";
+$theme-color-accent-warm-darkest: false;
 
 $theme-color-base-lightest: "gray-5";
 $theme-color-base-lighter: "gray-cool-10";

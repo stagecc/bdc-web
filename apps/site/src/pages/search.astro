@@ -33,11 +33,13 @@ import Base from '@layouts/Base.astro';
   });
 </script>
 
-<style is:global>
+<style lang="scss" is:global>
+  @use "@bdc/uswds-theme/src/uswds-init" as core;
+
   :root {
-    --pagefind-ui-primary: #005ea2;
+    --pagefind-ui-primary: #{core.core-color(core.$theme-color-primary)};
     --pagefind-ui-text: #1b1b1b;
-    --pagefind-ui-background: #ffffff;
+    --pagefind-ui-background: #{core.core-color("white")};
     --pagefind-ui-border: #adadad;
     --pagefind-ui-tag: #f0f0f0;
   }
@@ -47,7 +49,7 @@ import Base from '@layouts/Base.astro';
   }
   
   .pagefind-ui__result-link {
-    color: #005ea2 !important;
+    color: core.core-color(core.$theme-color-primary) !important;
     text-decoration: underline !important;
   }
   
