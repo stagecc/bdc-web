@@ -1,0 +1,24 @@
+---
+import Card from './Card.astro';
+import IconBadge from '../icon/IconBadge.astro';
+
+interface Props {
+  icon?: string;
+  title: string;
+  text: string;
+  href: string;
+  cta: string;
+  border?: boolean;
+}
+
+const { icon, title, text, href, cta, border = true } = Astro.props;
+---
+
+<Card variant="feature" class="height-full display-flex flex-column" border={border}>
+  <div class="display-flex flex-align-center margin-top-1 margin-bottom-2">
+    {icon && <IconBadge icon={icon} class="text-primary margin-right-105" tone="secondary" size={6} />}
+    <h3 class="margin-0 flex-1 text-primary-dark font-heading-md">{title}</h3>    
+  </div>
+  <p class="margin-top-0 margin-bottom-2 text-base line-height-sans-5">{text}</p>
+  <a class="usa-link text-bold" href={href}>{cta} &raquo;</a>
+</Card>

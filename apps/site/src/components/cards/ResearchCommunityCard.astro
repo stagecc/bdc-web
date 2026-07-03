@@ -1,0 +1,33 @@
+---
+import CardMediaStack from '@bdc/ui-astro/card/CardMediaStack.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  badgeLabel: string;
+  metric: string;
+  href: string;
+  mediaVariant?: 1 | 2 | 3 | 4;
+  border?: boolean;
+}
+
+const {
+  title,
+  description,
+  badgeLabel,
+  metric,
+  href,
+  mediaVariant = 1,
+  border = true,
+} = Astro.props;
+---
+
+<CardMediaStack
+  title={title}
+  summary={description}
+  badgeLabel={badgeLabel}
+  metric={metric}
+  href={href}
+  mediaVariant={mediaVariant}
+  border={border}
+/>

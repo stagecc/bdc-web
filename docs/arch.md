@@ -26,6 +26,8 @@ When building UI components, follow this order:
 - React USWDS component (`@trussworks/react-uswds`)
 - Custom React component
 
+Styling follows the same priority: USWDS utility classes first, scoped custom CSS only when utilities cannot express the design.
+
 ---
 
 ## File Type Rules

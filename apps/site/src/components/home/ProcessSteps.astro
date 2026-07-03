@@ -1,0 +1,136 @@
+---
+interface Step {
+  number: string;
+  title: string;
+  description?: string;
+}
+
+interface Props {
+  steps: Step[];
+}
+
+const { steps } = Astro.props;
+---
+
+<ol class="process-steps">
+  {steps.map((step, index) => (
+    <li class="process-steps__item padding-2 radius-lg display-flex flex-column">
+      <div class="display-flex">
+        {[...Array(index).keys()].map(i => (
+          <div class="process-steps__number--prev flex-1 text-uppercase text-bold text-ls-2 font-sans-2xs margin-0 radius-md display-inline-flex flex-align-center flex-justify-center padding-y-05 padding-x-2">
+            {steps[i].number}
+          </div>
+        ))}
+        <div class="process-steps__number flex-1 text-uppercase text-bold text-ls-2 font-sans-2xs margin-0 radius-md display-inline-flex flex-align-center flex-justify-center padding-y-05 padding-x-2">
+          {step.number}
+        </div>
+        {[...Array(steps.length - index - 1).keys()].map(() => (
+          <div class="process-steps__number flex-1 text-uppercase text-ls-2 margin-0 radius-md padding-y-05 padding-x-2"></div>
+        ))}
+      </div>
+
+      <div class="process-steps__progress margin-y-1" aria-hidden="true" style={`--process-step-count: ${steps.length};`}>
+        {steps.map((_, segmentIndex) => (
+          <span
+            class:list={["process-steps__segment", "radius-pill", segmentIndex <= index && "process-steps__segment--active"]}
+          ></span>
+        ))}
+      </div>
+
+      <h3 class="font-heading-md margin-y-1">{step.title}</h3>
+
+      {step.description && <p class="process-steps__description margin-0 flex-1 line-height-sans-5">{step.description}</p>}
+    </li>
+  ))}
+</ol>
+
+<style lang="scss">
+  .process-steps {
+    display: grid;
+    gap: 0.95rem;
+    list-style: none;
+    margin: 1.5rem 0;
+    padding: 0;
+  }
+
+  .process-steps__item {
+    background: rgb(255 255 255 / 10%);
+    border: 1px solid rgb(255 255 255 / 24%);
+    border-left: 4px solid rgb(147 209 255 / 72%);
+    position: relative;
+    transition: transform 180ms ease, background-color 180ms ease;
+  }
+
+  .process-steps__item:nth-child(2) {
+    border-left-color: rgb(175 198 255 / 78%);
+  }
+
+  .process-steps__item:nth-child(3) {
+    border-left-color: rgb(142 227 230 / 78%);
+  }
+
+  .process-steps__item:nth-child(4) {
+    border-left-color: rgb(167 235 192 / 78%);
+  }
+
+  .process-steps__item:hover {
+    background: rgb(255 255 255 / 15%);
+    transform: translateY(-2px);
+  }
+
+  .process-steps__number {
+    color: rgb(234 245 255 / 96%);
+    min-width: 3rem;
+  }
+
+  .process-steps__number--prev {
+    color: rgb(234 245 255 / 10%);
+  }
+
+  .process-steps h3 {
+    color: #fff;
+    line-height: 1.25;
+  }
+
+  .process-steps__description {
+    color: rgb(255 255 255 / 88%);
+  }
+
+  .process-steps__progress {
+    display: grid;
+    gap: 0.28rem;
+    grid-template-columns: repeat(var(--process-step-count), minmax(0, 1fr));
+  }
+
+  .process-steps__segment {
+    background: rgb(255 255 255 / 16%);
+    height: 0.28rem;
+  }
+
+  .process-steps__segment--active {
+    background: linear-gradient(90deg, rgb(157 220 255 / 90%) 0%, rgb(193 236 255 / 100%) 100%);
+  }
+
+  @media (min-width: 40em) {
+    .process-steps {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 64em) {
+    .process-steps {
+      gap: 1rem;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .process-steps__item {
+      transition: none;
+    }
+
+    .process-steps__item:hover {
+      transform: none;
+    }
+  }
+</style>

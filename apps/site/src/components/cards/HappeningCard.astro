@@ -1,0 +1,84 @@
+---
+import Card from '@bdc/ui-astro/card/Card.astro';
+import Link from '@components/link/Link.astro';
+import TagCapsule from '@bdc/ui-astro/tag/TagCapsule.astro';
+
+interface Props {
+  kind: 'latest' | 'news' | 'event';
+  meta: string;
+  title: string;
+  href: string;
+  linkLabel: string;
+  summary?: string;
+  lead?: boolean;
+}
+
+const { kind, meta, title, href, linkLabel, summary, lead = false } = Astro.props;
+
+const badgeByKind = {
+  latest: 'Latest',
+  news: 'News',
+  event: 'Event',
+} as const;
+
+const iconByKind = {
+  latest: 'announcement',
+  news: 'announcement',
+  event: 'event',
+} as const;
+
+const toneByKind = {
+  latest: 'secondary',
+  news: 'warm',
+  event: 'cool',
+} as const;
+---
+
+<Card
+  variant="feature"
+  class:list={[
+    'happening-card',
+    'height-full display-flex flex-column gap-1 shadow-2',
+    lead && 'happening-card--lead',
+  ]}
+>
+  <div class="display-flex flex-wrap flex-align-center gap-1 margin-bottom-2">
+    <TagCapsule label={badgeByKind[kind]} icon={iconByKind[kind]} tone={toneByKind[kind]} class="margin-right-1" />
+    <p class="font-sans-xs text-bold text-base margin-0">{meta}</p>
+  </div>
+
+  <h3 class="font-heading-sm margin-0 margin-bottom-2">
+    <Link to={href}>{title}</Link>
+  </h3>
+
+  {summary && <p class="margin-0 margin-bottom-2 text-base-dark">{summary}</p>}
+
+  <Link class="happening-card__link text-bold" to={href}>{linkLabel}</Link>
+</Card>
+
+<style lang="scss">
+  @use "@bdc/uswds-theme/src/uswds-init" as core;
+
+  $brand-900: core.core-color(core.$theme-color-primary-darker);
+  $border-soft: core.core-color("blue-10");
+
+  .happening-card {
+    border-color: $border-soft;
+  }
+
+  .happening-card--lead {
+    background:
+      radial-gradient(circle at 90% 16%, rgb(82 194 255 / 12%) 0%, transparent 36%),
+      linear-gradient(180deg, #f8fcff 0%, #ffffff 100%);
+  }
+
+  .happening-card h3 a {
+    color: $brand-900;
+    text-decoration: none;
+  }
+
+  .happening-card h3 a:hover {
+    text-decoration: underline;
+  }
+
+</style>

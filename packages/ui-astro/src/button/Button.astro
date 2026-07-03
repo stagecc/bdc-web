@@ -1,0 +1,75 @@
+---
+import Icon from '../icon/Icon.astro';
+
+interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
+  variant?:
+    | 'default'
+    | 'secondary'
+    | 'accent-cool'
+    | 'accent-warm'
+    | 'base'
+    | 'outline'
+    | 'outline-inverse'
+    | 'inverse'
+    | 'unstyled';
+  size?: 'default' | 'big';
+  icon?: string;
+  href?: string;
+  to?: string;
+  centered?: boolean;
+}
+
+const {
+  variant = 'default',
+  size = 'default',
+  icon,
+  class: className,
+  type = 'button',
+  href,
+  to,
+  centered,
+  ...rest
+} = Astro.props;
+
+const targetUrl = href || to;
+const Tag = targetUrl ? 'a' : 'button';
+const isStyled = variant !== 'unstyled';
+
+const variantClasses =
+  variant === 'default'
+    ? []
+    : variant === 'outline-inverse'
+      ? ['usa-button--outline', 'usa-button--inverse']
+      : [`usa-button--${variant}`];
+
+const classes = [
+  'usa-button',
+  isStyled && 'bdc-button radius-pill',
+  ...variantClasses,
+  size === 'big' && 'usa-button--big',
+  centered && 'usa-button--centered',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+
+const tagProps = {
+  ...(targetUrl ? { href: targetUrl } : { type }),
+  class: classes,
+  ...rest,
+};
+---
+
+<Tag {...tagProps}>
+  {icon && <Icon name={icon} />}
+  <slot />
+</Tag>
+
+<style>
+  .usa-button--centered {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
