@@ -1,6 +1,5 @@
 ---
-import Icon from '@components/Icon.astro';
-import { isExternalUrl } from '../util/url';
+import SharedButton from '@bdc/ui-astro/button/Button.astro';
 
 interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
   variant?:
@@ -10,6 +9,7 @@ interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
     | 'accent-warm'
     | 'base'
     | 'outline'
+    | 'outline-inverse'
     | 'inverse'
     | 'unstyled';
   size?: 'default' | 'big';
@@ -19,55 +19,7 @@ interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
   centered?: boolean;
 }
 
-const {
-  variant = 'default',
-  size = 'default',
-  icon,
-  class: className,
-  type = 'button',
-  href,
-  to,
-  centered,
-  ...rest
-} = Astro.props;
-
-const targetUrl = href || to;
-const Tag = targetUrl ? 'a' : 'button';
-const isExternal = !!targetUrl && isExternalUrl(targetUrl);
-
-const classes = [
-  'usa-button',
-  'radius-pill',
-  variant !== 'default' && `usa-button--${variant}`,
-  size === 'big' && 'usa-button--big',
-  centered && 'usa-button--centered',
-  className,
-]
-  .filter(Boolean)
-  .join(' ');
-
-const tagProps = {
-  ...(targetUrl
-    ? {
-        href: targetUrl,
-        ...(isExternal && { rel: 'noopener', target: '_blank' }),
-      }
-    : { type }),
-  class: classes,
-  ...rest,
-};
+const props = Astro.props as Props;
 ---
 
-<Tag {...tagProps}>
-  {icon && <Icon name={icon} />}
-  <slot />
-</Tag>
-
-<style>
-  .usa-button--centered {
-    display: block;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-  }
-</style>
+<SharedButton {...props}><slot /></SharedButton>

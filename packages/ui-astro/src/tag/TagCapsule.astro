@@ -1,0 +1,29 @@
+---
+import Icon from '../icon/Icon.astro';
+
+interface Props {
+  label: string;
+  icon?: string;
+  tone?: 'secondary' | 'warm' | 'cool';
+  class?: string;
+}
+
+const { label, icon, tone = 'secondary', class: className } = Astro.props;
+
+const toneClasses = {
+  secondary: 'bg-secondary-lighter text-secondary-dark border-secondary-light',
+  warm: 'bg-accent-warm-lighter text-accent-warm-darker border-accent-warm-light',
+  cool: 'bg-accent-cool-lighter text-accent-cool-darker border-accent-cool-light',
+} as const;
+---
+
+<span
+  class:list={[
+    'display-inline-flex flex-align-center border radius-pill font-sans-2xs text-bold text-uppercase padding-y-05 padding-x-1',
+    toneClasses[tone],
+    className,
+  ]}
+>
+  {icon && <Icon name={icon} size={3} class="margin-right-1" />}
+  {label}
+</span>

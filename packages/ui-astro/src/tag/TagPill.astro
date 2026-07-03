@@ -1,0 +1,18 @@
+---
+interface Props {
+  label: string;
+  tone?: 'secondary' | 'warm' | 'cool' | 'neutral';
+  class?: string;
+}
+
+const { label, tone = 'secondary', class: className } = Astro.props;
+
+const toneClasses = {
+  secondary: 'bg-secondary-lighter text-secondary-dark',
+  warm: 'bg-accent-warm-lighter text-accent-warm-darker',
+  cool: 'bg-accent-cool-lighter text-accent-cool-darker',
+  neutral: 'bg-base-lightest text-base-dark',
+} as const;
+---
+
+<span class:list={['usa-tag text-no-uppercase', toneClasses[tone], className]}>{label}</span>

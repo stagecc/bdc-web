@@ -1,0 +1,28 @@
+{
+  "name": "@bdc/ui-astro",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared Astro UI components for BDC apps",
+  "files": [
+    "src"
+  ],
+  "peerDependencies": {
+    "astro": "^6.0.0"
+  },
+  "exports": {
+    "./button/Button.astro": "./src/button/Button.astro",
+    "./card/Card.astro": "./src/card/Card.astro",
+    "./card/CardCta.astro": "./src/card/CardCta.astro",
+    "./card/CardCopy.astro": "./src/card/CardCopy.astro",
+    "./card/CardMediaStack.astro": "./src/card/CardMediaStack.astro",
+    "./icon/Icon.astro": "./src/icon/Icon.astro",
+    "./icon/IconBadge.astro": "./src/icon/IconBadge.astro",
+    "./layout/Hero.astro": "./src/layout/Hero.astro",
+    "./layout/PageSection.astro": "./src/layout/PageSection.astro",
+    "./layout/TwoColumnSection.astro": "./src/layout/TwoColumnSection.astro",
+    "./link/Link.astro": "./src/link/Link.astro",
+    "./tag/TagCapsule.astro": "./src/tag/TagCapsule.astro",
+    "./tag/TagPill.astro": "./src/tag/TagPill.astro"
+  }
+}

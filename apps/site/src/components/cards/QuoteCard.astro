@@ -1,0 +1,74 @@
+---
+import Card from '@bdc/ui-astro/card/Card.astro';
+
+interface Props {
+  quote: string;
+  person: string;
+  affiliation: string;
+  tone?: 'secondary' | 'cool' | 'warm';
+  border?: boolean;
+}
+
+const { quote, person, affiliation, tone = 'secondary', border = false } = Astro.props;
+
+const toneClasses = {
+  secondary: 'border-secondary',
+  cool: 'border-accent-cool',
+  warm: 'border-accent-warm',
+} as const;
+---
+
+<Card
+  variant="testimonial"
+  class:list={[
+    'card-quote',
+    'height-full display-flex flex-column position-relative padding-top-5 shadow-2 border-left-05',
+    toneClasses[tone],
+  ]}
+  border={border}
+>
+  <span class="card-quote__mark" aria-hidden="true">&ldquo;</span>
+  <p class="margin-top-0 margin-bottom-3 flex-1 line-height-sans-5 font-sans-sm text-base-dark text-italic">{quote}</p>
+  <strong class="display-block font-sans-sm text-primary-darker">{person}</strong>
+  <span class="font-sans-2xs text-base">{affiliation}</span>
+</Card>
+
+<style lang="scss">
+  @use "sass:color";
+  @use "@bdc/uswds-theme/src/uswds-init" as core;
+
+  $secondary: core.core-color(core.$theme-color-secondary);
+  $cool: core.core-color(core.$theme-color-accent-cool);
+  $warm: core.core-color(core.$theme-color-accent-warm);
+  $surface-soft: core.core-color("blue-cool-5");
+
+  .card-quote {
+    background:
+      radial-gradient(circle at 88% 14%, rgb(117 185 251 / 12%) 0%, transparent 34%),
+      linear-gradient(180deg, $surface-soft 0%, core.core-color("white") 100%);
+    overflow: hidden;
+  }
+
+  .card-quote__mark {
+    font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+    font-size: 10rem;
+    left: 0;
+    line-height: 1;
+    pointer-events: none;
+    position: absolute;
+    top: -0.5rem;
+  }
+
+  .card-quote.border-secondary .card-quote__mark {
+    color: color.change($secondary, $alpha: 0.15);
+  }
+
+  .card-quote.border-accent-cool .card-quote__mark {
+    color: color.change($cool, $alpha: 0.15);
+  }
+
+  .card-quote.border-accent-warm .card-quote__mark {
+    color: color.change($warm, $alpha: 0.15);
+  }
+
+</style>

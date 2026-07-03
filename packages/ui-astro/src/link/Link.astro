@@ -1,0 +1,35 @@
+---
+interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
+  to: string;
+  inheritColor?: boolean;
+}
+
+const {
+  to,
+  inheritColor = false,
+  class: className,
+  className: classNameProp,
+  ...rest
+} = Astro.props;
+const isExternal = to.startsWith('https://') || to.startsWith('http://');
+const classes = [
+  className,
+  classNameProp,
+  'usa-link',
+  inheritColor && 'link--inherit-style',
+  isExternal && 'usa-link--external',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<a href={to} class={classes} {...isExternal && { rel: 'noopener', target: '_blank' }} {...rest}><slot /></a>
+
+<style>
+  .link--inherit-style,
+  .link--inherit-style:hover,
+  .link--inherit-style:active,
+  .link--inherit-style:visited {
+    color: inherit;
+  }
+</style>
