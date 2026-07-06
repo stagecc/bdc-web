@@ -176,7 +176,9 @@ const programs = defineCollection({
 const banners = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/banners' }),
   schema: z.object({
-    variant: z.enum(['info', 'emergency']),
+    variant: z
+      .enum(['info', 'emergency', 'warning', 'error', 'success'])
+      .default('info'),
     active: z.boolean().default(false),
     importance: z.number(),
     homeOnly: z.boolean().default(false),

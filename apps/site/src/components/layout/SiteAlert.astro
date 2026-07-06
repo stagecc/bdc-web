@@ -1,39 +1,237 @@
 ---
+/**
+ * SiteAlert.astro
+ *
+ * Sitewide banner alert component supporting 5 variants.
+ * Renders in two visual styles controlled by the `style` prop:
+ *   - "border"   — solid background with a left accent border (default)
+ *   - "gradient" — horizontal gradient background with a bottom border
+ *
+ * Dismissible per session via sessionStorage — banner reappears on next visit.
+ *
+ * Accessibility:
+ *   - Uses <section> with aria-label for landmark identification.
+ *   - Close button is keyboard accessible with descriptive aria-label.
+ *
+ * Props:
+ *   variant      — 'info' | 'warning' | 'error' | 'success' | 'emergency'. Defaults to 'info'.
+ *   style        — 'border' | 'gradient'. Defaults to 'border'.
+ *   slim         — Reduces padding. Defaults to false.
+ *   noIcon       — Suppresses the icon. Defaults to false.
+ *   title        — Optional heading text.
+ *   headingLevel — Heading level for title (h2 | h3 | h4). Defaults to h3.
+ *   ariaLabel    — Accessible label for the section. Defaults to 'Site alert'.
+ *   storageKey   — Unique key for sessionStorage dismissal. Must be unique per banner instance.
+ *
+ * Usage:
+ *   <SiteAlert variant="warning" style="gradient" storageKey="maintenance-2024">
+ *     Scheduled maintenance this weekend.
+ *   </SiteAlert>
+ *
+ * TODO: Replace hardcoded hex colors with CSS custom properties once
+ * USWDS Sass tokens are mapped to :root variables in the global stylesheet.
+ */
+
 interface Props {
-  variant?: 'info' | 'emergency';
+  variant?: 'info' | 'warning' | 'error' | 'success' | 'emergency';
+  style?: 'border' | 'gradient';
   slim?: boolean;
   noIcon?: boolean;
   title?: string;
   headingLevel?: 'h2' | 'h3' | 'h4';
   ariaLabel?: string;
+  storageKey: string;
 }
 
 const {
   variant = 'info',
+  style = 'gradient',
   slim = false,
   noIcon = false,
   title,
   headingLevel: HeadingTag = 'h3',
   ariaLabel = 'Site alert',
+  storageKey,
 } = Astro.props;
 
-const containerClasses = [
-  'usa-site-alert',
-  `usa-site-alert--${variant}`,
-  slim && 'usa-site-alert--slim',
-  noIcon && 'usa-site-alert--no-icon',
-]
-  .filter(Boolean)
-  .join(' ');
+const alertId = `site-alert-${storageKey}`;
 ---
 
-<section class={containerClasses} aria-label={ariaLabel}>
-  <div class="usa-alert">
-    <div class="usa-alert__body">
-      {title && <HeadingTag class="usa-alert__heading">{title}</HeadingTag>}
-      <div class="usa-alert__text">
+<section
+  class={`site-alert site-alert--${variant} site-alert--${style}${slim ? ' site-alert--slim' : ''}${noIcon ? ' site-alert--no-icon' : ''}`}
+  aria-label={ariaLabel}
+  id={alertId}
+>
+  <div class="site-alert__body">
+    <div class="site-alert__content">
+      {title && <HeadingTag class="site-alert__heading">{title}</HeadingTag>}
+      <div class="site-alert__text">
         <slot />
       </div>
     </div>
+    <button
+      class="site-alert__close"
+      aria-label="Dismiss alert"
+      data-alert-id={alertId}
+    >
+      ✕
+    </button>
   </div>
 </section>
+
+<script>
+  // Dismiss banner for the session — reappears on next visit
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.site-alert__close').forEach((btn) => {
+      const alertId = btn.getAttribute('data-alert-id');
+      if (!alertId) return;
+
+      // Hide if already dismissed this session
+      if (sessionStorage.getItem(alertId) === 'dismissed') {
+        document.getElementById(alertId)?.remove();
+        return;
+      }
+
+      btn.addEventListener('click', () => {
+        sessionStorage.setItem(alertId, 'dismissed');
+        document.getElementById(alertId)?.remove();
+      });
+    });
+  });
+</script>
+
+<style>
+  /* ─── Base ─────────────────────────────────────────── */
+  .site-alert {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    position: relative;
+  }
+
+  .site-alert--slim {
+    padding: 0.4rem 1rem;
+  }
+
+  .site-alert__body {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 1rem;
+    margin: 0 auto;
+  }
+
+  .site-alert__content {
+    flex: 1;
+    text-align: center;
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+
+  .site-alert__content :global(p) {
+    margin: 0;
+  }
+
+  .site-alert__content :global(a) {
+    font-weight: 800;
+  }
+
+  .site-alert__heading {
+    margin: 0 0 0.25rem;
+    font-size: 1rem;
+  }
+
+  .site-alert__close {
+    flex-shrink: 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 0.25rem;
+    line-height: 1;
+    color: inherit;
+    opacity: 0.7;
+  }
+
+  .site-alert__close:hover {
+    opacity: 1;
+  }
+
+  /* ─── Border style ─────────────────────────────────── */
+  .site-alert--border.site-alert--info {
+    background-color: #e3f2fd;
+    border-left: 6px solid #21568a;
+  }
+
+  .site-alert--border.site-alert--warning {
+    background-color: #ffe3c2;
+    border-left: 6px solid #e8a25a;
+  }
+
+  .site-alert--border.site-alert--error {
+    background-color: #f2b5a7;
+    border-left: 6px solid #b33243;
+  }
+
+  .site-alert--border.site-alert--success {
+    background-color: #ecf3ec;
+    border-left: 6px solid #2e7d32;
+  }
+
+  .site-alert--border.site-alert--emergency {
+    background-color: #fdf0e8;
+    border-left: 6px solid #9c3d10;
+  }
+
+  /* ─── Gradient style ───────────────────────────────── */
+.site-alert--gradient.site-alert--info {
+  background: linear-gradient(90deg, #a6bbd0, #c8e0f4);
+  border-bottom: 6px solid #21568a;
+}
+
+  .site-alert--gradient.site-alert--warning {
+    background: linear-gradient(90deg, #ffe3c2, #f5c07a);
+    border-bottom: 6px solid #e8a25a;
+  }
+
+  .site-alert--gradient.site-alert--error {
+    background: linear-gradient(90deg, #f2b5a7, #e8897a);
+    border-bottom: 6px solid #b33243;
+  }
+
+  .site-alert--gradient.site-alert--success {
+    background: linear-gradient(90deg, #c8e6c9, #a5d6a7);
+    border-bottom: 6px solid #2e7d32;
+  }
+
+  .site-alert--gradient.site-alert--emergency {
+    background: linear-gradient(90deg, #f9d4b8, #f0b27a);
+    border-bottom: 6px solid #9c3d10;
+  }
+
+  /* ─── Link color overrides per variant ────────────── */
+  .site-alert--info :global(a) {
+    color: #01366a; /* blueberry-dark */
+    text-decoration-color: #01366a;
+  }
+
+  .site-alert--warning :global(a) {
+    color: #5a2a00;
+    text-decoration-color: #5a2a00;
+  }
+
+  .site-alert--error :global(a) {
+    color: #5a2a38; /* crimson-dark */
+    text-decoration-color: #5a2a38;
+  }
+
+  .site-alert--success :global(a) {
+    color: #1b5e20;
+    text-decoration-color: #1b5e20;
+  }
+
+  .site-alert--emergency :global(a) {
+    color: #5c2106;
+    text-decoration-color: #5c2106;
+  }
+</style>
