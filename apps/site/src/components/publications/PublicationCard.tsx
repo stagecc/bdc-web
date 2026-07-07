@@ -5,12 +5,6 @@ type Props = {
   pub: CollectionEntry<'publications'>['data'] & { date: string };
 };
 
-const STATUS_COLORS: Record<string, { bg: string; color: string }> = {
-  Published: { bg: '#c3dbff', color: '#000f2a' },
-  PrePrint: { bg: '#90cc90', color: '#000f2a' },
-  Other: { bg: '#dddddd', color: '#000f2a' },
-};
-
 function Icon({
   name,
   size = 3,
@@ -37,9 +31,7 @@ export default function PublicationCard({ pub }: Props) {
     year: 'numeric',
   });
 
-  const statusStyle = pub.status
-    ? (STATUS_COLORS[pub.status] ?? { bg: '#565c65', color: '#ffffff' })
-    : null;
+  const statusSlug = pub.status?.toLowerCase().replace(/\s+/g, '-');
 
   const metaRows = [
     pub.researchCommunity?.length
@@ -88,18 +80,10 @@ export default function PublicationCard({ pub }: Props) {
             {pub.journalName}
           </li>
         </ul>
-        {pub.status && statusStyle && (
+        {pub.status && (
           <div className="margin-top-1">
             <span
-              style={{
-                display: 'inline-block',
-                padding: '2px 12px',
-                borderRadius: '999px',
-                fontSize: '12px',
-                fontWeight: 600,
-                backgroundColor: statusStyle.bg,
-                color: statusStyle.color,
-              }}
+              className={`usa-tag bdc-tag--status bdc-tag--status-${statusSlug}`}
             >
               {pub.status}
             </span>

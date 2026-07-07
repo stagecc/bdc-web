@@ -116,26 +116,17 @@ const ActiveChip = ({
   <button
     onClick={onRemove}
     type="button"
-    className="usa-button usa-button--unstyled"
-    style={{
-      display: 'inline-flex',
-      alignItems: 'center',
-      gap: '4px',
-      padding: '2px 8px',
-      borderRadius: '999px',
-      fontSize: '13px',
-      border: '1px solid',
-      borderColor: '#005ea2',
-      backgroundColor: '#d9e8f6',
-      color: '#005ea2',
-      cursor: 'pointer',
-      whiteSpace: 'nowrap',
-      textDecoration: 'none',
-      fontStyle: italic ? 'italic' : 'normal',
-    }}
+    className="usa-button usa-button--unstyled bdc-filter-chip"
     aria-label={`Remove filter: ${label}`}
   >
-    {label} <span style={{ fontSize: '11px', opacity: 0.7 }}>×</span>
+    <span
+      className={`usa-tag bdc-tag--filter${italic ? ' bdc-tag--filter-italic' : ''}`}
+    >
+      {label}
+      <span aria-hidden="true" className="bdc-filter-chip__remove">
+        ×
+      </span>
+    </span>
   </button>
 );
 
