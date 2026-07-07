@@ -48,7 +48,7 @@ describe('buildPayload', () => {
 
     const payload = buildPayload(values, fields, FORM_TYPE);
     expect(payload.email).toBe('user@example.com');
-    expect(payload.custom_fields['requester']).toBeUndefined();
+    expect(payload.custom_fields.requester).toBeUndefined();
   });
 
   it('maps default_description to top-level description', () => {
@@ -59,7 +59,7 @@ describe('buildPayload', () => {
 
     const payload = buildPayload(values, fields, FORM_TYPE);
     expect(payload.description).toBe('Some details here');
-    expect(payload.custom_fields['description']).toBeUndefined();
+    expect(payload.custom_fields.description).toBeUndefined();
   });
 
   it('maps default_company to top-level company', () => {
@@ -68,7 +68,7 @@ describe('buildPayload', () => {
 
     const payload = buildPayload(values, fields, FORM_TYPE);
     expect(payload.company).toBe('Acme Corp');
-    expect(payload.custom_fields['company']).toBeUndefined();
+    expect(payload.custom_fields.company).toBeUndefined();
   });
 
   it('skips default_subject even if present in field config', () => {
@@ -78,7 +78,7 @@ describe('buildPayload', () => {
     const payload = buildPayload(values, fields, FORM_TYPE);
     // Subject should still be formType, not the user value
     expect(payload.subject).toBe(FORM_TYPE);
-    expect(payload.custom_fields['subject']).toBeUndefined();
+    expect(payload.custom_fields.subject).toBeUndefined();
   });
 
   it('skips fields with empty string values', () => {
@@ -88,7 +88,7 @@ describe('buildPayload', () => {
     const values = { cf_optional_field: '' };
 
     const payload = buildPayload(values, fields, FORM_TYPE);
-    expect(payload.custom_fields['cf_optional_field']).toBeUndefined();
+    expect(payload.custom_fields.cf_optional_field).toBeUndefined();
   });
 
   it('skips fields with undefined values', () => {
@@ -98,7 +98,7 @@ describe('buildPayload', () => {
     const values = { cf_optional_field: undefined };
 
     const payload = buildPayload(values, fields, FORM_TYPE);
-    expect(payload.custom_fields['cf_optional_field']).toBeUndefined();
+    expect(payload.custom_fields.cf_optional_field).toBeUndefined();
   });
 
   it('handles a realistic mixed payload correctly', () => {
