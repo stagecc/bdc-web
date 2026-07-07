@@ -49,13 +49,21 @@ const classes = [
 
 {centered ? (
   <div style="text-align: center;">
-    <Tag class={classes} {...rest}>
+    <Tag
+      {...targetUrl ? { href: targetUrl } : { type }}
+      class={classes}
+      {...rest}
+    >
       {icon && <Icon name={icon} />}
       <slot />
     </Tag>
   </div>
 ) : (
-  <Tag class={classes} {...rest}>
+  <Tag
+    {...targetUrl ? { href: targetUrl } : { type }}
+    class={classes}
+    {...rest}
+  >
     {icon && <Icon name={icon} />}
     <slot />
   </Tag>
