@@ -15,6 +15,12 @@
  *   - schemaId identifies which custom object schema to post records to
  *   - idPrefix customizes the generated submission ID per form type
  *
+ * FormProvider:
+ *   This component uses FormProvider to expose the RHF form context to all
+ *   child field components. Field components that need unregister (e.g. for
+ *   "Other" free text fields) access it via useFormContext rather than having
+ *   it passed as a prop.
+ *
  * Data flow:
  *   1. Astro page fetches schema fields via getCustomObjectSchema at build time
  *   2. Astro page fetches reference data via getReferenceDataValues at build time
@@ -33,7 +39,7 @@
 
 import { useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
-import { useForm } from 'react-hook-form';
+import { FormProvider, useForm } from 'react-hook-form';
 import { buildCustomObjectPayload } from '../../util/freshdesk/buildCustomObjectPayload';
 import type { CustomObjectField } from '../../util/freshdesk/typesCustomObjects';
 import { getRecaptchaToken } from '../../util/recaptcha';
@@ -87,16 +93,21 @@ export default function DynamicCustomObjectForm({
   const errorSummaryRef = useRef<HTMLDivElement>(null);
   const confirmationRef = useRef<HTMLDivElement>(null);
 
+  // methods is the full RHF form instance. Spread into FormProvider so all
+  // child field components can access register, unregister, control, etc.
+  // via useFormContext without needing them passed as props.
+  const methods = useForm<Record<string, unknown>>({
+    mode: 'onSubmit', // Validate on submit, not while typing
+    reValidateMode: 'onChange', // Clear errors in real time as user fixes them
+  });
+
   const {
     register,
     control,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<Record<string, unknown>>({
-    mode: 'onSubmit', // Validate on submit, not while typing
-    reValidateMode: 'onChange', // Clear errors in real time as user fixes them
-  });
+  } = methods;
 
   // ---------------------------------------------------------------------------
   // Fallback — shown when getCustomObjectSchema failed at build time
@@ -210,83 +221,87 @@ export default function DynamicCustomObjectForm({
   const errorFields = Object.keys(errors);
 
   return (
-    <form
-      className="usa-form usa-form--large"
-      onSubmit={handleSubmit(onSubmit, onError)}
-      noValidate // Disable native browser validation — RHF handles it
-    >
-      {/* Submission error banner — shown when the Lambda POST fails */}
-      {status === 'error' && submitError && (
-        <div
-          className="usa-alert usa-alert--error margin-bottom-3"
-          role="alert"
-        >
-          <div className="usa-alert__body">
-            <p className="usa-alert__text">{submitError}</p>
-          </div>
-        </div>
-      )}
-
-      {/* Validation error summary — shown after a failed submit attempt.
-          Focus moves here programmatically via onError so screen reader
-          users hear the summary immediately. */}
-      {errorFields.length > 0 && (
-        <div
-          ref={errorSummaryRef}
-          className="usa-alert usa-alert--error margin-bottom-3"
-          role="alert"
-          tabIndex={-1}
-        >
-          <div className="usa-alert__body">
-            <h2 className="usa-alert__heading">{formErrors.summary.heading}</h2>
-            <ul className="usa-list">
-              {errorFields.map((fieldName) => (
-                <li key={fieldName}>
-                  <a href={`#${fieldName}`}>
-                    {errors[fieldName]?.message as string}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-
-      {/* Required fields note — per UX spec, appears at top of every form */}
-      <p className="usa-hint margin-bottom-2">
-        Required fields are marked with an asterisk (*).
-      </p>
-
-      {/* Form intro text */}
-      <p className="margin-bottom-3">
-        Enter the required information below to complete your submission.
-      </p>
-
-      {/* Dynamic fields — rendered from custom object schema field config */}
-      {fields.map((field) =>
-        renderCustomObjectField(field, register, control, errors),
-      )}
-
-      {/* Hardcoded fields — not derived from Freshdesk config */}
-      <ConsentField
-        register={register(CONSENT_FIELD_NAME, {
-          required: fieldErrors.consent.required,
-        })}
-        error={errors[CONSENT_FIELD_NAME] as FieldError | undefined}
-      />
-
-      <HoneypotField register={register('website')} />
-
-      {/* Submit button — disabled while submitting to prevent double submission.
-          Label changes to "Submitting…" so users know something is happening. */}
-      <button
-        type="submit"
-        className="usa-button margin-top-3"
-        disabled={status === 'submitting'}
-        aria-disabled={status === 'submitting'}
+    <FormProvider {...methods}>
+      <form
+        className="usa-form usa-form--large"
+        onSubmit={handleSubmit(onSubmit, onError)}
+        noValidate // Disable native browser validation — RHF handles it
       >
-        {status === 'submitting' ? 'Submitting…' : 'Submit'}
-      </button>
-    </form>
+        {/* Submission error banner — shown when the Lambda POST fails */}
+        {status === 'error' && submitError && (
+          <div
+            className="usa-alert usa-alert--error margin-bottom-3"
+            role="alert"
+          >
+            <div className="usa-alert__body">
+              <p className="usa-alert__text">{submitError}</p>
+            </div>
+          </div>
+        )}
+
+        {/* Validation error summary — shown after a failed submit attempt.
+            Focus moves here programmatically via onError so screen reader
+            users hear the summary immediately. */}
+        {errorFields.length > 0 && (
+          <div
+            ref={errorSummaryRef}
+            className="usa-alert usa-alert--error margin-bottom-3"
+            role="alert"
+            tabIndex={-1}
+          >
+            <div className="usa-alert__body">
+              <h2 className="usa-alert__heading">
+                {formErrors.summary.heading}
+              </h2>
+              <ul className="usa-list">
+                {errorFields.map((fieldName) => (
+                  <li key={fieldName}>
+                    <a href={`#${fieldName}`}>
+                      {errors[fieldName]?.message as string}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {/* Required fields note — per UX spec, appears at top of every form */}
+        <p className="usa-hint margin-bottom-2">
+          Required fields are marked with an asterisk (*).
+        </p>
+
+        {/* Form intro text */}
+        <p className="margin-bottom-3">
+          Enter the required information below to complete your submission.
+        </p>
+
+        {/* Dynamic fields — rendered from custom object schema field config */}
+        {fields.map((field) =>
+          renderCustomObjectField(field, register, control, errors),
+        )}
+
+        {/* Hardcoded fields — not derived from Freshdesk config */}
+        <ConsentField
+          register={register(CONSENT_FIELD_NAME, {
+            required: fieldErrors.consent.required,
+          })}
+          error={errors[CONSENT_FIELD_NAME] as FieldError | undefined}
+        />
+
+        <HoneypotField register={register('website')} />
+
+        {/* Submit button — disabled while submitting to prevent double submission.
+            Label changes to "Submitting…" so users know something is happening. */}
+        <button
+          type="submit"
+          className="usa-button margin-top-3"
+          disabled={status === 'submitting'}
+          aria-disabled={status === 'submitting'}
+        >
+          {status === 'submitting' ? 'Submitting…' : 'Submit'}
+        </button>
+      </form>
+    </FormProvider>
   );
 }

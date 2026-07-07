@@ -29,7 +29,8 @@
  *   When a dropdown field has sections, selecting a choice may reveal additional
  *   fields. These section fields are rendered inline immediately below the dropdown,
  *   wrapped in a div with a fade-in animation. When a section is hidden, its fields
- *   are unregistered from RHF so their values are excluded from the payload.
+ *   are unregistered from RHF via useFormContext so their values are excluded
+ *   from the payload.
  *
  * Adding a new field type:
  *   1. Add the type to FreshdeskFieldType in types.ts
@@ -39,7 +40,8 @@
  */
 
 import { useEffect } from 'react';
-import type { FieldError, UseFormUnregister, useForm } from 'react-hook-form';
+import type { FieldError } from 'react-hook-form';
+import { type useForm, useFormContext } from 'react-hook-form';
 import type {
   FreshdeskField,
   FreshdeskSection,
@@ -65,7 +67,6 @@ type RHFControl = ReturnType<
 type RHFErrors = ReturnType<
   typeof useForm<Record<string, unknown>>
 >['formState']['errors'];
-type RHFUnregister = UseFormUnregister<Record<string, unknown>>;
 
 // ---------------------------------------------------------------------------
 // SectionFields component
@@ -77,6 +78,10 @@ type RHFUnregister = UseFormUnregister<Record<string, unknown>>;
  * Extracted as a component (not just a function) so we can use useEffect
  * to unregister fields from RHF when the section becomes hidden. This ensures
  * hidden section fields are excluded from the payload on submission.
+ *
+ * unregister is accessed via useFormContext rather than passed as a prop —
+ * DynamicForm wraps all fields in FormProvider, so the context is always
+ * available here without needing it threaded through the call chain.
  *
  * Animation:
  *   A simple CSS fade-in with a slight upward translate gives the section
@@ -90,7 +95,6 @@ interface SectionFieldsProps {
   register: RHFRegister;
   control: RHFControl;
   errors: RHFErrors;
-  unregister: RHFUnregister;
   sectionSelections: Record<string, string>;
   onSectionChange: (fieldName: string, value: string) => void;
 }
@@ -101,10 +105,13 @@ function SectionFields({
   register,
   control,
   errors,
-  unregister,
   sectionSelections,
   onSectionChange,
 }: SectionFieldsProps) {
+  // Access unregister from form context — available because DynamicForm
+  // wraps everything in FormProvider. No need to pass it as a prop.
+  const { unregister } = useFormContext<Record<string, unknown>>();
+
   // When this section becomes hidden, unregister its fields from RHF.
   // keepValue: false clears the values so stale data isn't submitted
   // if the user switches choices and then reselects this section later.
@@ -146,7 +153,6 @@ function SectionFields({
           register,
           control,
           errors,
-          unregister,
           sectionSelections,
           onSectionChange,
         ),
@@ -164,9 +170,6 @@ export function renderField(
   register: RHFRegister,
   control: RHFControl,
   errors: RHFErrors,
-  // unregister is only needed when rendering section fields — passed through
-  // from DynamicForm so SectionFields can clean up hidden fields from RHF.
-  unregister: RHFUnregister,
   // Tracks the currently selected value for each dropdown that has sections.
   // Keyed by field name. Used to determine which sections are visible.
   sectionSelections: Record<string, string>,
@@ -197,7 +200,9 @@ export function renderField(
           {...commonProps}
           inputType="email"
           register={register(field.name, {
-            required: fieldErrors.email.required,
+            required: field.required_for_customers
+              ? fieldErrors.email.required
+              : false,
             pattern: {
               value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
               message: fieldErrors.email.pattern,
@@ -298,7 +303,6 @@ export function renderField(
                 register={register}
                 control={control}
                 errors={errors}
-                unregister={unregister}
                 sectionSelections={sectionSelections}
                 onSectionChange={onSectionChange}
               />
