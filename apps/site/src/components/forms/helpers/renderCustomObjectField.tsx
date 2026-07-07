@@ -10,9 +10,6 @@
  *   - No default_subject equivalent — PRIMARY fields are excluded by getCustomObjectSchema
  *   - No dynamic sections — custom objects don't support them natively
  *   - MULTI_SELECT → MultiSelectCheckbox (checkbox group)
- *   - RELATIONSHIP fields rendered based on field_options.ui_hint
- *   - Options for RadioField and MultiSelectCheckbox come from field.options,
- *     populated at build time by the Astro page via getReferenceDataValues()
  *
  * Field type → component mapping:
  *   TEXT         → TextField
@@ -23,8 +20,6 @@
  *   MULTI_SELECT → MultiSelectCheckbox
  *   NUMBER       → TextField (type="number")
  *   DECIMAL      → TextField (type="decimal")
- *   RELATIONSHIP + ui_hint="radio" → RadioField
- *   RELATIONSHIP + ui_hint="checkbox-group" → MultiSelectCheckbox
  *   PRIMARY      → null (never rendered — set programmatically)
  *
  * Adding a new field type:
@@ -38,7 +33,6 @@ import type { CustomObjectField } from '../../../util/freshdesk/typesCustomObjec
 import CheckboxField from '../fields/CheckboxField';
 import DateField from '../fields/DateField';
 import MultiSelectCheckbox from '../fields/MultiSelectCheckbox';
-import RadioField from '../fields/RadioField';
 import SelectField from '../fields/SelectField';
 import TextareaField from '../fields/TextareaField';
 import TextField from '../fields/TextField';
@@ -156,17 +150,14 @@ export function renderCustomObjectField(
       );
 
     case 'MULTI_SELECT': {
-      // Options come from field.options — populated at build time by the
-      // Astro page via getReferenceDataValues() for reference data schemas,
-      // or from field.choices for inline choices defined on the schema.
-      // Prefer field.options if present, fall back to choices values.
+      // Options come from field.options if populated by the Astro page,
+      // or fall back to inline choices defined on the schema directly.
       const multiOptions =
         field.options ?? field.choices?.map((c) => c.value) ?? [];
 
       if (!multiOptions.length) {
         console.warn(
-          `renderCustomObjectField: MULTI_SELECT field "${field.name}" has no options — ` +
-            `was getReferenceDataValues() called and options merged into the field config?`,
+          `renderCustomObjectField: MULTI_SELECT field "${field.name}" has no options`,
         );
       }
       return (
@@ -216,54 +207,6 @@ export function renderCustomObjectField(
           })}
         />
       );
-
-    case 'RELATIONSHIP': {
-      // RELATIONSHIP fields are rendered based on ui_hint in field_options.
-      // This is our convention — added as a TEXT field on reference data schemas
-      // to tell the renderer which component to use.
-      const uiHint = field.field_options?.ui_hint;
-      const relationshipOptions = field.options ?? [];
-
-      if (!relationshipOptions.length) {
-        console.warn(
-          `renderCustomObjectField: RELATIONSHIP field "${field.name}" has no options — ` +
-            `was getReferenceDataValues() called for the related schema?`,
-        );
-      }
-
-      if (uiHint === 'radio') {
-        return (
-          <RadioField
-            key={field.name}
-            {...commonProps}
-            options={relationshipOptions}
-            register={register(field.name, {
-              required: field.required ? fieldErrors.select.required : false,
-            })}
-          />
-        );
-      }
-
-      if (uiHint === 'checkbox-group') {
-        return (
-          <MultiSelectCheckbox
-            key={field.name}
-            {...commonProps}
-            options={relationshipOptions}
-            register={register(field.name, {
-              required: field.required ? fieldErrors.checkbox.required : false,
-            })}
-          />
-        );
-      }
-
-      // Unknown or missing ui_hint — log and skip
-      console.warn(
-        `renderCustomObjectField: RELATIONSHIP field "${field.name}" has unknown ` +
-          `or missing ui_hint "${uiHint}" — add ui_hint to field_options to render correctly`,
-      );
-      return null;
-    }
 
     default:
       console.warn(
