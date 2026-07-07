@@ -23,6 +23,30 @@ const robotsTxtConfig = {
   ],
 };
 
+function externalLinks() {
+  return (tree) => {
+    tree.children?.forEach(function walk(node) {
+      if (
+        node.tagName === 'a' &&
+        typeof node.properties?.href === 'string' &&
+        (node.properties.href.startsWith('http://') ||
+          node.properties.href.startsWith('https://'))
+      ) {
+        node.properties.target = '_blank';
+        node.properties.rel = 'noopener noreferrer';
+        node.properties.className = [
+          ...(Array.isArray(node.properties.className)
+            ? node.properties.className
+            : []),
+          'usa-link',
+          'usa-link--external',
+        ];
+      }
+      node.children?.forEach(walk);
+    });
+  };
+}
+
 export default defineConfig({
   site: siteUrl,
   integrations: [
@@ -34,6 +58,7 @@ export default defineConfig({
   ],
   markdown: {
     remarkPlugins: [['remark-excerpt', { remove: true }]],
+    rehypePlugins: [externalLinks],
   },
   vite: {
     optimizeDeps: {
