@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import TooltipIcon from '../TooltipIcon';
 import PublicationCard from './PublicationCard';
 import {
   type Filters,
@@ -18,18 +19,28 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
   { value: 'title-za', label: 'Title, Z–A' },
 ];
 
+// NOTE: Tooltip text is hardcoded for specific Research Community values.
+// If these option strings change in the data, tooltips will silently stop appearing.
+// Content manager is aware — see publications filtering decision log.
+const RESEARCH_COMMUNITY_TOOLTIPS: Record<string, string> = {
+  'Not Applicable': 'This work was not part of a Research Community effort.',
+  Other: 'This work is part of a research community not listed on the website.',
+};
+
 function FilterGroup({
   legend,
   options,
   selected,
   onToggle,
   threshold = 5,
+  tooltips = {},
 }: {
   legend: string;
   options: Map<string, number>;
   selected: string[];
   onToggle: (value: string) => void;
   threshold?: number;
+  tooltips?: Record<string, string>;
 }) {
   const [showAll, setShowAll] = useState(false);
 
@@ -51,6 +62,9 @@ function FilterGroup({
       <legend className="usa-legend text-bold">{legend}</legend>
       {visibleEntries.map(([value, count]) => {
         const id = `filter-${legend.toLowerCase().replace(/\s+/g, '-')}-${value.toLowerCase().replace(/\s+/g, '-')}`;
+        const tooltipText = tooltips[value];
+        const isDisabled = count === 0 && !selected.includes(value);
+
         return (
           <div key={value} className="usa-checkbox">
             <input
@@ -61,9 +75,18 @@ function FilterGroup({
               value={value}
               checked={selected.includes(value)}
               onChange={() => onToggle(value)}
+              disabled={isDisabled}
             />
-            <label className="usa-checkbox__label" htmlFor={id}>
-              {value} <span className="text-base-light">({count})</span>
+            <label
+              className={`usa-checkbox__label${isDisabled ? ' text-base-light' : ''}`}
+              htmlFor={id}
+              style={isDisabled ? { opacity: 0.4 } : undefined}
+            >
+              {value}
+              {tooltipText && (
+                <TooltipIcon text={tooltipText} id={`${id}-tooltip`} />
+              )}
+              <span className="text-base-light"> ({count})</span>
             </label>
           </div>
         );
@@ -84,9 +107,11 @@ function FilterGroup({
 const ActiveChip = ({
   label,
   onRemove,
+  italic = false,
 }: {
   label: string;
   onRemove: () => void;
+  italic?: boolean;
 }) => (
   <button
     onClick={onRemove}
@@ -106,6 +131,7 @@ const ActiveChip = ({
       cursor: 'pointer',
       whiteSpace: 'nowrap',
       textDecoration: 'none',
+      fontStyle: italic ? 'italic' : 'normal',
     }}
     aria-label={`Remove filter: ${label}`}
   >
@@ -132,6 +158,7 @@ export default function PublicationsFilter({ publications }: Props) {
     updateSearch,
     toggleFilter,
     clearFilters,
+    clearAll,
     updateSort,
     loadMore,
   } = usePublications(publications);
@@ -156,69 +183,83 @@ export default function PublicationsFilter({ publications }: Props) {
     >
       {/* Left sidebar — search + filters */}
       <aside className="tablet:grid-col-4" style={{ padding: 0 }}>
-        <div className="usa-card__container padding-x-3 padding-y-1">
-          {/* Search */}
-          <div className="margin-bottom-3">
-            <label
-              className="usa-label"
-              htmlFor="pub-search"
-              style={{ fontWeight: 600 }}
-            >
-              Search
-            </label>
-            <p className="usa-hint" style={{ fontSize: '13px' }}>
-              Search by title, journal, DOI/PMID, or research community
-            </p>
-            <input
-              className="usa-input usa-search__input--no-button width-full"
-              id="pub-search"
-              type="search"
-              value={search}
-              onChange={(e) => updateSearch(e.target.value)}
-              placeholder="Search publications..."
-            />
+        <div className="usa-card__container" style={{ overflow: 'hidden' }}>
+          {/* Search header */}
+          <div className="margin-bottom-2">
+            <div className="bg-base-lightest padding-x-3 padding-y-105">
+              <label
+                className="usa-label margin-0"
+                htmlFor="pub-search"
+                style={{ fontWeight: 600 }}
+              >
+                Search
+              </label>
+            </div>
+            <div className="padding-x-3 padding-top-1">
+              <p
+                className="usa-hint margin-top-05"
+                style={{ fontSize: '13px' }}
+              >
+                Search by title, journal, or research community
+              </p>
+              <input
+                className="usa-input usa-search__input--no-button width-full margin-top-1"
+                id="pub-search"
+                type="search"
+                value={search}
+                onChange={(e) => updateSearch(e.target.value)}
+                placeholder="Search publications..."
+              />
+            </div>
           </div>
 
           {/* Filters header */}
-          <div className="display-flex flex-justify flex-align-center margin-bottom-0">
-            <h2 className="usa-legend margin-0" style={{ fontWeight: 600 }}>
-              Filters
-            </h2>
-            {hasActiveFilters && (
-              <button
-                type="button"
-                className="usa-button usa-button--unstyled"
-                onClick={clearFilters}
-              >
-                Clear all
-              </button>
-            )}
+          <div className="bg-base-lightest padding-x-3 padding-y-105 margin-top-4">
+            <div className="display-flex flex-justify flex-align-center">
+              <h2 className="usa-legend margin-0" style={{ fontWeight: 600 }}>
+                Filters
+              </h2>
+              {hasActiveFilters && (
+                <button
+                  type="button"
+                  className="usa-button usa-button--unstyled"
+                  onClick={clearFilters}
+                  style={{ textDecoration: 'none' }}
+                >
+                  Clear all
+                </button>
+              )}
+            </div>
           </div>
 
-          <FilterGroup
-            legend="Year"
-            options={filterOptions.years}
-            selected={filters.year}
-            onToggle={(v) => toggleFilter('year', v)}
-          />
-          <FilterGroup
-            legend="Research Community"
-            options={filterOptions.researchCommunities}
-            selected={filters.researchCommunity}
-            onToggle={(v) => toggleFilter('researchCommunity', v)}
-          />
-          <FilterGroup
-            legend="Research Area"
-            options={filterOptions.researchAreas}
-            selected={filters.researchArea}
-            onToggle={(v) => toggleFilter('researchArea', v)}
-          />
-          <FilterGroup
-            legend="BDC Contribution"
-            options={filterOptions.bdcContributions}
-            selected={filters.bdcContribution}
-            onToggle={(v) => toggleFilter('bdcContribution', v)}
-          />
+          {/* Filter groups */}
+          <div className="padding-x-3">
+            <FilterGroup
+              legend="Year"
+              options={filterOptions.years}
+              selected={filters.year}
+              onToggle={(v) => toggleFilter('year', v)}
+            />
+            <FilterGroup
+              legend="Research Community"
+              options={filterOptions.researchCommunities}
+              selected={filters.researchCommunity}
+              onToggle={(v) => toggleFilter('researchCommunity', v)}
+              tooltips={RESEARCH_COMMUNITY_TOOLTIPS}
+            />
+            <FilterGroup
+              legend="Research Area"
+              options={filterOptions.researchAreas}
+              selected={filters.researchArea}
+              onToggle={(v) => toggleFilter('researchArea', v)}
+            />
+            <FilterGroup
+              legend="BDC Contribution"
+              options={filterOptions.bdcContributions}
+              selected={filters.bdcContribution}
+              onToggle={(v) => toggleFilter('bdcContribution', v)}
+            />
+          </div>
         </div>
       </aside>
 
@@ -235,6 +276,9 @@ export default function PublicationsFilter({ publications }: Props) {
               gap: '6px',
             }}
           >
+            <span className="text-bold font-body-sm margin-right-1">
+              Active filters:
+            </span>
             {search && (
               <>
                 <span
@@ -243,12 +287,11 @@ export default function PublicationsFilter({ publications }: Props) {
                 >
                   Search:
                 </span>
-                <span
-                  className="text-base-dark font-body-xs"
-                  style={{ fontStyle: 'italic' }}
-                >
-                  {search}
-                </span>
+                <ActiveChip
+                  label={search}
+                  onRemove={() => updateSearch('')}
+                  italic
+                />
                 {hasActiveFilters && <Separator />}
               </>
             )}
@@ -325,15 +368,12 @@ export default function PublicationsFilter({ publications }: Props) {
             )}
             <button
               type="button"
-              onClick={() => {
-                clearFilters();
-                updateSearch('');
-              }}
+              onClick={clearAll}
               className="usa-button usa-button--unstyled text-base-dark font-body-xs"
               style={{
-                textDecoration: 'underline',
                 whiteSpace: 'nowrap',
                 marginLeft: '4px',
+                textDecoration: 'none',
               }}
             >
               Clear all
@@ -374,14 +414,7 @@ export default function PublicationsFilter({ publications }: Props) {
           <div>
             <h3>No results found</h3>
             <p>No publications match your current search or filters.</p>
-            <button
-              type="button"
-              className="usa-button"
-              onClick={() => {
-                clearFilters();
-                updateSearch('');
-              }}
-            >
+            <button type="button" className="usa-button" onClick={clearAll}>
               {hasActiveFilters && search
                 ? 'Clear search and filters'
                 : hasActiveFilters

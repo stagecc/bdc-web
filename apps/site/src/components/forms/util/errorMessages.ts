@@ -28,7 +28,6 @@
  *     (see formErrors.submission.general and formStatus.unavailable)
  *   - Per-form success copy and button labels are defined per form, not here
  *
- * TODO: Review all copy with content team before launch.
  */
 
 // ---------------------------------------------------------------------------
@@ -119,21 +118,20 @@ export const formErrors = {
   // The form stays as-is and the user's answers are preserved.
   submission: {
     // General connection or server error
-    // TODO: Replace [email] with the actual support email address before launch
     general:
       "Your submission didn't go through. Check your connection and try again. " +
-      'If the problem continues, contact us at [email].',
+      'If the problem continues, contact us at biodatacatalyst@nhlbi.nih.gov.',
     // Request timed out
     timeout:
       'This is taking longer than expected. Check your connection and try again.',
     // reCAPTCHA verification failed
     recaptchaFailed:
       "We weren't able to verify your submission. " +
-      'If you are having trouble, contact us at [email].',
+      'If you are having trouble, contact us at biodatacatalyst@nhlbi.nih.gov.',
     // reCAPTCHA script failed to load
     recaptchaUnavailable:
       "A required security check couldn't load. " +
-      'Refresh the page and try again. If the problem continues, contact us at [email].',
+      'Refresh the page and try again. If the problem continues, contact us at biodatacatalyst@nhlbi.nih.gov.',
   },
 };
 
@@ -145,11 +143,12 @@ export const formErrors = {
 export const formStatus = {
   // Shown when getFormFields fails at build time and DynamicForm renders
   // the fallback UI instead of the form.
-  // TODO: Replace [email] with the actual support email address before launch
   unavailable:
-    'Try again later, or contact us by email if you need help right away.',
+    'Try again later, or contact us by email at biodatacatalyst@nhlbi.nih.gov if you need help right away.',
   unavailableHeading: "This form isn't available right now.",
 
   // Default success heading — per-form follow-up copy is defined per form
   successHeading: 'Submission Received',
+  successText:
+    'Thank you for submitting your publication to BDC. Your submission has been received and forwarded to the appropriate BDC team for review. If additional information is needed, we may contact you using the email address you provided. Additionally, a copy of your responses has been sent to you at the email address provided. Note that submission does not guarantee inclusion on the BDC-Enabled Research page.',
 };

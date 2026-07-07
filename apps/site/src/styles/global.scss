@@ -58,3 +58,19 @@ h4 {
 .usa-checkbox {
   background-color: transparent;
 }
+
+.usa-legend, .usa-label {
+  // font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.usa-form--large {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+}

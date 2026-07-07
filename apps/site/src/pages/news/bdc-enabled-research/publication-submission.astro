@@ -45,10 +45,7 @@ let formError = false;
 const schemaId = Number(
   import.meta.env.FRESHDESK_CUSTOM_OBJECT_PUBLICATIONS_SCHEMA_ID,
 );
-console.log(
-  'raw:',
-  import.meta.env.FRESHDESK_CUSTOM_OBJECT_PUBLICATIONS_SCHEMA_ID,
-);
+
 try {
   fields = await getCustomObjectSchema(schemaId);
 } catch (e) {
@@ -64,18 +61,20 @@ try {
         <div class="grid-col-12 usa-prose--full-width">
 
           <h1>Submit BDC-Enabled Research</h1>
-
-          <p>
-            Researchers may use this form to submit publications that leveraged BDC resources for consideration on the BDC-Enabled Research page.
-          </p>
-          <p>
-            Provide the requested information below. Your submission will be reviewed by the BDC team, and we may contact you if additional information or clarification is needed. Submission of a publication does not guarantee inclusion on the website.
-          </p>
+          <div class="usa-prose">
+            <p>
+              Researchers may use this form to submit publications that leveraged BDC resources for consideration on the BDC-Enabled Research page. View all <a href="/news/bdc-enabled-research">BDC-Enabled Research Publications</a>.
+            </p>
+            <p>
+              Provide the requested information below. Your submission will be reviewed by the BDC team, and we may contact you if additional information or clarification is needed. Submission of a publication does not guarantee inclusion on the website.
+            </p>
+          </div>
 
           <InlineAlert variant="info">
             Before you begin: Have your publication title and DOI, PubMed ID, or publication URL available. The form takes approximately 2-3 minutes to complete. 
           </InlineAlert>
 
+          <h2 style="margin-bottom: 0;">Published Research Form</h2>
           <DynamicCustomObjectForm
             fields={fields}
             schemaId={schemaId}
