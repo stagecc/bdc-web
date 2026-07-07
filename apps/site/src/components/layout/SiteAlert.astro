@@ -2,10 +2,8 @@
 /**
  * SiteAlert.astro
  *
- * Sitewide banner alert component supporting 5 variants.
- * Renders in two visual styles controlled by the `style` prop:
- *   - "border"   — solid background with a left accent border (default)
- *   - "gradient" — horizontal gradient background with a bottom border
+ * Sitewide banner alert component supporting 5 variants with a gradient
+ * background and bottom border accent style.
  *
  * Dismissible per session via sessionStorage — banner reappears on next visit.
  *
@@ -15,16 +13,16 @@
  *
  * Props:
  *   variant      — 'info' | 'warning' | 'error' | 'success' | 'emergency'. Defaults to 'info'.
- *   style        — 'border' | 'gradient'. Defaults to 'border'.
  *   slim         — Reduces padding. Defaults to false.
- *   noIcon       — Suppresses the icon. Defaults to false.
+ *   noIcon       — Reserved for future use. Defaults to false.
  *   title        — Optional heading text.
  *   headingLevel — Heading level for title (h2 | h3 | h4). Defaults to h3.
  *   ariaLabel    — Accessible label for the section. Defaults to 'Site alert'.
- *   storageKey   — Unique key for sessionStorage dismissal. Must be unique per banner instance.
+ *   storageKey   — Unique key for sessionStorage dismissal. Must be unique per
+ *                  banner instance. Use the content collection entry id.
  *
  * Usage:
- *   <SiteAlert variant="warning" style="gradient" storageKey="maintenance-2024">
+ *   <SiteAlert variant="warning" storageKey="maintenance-2024">
  *     Scheduled maintenance this weekend.
  *   </SiteAlert>
  *
@@ -34,7 +32,6 @@
 
 interface Props {
   variant?: 'info' | 'warning' | 'error' | 'success' | 'emergency';
-  style?: 'border' | 'gradient';
   slim?: boolean;
   noIcon?: boolean;
   title?: string;
@@ -45,7 +42,6 @@ interface Props {
 
 const {
   variant = 'info',
-  style = 'gradient',
   slim = false,
   noIcon = false,
   title,
@@ -58,7 +54,7 @@ const alertId = `site-alert-${storageKey}`;
 ---
 
 <section
-  class={`site-alert site-alert--${variant} site-alert--${style}${slim ? ' site-alert--slim' : ''}${noIcon ? ' site-alert--no-icon' : ''}`}
+  class={`site-alert site-alert--${variant}${slim ? ' site-alert--slim' : ''}`}
   aria-label={ariaLabel}
   id={alertId}
 >
@@ -157,54 +153,28 @@ const alertId = `site-alert-${storageKey}`;
     opacity: 1;
   }
 
-  /* ─── Border style ─────────────────────────────────── */
-  .site-alert--border.site-alert--info {
-    background-color: #e3f2fd;
-    border-left: 6px solid #21568a;
+  /* ─── Variants ────────────────────────────── */
+  .site-alert--info {
+    background: linear-gradient(90deg, #a6bbd0, #c8e0f4);
+    border-bottom: 6px solid #21568a;
   }
 
-  .site-alert--border.site-alert--warning {
-    background-color: #ffe3c2;
-    border-left: 6px solid #e8a25a;
-  }
-
-  .site-alert--border.site-alert--error {
-    background-color: #f2b5a7;
-    border-left: 6px solid #b33243;
-  }
-
-  .site-alert--border.site-alert--success {
-    background-color: #ecf3ec;
-    border-left: 6px solid #2e7d32;
-  }
-
-  .site-alert--border.site-alert--emergency {
-    background-color: #fdf0e8;
-    border-left: 6px solid #9c3d10;
-  }
-
-  /* ─── Gradient style ───────────────────────────────── */
-.site-alert--gradient.site-alert--info {
-  background: linear-gradient(90deg, #a6bbd0, #c8e0f4);
-  border-bottom: 6px solid #21568a;
-}
-
-  .site-alert--gradient.site-alert--warning {
+  .site-alert--warning {
     background: linear-gradient(90deg, #ffe3c2, #f5c07a);
     border-bottom: 6px solid #e8a25a;
   }
 
-  .site-alert--gradient.site-alert--error {
+  .site-alert--error {
     background: linear-gradient(90deg, #f2b5a7, #e8897a);
     border-bottom: 6px solid #b33243;
   }
 
-  .site-alert--gradient.site-alert--success {
+  .site-alert--success {
     background: linear-gradient(90deg, #c8e6c9, #a5d6a7);
     border-bottom: 6px solid #2e7d32;
   }
 
-  .site-alert--gradient.site-alert--emergency {
+  .site-alert--emergency {
     background: linear-gradient(90deg, #f9d4b8, #f0b27a);
     border-bottom: 6px solid #9c3d10;
   }
