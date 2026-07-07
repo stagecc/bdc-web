@@ -9,15 +9,7 @@ export default function TooltipIcon({ text, id }: Props) {
   const [visible, setVisible] = useState(false);
 
   return (
-    <span
-      style={{
-        position: 'relative',
-        display: 'inline-block',
-        verticalAlign: 'middle',
-        marginLeft: '4px',
-        color: '#494848',
-      }}
-    >
+    <span className="bdc-tooltip">
       <button
         type="button"
         aria-describedby={id}
@@ -25,15 +17,7 @@ export default function TooltipIcon({ text, id }: Props) {
         onMouseLeave={() => setVisible(false)}
         onFocus={() => setVisible(true)}
         onBlur={() => setVisible(false)}
-        style={{
-          background: 'none',
-          border: 'none',
-          padding: 0,
-          cursor: 'help',
-          display: 'inline-flex',
-          alignItems: 'center',
-          color: 'inherit',
-        }}
+        className="bdc-tooltip__trigger"
         aria-label="More information"
       >
         <svg
@@ -49,39 +33,8 @@ export default function TooltipIcon({ text, id }: Props) {
         </svg>
       </button>
       {visible && (
-        <span
-          id={id}
-          role="tooltip"
-          style={{
-            position: 'absolute',
-            bottom: '100%',
-            left: '50%',
-            transform: 'translateX(-50%) translateY(-8px)',
-            background: '#1b1b1b',
-            color: '#ffffff',
-            padding: '0.5rem 0.75rem',
-            borderRadius: '4px',
-            fontSize: '0.8rem',
-            lineHeight: '1.3',
-            width: 'max-content',
-            maxWidth: '240px',
-            textAlign: 'left',
-            zIndex: 10,
-            pointerEvents: 'none',
-            whiteSpace: 'normal',
-          }}
-        >
+        <span id={id} role="tooltip" className="bdc-tooltip__bubble">
           {text}
-          <span
-            style={{
-              position: 'absolute',
-              top: '100%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              border: '6px solid transparent',
-              borderTopColor: '#1b1b1b',
-            }}
-          />
         </span>
       )}
     </span>

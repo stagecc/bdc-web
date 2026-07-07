@@ -14,10 +14,9 @@ function Icon({
 }) {
   return (
     <svg
-      className={`usa-icon usa-icon--size-${size}`}
+      className={`usa-icon usa-icon--size-${size} bdc-pub-card__icon`}
       aria-hidden="true"
       focusable="false"
-      style={{ marginBottom: '2px', marginRight: '4px' }}
     >
       <use href={`${spriteUrl}#${name}`} />
     </svg>
@@ -46,10 +45,7 @@ export default function PublicationCard({ pub }: Props) {
   ].filter(Boolean) as { label: string; values: string[] }[];
 
   return (
-    <li
-      className="usa-collection__item margin-y-3"
-      style={{ maxWidth: '100%' }}
-    >
+    <li className="usa-collection__item bdc-pub-card margin-y-3">
       <div className="usa-collection__body">
         <h4 className="usa-collection__heading">
           <a
@@ -61,22 +57,13 @@ export default function PublicationCard({ pub }: Props) {
             {pub.title}
           </a>
         </h4>
-        <ul
-          className="usa-collection__meta margin-top-2"
-          style={{ marginTop: '0.75rem', marginBottom: '0.75rem' }}
-        >
-          <li
-            className="usa-collection__meta-item display-flex flex-align-center"
-            style={{ fontWeight: 800, gap: '4px' }}
-          >
-            <Icon name="calendar_today" size={2} />
+        <ul className="usa-collection__meta bdc-pub-card__meta">
+          <li className="usa-collection__meta-item display-flex flex-align-center bdc-pub-card__meta-item">
+            <Icon name="calendar_today" />
             <time dateTime={pub.date}>{formattedDate}</time>
           </li>
-          <li
-            className="usa-collection__meta-item display-flex flex-align-center"
-            style={{ fontWeight: 800, gap: '4px' }}
-          >
-            <Icon name="local_library" size={2} />
+          <li className="usa-collection__meta-item display-flex flex-align-center bdc-pub-card__meta-item">
+            <Icon name="local_library" />
             {pub.journalName}
           </li>
         </ul>
@@ -90,10 +77,7 @@ export default function PublicationCard({ pub }: Props) {
           </div>
         )}
         {metaRows.length > 0 && (
-          <p
-            className="margin-top-1"
-            style={{ fontSize: '13px', lineHeight: '1.6', marginBottom: 0 }}
-          >
+          <p className="margin-top-1 bdc-pub-card__categories">
             {metaRows.map((row, i) => (
               <span key={row.label}>
                 <span className="text-base-dark">{row.label}: </span>

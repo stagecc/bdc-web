@@ -131,9 +131,7 @@ const ActiveChip = ({
 );
 
 const Separator = () => (
-  <span className="text-base-light" style={{ margin: '0 4px' }}>
-    |
-  </span>
+  <span className="text-base-light bdc-active-filters__separator">|</span>
 );
 
 export default function PublicationsFilter({ publications }: Props) {
@@ -258,15 +256,7 @@ export default function PublicationsFilter({ publications }: Props) {
       <div className="tablet:grid-col-8">
         {/* Active filter chips */}
         {hasAnyActive && (
-          <div
-            className="bg-base-lightest border border-base-light radius-md padding-105 margin-bottom-2"
-            style={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              gap: '6px',
-            }}
-          >
+          <div className="bg-base-lightest border border-base-light radius-md padding-105 margin-bottom-2 bdc-active-filters">
             <span className="text-bold font-body-sm margin-right-1">
               Active filters:
             </span>
@@ -360,12 +350,7 @@ export default function PublicationsFilter({ publications }: Props) {
             <button
               type="button"
               onClick={clearAll}
-              className="usa-button usa-button--unstyled text-base-dark font-body-xs"
-              style={{
-                whiteSpace: 'nowrap',
-                marginLeft: '4px',
-                textDecoration: 'none',
-              }}
+              className="usa-button usa-button--unstyled text-base-dark font-body-xs bdc-active-filters__clear"
             >
               Clear all
             </button>

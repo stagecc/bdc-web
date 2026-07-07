@@ -1,0 +1,32 @@
+// _publication-card.scss
+// Visual treatment for publication list cards.
+// Extends usa-collection primitives.
+// Behavior lives in PublicationCard.tsx.
+
+.bdc-pub-card {
+  max-width: 100% !important;
+}
+
+.bdc-pub-card__meta {
+  margin-top: 0.75rem !important;
+  margin-bottom: 0.75rem !important;
+}
+
+.bdc-pub-card__meta-item {
+  font-weight: 800;
+  gap: 0.25rem; // 4px
+
+}
+
+.bdc-pub-card__icon {
+  margin-bottom: 2px;
+  margin-right: 4px;
+  width: 1em !important;
+  height: 1em !important;
+}
+
+.bdc-pub-card__categories {
+  font-size: 0.8125rem; // 13px
+  line-height: 1.6;
+  margin-bottom: 0;
+}
