@@ -145,15 +145,7 @@ export default function DynamicForm({
         <output className="usa-alert usa-alert--success">
           <div className="usa-alert__body">
             <h2 className="usa-alert__heading">{formStatus.successHeading}</h2>
-            <p className="usa-alert__text">
-              Thank you for submitting your publication to BDC. Your submission
-              has been received and forwarded to the appropriate BDC team for
-              review. If additional information is needed, we may contact you
-              using the email address you provided. Additionally, a copy of your
-              responses has been sent to you at the email address provided. Note
-              that submission does not guarantee inclusion on the BDC-Enabled
-              Research page.
-            </p>
+            <p className="usa-alert__text">{formStatus.successText}</p>
           </div>
         </output>
 
