@@ -2,8 +2,7 @@
 /**
  * Published Research Submission Form
  *
- * Replaced the ticket form version (DynamicForm) with a custom object form
- * (DynamicCustomObjectForm) to store publication submissions as Freshdesk
+ * Uses DynamicCustomObjectForm to store publication submissions as Freshdesk
  * custom object records rather than ticket custom fields.
  *
  * Why custom objects?
@@ -13,21 +12,10 @@
  *   better data modeling.
  *
  * Build-time fetches:
- *   1. Publication schema fields — getCustomObjectSchema
- *   2. Reference data for multi-select and radio fields:
- *      - Publication Status → RadioField
- *      - Research Areas → MultiSelectCheckbox
- *      - Org Contributions → MultiSelectCheckbox
- *      - Research Communities → MultiSelectCheckbox
- *   Reference data options are merged into the relevant field configs before
- *   being passed as props to DynamicCustomObjectForm.
+ *   Publication schema fields — getCustomObjectSchema
  *
  * Environment variables required:
  *   FRESHDESK_CUSTOM_OBJECT_PUBLICATIONS_SCHEMA_ID
- *   FRESHDESK_CUSTOM_OBJECT_PUBLICATION_STATUS_SCHEMA_ID
- *   FRESHDESK_CUSTOM_OBJECT_RESEARCH_AREAS_SCHEMA_ID
- *   FRESHDESK_CUSTOM_OBJECT_ORG_CONTRIBUTIONS_SCHEMA_ID
- *   FRESHDESK_CUSTOM_OBJECT_RESEARCH_COMMUNITIES_SCHEMA_ID
  *   FRESHDESK_PROXY_URL
  *   PUBLIC_RECAPTCHA_SITE_KEY
  */
@@ -35,7 +23,6 @@
 import DynamicCustomObjectForm from '@components/forms/DynamicCustomObjectForm.tsx';
 import InlineAlert from '@components/InlineAlert.astro';
 import Base from '@layouts/Base.astro';
-import { getReferenceDataValues } from '../../../util/freshdesk/getCustomObjectRecords';
 import { getCustomObjectSchema } from '../../../util/freshdesk/getCustomObjectSchema';
 import type { CustomObjectField } from '../../../util/freshdesk/typesCustomObjects';
 
