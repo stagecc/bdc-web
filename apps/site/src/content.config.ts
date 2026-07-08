@@ -63,8 +63,12 @@ const publications = defineCollection({
   schema: z.object({
     title: z.string(),
     date: z.coerce.date(),
-    location: z.string(),
+    journalName: z.string(),
     url: z.string(),
+    status: z.enum(['Published', 'PrePrint', 'Other']).optional(),
+    bdcContribution: z.array(z.string()).optional(),
+    researchArea: z.array(z.string()).optional(),
+    researchCommunity: z.array(z.string()).optional(),
   }),
 });
 
@@ -172,7 +176,9 @@ const programs = defineCollection({
 const banners = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/banners' }),
   schema: z.object({
-    variant: z.enum(['info', 'emergency']),
+    variant: z
+      .enum(['info', 'emergency', 'warning', 'error', 'success'])
+      .default('info'),
     active: z.boolean().default(false),
     importance: z.number(),
     homeOnly: z.boolean().default(false),

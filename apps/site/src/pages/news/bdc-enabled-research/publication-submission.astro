@@ -1,0 +1,79 @@
+---
+/**
+ * Published Research Submission Form
+ *
+ * Uses DynamicCustomObjectForm to store publication submissions as Freshdesk
+ * custom object records rather than ticket custom fields.
+ *
+ * Why custom objects?
+ *   Ticket custom fields display on every ticket in the agent view regardless
+ *   of ticket type, creating a cluttered experience. Custom object records
+ *   keep publication-specific data off tickets entirely — cleaner for agents,
+ *   better data modeling.
+ *
+ * Build-time fetches:
+ *   Publication schema fields — getCustomObjectSchema
+ *
+ * Environment variables required:
+ *   FRESHDESK_CUSTOM_OBJECT_PUBLICATIONS_SCHEMA_ID
+ *   FRESHDESK_PROXY_URL
+ *   PUBLIC_RECAPTCHA_SITE_KEY
+ */
+
+import DynamicCustomObjectForm from '@components/forms/DynamicCustomObjectForm.tsx';
+import InlineAlert from '@components/InlineAlert.astro';
+import Base from '@layouts/Base.astro';
+import { getCustomObjectSchema } from '../../../util/freshdesk/getCustomObjectSchema';
+import type { CustomObjectField } from '../../../util/freshdesk/typesCustomObjects';
+
+let fields: CustomObjectField[] = [];
+let formError = false;
+
+const schemaId = Number(
+  import.meta.env.FRESHDESK_CUSTOM_OBJECT_PUBLICATIONS_SCHEMA_ID,
+);
+
+try {
+  fields = await getCustomObjectSchema(schemaId);
+} catch (e) {
+  console.error('Failed to fetch publication submission form config:', e);
+  formError = true;
+}
+---
+
+<Base title="Submit Published Research" enableRecaptcha>
+  <section class="usa-section">
+    <div class="grid-container">
+      <div class="grid-row">
+        <div class="grid-col-12 usa-prose--full-width">
+
+          <h1>Submit BDC-Enabled Research</h1>
+          <div class="usa-prose">
+            <p>
+              Researchers may use this form to submit publications that leveraged BDC resources for consideration on the BDC-Enabled Research page. View all <a href="/news/bdc-enabled-research">BDC-Enabled Research Publications</a>.
+            </p>
+            <p>
+              Provide the requested information below. Your submission will be reviewed by the BDC team, and we may contact you if additional information or clarification is needed. Submission of a publication does not guarantee inclusion on the website.
+            </p>
+          </div>
+
+          <InlineAlert variant="info">
+            Before you begin: Have your publication title and DOI, PubMed ID, or publication URL available. The form takes approximately 2-3 minutes to complete. 
+          </InlineAlert>
+
+          <h2 style="margin-bottom: 0;">Published Research Form</h2>
+          <DynamicCustomObjectForm
+            fields={fields}
+            schemaId={schemaId}
+            idPrefix="PUB"
+            submitUrl={import.meta.env.FRESHDESK_PROXY_URL}
+            recaptchaSiteKey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
+            error={formError}
+            client:load
+          />
+
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

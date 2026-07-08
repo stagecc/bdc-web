@@ -1,0 +1,28 @@
+// _status-chip.scss
+// Extends usa-tag for publication status display.
+// Display-only — not interactive, not removable.
+// Status values: Published, PrePrint, Other
+
+.usa-tag.bdc-tag--status {
+  display: inline-block;
+  border-radius: 999px;
+  font-size: 0.75rem; // 12px
+  font-weight: 600;
+  text-transform: none;
+  padding: 2px 12px;
+}
+
+.usa-tag.bdc-tag--status-published {
+  background-color: #c3dbff !important;
+  color: #000f2a;
+}
+
+.usa-tag.bdc-tag--status-preprint {
+  background-color: #90cc90 !important;
+  color: #000f2a;
+}
+
+.usa-tag.bdc-tag--status-other {
+  background-color: #dddddd !important;
+  color: #000f2a;
+}
