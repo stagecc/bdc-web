@@ -23,12 +23,11 @@
  *
  * Data flow:
  *   1. Astro page fetches schema fields via getCustomObjectSchema at build time
- *   2. Astro page fetches reference data via getReferenceDataValues at build time
- *   3. Reference data options are merged into relevant field configs
- *   4. Enriched fields array is passed as props to this component
- *   5. renderCustomObjectField maps field types to USWDS components
- *   6. On submit, buildCustomObjectPayload builds the record payload
- *   7. Payload (including reCAPTCHA token) is POSTed to the Lambda proxy,
+ *   2. The schema response already includes choices for DROPDOWN and MULTI_SELECT fields
+ *   3. Filtered fields array is passed as props to this component
+ *   4. renderCustomObjectField maps field types to USWDS components
+ *   5. On submit, buildCustomObjectPayload builds the record payload
+ *   6. Payload (including reCAPTCHA token) is POSTed to the Lambda proxy,
  *      which forwards to POST /api/v2/custom_objects/schemas/{id}/records/
  *
  * Error fallback:
@@ -56,8 +55,8 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
 
 interface DynamicCustomObjectFormProps {
   // Filtered, enriched field config from getCustomObjectSchema.
-  // PRIMARY and hidden fields are excluded. Reference data fields
-  // have options populated from getReferenceDataValues.
+  // PRIMARY, RELATIONSHIP, and hidden fields are excluded.
+  // DROPDOWN and MULTI_SELECT fields include choices from the schema response.
   fields: CustomObjectField[];
   // The numeric ID of the custom object schema.
   // Passed to the Lambda proxy so it can construct the correct endpoint:

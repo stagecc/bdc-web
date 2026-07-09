@@ -5,9 +5,10 @@
  *   - custom_dropdown
  *   - default_ticket_type
  *
- * Choices are fetched at build time via the Freshdesk per-field endpoint
- * (GET /api/v2/ticket-forms/{id}/fields/{field_id}) and passed in via
- * the field config. They are never fetched client-side.
+ * Choices are provided via the field config. For ticket forms, they are fetched
+ * at build time via the Freshdesk per-field endpoint
+ * (GET /api/v2/ticket-forms/{id}/fields/{field_id}). For custom object forms,
+ * they are included directly in the schema response.
  *
  * Choice rendering:
  *   - Uses `value` as the option value submitted to Freshdesk
@@ -55,9 +56,8 @@ interface SelectFieldProps {
   // Whether the field is required — derived from required_for_customers.
   required?: boolean;
   // The available choices for this dropdown.
-  // Fetched at build time via the per-field endpoint and merged into
-  // the field config by getFormFields. Should never be undefined for
-  // dropdown fields — renderField logs a warning if choices are missing.
+  // Never undefined for dropdown fields in practice — the caller
+  // logs a warning if choices are missing.
   choices?: FreshdeskChoice[];
   // React Hook Form's register function, bound to this field by the parent.
   register: ReturnType<UseFormRegister<Record<string, unknown>>>;

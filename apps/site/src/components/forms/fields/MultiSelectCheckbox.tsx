@@ -1,16 +1,19 @@
 /**
  * MultiSelectCheckbox
  *
- * Renders a USWDS checkbox group for multi-select fields backed by
- * reference data from a Freshdesk custom object schema.
+ * Renders a USWDS checkbox group for multi-select fields.
  *
  * Used for fields where the user can select one or more options from a
- * predefined list — for example, Research Community, Research Area,
- * and Org Contribution on the Publications Submission form.
+ * predefined list — for example, Research Community and Research Area
+ * on the Publications Submission form.
  *
  * Options source:
- *   Options are fetched at build time via getReferenceDataValues() and passed
- *   as a string array prop. They are never fetched client-side.
+ *   Options are passed as a string array prop. They come from either:
+ *   - Inline choices defined on the Freshdesk custom object schema
+ *     (returned by getCustomObjectSchema and mapped to string values)
+ *   - A string array populated at build time by the Astro page from
+ *     a separate data source and merged into the field config
+ *   Options are never fetched client-side.
  *
  * Payload shape:
  *   React Hook Form returns checked checkbox values as an array of strings.
@@ -47,8 +50,8 @@ interface MultiSelectCheckboxProps {
   // Whether at least one option must be checked before submitting.
   required?: boolean;
   // The available options for this checkbox group.
-  // Fetched at build time via getReferenceDataValues() from a reference
-  // data custom object schema (e.g. ResearchCommunities).
+  // Provided by the parent — either from inline schema choices or a
+  // separate data source merged into the field config at build time.
   // Each string is both the display label and the submitted value.
   // If "Other" is present (case-insensitive), a free text input is shown
   // when it is checked.
