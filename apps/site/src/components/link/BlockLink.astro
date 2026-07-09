@@ -1,5 +1,5 @@
 ---
-import Icon from '@components/Icon.astro';
+import Icon from '@components/Icon.tsx';
 import Link from '@components/link/Link.astro';
 
 const { to, flex = 'center', class: className = '' } = Astro.props;
@@ -11,7 +11,7 @@ const { to, flex = 'center', class: className = '' } = Astro.props;
   <Link to={to}>
     <slot />
   </Link>
-  <Icon name="navigate_next" class="margin-top-05" />
+  <Icon name="navigate_next" className="margin-top-05" />
 </p>
 
 <style>

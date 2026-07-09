@@ -1,5 +1,5 @@
 ---
-import Icon from '@components/Icon.astro';
+import Icon from '@components/Icon.tsx';
 import Link from '@components/link/Link.astro';
 import TagLink from '@components/link/TagLink.astro';
 
@@ -17,7 +17,7 @@ const endDateStr = endDate?.toLocaleDateString('en-US', dateOptions);
   <div class="event__meta border-bottom padding-bottom-1 margin-bottom-2 text-base-dark">
 
     <div class="display-flex flex-align-center gap-1 margin-bottom-05">
-      <Icon name="event" size={3} class="margin-right-1"/>
+      <Icon name="event" size={3} className="margin-right-1"/>
       <time datetime={date.toISOString()}>
         {dateStr}{endDate && ` – ${endDateStr}`}
       </time>
@@ -26,14 +26,14 @@ const endDateStr = endDate?.toLocaleDateString('en-US', dateOptions);
 
     {location && (
       <div class="display-flex flex-align-center gap-1 margin-bottom-05">
-        <Icon name="location_on" size={3} class="margin-right-1"/>
+        <Icon name="location_on" size={3} className="margin-right-1"/>
         <span>{location}</span>
       </div>
     )}
 
     {url && (
       <div class="display-flex flex-align-center gap-1 margin-bottom-05">
-        <Icon name="language" size={3} class="margin-right-1"/>
+        <Icon name="language" size={3} className="margin-right-1"/>
         <Link to={url}>Event website</Link>
       </div>
     )}

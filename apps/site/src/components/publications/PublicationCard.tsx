@@ -1,27 +1,9 @@
 import type { CollectionEntry } from 'astro:content';
-import spriteUrl from '../../assets/sprite.svg?url';
+import Icon from '@components/Icon.tsx';
 
 type Props = {
   pub: CollectionEntry<'publications'>['data'] & { date: string };
 };
-
-function Icon({
-  name,
-  size = 3,
-}: {
-  name: string;
-  size?: 3 | 4 | 5 | 6 | 7 | 8 | 9;
-}) {
-  return (
-    <svg
-      className={`usa-icon usa-icon--size-${size} bdc-pub-card__icon`}
-      aria-hidden="true"
-      focusable="false"
-    >
-      <use href={`${spriteUrl}#${name}`} />
-    </svg>
-  );
-}
 
 export default function PublicationCard({ pub }: Props) {
   const formattedDate = new Date(pub.date).toLocaleDateString('en-US', {
@@ -59,11 +41,11 @@ export default function PublicationCard({ pub }: Props) {
         </h4>
         <ul className="usa-collection__meta bdc-pub-card__meta">
           <li className="usa-collection__meta-item display-flex flex-align-center bdc-pub-card__meta-item">
-            <Icon name="calendar_today" />
+            <Icon name="calendar_today" className="bdc-pub-card__icon" />
             <time dateTime={pub.date}>{formattedDate}</time>
           </li>
           <li className="usa-collection__meta-item display-flex flex-align-center bdc-pub-card__meta-item">
-            <Icon name="local_library" />
+            <Icon name="local_library" className="bdc-pub-card__icon" />
             {pub.journalName}
           </li>
         </ul>
