@@ -1,5 +1,5 @@
 ---
-import Icon from '@components/Icon.astro';
+import Icon from '@components/Icon.tsx';
 
 interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
   variant?:
@@ -13,7 +13,6 @@ interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
     | 'unstyled';
   size?: 'default' | 'big';
   icon?: string;
-  className?: string;
   href?: string;
   to?: string;
   centered?: boolean;
@@ -24,7 +23,6 @@ const {
   size = 'default',
   icon,
   class: className,
-  className: classNameProp,
   type = 'button',
   href,
   to,
@@ -40,31 +38,29 @@ const classes = [
   'radius-pill',
   variant !== 'default' && `usa-button--${variant}`,
   size === 'big' && 'usa-button--big',
+  centered && 'usa-button--centered',
   className,
-  classNameProp,
 ]
   .filter(Boolean)
   .join(' ');
+
+const tagProps = {
+  ...(targetUrl ? { href: targetUrl } : { type }),
+  class: classes,
+  ...rest,
+};
 ---
 
-{centered ? (
-  <div style="text-align: center;">
-    <Tag
-      {...targetUrl ? { href: targetUrl } : { type }}
-      class={classes}
-      {...rest}
-    >
-      {icon && <Icon name={icon} />}
-      <slot />
-    </Tag>
-  </div>
-) : (
-  <Tag
-    {...targetUrl ? { href: targetUrl } : { type }}
-    class={classes}
-    {...rest}
-  >
-    {icon && <Icon name={icon} />}
-    <slot />
-  </Tag>
-)}
+<Tag {...tagProps}>
+  {icon && <Icon name={icon} />}
+  <slot />
+</Tag>
+
+<style>
+  .usa-button--centered {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>
