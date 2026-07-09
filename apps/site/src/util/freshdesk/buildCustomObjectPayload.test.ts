@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { buildCustomObjectPayload } from './buildCustomObjectPayload.ts';
+import { buildCustomObjectPayload } from './buildCustomObjectPayload';
 import type { CustomObjectField } from './typesCustomObjects';
 
 // ---------------------------------------------------------------------------
@@ -15,20 +15,11 @@ const makeField = (
   type: 'TEXT',
   position: 1,
   required: false,
-  editable: true,
   visible: true,
   deleted: false,
   placeholder: null,
-  hint: null,
   field_options: { unique: 'false' },
-  filterable: false,
-  searchable: false,
-  aggregatable: false,
-  has_dependents: false,
-  parent_id: null,
   choices: [],
-  default: null,
-  validations: {},
   ...overrides,
 });
 

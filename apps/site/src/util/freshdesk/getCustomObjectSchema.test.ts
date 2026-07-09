@@ -15,20 +15,11 @@ const makeField = (
   type: 'TEXT',
   position: 1,
   required: false,
-  editable: true,
   visible: true,
   deleted: false,
   placeholder: null,
-  hint: null,
   field_options: { unique: 'false' },
-  filterable: false,
-  searchable: false,
-  aggregatable: false,
-  has_dependents: false,
-  parent_id: null,
   choices: [],
-  default: null,
-  validations: {},
   ...overrides,
 });
 
@@ -48,7 +39,7 @@ beforeEach(() => {
 // ---------------------------------------------------------------------------
 
 describe('getCustomObjectSchema — filtering', () => {
-  it('returns visible non-deleted non-PRIMARY fields', async () => {
+  it('returns visible non-deleted renderable fields', async () => {
     mockSchemaFetch([
       makeField({ name: 'title', type: 'TEXT', visible: true, deleted: false }),
       makeField({
@@ -93,32 +84,14 @@ describe('getCustomObjectSchema — filtering', () => {
     expect(result.map((f) => f.name)).toEqual(['title']);
   });
 
-  it('excludes NATIVE RELATIONSHIP fields', async () => {
+  it('excludes RELATIONSHIP fields — not yet supported by the renderer', async () => {
     mockSchemaFetch([
       makeField({ name: 'title', type: 'TEXT' }),
-      makeField({
-        name: 'email_address',
-        type: 'RELATIONSHIP',
-        field_options: { related_object_type: 'NATIVE' },
-      }),
+      makeField({ name: 'linked_contact', type: 'RELATIONSHIP' }),
     ]);
 
     const result = await getCustomObjectSchema('1001');
     expect(result.map((f) => f.name)).toEqual(['title']);
-  });
-
-  it('includes CUSTOM RELATIONSHIP fields', async () => {
-    mockSchemaFetch([
-      makeField({ name: 'title', type: 'TEXT' }),
-      makeField({
-        name: 'publication_status',
-        type: 'RELATIONSHIP',
-        field_options: { related_object_type: 'CUSTOM', ui_hint: 'radio' },
-      }),
-    ]);
-
-    const result = await getCustomObjectSchema('1001');
-    expect(result.map((f) => f.name)).toEqual(['title', 'publication_status']);
   });
 
   it('returns an empty array when all fields are filtered out', async () => {
@@ -140,8 +113,8 @@ describe('getCustomObjectSchema — filtering', () => {
 describe('getCustomObjectSchema — choices', () => {
   it('includes choices on MULTI_SELECT fields', async () => {
     const choices = [
-      { id: 1, value: 'Heart', position: 1, dependent_ids: {} },
-      { id: 2, value: 'Lung', position: 2, dependent_ids: {} },
+      { id: 1, value: 'Heart', position: 1 },
+      { id: 2, value: 'Lung', position: 2 },
     ];
     mockSchemaFetch([
       makeField({ name: 'research_area', type: 'MULTI_SELECT', choices }),
@@ -153,8 +126,8 @@ describe('getCustomObjectSchema — choices', () => {
 
   it('includes choices on DROPDOWN fields', async () => {
     const choices = [
-      { id: 1, value: 'Published', position: 1, dependent_ids: {} },
-      { id: 2, value: 'Preprint', position: 2, dependent_ids: {} },
+      { id: 1, value: 'Published', position: 1 },
+      { id: 2, value: 'PrePrint', position: 2 },
     ];
     mockSchemaFetch([
       makeField({ name: 'publication_status', type: 'DROPDOWN', choices }),
