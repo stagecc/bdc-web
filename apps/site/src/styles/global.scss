@@ -1,5 +1,10 @@
 @use "@bdc/uswds-theme/src/uswds-init" as core;
 @use "uswds";
+@use "components/filter-chip";
+@use "components/status-chip";
+@use "components/tooltip";
+@use "components/publication-card";
+@use "components/active-filters";
 
 h1, h2, h3, h4, h5, h6 {
   font-family: core.core-font-family('heading');

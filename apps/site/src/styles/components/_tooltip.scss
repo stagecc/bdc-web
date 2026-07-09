@@ -1,0 +1,96 @@
+// _tooltip.scss
+// Inline tooltip with icon trigger.
+// Behavior (show/hide on focus/hover) lives in React TooltipIcon.tsx.
+// All visual treatment lives here.
+
+/* ─── Tooltip ───────────────────────────────────────── */
+.bdc-tooltip {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+/* Prose trigger — dotted underline on the text */
+.bdc-tooltip__prose-trigger {
+  text-decoration: underline dotted;
+  text-underline-offset: 2px;
+  cursor: help;
+  display: inline;
+}
+
+/* Superscript icon next to prose trigger text */
+.bdc-tooltip__icon {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.1rem;
+  vertical-align: super;
+  font-size: 0.65em;
+  line-height: 1;
+  
+}
+
+.bdc-tooltip__icon svg,
+.bdc-tooltip__icon-trigger svg {
+  width: 0.9rem;
+  height: 0.9rem;
+  color: red;
+}
+
+/* Icon-only trigger button */
+.bdc-tooltip__icon-trigger {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.25rem;
+}
+
+.bdc-tooltip__icon-trigger:hover,
+.bdc-tooltip__icon-trigger:focus {
+  outline: none;
+}
+
+/* Tooltip bubble */
+.bdc-tooltip__bubble {
+  position: absolute;
+  // bottom: 100%;
+  // left: 50%;
+  // transform: translateX(-50%) translateY(-8px);
+  // background: #1b1b1b;
+  // color: #ffffff;
+  // padding: 0.5rem 0.75rem;
+  // font-size: 0.8rem;
+  // line-height: 1.3;
+  // width: max-content;
+  // max-width: 240px;
+  // text-align: left;
+  // text-decoration: none;
+  // opacity: 0;
+  // visibility: hidden;
+  // transition: opacity 150ms ease;
+  // pointer-events: none;
+  // z-index: 10;
+  // white-space: normal;
+}
+
+/* Arrow */
+.bdc-tooltip__bubble::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1b1b1b;
+}
+
+/* Show on hover or focus */
+.bdc-tooltip:hover .bdc-tooltip__bubble,
+.bdc-tooltip__prose-trigger:focus ~ .bdc-tooltip__bubble,
+.bdc-tooltip__icon-trigger:focus ~ .bdc-tooltip__bubble,
+.bdc-tooltip__icon-trigger:hover ~ .bdc-tooltip__bubble {
+  opacity: 1;
+  visibility: visible;
+}
