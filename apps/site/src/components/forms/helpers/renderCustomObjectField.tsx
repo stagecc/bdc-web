@@ -63,12 +63,11 @@ export function renderCustomObjectField(
   errors: RHFErrors,
 ) {
   // Props shared across all field components.
-  // Custom objects use `hint` directly (not `hint_for_customers`)
-  // and `label` as the customer-facing label (no separate label_for_customers).
+  // Custom objects use `label` as the customer-facing label.
+  // There is no separate label_for_customers or hint field.
   const commonProps = {
     name: field.name,
     label: field.label,
-    hint: field.hint ?? undefined,
     required: field.required,
     error: errors[field.name] as FieldError | undefined,
   };
@@ -112,7 +111,6 @@ export function renderCustomObjectField(
     case 'DROPDOWN':
       // For DROPDOWN fields, choices come from the schema response directly
       // (unlike ticket form dropdowns which require a separate per-field fetch).
-      // Map choices to the shape SelectField expects.
       if (!field.choices?.length) {
         console.warn(
           `renderCustomObjectField: dropdown field "${field.name}" has no choices`,
@@ -150,8 +148,9 @@ export function renderCustomObjectField(
       );
 
     case 'MULTI_SELECT': {
-      // Options come from field.options if populated by the Astro page,
-      // or fall back to inline choices defined on the schema directly.
+      // Options come from field.options if set, or fall back to inline
+      // choices defined on the schema. See CustomObjectField.options in
+      // typesCustomObjects.ts for details.
       const multiOptions =
         field.options ?? field.choices?.map((c) => c.value) ?? [];
 
