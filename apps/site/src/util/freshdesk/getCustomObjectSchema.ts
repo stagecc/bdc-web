@@ -18,8 +18,10 @@
  *   - No dynamic sections to resolve — custom objects don't support them natively
  *   - Field filtering uses `visible` and `deleted` instead of
  *     `displayed_to_customers` and `archived`
- *   - PRIMARY fields are always excluded from the rendered form — they are
- *     set programmatically by buildCustomObjectPayload, never from user input
+ *   - PRIMARY fields are always excluded — set programmatically by
+ *     buildCustomObjectPayload, never collected from user input
+ *   - RELATIONSHIP fields are excluded with a build-time warning —
+ *     not yet supported by the renderer. See renderCustomObjectField.tsx.
  *
  * The caller (Astro frontmatter) is responsible for catching errors and passing
  * an error prop to the form component so it can render the fallback UI.
@@ -67,22 +69,24 @@ function getAuthHeader(): string {
  *   - deleted: true — soft-deleted fields still present in the API response
  *   - type PRIMARY — the record identifier, always set programmatically
  *     by buildCustomObjectPayload, never collected from user input
- *   - type RELATIONSHIP where field_options.related_object_type is NATIVE —
- *     native object relationships (contacts, tickets, companies) require
- *     a lookup flow not yet implemented. Custom-to-custom relationships
- *     are rendered based on ui_hint.
+ *   - type RELATIONSHIP — not yet supported by the renderer. Excluded with
+ *     a build-time warning so it's visible in CI logs without breaking the
+ *     build. When support is added, add a RELATIONSHIP case to
+ *     renderCustomObjectField and remove this exclusion.
  *
  * Note: Unlike ticket forms, there is no `displayed_to_customers` equivalent.
- * All visible, non-deleted, non-PRIMARY fields are included in the form.
+ * All visible, non-deleted, non-PRIMARY, non-RELATIONSHIP fields are included.
  */
 function isVisibleField(field: CustomObjectField): boolean {
   if (!field.visible || field.deleted) return false;
   if (field.type === 'PRIMARY') return false;
-  if (
-    field.type === 'RELATIONSHIP' &&
-    field.field_options.related_object_type === 'NATIVE'
-  )
+  if (field.type === 'RELATIONSHIP') {
+    console.warn(
+      `getCustomObjectSchema: RELATIONSHIP field "${field.name}" was excluded — ` +
+        `not yet supported by the renderer. See renderCustomObjectField.tsx.`,
+    );
     return false;
+  }
   return true;
 }
 
@@ -97,7 +101,7 @@ function isVisibleField(field: CustomObjectField): boolean {
  *   Stored in .env as FRESHDESK_CUSTOM_OBJECT_{NAME}_SCHEMA_ID.
  *   Obtain by calling GET /api/v2/custom_objects/schemas and noting the `id`.
  * @returns Filtered array of CustomObjectField objects ready to pass as props
- *   to the form component. PRIMARY and hidden fields are excluded.
+ *   to the form component. PRIMARY, RELATIONSHIP, and hidden fields are excluded.
  * @throws If the Freshdesk API returns a non-ok response.
  */
 export async function getCustomObjectSchema(

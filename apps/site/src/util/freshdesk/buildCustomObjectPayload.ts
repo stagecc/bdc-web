@@ -21,7 +21,8 @@
  *   - No subject, type, or email top-level properties
  *   - PRIMARY field value (submission ID) is generated here, not from user input
  *   - MULTI_SELECT values are arrays of strings, not single values
- *   - recaptcha_token is added by DynamicForm after this runs, same as ticket forms
+ *   - recaptcha_token is added by DynamicCustomObjectForm after this runs, same as
+ *     ticket forms
  *
  * Submission ID generation:
  *   The PRIMARY field uniquely identifies each record. We generate a short
