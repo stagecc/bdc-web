@@ -1,32 +1,4 @@
 ---
-/**
- * SiteAlert.astro
- *
- * Sitewide banner alert component supporting 5 variants with a gradient
- * background and bottom border accent style.
- *
- * Dismissible per session via sessionStorage — banner reappears on next visit.
- *
- * Accessibility:
- *   - Uses <section> with aria-label for landmark identification.
- *   - Close button is keyboard accessible with descriptive aria-label.
- *
- * Props:
- *   variant      — 'info' | 'warning' | 'error' | 'success' | 'emergency'. Defaults to 'info'.
- *   slim         — Reduces padding. Defaults to false.
- *   title        — Optional heading text.
- *   headingLevel — Heading level for title (h2 | h3 | h4). Defaults to h3.
- *   ariaLabel    — Accessible label for the section. Defaults to 'Site alert'.
- *   storageKey   — Unique key for sessionStorage dismissal. Must be unique per
- *                  banner instance. Use the content collection entry id.
- *
- * Usage:
- *   <SiteAlert variant="warning" storageKey="maintenance-2024">
- *     Scheduled maintenance this weekend.
- *   </SiteAlert>
- *
- */
-
 interface Props {
   variant?: 'info' | 'warning' | 'error' | 'success' | 'emergency';
   slim?: boolean;
@@ -61,15 +33,19 @@ const containerClasses = [
   aria-label={ariaLabel}
   id={alertId}
 >
-  <div class="bdc-site-alert__body">
-    <div class="bdc-site-alert__content">
-      {title && <HeadingTag class="bdc-site-alert__heading">{title}</HeadingTag>}
-      <div class="bdc-site-alert__text">
+  <div class="display-flex flex-row flex-align-start flex-justify-center gap-2 margin-x-auto padding-x-2 padding-y-105">
+    <div class="flex-1 text-center font-body-sm line-height-body-5">
+      {title && (
+        <HeadingTag class="margin-0 margin-bottom-05 font-body-md">
+          {title}
+        </HeadingTag>
+      )}
+      <div>
         <slot />
       </div>
     </div>
     <button
-      class="bdc-site-alert__close"
+      class="bdc-site-alert__close flex-shrink-0 bg-transparent border-0 cursor-pointer font-body-md padding-05 line-height-body-1 text-inherit opacity-70"
       aria-label="Dismiss alert"
       data-alert-id={alertId}
     >
@@ -80,11 +56,10 @@ const containerClasses = [
 
 <script>
   function initSiteAlerts() {
-    document.querySelectorAll('.bdc-site-alert__close').forEach((btn) => {
+    document.querySelectorAll('[data-alert-id]').forEach((btn) => {
       const alertId = btn.getAttribute('data-alert-id');
       if (!alertId) return;
 
-      // Hide if already dismissed this session
       if (sessionStorage.getItem(alertId) === 'dismissed') {
         document.getElementById(alertId)?.remove();
         return;
@@ -97,9 +72,6 @@ const containerClasses = [
     });
   }
 
-  // Run on initial page load
   document.addEventListener('DOMContentLoaded', initSiteAlerts);
-
-  // Re-run after Astro view transitions swap the page
   document.addEventListener('astro:after-swap', initSiteAlerts);
 </script>
