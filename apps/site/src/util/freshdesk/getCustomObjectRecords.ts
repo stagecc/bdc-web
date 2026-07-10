@@ -32,7 +32,8 @@
  * Filtering:
  *   By default, all non-deleted records are returned. Pass a `filter`
  *   function to exclude records that shouldn't appear in the UI — for
- *   example, filtering out inactive reference data records.
+ *   example, filtering out inactive reference data records or records
+ *   missing the fields needed by the caller.
  */
 
 import type {
@@ -138,35 +139,4 @@ export async function getCustomObjectRecords(
   } while (nextMarker);
 
   return allRecords;
-}
-
-// ---------------------------------------------------------------------------
-// Convenience helpers
-// ---------------------------------------------------------------------------
-
-/**
- * Fetches reference data records and returns them as a simple array of
- * value strings for use as checkbox/radio choices.
- *
- * Filters out records where `data.active` is explicitly false, so
- * deactivating a reference data record in Freshdesk admin removes it
- * from the form without a code change.
- *
- * @param schemaId - The schema ID of the reference data object
- *   (e.g. ResearchCommunities, PublicationStatus).
- * @returns Array of value strings from the record's PRIMARY field (`name`).
- */
-export async function getReferenceDataValues(
-  schemaId: string | number,
-): Promise<string[]> {
-  const records = await getCustomObjectRecords(schemaId, {
-    // Exclude records explicitly marked inactive.
-    // Records without an `active` field default to included.
-    filter: (record) => record.data.active !== false,
-  });
-
-  // Extract the primary field value (always named 'name' in our reference schemas)
-  return records
-    .map((record) => record.data.name)
-    .filter((name): name is string => typeof name === 'string');
 }

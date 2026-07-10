@@ -1,8 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import {
-  getCustomObjectRecords,
-  getReferenceDataValues,
-} from './getCustomObjectRecords';
+import { getCustomObjectRecords } from './getCustomObjectRecords';
 import type { CustomObjectRecord } from './typesCustomObjects';
 
 // ---------------------------------------------------------------------------
@@ -133,6 +130,25 @@ describe('getCustomObjectRecords — filter option', () => {
     expect(result).toHaveLength(1);
     expect(result[0].data.name).toBe('Active');
   });
+
+  it('can be used to fetch active reference-data names', async () => {
+    mockRecordsFetch([
+      makeRecord('_1-1', { name: 'Heart', active: true }),
+      makeRecord('_1-2', { name: 'Deprecated Area', active: false }),
+      makeRecord('_1-3', { name: null }),
+      makeRecord('_1-4', { name: 42 }),
+      makeRecord('_1-5', { name: 'Lung' }),
+    ]);
+
+    const result = (
+      await getCustomObjectRecords('1001', {
+        filter: (record) =>
+          record.data.active !== false && typeof record.data.name === 'string',
+      })
+    ).map((record) => record.data.name);
+
+    expect(result).toEqual(['Heart', 'Lung']);
+  });
 });
 
 // ---------------------------------------------------------------------------
@@ -173,53 +189,5 @@ describe('getCustomObjectRecords — error handling', () => {
     await expect(getCustomObjectRecords('1001')).rejects.toThrow(
       'Freshdesk API error fetching records for schema 1001: 500 Internal Server Error',
     );
-  });
-});
-
-// ---------------------------------------------------------------------------
-// getReferenceDataValues
-// ---------------------------------------------------------------------------
-
-describe('getReferenceDataValues', () => {
-  it('returns name values from records', async () => {
-    mockRecordsFetch([
-      makeRecord('_1-1', { name: 'Heart', active: true }),
-      makeRecord('_1-2', { name: 'Lung', active: true }),
-      makeRecord('_1-3', { name: 'Blood', active: true }),
-    ]);
-
-    const result = await getReferenceDataValues('1001');
-    expect(result).toEqual(['Heart', 'Lung', 'Blood']);
-  });
-
-  it('excludes records where active is false', async () => {
-    mockRecordsFetch([
-      makeRecord('_1-1', { name: 'Heart', active: true }),
-      makeRecord('_1-2', { name: 'Deprecated Area', active: false }),
-    ]);
-
-    const result = await getReferenceDataValues('1001');
-    expect(result).toEqual(['Heart']);
-  });
-
-  it('includes records without an active field', async () => {
-    mockRecordsFetch([
-      makeRecord('_1-1', { name: 'Heart' }),
-      makeRecord('_1-2', { name: 'Lung' }),
-    ]);
-
-    const result = await getReferenceDataValues('1001');
-    expect(result).toEqual(['Heart', 'Lung']);
-  });
-
-  it('excludes records with non-string name values', async () => {
-    mockRecordsFetch([
-      makeRecord('_1-1', { name: 'Heart' }),
-      makeRecord('_1-2', { name: null }),
-      makeRecord('_1-3', { name: 42 }),
-    ]);
-
-    const result = await getReferenceDataValues('1001');
-    expect(result).toEqual(['Heart']);
   });
 });
