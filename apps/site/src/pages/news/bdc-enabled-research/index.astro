@@ -28,6 +28,6 @@ const publications = (await getCollection('publications')).map((pub) => ({
         </div>
       </div>
     </div>
-    <PublicationsFilter client:load publications={publications} />
+    <PublicationsFilter client:visible publications={publications} />
   </section>
 </Base>
