@@ -5,6 +5,7 @@
 @use "components/tooltip";
 @use "components/publication-card";
 @use "components/active-filters";
+@use "components/site-alert";
 
 h1, h2, h3, h4, h5, h6 {
   font-family: core.core-font-family('heading');

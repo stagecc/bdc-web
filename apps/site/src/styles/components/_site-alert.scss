@@ -1,0 +1,109 @@
+@use 'uswds-core' as *;
+
+// ─── Base ───────────────────────────────────────────────
+
+.bdc-site-alert__body {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: center;
+  gap: units(2);
+  margin: 0 auto;
+  padding: units(1.5) units(2);
+}
+
+.usa-site-alert--slim .bdc-site-alert__body {
+  padding: units(0.5) units(2);
+}
+
+.bdc-site-alert__content {
+  flex: 1;
+  text-align: center;
+  font-size: size('body', 'sm');
+  line-height: line-height('body', 5);
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    font-weight: font-weight('bold');
+  }
+}
+
+.bdc-site-alert__heading {
+  margin: 0 0 units(0.5);
+  font-size: size('body', 'md');
+}
+
+.bdc-site-alert__close {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: size('body', 'md');
+  padding: units(0.5);
+  line-height: 1;
+  color: inherit;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+// ─── Variants ───────────────────────────────────────────
+// Gradient colors use bdc palette values — no USWDS token equivalent.
+// Bottom border colors use USWDS theme tokens where available.
+// TODO: Replace bdc palette hex values with CSS custom properties once
+// USWDS Sass tokens are mapped to :root variables in the global stylesheet.
+
+.bdc-site-alert--info {
+  background: linear-gradient(90deg, #a6bbd0, #c8e0f4);
+  border-bottom: 6px solid color($theme-color-primary);
+
+  a {
+    color: color($theme-color-primary-darker);
+    text-decoration-color: color($theme-color-primary-darker);
+  }
+}
+
+.bdc-site-alert--warning {
+  background: linear-gradient(90deg, #ffe3c2, #f5c07a);
+  border-bottom: 6px solid #e8a25a; // TODO: bdc token
+
+  a {
+    color: #5a2a00; // TODO: bdc token
+    text-decoration-color: #5a2a00;
+  }
+}
+
+.bdc-site-alert--error {
+  background: linear-gradient(90deg, #f2b5a7, #e8897a);
+  border-bottom: 6px solid color($theme-color-secondary);
+
+  a {
+    color: color($theme-color-secondary-dark);
+    text-decoration-color: color($theme-color-secondary-dark);
+  }
+}
+
+.bdc-site-alert--success {
+  background: linear-gradient(90deg, #c8e6c9, #a5d6a7);
+  border-bottom: 6px solid #2e7d32; // TODO: bdc token — no USWDS green equivalent
+
+  a {
+    color: #1b5e20; // TODO: bdc token
+    text-decoration-color: #1b5e20;
+  }
+}
+
+.bdc-site-alert--emergency {
+  background: linear-gradient(90deg, #f9d4b8, #f0b27a);
+  border-bottom: 6px solid #9c3d10; // TODO: bdc token — softened USWDS emergency color
+
+  a {
+    color: #5c2106; // TODO: bdc token
+    text-decoration-color: #5c2106;
+  }
+}
