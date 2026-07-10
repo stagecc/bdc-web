@@ -29,7 +29,7 @@ const rendered = await Promise.all(
 ---
 
 {rendered.map(({ banner, Content }) => (
-  <SiteAlert variant={banner.data.variant} noIcon>
+  <SiteAlert variant={banner.data.variant} storageKey={banner.id}>
     <Content />
   </SiteAlert>
 ))}

@@ -15,6 +15,7 @@ interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
   icon?: string;
   href?: string;
   to?: string;
+  centered?: boolean;
 }
 
 const {
@@ -22,10 +23,10 @@ const {
   size = 'default',
   icon,
   class: className,
-  className: classNameProp,
   type = 'button',
   href,
   to,
+  centered,
   ...rest
 } = Astro.props;
 
@@ -37,18 +38,29 @@ const classes = [
   'radius-pill',
   variant !== 'default' && `usa-button--${variant}`,
   size === 'big' && 'usa-button--big',
+  centered && 'usa-button--centered',
   className,
-  classNameProp,
 ]
   .filter(Boolean)
   .join(' ');
+
+const tagProps = {
+  ...(targetUrl ? { href: targetUrl } : { type }),
+  class: classes,
+  ...rest,
+};
 ---
 
-<Tag 
-  {...targetUrl ? { href: targetUrl } : { type }} 
-  class={classes} 
-  {...rest}
->
-  {icon && <Icon name={icon} /> }
+<Tag {...tagProps}>
+  {icon && <Icon name={icon} />}
   <slot />
 </Tag>
+
+<style>
+  .usa-button--centered {
+    display: block;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+</style>

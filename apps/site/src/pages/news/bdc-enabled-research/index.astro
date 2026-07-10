@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import PublicationsFilter from '@components/publications/PublicationsFilter';
+import SummaryCard from '@components/SummaryCard.astro';
+import Base from '@layouts/Base.astro';
+
+const publications = (await getCollection('publications')).map((pub) => ({
+  ...pub.data,
+  date: pub.data.date.toISOString(),
+}));
+---
+
+<Base title="BDC-Enabled Research">
+  <section class="usa-section">
+    <div class="grid-container usa-prose--full-width">
+      <h1>BDC-Enabled Research</h1>
+      <div style="height: 200px">
+        <SummaryCard number={publications.length} qualifier="Total Publications" float="right">
+          <a href="/news/bdc-enabled-research/publication-submission">Submit a Publication →</a>
+        </SummaryCard>
+        <div class="usa-prose">
+          <p>
+            This page highlights publications that used BDC-hosted datasets, computational workspaces, tools, or other ecosystem resources in conducting their research.
+          </p>
+          <p>
+            Remember to include BDC's citation/acknowledgment in the manuscripts you submit to journals.
+          </p>
+        </div>
+      </div>
+    </div>
+    <PublicationsFilter client:visible publications={publications} />
+  </section>
+</Base>

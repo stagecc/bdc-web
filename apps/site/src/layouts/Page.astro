@@ -6,6 +6,9 @@ import type { MarkdownHeading } from 'astro';
 interface Props {
   frontmatter: {
     title: string;
+    // Optional date string displayed as "Last Reviewed"
+    // at the top of the page.
+    // Example format used across the site: "June 2026".
     lastReviewed?: string;
     in_page_nav?: boolean;
   };

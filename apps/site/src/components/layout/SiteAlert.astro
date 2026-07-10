@@ -1,39 +1,77 @@
 ---
 interface Props {
-  variant?: 'info' | 'emergency';
+  variant?: 'info' | 'warning' | 'error' | 'success' | 'emergency';
   slim?: boolean;
-  noIcon?: boolean;
   title?: string;
   headingLevel?: 'h2' | 'h3' | 'h4';
   ariaLabel?: string;
+  storageKey: string;
 }
 
 const {
   variant = 'info',
   slim = false,
-  noIcon = false,
   title,
   headingLevel: HeadingTag = 'h3',
   ariaLabel = 'Site alert',
+  storageKey,
 } = Astro.props;
+
+const alertId = `site-alert-${storageKey}`;
 
 const containerClasses = [
   'usa-site-alert',
-  `usa-site-alert--${variant}`,
+  `bdc-site-alert--${variant}`,
   slim && 'usa-site-alert--slim',
-  noIcon && 'usa-site-alert--no-icon',
 ]
   .filter(Boolean)
   .join(' ');
 ---
 
-<section class={containerClasses} aria-label={ariaLabel}>
-  <div class="usa-alert">
-    <div class="usa-alert__body">
-      {title && <HeadingTag class="usa-alert__heading">{title}</HeadingTag>}
-      <div class="usa-alert__text">
+<section
+  class={containerClasses}
+  aria-label={ariaLabel}
+  id={alertId}
+>
+  <div class="display-flex flex-row flex-align-start flex-justify-center gap-2 margin-x-auto padding-x-2 padding-y-105">
+    <div class="flex-1 text-center font-body-sm line-height-body-5">
+      {title && (
+        <HeadingTag class="margin-0 margin-bottom-05 font-body-md">
+          {title}
+        </HeadingTag>
+      )}
+      <div>
         <slot />
       </div>
     </div>
+    <button
+      class="bdc-site-alert__close flex-shrink-0 bg-transparent border-0 cursor-pointer font-body-md padding-05 line-height-body-1 text-inherit opacity-70"
+      aria-label="Dismiss alert"
+      data-alert-id={alertId}
+    >
+      ✕
+    </button>
   </div>
 </section>
+
+<script>
+  function initSiteAlerts() {
+    document.querySelectorAll('[data-alert-id]').forEach((btn) => {
+      const alertId = btn.getAttribute('data-alert-id');
+      if (!alertId) return;
+
+      if (sessionStorage.getItem(alertId) === 'dismissed') {
+        document.getElementById(alertId)?.remove();
+        return;
+      }
+
+      btn.addEventListener('click', () => {
+        sessionStorage.setItem(alertId, 'dismissed');
+        document.getElementById(alertId)?.remove();
+      });
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initSiteAlerts);
+  document.addEventListener('astro:after-swap', initSiteAlerts);
+</script>
