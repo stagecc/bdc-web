@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TooltipIcon from '../TooltipIcon';
+import Tooltip from '../Tooltip.tsx';
 import PublicationCard from './PublicationCard';
 import {
   type Filters,
@@ -83,9 +83,7 @@ function FilterGroup({
               style={isDisabled ? { opacity: 0.4 } : undefined}
             >
               {value}
-              {tooltipText && (
-                <TooltipIcon text={tooltipText} id={`${id}-tooltip`} />
-              )}
+              {tooltipText && <Tooltip text={tooltipText} />}
               <span className="text-base-light"> ({count})</span>
             </label>
           </div>

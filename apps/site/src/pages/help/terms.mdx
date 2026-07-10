@@ -5,7 +5,7 @@ layout: ../../layouts/Page.astro
 ---
 import Callout from '@components/Callout.astro';
 import InlineAlert from '@components/InlineAlert.astro';
-import Tooltip from '@components/Tooltip.astro'
+import Tooltip from '@components/Tooltip.tsx';
 
 <InlineAlert variant="info">
 These Terms of Use describe the conditions governing use of BDC and related resources. By accessing or using this website, users agree to comply with these terms.
@@ -27,7 +27,7 @@ All hosted data within BDC is de-identified. De-identified data is information t
 
 ### Authorization of Use
 
-Access to hosted data is controlled through the [Database of Genotypes and Phenotypes](https://dbgap.ncbi.nlm.nih.gov/home/) <Tooltip text="NIH system used to manage access to controlled-access datasets">(dbGaP)</Tooltip> system, by authorization of the appropriate Data Access Committee <Tooltip text="Responsible for reviewing and approving requests to controlled-access datasets">(DAC)</Tooltip>. Data Access Committees are established based on programmatic areas of interest as well as technical and ethical expertise. All DACs operate through common principles and under similar mechanisms to ensure the consistency and transparency of the controlled data access process. Use of industry-standard [OAuth 2.0](https://oauth.net/) and [Open ID Connect](https://openid.net/developers/how-connect-works/) (OIDC) services, which are connected to [NIH's electronic Research Administration](https://www.era.nih.gov//) (eRA) infrastructure for authentication and authorization, ensures that only data objects approved for access by NIH DACs and approved in dbGaP are available to a user in BDC.
+Access to hosted data is controlled through the [Database of Genotypes and Phenotypes](https://dbgap.ncbi.nlm.nih.gov/home/) (dbGaP) <Tooltip text="NIH system used to manage access to controlled-access datasets" client:visible /> system, by authorization of the appropriate Data Access Committee (DAC) <Tooltip text="Responsible for reviewing and approving requests to controlled-access datasets" client:visible />. Data Access Committees are established based on programmatic areas of interest as well as technical and ethical expertise. All DACs operate through common principles and under similar mechanisms to ensure the consistency and transparency of the controlled data access process. Use of industry-standard [OAuth 2.0](https://oauth.net/) and [Open ID Connect](https://openid.net/developers/how-connect-works/) (OIDC) services, which are connected to [NIH's electronic Research Administration](https://www.era.nih.gov//) (eRA) infrastructure for authentication and authorization, ensures that only data objects approved for access by NIH DACs and approved in dbGaP are available to a user in BDC.
 
 ### Access to Individual Level Data and Download Functionality
 
