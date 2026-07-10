@@ -32,6 +32,7 @@ export default function Tooltip({ text, position = 'top' }: Props) {
       label={text}
       position={position}
       className="bdc-tooltip__trigger"
+      aria-label={text}
     >
       <Icon name="info_outline" size={3} />
     </TrussTooltip>
