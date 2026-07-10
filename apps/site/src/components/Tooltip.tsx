@@ -1,5 +1,4 @@
-import Icon from '@components/Icon';
-import { Tooltip as TrussTooltip } from '@trussworks/react-uswds';
+import { Icon, Tooltip as TrussTooltip } from '@trussworks/react-uswds';
 
 interface Props {
   text: string;
@@ -14,7 +13,7 @@ export default function Tooltip({ text, position = 'top' }: Props) {
       className="bg-transparent padding-0 cursor-pointer text-primary-dark margin-left-1 height-3 width-3"
       aria-label={text}
     >
-      <Icon name="info_outline" size={3} />
+      <Icon.InfoOutline size={3} />
     </TrussTooltip>
   );
 }
