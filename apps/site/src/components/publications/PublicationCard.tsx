@@ -12,8 +12,6 @@ export default function PublicationCard({ pub }: Props) {
     year: 'numeric',
   });
 
-  const statusSlug = pub.status?.toLowerCase().replace(/\s+/g, '-');
-
   const metaRows = [
     pub.researchCommunity?.length
       ? { label: 'Research Community', values: pub.researchCommunity }
@@ -27,7 +25,7 @@ export default function PublicationCard({ pub }: Props) {
   ].filter(Boolean) as { label: string; values: string[] }[];
 
   return (
-    <li className="usa-collection__item bdc-pub-card margin-y-3">
+    <li className="usa-collection__item maxw-full margin-y-3">
       <div className="usa-collection__body">
         <h4 className="usa-collection__heading">
           <a
@@ -39,27 +37,25 @@ export default function PublicationCard({ pub }: Props) {
             {pub.title}
           </a>
         </h4>
-        <ul className="usa-collection__meta bdc-pub-card__meta">
-          <li className="usa-collection__meta-item display-flex flex-align-center bdc-pub-card__meta-item">
-            <Icon name="calendar_today" className="bdc-pub-card__icon" />
+        <ul className="usa-collection__meta margin-y-1">
+          <li className="usa-collection__meta-item text-bold">
+            <Icon name="calendar_today" className="margin-right-1" />
             <time dateTime={pub.date}>{formattedDate}</time>
           </li>
-          <li className="usa-collection__meta-item display-flex flex-align-center bdc-pub-card__meta-item">
-            <Icon name="local_library" className="bdc-pub-card__icon" />
+          <li className="usa-collection__meta-item text-bold">
+            <Icon name="local_library" className="margin-right-1" />
             {pub.journalName}
           </li>
         </ul>
         {pub.status && (
           <div className="margin-top-1">
-            <span
-              className={`usa-tag bdc-tag--status bdc-tag--status-${statusSlug}`}
-            >
+            <span className="usa-tag padding-x-2 padding-y-05 font-body-2xs">
               {pub.status}
             </span>
           </div>
         )}
         {metaRows.length > 0 && (
-          <p className="margin-top-1 bdc-pub-card__categories">
+          <p className="margin-top-1 margin-bottom-0 font-body-xs line-height-body-5">
             {metaRows.map((row, i) => (
               <span key={row.label}>
                 <span className="text-base-dark">{row.label}: </span>
