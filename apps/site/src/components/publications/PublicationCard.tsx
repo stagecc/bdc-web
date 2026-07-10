@@ -43,7 +43,7 @@ export default function PublicationCard({ pub }: Props) {
             <time dateTime={pub.date}>{formattedDate}</time>
           </li>
           <li className="usa-collection__meta-item text-bold">
-            <Icon.LocalLibrary role="img" aria-label="Journal" size={3} />
+            <Icon.LocalLibrary aria-hidden size={3} />
             {pub.journalName}
           </li>
         </ul>

@@ -13,7 +13,7 @@ export default function Tooltip({ text, position = 'top' }: Props) {
       className="bg-transparent padding-0 cursor-pointer text-primary-dark margin-left-1 height-3 width-3"
       aria-label={text}
     >
-      <Icon.InfoOutline size={3} />
+      <Icon.InfoOutline aria-hidden size={3} />
     </TrussTooltip>
   );
 }
