@@ -1,5 +1,5 @@
 ---
-import Icon from '@components/Icon.tsx';
+import Icon from '@components/Icon.astro';
 
 interface Props {
   title: string;
@@ -28,6 +28,6 @@ const calUrl = `https://calendar.google.com/calendar/render?${params.toString()}
 ---
 
 <a href={calUrl} class="usa-button usa-button--outline" target="_blank" rel="noopener noreferrer">
-  <Icon name="calendar_today" className="margin-right-05" />
+  <Icon name="calendar_today" class="margin-right-05" />
   Add to Google Calendar
 </a>

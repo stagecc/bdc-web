@@ -1,9 +1,27 @@
 import type { CollectionEntry } from 'astro:content';
-import Icon from '@components/Icon.tsx';
+import spriteUrl from '../../assets/sprite.svg?url';
 
 type Props = {
   pub: CollectionEntry<'publications'>['data'] & { date: string };
 };
+
+function Icon({
+  name,
+  size = 3,
+}: {
+  name: string;
+  size?: 3 | 4 | 5 | 6 | 7 | 8 | 9;
+}) {
+  return (
+    <svg
+      className={`usa-icon usa-icon--size-${size} bdc-pub-card__icon`}
+      aria-hidden="true"
+      focusable="false"
+    >
+      <use href={`${spriteUrl}#${name}`} />
+    </svg>
+  );
+}
 
 export default function PublicationCard({ pub }: Props) {
   const formattedDate = new Date(pub.date).toLocaleDateString('en-US', {
@@ -37,13 +55,13 @@ export default function PublicationCard({ pub }: Props) {
             {pub.title}
           </a>
         </h4>
-        <ul className="usa-collection__meta margin-y-1">
-          <li className="usa-collection__meta-item text-bold">
-            <Icon name="calendar_today" className="margin-right-1" />
+        <ul className="usa-collection__meta bdc-pub-card__meta">
+          <li className="usa-collection__meta-item display-flex flex-align-center bdc-pub-card__meta-item">
+            <Icon name="calendar_today" />
             <time dateTime={pub.date}>{formattedDate}</time>
           </li>
-          <li className="usa-collection__meta-item text-bold">
-            <Icon name="local_library" className="margin-right-1" />
+          <li className="usa-collection__meta-item display-flex flex-align-center bdc-pub-card__meta-item">
+            <Icon name="local_library" />
             {pub.journalName}
           </li>
         </ul>
