@@ -12,8 +12,6 @@ const allEvents = (await getCollection('events')).sort(
 const upcoming = allEvents
   .filter((e) => (e.data.end_date ?? e.data.date) >= now)
   .reverse();
-
-const past = allEvents.filter((e) => (e.data.end_date ?? e.data.date) < now);
 ---
 
 <Base title="Events">
@@ -24,22 +22,15 @@ const past = allEvents.filter((e) => (e.data.end_date ?? e.data.date) < now);
       <h1>Events</h1>
 
       <section class="margin-top-4">
-        <h2 class="font-heading-lg margin-bottom-2">Upcoming</h2>
-        {
-          upcoming.length > 0
+        {upcoming.length > 0
           ? <EventsList items={upcoming} />
           : 'No upcoming events are scheduled at this time. Check back soon!'
         }
       </section>
 
-      <br />
-
-      {past.length > 0 && (
-        <section class="margin-top-4">
-          <h2 class="font-heading-lg margin-bottom-2">Past</h2>
-          <EventsList items={past} />
-        </section>
-      )}
+      <p>
+        <a href="/news/events/archive">View past events</a>
+      </p>
 
     </div>
   </section>
