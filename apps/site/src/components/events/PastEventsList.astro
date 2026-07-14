@@ -40,7 +40,7 @@ const years = Object.keys(byYear)
 
     <ul class="usa-list usa-list--unstyled">
       {byYear[year].map((event) => {
-        const { title, date, end_date, externalEvent, materials, time, display_date, location, url } = event.data;
+        const { title, date, end_date, externalEvent, materials, time, display_date, eventType, location, url } = event.data;
         
         return (
           <li class="usa-collection__item maxw-none margin-bottom-2 border-base-lightest">
@@ -48,7 +48,7 @@ const years = Object.keys(byYear)
             {/* <CalendarDate date={date} endDate={end_date} /> */}
 
             <div class="usa-collection__body">
-              <div class="display-flex flex-row flex-align-start gap-2" style="border: 1px solid red">
+              <div class="display-flex flex-row flex-align-start">
 
                 {/* Left column — brand mark or spacer */}
                 <div class="flex-shrink-0 width-5">
@@ -74,10 +74,11 @@ const years = Object.keys(byYear)
                       {time && <> &middot; {time}</>}
                     </p>
                     {/* Event type tag */}
-                    <div class="">
-                      {/* TODO: replace with actual event type field */}
-                      <span class="usa-tag margin-left-3">event-type</span>
-                    </div>
+                    {
+                      eventType && (
+                        <span class="usa-tag margin-left-3">{eventType}</span>
+                      )
+                    }
                   </div>
                   {/* Date/time in paragraph form */}
                   {/* Title */}
@@ -99,7 +100,7 @@ const years = Object.keys(byYear)
                           label: string }) => (
                         <a
                           href={material.url}
-                          class="usa-link display-flex flex-align-center gap-05 font-sans-xs"
+                          class="usa-link display-flex flex-align-center font-sans-xs margin-right-2"
                           target="_blank"
                           rel="noopener noreferrer"
                         >
@@ -108,7 +109,7 @@ const years = Object.keys(byYear)
                             size={3}
                             aria-hidden="true"
                           />
-                          <span>{material.label}</span>
+                          <span class="margin-left-05">{material.label}</span>
                         </a>
                       ))}
                     </div>

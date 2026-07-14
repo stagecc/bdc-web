@@ -18,7 +18,7 @@ const { items } = Astro.props;
 
 <ul class="usa-collection">
   {items.map(({ event, excerpt }) => {
-    const { title, date, end_date, time, location, url, tags, externalEvent } = event.data;
+    const { title, date, end_date, time, eventType, location, url, tags, externalEvent } = event.data;
 
     return (
       <li class="usa-collection__item maxw-none">
@@ -51,7 +51,7 @@ const { items } = Astro.props;
                     {title}
                   </a>
                 </h4>
-                <span class="usa-tag margin-left-3">event-type</span>
+                <span class="usa-tag margin-left-3">{eventType}</span>
               </div>
 
               {/* Metadata */}
