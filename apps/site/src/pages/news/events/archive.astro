@@ -1,6 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
-import EventsList from '@components/events/EventsList.astro';
+import PastEventsList from '@components/events/PastEventsList.astro';
 import Base from '@layouts/Base.astro';
 
 const now = new Date();
@@ -12,7 +12,7 @@ const past = (await getCollection('events'))
 
 <Base title="Past Events">
 
-  <section class="usa-section">
+  <section class="usa-section margin-x-auto maxw-tablet-lg">
     <div class="grid-container">
 
       <h1>Past Events</h1>
@@ -23,7 +23,7 @@ const past = (await getCollection('events'))
 
       <section>
         {past.length > 0
-          ? <EventsList items={past} />
+          ? <PastEventsList items={past} />
           : <p>No past events found.</p>
         }
       </section>

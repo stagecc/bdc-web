@@ -44,6 +44,15 @@ const events = defineCollection({
       tags: z.array(z.string()).default([]),
       heroImage: image().optional(),
       heroAlt: z.string().optional(),
+      materials: z
+        .array(
+          z.object({
+            type: z.enum(['recording', 'slides', 'forum']),
+            url: z.string().url(),
+            label: z.string(),
+          }),
+        )
+        .optional(),
       seo: z
         .object({
           title: z.string().optional(),
@@ -66,7 +75,7 @@ const publications = defineCollection({
     journalName: z.string(),
     url: z.string(),
     status: z.enum(['Published', 'PrePrint', 'Other']).optional(),
-    bdcContribution: z.array(z.string()).optional(),
+    Contribution: z.array(z.string()).optional(),
     researchArea: z.array(z.string()).optional(),
     researchCommunity: z.array(z.string()).optional(),
   }),
@@ -130,34 +139,41 @@ const faqs = defineCollection({
 import { slugify } from './util/slugify';
 
 const programs = defineCollection({
-  loader: async () => {
-    const listResponse = await fetch(
-      'https://search.biodatacatalyst.renci.org/search-api/program_list',
-      { headers: { Accept: 'application/json' } },
-    );
-    const listData = await listResponse.json();
-    const programs = await Promise.all(
-      listData.result.map(async (program: Record<string, unknown>) => {
-        const studiesResponse = await fetch(
-          `https://search.biodatacatalyst.renci.org/search-api/search_program?program_name=${encodeURIComponent(String(program.key))}`,
-          { headers: { Accept: 'application/json' } },
-        );
-        const studiesData = await studiesResponse.json();
-        const name = String(program.key);
-        return {
-          id: slugify(name),
-          name,
-          description: String(program.description),
-          numberOfStudies: (program.No_of_studies as { value: number }).value,
-          studies: studiesData.result.map((s: Record<string, unknown>) => ({
-            name: String(s.collection_name),
-            id: String(s.collection_id),
-            url: String(s.collection_action),
-          })),
-        };
-      }),
-    );
-    return programs;
+  loader: {
+    name: 'programs-loader',
+    load: async (context) => {
+      const listResponse = await fetch(
+        'https://search.biodatacatalyst.renci.org/search-api/program_list',
+        { headers: { Accept: 'application/json' } },
+      );
+      const listData = await listResponse.json();
+
+      await Promise.all(
+        listData.result.map(async (program: Record<string, unknown>) => {
+          const studiesResponse = await fetch(
+            `https://search.biodatacatalyst.renci.org/search-api/search_program?program_name=${encodeURIComponent(String(program.key))}`,
+            { headers: { Accept: 'application/json' } },
+          );
+          const studiesData = await studiesResponse.json();
+          const name = String(program.key);
+          const id = slugify(name);
+
+          const data = {
+            name,
+            description: String(program.description),
+            numberOfStudies: (program.No_of_studies as { value: number }).value,
+            studies: studiesData.result.map((s: Record<string, unknown>) => ({
+              name: String(s.collection_name),
+              id: String(s.collection_id),
+              url: String(s.collection_action),
+            })),
+          };
+
+          const parsedData = await context.parseData({ id, data });
+          context.store.set({ id, data: parsedData });
+        }),
+      );
+    },
   },
   schema: z.object({
     name: z.string(),
@@ -170,6 +186,16 @@ const programs = defineCollection({
         url: z.string(),
       }),
     ),
+  }),
+});
+
+const programContent = defineCollection({
+  loader: glob({ pattern: '*.{md,mdx}', base: './src/content/programs' }),
+  schema: z.object({
+    excerpt: z.string().optional(),
+    title: z.string().optional(),
+    priority: z.number().optional(),
+    dataAvailable: z.boolean().default(true),
   }),
 });
 
@@ -199,6 +225,22 @@ const eep = defineCollection({
     }),
 });
 
+const fellows = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/fellows' }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      university: z.string(),
+      photo: image(),
+      cohort: z.string(),
+      bio: z.string(),
+      project: z.object({
+        title: z.string(),
+        abstract: z.string(),
+      }),
+    }),
+});
+
 export const collections = {
   news,
   events,
@@ -206,6 +248,8 @@ export const collections = {
   coverage,
   faqs,
   programs,
-  eep,
+  programContent,
   banners,
+  eep,
+  fellows,
 };

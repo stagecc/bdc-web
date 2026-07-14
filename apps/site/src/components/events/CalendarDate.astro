@@ -29,11 +29,11 @@ const sameMonth =
 
     <time datetime={`${isoStart}/${isoEnd}`}>
 
-      <span class="usa-collection__calendar-date-month">
+      <span class="usa-collection__calendar-date-month bg-base-dark">
         {sameMonth ? startMonth : `${startMonth}–${endMonth}`}
       </span>
 
-      <span class="usa-collection__calendar-date-day">
+      <span class="usa-collection__calendar-date-day text-base-dark border-base-dark">
         {sameMonth
           ? `${startDay}–${endDay}`
           : startDay}

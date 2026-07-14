@@ -1,0 +1,90 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Button from '@components/Button.astro';
+import Callout from '@components/Callout.astro';
+import BlockLink from '@components/link/BlockLink.astro';
+import Link from '@components/link/Link.astro';
+import SummaryCard from '@components/SummaryCard.astro';
+import Page from '@layouts/Page.astro';
+
+const localEntries = await getCollection('programContent');
+
+const sections = await Promise.all(
+  localEntries.map(async (entry) => {
+    const apiEntry = await getEntry('programs', entry.id);
+    const { Content } = await render(entry);
+    return {
+      id: entry.id,
+      name: entry.data.title ?? apiEntry?.data.name ?? entry.id,
+      priority: entry.data.priority,
+      dataAvailable: entry.data.dataAvailable,
+      Content,
+    };
+  }),
+);
+
+sections.sort((a, b) => {
+  const aPriority = a.priority;
+  const bPriority = b.priority;
+
+  if (aPriority !== undefined && bPriority !== undefined) {
+    return aPriority - bPriority;
+  }
+  if (aPriority !== undefined) return -1;
+  if (bPriority !== undefined) return 1;
+  return a.name.localeCompare(b.name);
+});
+
+const headings = sections.map(({ id, name }) => ({
+  depth: 2,
+  slug: id,
+  text: name,
+}));
+---
+
+<Page frontmatter={{ title: 'Research Communities' }} headings={headings}>
+  <SummaryCard icon="people" number={sections.length} qualifier="Communities" float="right">
+    Working together to advance biomedical research
+    <p>
+      <Link to="https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement">→ View BDC Citation and Acknowledgement Guidance</Link>
+    </p>
+    <p>
+      <Link to="/news/bdc-enabled-research">→ Explore BDC-Enabled Research</Link>
+    </p>
+
+  </SummaryCard>
+
+  <p>
+    BDC collaborates with many of NHLBI's largest research communities by importing their data, integrating their resources (as appropriate), and providing analytical tools, applications, workflows, and secure workspaces. 
+  </p>
+  <p>
+    To support researchers from these communities when they start using the ecosystem, BDC develops and deploys enhancements, tailors the user onboarding process, and encourages participation in the greater BDC community. Researchers within these communities may use BDC to analyze scientific data collected from research protocols.
+  </p>
+  <p>
+    Not all the data from the research communities are broadly available in the BDC ecosystem; however, BDC regularly adds data from these communities and other studies for broad research use.
+  </p>
+  <p>
+    Analysis of data in BDC from the research communities below requires eRA Commons credentials and approved data access requests (DARs) for each dataset from the NIH Database of Genotypes and Phenotypes (dbGaP). 
+  </p>
+
+<div class="margin-bottom-8">
+  {sections.map(({ id, name, dataAvailable, Content }) => (
+      <section id={id} class="border-top-1px border-base-light margin-top-6">
+        <h2>{name}</h2>
+        <Content />
+        {dataAvailable && (<Button to={`/about/studies/${id}`} centered>See a list of the {name} data available in BDC</Button>)}
+      </section>
+    ))}
+</div>
+
+<Callout icon="add_circle_outline">
+  <h3>Want to propose a new research community collaboration?</h3>
+  <p>
+    Research programs interested in collaborating with BDC can express their interest with our Contact form. 
+  </p>
+  <p>
+    <Link to="/news/bdc-enabled-research">→ Propose New Research Community Collaboration</Link>
+  </p>
+</Callout>
+
+</Page>

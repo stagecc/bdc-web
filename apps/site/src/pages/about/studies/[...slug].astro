@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 
@@ -14,17 +14,25 @@ export async function getStaticPaths() {
 
 const { program } = Astro.props;
 const { name, description, studies } = program.data;
+
+const localEntry = await getEntry('programContent', program.id);
+const excerpt = localEntry?.data.excerpt;
 ---
 
 <Base title={name}>
 
   <section class="usa-section">
     <div class="grid-container">
-
+      <div class="margin-top-4">
+        <Link to="/about/studies">← View Program Table</Link>
+      </div>
       <h1>{name}</h1>
-      <p class="usa-prose">{description}</p>
-
-      <Link to="/about/studies">← All Programs</Link>
+      <span class="usa-tag">{description}</span>
+      {excerpt && <p class="usa-intro">{excerpt}</p>}
+      <p class="usa-prose">
+        You can view {name} data available in BDC below, or learn more about {name} and the other programs BDC supports on the 
+        <Link to={`/about/research-communities#${program.id}`}>Research Communities</Link> page. 
+      </p>
 
       <table class="usa-table usa-table--borderless usa-table--striped width-full margin-top-4">
         <thead>

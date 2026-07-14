@@ -23,9 +23,9 @@ export async function getStaticPaths() {
       news: (newsMap.get(tag) ?? []).sort(
         (a, b) => b.data.date.getTime() - a.data.date.getTime(),
       ),
-      events: (eventsMap.get(tag) ?? []).sort(
-        (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-      ),
+      events: (eventsMap.get(tag) ?? [])
+        .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+        .map((event) => ({ event, excerpt: null })),
     },
   }));
 }

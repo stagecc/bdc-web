@@ -1,5 +1,9 @@
 @use 'uswds-core' as *;
 
+.usa-site-alert p {
+  margin: 0
+}
+
 .bdc-site-alert--info {
   background: linear-gradient(90deg, #a6bbd0, #c8e0f4);
   border-bottom: 6px solid color($theme-color-primary);

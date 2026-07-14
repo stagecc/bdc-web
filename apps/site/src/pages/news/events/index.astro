@@ -1,17 +1,25 @@
 ---
 import { getCollection } from 'astro:content';
+import Button from '@components/Button.astro';
 import EventsList from '@components/events/EventsList.astro';
 import Base from '@layouts/Base.astro';
+import orgLogo from '../../../../public/favicon.svg';
 
 const now = new Date();
 
-const allEvents = (await getCollection('events')).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-);
-
-const upcoming = allEvents
+const upcomingEvents = (await getCollection('events'))
   .filter((e) => (e.data.end_date ?? e.data.date) >= now)
-  .reverse();
+  .sort((a, b) => a.data.date.getTime() - b.data.date.getTime());
+
+const upcoming = upcomingEvents.map((event) => {
+  const excerpt = event.body
+    ? `${event.body
+        .replace(/^---[\s\S]*?---/, '')
+        .trim()
+        .slice(0, 300)}...`
+    : null;
+  return { event, excerpt };
+});
 ---
 
 <Base title="Events">
@@ -20,17 +28,27 @@ const upcoming = allEvents
     <div class="grid-container">
 
       <h1>Events</h1>
-
+        <p>
+          Explore upcoming webinars, trainings, workshops, conferences, and community sessions from across the org ecosystem. 
+        </p>
+        <p class="usa-prose">
+          <img
+          src={orgLogo.src}
+          alt="org-hosted event"
+          width="24"
+          height="24"
+          class="radius-pill margin-x-05 border-1px border-base-lighter"
+        />{" "}<strong>org-Hosted</strong> indicates events organized by org..
+        </p>
       <section class="margin-top-4">
         {upcoming.length > 0
           ? <EventsList items={upcoming} />
           : 'No upcoming events are scheduled at this time. Check back soon!'
         }
       </section>
-
-      <p>
-        <a href="/news/events/archive">View past events</a>
-      </p>
+      <section class="margin-top-4">
+        <Button variant="default" centered href="/news/events/archive/">View past events</Button>
+      </section>
 
     </div>
   </section>
