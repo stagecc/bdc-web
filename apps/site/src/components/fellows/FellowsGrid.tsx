@@ -70,7 +70,10 @@ export const FellowsGrid = ({ fellows }: Props) => {
         {cohorts.map((cohort) => (
           <div key={cohort} className="margin-bottom-4">
             <h2 className="font-sans-sm text-bold border-bottom-1px padding-bottom-1 margin-bottom-1">
-              Cohort {cohort}
+              Cohort {cohort}{' '}
+              <span class="usa-tag text-normal margin-left-2">
+                {byCohort[cohort].length} fellows
+              </span>
             </h2>
             <div className="fellows-list margin-x-auto margin-y-3">
               {byCohort[cohort].map((fellow) => (

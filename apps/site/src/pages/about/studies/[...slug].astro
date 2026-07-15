@@ -5,33 +5,42 @@ import Base from '@layouts/Base.astro';
 
 export async function getStaticPaths() {
   const programs = await getCollection('programs');
+  const localEntries = await getCollection('programContent');
 
-  return programs.map((program) => ({
-    params: { slug: program.id },
-    props: { program },
-  }));
+  const localByApiId = new Map(
+    localEntries.map((entry) => [entry.data.studyId ?? entry.id, entry]),
+  );
+
+  return programs.map((program) => {
+    const local = localByApiId.get(program.id);
+    const slug = local?.id ?? program.id;
+
+    return {
+      params: { slug },
+      props: { program, local, slug },
+    };
+  });
 }
 
-const { program } = Astro.props;
+const { program, local, slug } = Astro.props;
 const { name, description, studies } = program.data;
 
-const localEntry = await getEntry('programContent', program.id);
-const excerpt = localEntry?.data.excerpt;
+const excerpt = local?.data.excerpt;
+const title = local?.data.title ?? name;
 ---
 
-<Base title={name}>
-
+<Base title={title}>
   <section class="usa-section">
     <div class="grid-container">
       <div class="margin-top-4">
         <Link to="/about/studies">← View Program Table</Link>
       </div>
-      <h1>{name}</h1>
-      <span class="usa-tag">{description}</span>
+      <h1>{title}</h1>
+      <span class="usa-tag">{description}</span><span class="margin-left-1">· {studies.length} hosted datasets in BDC</span>
       {excerpt && <p class="usa-intro">{excerpt}</p>}
       <p class="usa-prose">
         You can view {name} data available in BDC below, or learn more about {name} and the other programs BDC supports on the 
-        <Link to={`/about/research-communities#${program.id}`}>Research Communities</Link> page. 
+        <Link to={`/about/research-communities#${slug}`}>Research Communities</Link> page. 
       </p>
 
       <table class="usa-table usa-table--borderless usa-table--striped width-full margin-top-4">
