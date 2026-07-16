@@ -40,12 +40,12 @@ const title = local?.data.title ?? name;
       {excerpt && <p class="usa-intro">{excerpt}</p>}
       { local?.data ? (
         <p class="usa-prose">
-          You can view {name} data available in BDC below, or learn more about {name} and the other programs BDC supports on the 
+          You can view {title} data available in BDC below, or learn more about {title} and the other programs BDC supports on the 
           <Link to={`/about/research-communities#${slug}`}>Research Communities</Link> page. 
         </p>
       ) : (
         <p class="usa-prose">
-          View {name} data available in BDC below.
+          View {title} data available in BDC below.
         </p>
       )}
 
