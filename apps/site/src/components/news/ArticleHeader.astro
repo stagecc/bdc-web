@@ -1,10 +1,14 @@
 ---
-const { title, date, tags = [] } = Astro.props;
+const { title, date, eventType, tags = [] } = Astro.props;
 
 import TagLink from '@components/link/TagLink.astro';
 ---
 
 <header class="article__header">
+
+  <span class="usa-tag">
+    {eventType}
+  </span>
 
   <h1>{title}</h1>
 

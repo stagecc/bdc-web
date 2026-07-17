@@ -7,6 +7,9 @@ const { items } = Astro.props;
   {items.map(post => (
     <li class="usa-collection__item">
       <div class="usa-collection__body">
+        <span class="usa-tag">
+          {post.data.eventType}
+        </span>
         <h4 class="usa-collection__heading">
           <a href={`/news/latest-updates/${post.id}/`} class="usa-link">
             {post.data.title}

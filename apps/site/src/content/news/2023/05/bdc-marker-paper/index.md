@@ -2,6 +2,7 @@
 date: 2023-05-19
 title: NHLBI BioData Catalyst® (BDC) Provides Collaborative Cloud Computing Environment to Meet Evolving Researcher Needs
 subtitle: ""
+eventType: General Update
 tags:
   - news
   - publication
