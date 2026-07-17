@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import PastEventsList from '@components/events/PastEventsList.astro';
+import InlineAlert from '@components/InlineAlert.astro';
+import Base from '@layouts/Base.astro';
+import orgLogo from '../../../../public/favicon.svg';
+
+const now = new Date();
+
+const past = (await getCollection('events'))
+  .filter((e) => (e.data.end_date ?? e.data.date) < now)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+---
+
+<Base title="Past Events">
+
+  <section class="usa-section margin-x-auto maxw-tablet-lg">
+    <div class="grid-container">
+      <p>
+        <a href="/news/events">← Upcoming events</a>
+      </p>
+
+      <h1>Past Events</h1>
+      <p class="usa-prose">
+        Browse past events supported by the BDC ecosystem. Archived events may include recordings, slides, and additional resources when available. 
+      </p>
+      <p class="usa-prose">Items denoted with a 
+          <img
+          src={orgLogo.src}
+          alt="org-hosted event"
+          width="24"
+          height="24"
+          class="radius-pill margin-x-05 border-1px border-base-lighter"
+        />{" "}indicate events hosted by BDC.
+        </p>
+      <InlineAlert variant="info">
+        Don’t see the event you’re looking for? Check back soon as more materials are added.
+    
+      </InlineAlert>
+      <section>
+        {past.length > 0
+          ? <PastEventsList items={past} />
+          : <p>No past events found.</p>
+        }
+      </section>
+
+    </div>
+  </section>
+</Base>

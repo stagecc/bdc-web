@@ -1,71 +1,115 @@
 ---
+import type { CollectionEntry } from 'astro:content';
+import Button from '@components/Button.astro';
 import CalendarDate from '@components/events/CalendarDate.astro';
-import Icon from '@components/Icon.astro';
 import TagLink from '@components/link/TagLink.astro';
+import { Icon } from '@trussworks/react-uswds';
+import orgLogo from '../../../public/favicon.svg';
+
+interface Props {
+  items: {
+    event: CollectionEntry<'events'>;
+    excerpt: string | null;
+  }[];
+}
 
 const { items } = Astro.props;
-
-const dateOptions = {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-} as const;
 ---
 
 <ul class="usa-collection">
-
-  {items.map(event => {
-
-    const dateStr =
-      event.data.date.toLocaleDateString('en-US', dateOptions);
-
-    const endDateStr =
-      event.data.end_date?.toLocaleDateString('en-US', dateOptions);
+  {items.map(({ event, excerpt }) => {
+    const { title, date, end_date, time, eventType, location, url, tags, externalEvent } = event.data;
 
     return (
+      <li class="usa-collection__item maxw-none">
 
-      <li class="usa-collection__item">
-
-        <!-- NEW: calendar date -->
-        <CalendarDate
-          date={event.data.date}
-          endDate={event.data.end_date}
-        />
+        <CalendarDate date={date} endDate={end_date} />
 
         <div class="usa-collection__body">
+          <div class="display-flex flex-row flex-align-start gap-2">
 
-          <h4 class="usa-collection__heading">
-            <a href={`/news/events/${event.id}/`} class="usa-link">
-              {event.data.title}
-            </a>
-          </h4>
+            {/* Left column — brand mark or spacer */}
+            <div class="flex-shrink-0" style="width: 24px;">
+              {!externalEvent && (
+                <img
+                  src={orgLogo.src}
+                  alt="org-hosted event"
+                  width="24"
+                  height="24"
+                  class="radius-pill border-1px border-base-lighter"
+                />
+              )}
+            </div>
 
-          <ul class="usa-collection__meta">
+            {/* Right column — all content */}
+            <div style="flex: 1; min-width: 0;">
 
-            {event.data.location && (
-              <li class="usa-collection__meta-item">
-                <Icon name="location_on" /> {event.data.location}
-              </li>
-            )}
+              {/* Title row with event type badge */}
+              <div class="display-flex flex-align-center gap-1 margin-bottom-05">
+                <h4 class="usa-collection__heading margin-0">
+                  <a href={`/news/events/${event.id}/`} class="usa-link">
+                    {title}
+                  </a>
+                </h4>
+                <span class="usa-tag margin-left-3">{eventType}</span>
+              </div>
 
-            {event.data.tags.length > 0 && (
-              <li class="usa-collection__meta-item">
-                <div class="display-flex flex-wrap gap-05">
-                  {event.data.tags.map(tag => (
-                    <TagLink tag={tag} />
-                  ))}
-                </div>
-              </li>
-            )}
+              {/* Metadata */}
+              <ul class="usa-collection__meta">
 
-          </ul>
+                {(event.data.display_date || time) && (
+                  <li class="usa-collection__meta-item display-flex flex-align-center">
+                    <Icon.CalendarToday aria-hidden size={3} />
+                    <span class="margin-left-1">
+                      {event.data.display_date ?? date.toLocaleDateString('en-US', {
+                        month: 'long', day: 'numeric', year: 'numeric',
+                      })}
+                      {time && <> &middot; {time}</>}
+                    </span>
+                  </li>
+                )}
 
+                {location && (
+                  <li class="usa-collection__meta-item display-flex flex-align-center">
+                    <Icon.LocationOn aria-hidden size={3} />
+                    <span class="margin-left-1">{location}</span>
+                  </li>
+                )}
+
+                {tags?.length > 0 && (
+                  <li class="usa-collection__meta-item">
+                    <div class="display-flex flex-wrap gap-05">
+                      {tags.map((tag: string) => <TagLink tag={tag} />)}
+                    </div>
+                  </li>
+                )}
+
+              </ul>
+
+              {/* Excerpt */}
+              {excerpt && (
+                <p class="font-sans-xs margin-top-1 margin-bottom-1">
+                  {excerpt}
+                </p>
+              )}
+
+              {/* Action buttons */}
+              <div class="display-flex gap-1 margin-top-2 flex-wrap">
+                {url && (
+                  <Button href={url} variant="default">
+                    Register Now
+                  </Button>
+                )}
+                <Button href={`/news/events/${event.id}/`} variant="outline">
+                  View Details
+                </Button>
+              </div>
+
+            </div>
+          </div>
         </div>
 
       </li>
-
     );
-
   })}
-
 </ul>

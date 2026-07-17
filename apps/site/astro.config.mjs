@@ -60,6 +60,12 @@ export default defineConfig({
     remarkPlugins: [['remark-excerpt', { remove: true }]],
     rehypePlugins: [externalLinks],
   },
+  redirects: {
+    // This is a temporary redirect needed to support a change in naming from NHLBI which is not yet reflected in Dug.
+    // Once the program.id is changed in Dug, this can be deleted
+    '/about/studies/sickle-cell-disease':
+      '/about/studies/nhlbi-division-of-blood-diseases/',
+  },
   vite: {
     optimizeDeps: {
       include: ['react', 'react-dom', '@trussworks/react-uswds'],

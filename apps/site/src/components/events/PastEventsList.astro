@@ -1,0 +1,130 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import CalendarDate from '@components/events/CalendarDate.astro';
+import Icon from '@components/Icon.astro';
+import orgLogo from '../../../public/favicon.svg';
+
+interface Props {
+  items: CollectionEntry<'events'>[];
+}
+
+const { items } = Astro.props;
+
+const materialIcons: Record<string, string> = {
+  recording: 'youtube',
+  slides: 'file_present',
+  forum: 'forum',
+};
+
+// Group by year — to remove grouping, delete this block and render items directly
+const byYear = items.reduce(
+  (acc, event) => {
+    const year = event.data.date.getFullYear();
+    if (!acc[year]) acc[year] = [];
+    acc[year].push(event);
+    return acc;
+  },
+  {} as Record<number, CollectionEntry<'events'>[]>,
+);
+
+const years = Object.keys(byYear)
+  .map(Number)
+  .sort((a, b) => b - a);
+---
+
+{years.map((year) => (
+  <section class="">
+
+    {/* Year heading — remove this and the section wrapper to disable grouping */}
+    <h2 class="font-heading-lg margin-bottom-1">{year}</h2>
+
+    <ul class="usa-list usa-list--unstyled">
+      {byYear[year].map((event) => {
+        const { title, date, end_date, externalEvent, materials, time, display_date, eventType, location, url } = event.data;
+        
+        return (
+          <li class="usa-collection__item maxw-none margin-bottom-2 border-base-lightest">
+
+            {/* <CalendarDate date={date} endDate={end_date} /> */}
+
+            <div class="usa-collection__body">
+              <div class="display-flex flex-row flex-align-start">
+
+                {/* Left column — brand mark or spacer */}
+                <div class="flex-shrink-0 width-5">
+                  {!externalEvent && (
+                    <img
+                      src={orgLogo.src}
+                      alt="org-hosted event"
+                      width="24"
+                      height="24"
+                      class="radius-pill border-1px border-base-lighter"
+                    />
+                  )}
+                </div>
+
+                {/* Right column */}
+                <div style="flex: 1; min-width: 0;">
+                  <div class="display-flex flex-align-center">
+
+                    <p class="font-sans-xs text-base-dark margin-0">
+                      {date.toLocaleDateString('en-US', {
+                        month: 'long', day: 'numeric', year: 'numeric'
+                      })}
+                      {time && <> &middot; {time}</>}
+                    </p>
+                    {/* Event type tag */}
+                    {
+                      eventType && (
+                        <span class="usa-tag margin-left-3">{eventType}</span>
+                      )
+                    }
+                  </div>
+                  {/* Date/time in paragraph form */}
+                  {/* Title */}
+                  <h4 class="usa-collection__heading margin-top-05">
+                    <a href={`/news/events/${event.id}/`} class="usa-link">
+                      {title}
+                    </a>
+                  </h4>
+
+
+                  {/* Materials — inline row */}
+                    {materials && materials.length > 0 && (
+                      <div class="display-flex gap-5 flex-wrap margin-top-1">
+                      {
+                        materials.map(
+                        (material: { 
+                          type: string; 
+                          url: string; 
+                          label: string }) => (
+                        <a
+                          href={material.url}
+                          class="usa-link display-flex flex-align-center font-sans-xs margin-right-2"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <Icon
+                            name={materialIcons[material.type] ?? 'link'}
+                            size={3}
+                            aria-hidden="true"
+                          />
+                          <span class="margin-left-05">{material.label}</span>
+                        </a>
+                      ))}
+                    </div>
+                  )}
+
+                </div>
+              </div>
+            </div>
+
+          </li>
+        );
+      })}
+    </ul>
+
+    <hr class="margin-top-5 border-base-light" />
+
+  </section>
+))}

@@ -3,17 +3,40 @@ import { Image } from 'astro:assets';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import AddToCalendar from '@components/events/AddToCalendar.astro';
 import EventHeader from '@components/events/EventHeader.astro';
+import Icon from '@components/Icon.astro';
+import InlineAlert from '@components/InlineAlert.astro';
+import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 
 const { frontmatter } = Astro.props;
 
 const crumbs = [
-  { label: 'Events', href: '/updates/events/' },
+  { label: 'Events', href: '/news/events/' },
   { label: frontmatter.title },
 ];
+const materialIcons: Record<string, string> = {
+  recording: 'youtube',
+  slides: 'file_present',
+  forum: 'forum',
+};
+const {
+  title,
+  date,
+  end_date,
+  time,
+  location,
+  url,
+  registration_required,
+  eventType,
+  tags,
+  heroImage,
+  heroAlt,
+  materials,
+} = frontmatter;
 
-const { title, date, end_date, time, location, url, tags, heroImage, heroAlt } =
-  frontmatter;
+const now = new Date();
+const eventEnd = end_date ?? date;
+const isPast = eventEnd < now;
 ---
 
 <Base title={title}>
@@ -24,6 +47,15 @@ const { title, date, end_date, time, location, url, tags, heroImage, heroAlt } =
 
         <Breadcrumbs items={crumbs} />
 
+        {isPast && (
+          <InlineAlert variant="success" noIcon>
+            <strong>This event has concluded</strong>
+            <p>
+              Recordings, slides, and related materials are provided below when available. 
+            </p>
+          </InlineAlert>
+        )}
+
         <EventHeader
           title={title}
           date={date}
@@ -32,6 +64,8 @@ const { title, date, end_date, time, location, url, tags, heroImage, heroAlt } =
           location={location}
           url={url}
           tags={tags}
+          registration_required={registration_required}
+          eventType={eventType}
         />
 
         <AddToCalendar
@@ -47,6 +81,30 @@ const { title, date, end_date, time, location, url, tags, heroImage, heroAlt } =
             alt={heroAlt || ''}
             class="event__hero"
           />
+        )}
+
+        {materials && materials.length > 0 && (
+          <div class="margin-top-1">
+            <InlineAlert variant="info">
+              <strong>Event Materials</strong>
+              <ul class="usa-list usa-list--unstyled font-body-3xs">
+              {materials.map((material: { type: string; url: string; label: string }) => (
+                <li class="usa-collection__meta-item">
+                  <Link to={material.url}>
+                    <Icon
+                      name={materialIcons[material.type] ?? 'link'}
+                      aria-hidden="true"
+                    /> {material.label}
+                  </Link>
+
+                </li>
+
+              ))}
+                
+              </ul>
+
+            </InlineAlert>
+          </div>
         )}
 
         <div class="event__content">

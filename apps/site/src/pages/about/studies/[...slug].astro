@@ -1,30 +1,53 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 
 export async function getStaticPaths() {
   const programs = await getCollection('programs');
+  const localEntries = await getCollection('programContent');
 
-  return programs.map((program) => ({
-    params: { slug: program.id },
-    props: { program },
-  }));
+  const localByApiId = new Map(
+    localEntries.map((entry) => [entry.data.studyId ?? entry.id, entry]),
+  );
+
+  return programs.map((program) => {
+    const local = localByApiId.get(program.id);
+    const slug = local?.id ?? program.id;
+
+    return {
+      params: { slug },
+      props: { program, local, slug },
+    };
+  });
 }
 
-const { program } = Astro.props;
+const { program, local, slug } = Astro.props;
 const { name, description, studies } = program.data;
+
+const excerpt = local?.data.excerpt;
+const title = local?.data.title ?? name;
 ---
 
-<Base title={name}>
-
+<Base title={title}>
   <section class="usa-section">
     <div class="grid-container">
-
-      <h1>{name}</h1>
-      <p class="usa-prose">{description}</p>
-
-      <Link to="/about/studies">← All Programs</Link>
+      <div class="margin-top-4">
+        <Link to="/about/studies">← View Program Table</Link>
+      </div>
+      <h1>{title}</h1>
+      <span class="usa-tag">{description}</span><span class="margin-left-1">· {studies.length} hosted datasets in BDC</span>
+      {excerpt && <p class="usa-intro">{excerpt}</p>}
+      { local?.data ? (
+        <p class="usa-prose">
+          You can view {title} data available in BDC below, or learn more about {title} and the other programs BDC supports on the 
+          <Link to={`/about/research-communities#${slug}`}>Research Communities</Link> page. 
+        </p>
+      ) : (
+        <p class="usa-prose">
+          View {title} data available in BDC below.
+        </p>
+      )}
 
       <table class="usa-table usa-table--borderless usa-table--striped width-full margin-top-4">
         <thead>
