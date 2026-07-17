@@ -16,18 +16,23 @@ const { items } = Astro.props;
           </a>
         </h4>
 
-        <ul class="usa-collection__meta">
+        <ul class="usa-collection__meta display-flex flex-align-center">
           {/* date */}
-          <li class="usa-collection__meta-item">
+          <li class="usa-collection__meta-item margin-right-0">
             <time datetime={post.data.date.toISOString()}>
               {post.data.date.toLocaleDateString('en-US', {
                 month: 'long',
-                day: 'numeric'
+                day: 'numeric',
+                year: 'numeric'
               })}
             </time>
           </li>
+        </ul>
 
-          {/* tags */}
+        <p class="usa-collection__description">{post.data.excerpt}</p>
+        
+        {/* tags */}
+        <ul class="usa-collection__meta">
           {
             post.data.tags.length > 0 && (
             <li class="usa-collection__meta-item">
@@ -40,6 +45,12 @@ const { items } = Astro.props;
           )}
 
         </ul>
+
+        <p>
+          <a href={`/news/latest-updates/${post.id}/`}>
+            → Read Update
+          </a>
+        </p>
       </div>
     </li>
   ))}

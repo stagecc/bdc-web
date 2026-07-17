@@ -23,6 +23,7 @@ const news = defineCollection({
           keywords: z.array(z.string()).optional(),
         })
         .optional(),
+      excerpt: z.string().optional(),
     }),
 });
 
