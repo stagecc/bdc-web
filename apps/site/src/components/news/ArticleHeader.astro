@@ -11,13 +11,16 @@ import TagLink from '@components/link/TagLink.astro';
   </span>
 
   <h1>{title}</h1>
+  <div class="display-flex flex-align-center">
+    <time datetime={date.toISOString()} class="meta-text">
+      Published on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+    </time>
+    <span class="margin-x-1 meta-text" >·</span>
+    <span class="meta-text">X minutes to read</span>
+  </div>
 
   <div class="display-flex flex-justify flex-align-center border-bottom">
     
-    <time datetime={date.toISOString()} class="publish-date">
-      Published on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-    </time>
-
     {tags.length > 0 && (
       <div class="tags display-flex padding-0 margin-y-1">
         {tags.map(tag => <TagLink tag={tag} />)}
@@ -27,7 +30,7 @@ import TagLink from '@components/link/TagLink.astro';
 </header>
 
 <style>
-  .publish-date {
+  .meta-text {
     color: #666;
   }
 </style>
