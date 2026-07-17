@@ -27,6 +27,10 @@ const { items } = Astro.props;
               })}
             </time>
           </li>
+          <span class="margin-x-1 margin-top-05" >·</span>
+          <li class="usa-collection__meta-item">
+            X minutes to read
+          </li>
         </ul>
 
         <p class="usa-collection__description">{post.data.excerpt}</p>
@@ -36,7 +40,10 @@ const { items } = Astro.props;
           {
             post.data.tags.length > 0 && (
             <li class="usa-collection__meta-item">
-              <div class="display-flex flex-wrap gap-05">
+              <div class="display-flex flex-wrap flex-align-center">
+                <span class="margin-right-05">
+                  Topics:
+                </span>
                 {post.data.tags.map(tag => (
                   <TagLink tag={tag} />
                 ))}
