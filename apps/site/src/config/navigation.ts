@@ -25,6 +25,7 @@ export const navConfig: NavItem[] = [
         external: true,
       },
       { label: 'Analyze', href: '/data/analyze' },
+      { label: 'Bring Your Own Tools', href: '/data/bring-your-own-tools' },
     ],
   },
   {
