@@ -6,7 +6,7 @@ import Icon from '@components/Icon.astro';
 import ArticleHeader from '@components/news/ArticleHeader.astro';
 import Base from '@layouts/Base.astro';
 
-const { frontmatter, newerPost, olderPost } = Astro.props;
+const { frontmatter, newerPost, olderPost, minutesRead } = Astro.props;
 
 const crumbs = [
   { label: 'News', href: '/news/latest-updates/' },
@@ -29,6 +29,7 @@ const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
           date={date}
           tags={tags}
           updateType={updateType}
+          minutesRead={minutesRead}
         />
 
         {heroImage && (

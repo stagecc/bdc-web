@@ -1,5 +1,5 @@
 ---
-const { title, date, updateType, tags = [] } = Astro.props;
+const { title, date, updateType, minutesRead, tags = [] } = Astro.props;
 
 import TagLink from '@components/link/TagLink.astro';
 ---
@@ -16,7 +16,7 @@ import TagLink from '@components/link/TagLink.astro';
       Published on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
     </time>
     <span class="margin-x-1 meta-text" >·</span>
-    <span class="meta-text">X minutes to read</span>
+    <span class="meta-text">{minutesRead}</span>
   </div>
 
   <div class="display-flex flex-justify flex-align-center border-bottom">
