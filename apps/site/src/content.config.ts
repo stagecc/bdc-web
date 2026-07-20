@@ -10,7 +10,7 @@ const news = defineCollection({
       title: z.string(),
       subtitle: z.string().optional(),
       date: z.coerce.date(),
-      eventType: z
+      updateType: z
         .enum(['General Update', 'Research Highlight', 'Contributor Highlight'])
         .default('General Update'),
       tags: z.array(z.string()).default([]),

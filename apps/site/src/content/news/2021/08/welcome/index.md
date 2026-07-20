@@ -2,7 +2,7 @@
 date: 2021-08-15
 title: NHLBI BioData Catalyst welcomes all researchers
 subtitle: Cloud-based ecosystem provides tools, applications, and workflows in secure workspaces for the heart, lung, blood, and sleep research community.
-eventType: General Update
+updateType: General Update
 tags:
   - news
 seo:
