@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
+import Icon from '@components/Icon.astro';
 import ArticleHeader from '@components/news/ArticleHeader.astro';
 import Base from '@layouts/Base.astro';
 
@@ -35,6 +36,34 @@ const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
             alt={heroAlt || ''}
             class="article__hero"
           />
+        )}
+
+        {updateType === "Monthly Update" && (
+          <div class="bg-info-lighter padding-3 margin-y-4 display-flex flex-align-center margin-x-10">
+            <div class="flex-fill">
+              <p class="margin-0 font-sans-sm">
+                Read the latest monthly update, including recent ecosystem news, data 
+                updates, events, training opportunities, and reminders for the BDC community. 
+                This update opens in Mailchimp.
+              </p>
+            </div>
+            <div class="flex-shrink-0 margin-left-3">
+              <Icon name="mail_outline" size={9} />
+            </div>
+          </div>
+        )}
+        {updateType === "Release Notes" && (
+          <div class="bg-info-lighter padding-3 margin-y-4 display-flex flex-align-center margin-x-10">
+            <div class="flex-fill">
+              <p class="margin-0 font-sans-sm">
+                The BDC release notes summarize recent updates across the BDC ecosystem, 
+                including data availability, documentation, and platform functionality.
+              </p>
+            </div>
+            <div class="flex-shrink-0 margin-left-3">
+              <Icon name="topic" size={9} />
+            </div>
+          </div>
         )}
 
         <div class="article__content">

@@ -11,7 +11,13 @@ const news = defineCollection({
       subtitle: z.string().optional(),
       date: z.coerce.date(),
       updateType: z
-        .enum(['General Update', 'Research Highlight', 'Contributor Highlight'])
+        .enum([
+          'General Update',
+          'Research Highlight',
+          'Contributor Highlight',
+          'Monthly Update',
+          'Release Notes',
+        ])
         .default('General Update'),
       tags: z.array(z.string()).default([]),
       heroImage: image().optional(),
