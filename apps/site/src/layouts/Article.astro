@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
+import EmailSignup from '@components/EmailSignup.astro';
 import Icon from '@components/Icon.astro';
 import ArticleHeader from '@components/news/ArticleHeader.astro';
 import Base from '@layouts/Base.astro';
@@ -70,6 +71,12 @@ const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
           <slot />
         </div>
 
+        {
+          updateType == "Monthly Update" || updateType == "Release Notes" && (
+            <EmailSignup/>
+          )
+        }
+        
       </div>
     </article>
   </section>
