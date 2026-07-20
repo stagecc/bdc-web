@@ -6,7 +6,7 @@ import Icon from '@components/Icon.astro';
 import ArticleHeader from '@components/news/ArticleHeader.astro';
 import Base from '@layouts/Base.astro';
 
-const { frontmatter } = Astro.props;
+const { frontmatter, newerPost, olderPost } = Astro.props;
 
 const crumbs = [
   { label: 'News', href: '/news/latest-updates/' },
@@ -72,11 +72,31 @@ const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
         </div>
 
         {
-          updateType == "Monthly Update" || updateType == "Release Notes" && (
+          (updateType == "Monthly Update" || updateType == "Release Notes") && (
             <EmailSignup/>
           )
         }
         
+        <nav aria-label="More news articles" class="margin-top-10">
+          <div class="display-flex flex-justify">
+            {olderPost && (
+              <a href={`/news/latest-updates/${olderPost.slug}/`} rel="prev" class="width-mobile-lg">
+                ← PREVIOUS
+                <span class="usa-collection__meta-item">
+                  {olderPost.title}
+                </span>
+              </a>
+            )}
+            {newerPost && (
+              <a href={`/news/latest-updates/${newerPost.slug}/`} rel="next" class="width-mobile-lg text-right">
+                NEXT →
+                <span class="usa-collection__meta-item">
+                  {newerPost.title}
+                </span>
+              </a>
+            )}
+          </div>
+        </nav>
       </div>
     </article>
   </section>

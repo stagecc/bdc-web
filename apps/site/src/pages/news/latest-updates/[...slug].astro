@@ -1,25 +1,34 @@
 ---
-import { getCollection, render } from 'astro:content';
+import { render } from 'astro:content';
 import ArticleLayout from '@layouts/Article.astro';
+import { getEntriesWithNeighbors } from '../../../util/prev-next.ts';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('news');
+  const entries = await getEntriesWithNeighbors('news', 'date');
 
-  return posts.map((post) => ({
-    params: {
-      slug: post.id,
-    },
-    props: {
-      post,
-    },
-  }));
+  return entries.map(
+    ({ entry: post, newerEntry: newerPost, olderEntry: olderPost }) => ({
+      params: {
+        slug: post.id,
+      },
+      props: {
+        post,
+        newerPost,
+        olderPost,
+      },
+    }),
+  );
 }
 
-const { post } = Astro.props;
+const { post, newerPost, olderPost } = Astro.props;
 const { Content } = await render(post);
 ---
 
-<ArticleLayout frontmatter={post.data}>
+<ArticleLayout
+  frontmatter={post.data}
+  newerPost={newerPost}
+  olderPost={olderPost}
+>
 
   <Content />
 
