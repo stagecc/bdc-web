@@ -1,10 +1,12 @@
 ---
+import { isExternalUrl } from '../../util/url';
+
 interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   to: string;
 }
 
 const { to, class: className, className: classNameProp, ...rest } = Astro.props;
-const isExternal = to.startsWith('https://') || to.startsWith('http://');
+const isExternal = isExternalUrl(to);
 const classes = [
   className,
   classNameProp,
