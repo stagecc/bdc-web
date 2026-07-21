@@ -72,7 +72,7 @@ const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
         </div>
 
         {
-          updateType == "Monthly Update" || updateType == "Release Notes" && (
+          (updateType == "Monthly Update" || updateType == "Release Notes") && (
             <EmailSignup/>
           )
         }
