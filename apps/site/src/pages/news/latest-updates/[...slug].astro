@@ -1,10 +1,10 @@
 ---
 import { render } from 'astro:content';
 import ArticleLayout from '@layouts/Article.astro';
-import { getEntriesWithNeighbors } from '../../../util/prev-next.ts';
+import { getEntriesWithPrevNext } from '../../../util/prev-next.ts';
 
 export async function getStaticPaths() {
-  const entries = await getEntriesWithNeighbors('news', 'date');
+  const entries = await getEntriesWithPrevNext('news', 'date');
 
   return entries.map(
     ({ entry: post, newerEntry: newerPost, olderEntry: olderPost }) => ({

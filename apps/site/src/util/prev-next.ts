@@ -1,56 +1,50 @@
-// src/utils/prev-next.ts
 import {
   type CollectionEntry,
   type CollectionKey,
   getCollection,
 } from 'astro:content';
 
-export interface NeighborInfo {
+export interface PrevNextInfo {
   slug: string;
   title: string;
   date?: Date;
 }
 
-export interface EntryWithNeighbors<C extends CollectionKey> {
+export interface EntryWithPrevNext<C extends CollectionKey> {
   entry: CollectionEntry<C>;
-  newerEntry?: NeighborInfo;
-  olderEntry?: NeighborInfo;
+  newerEntry?: PrevNextInfo;
+  olderEntry?: PrevNextInfo;
 }
 
-/**
- * Fetches a collection, sorts it by a date field (newest first), and
- * attaches each entry's chronological neighbors.
- *
- * "newer" = the entry immediately more recent (index i - 1)
- * "older" = the entry immediately less recent (index i + 1)
- */
-export async function getEntriesWithNeighbors<C extends CollectionKey>(
+export async function getEntriesWithPrevNext<C extends CollectionKey>(
   collection: C,
   sortField: string,
-): Promise<EntryWithNeighbors<C>[]> {
+): Promise<EntryWithPrevNext<C>[]> {
   const entries = await getCollection(collection);
 
-  const getTime = (entry: CollectionEntry<C>): number =>
-    new Date(
-      (entry.data as Record<string, unknown>)[sortField] as string,
-    ).getTime();
+  const sorted = entries
+    .map((entry) => ({
+      entry,
+      time: new Date(
+        (entry.data as Record<string, unknown>)[sortField] as string,
+      ).getTime(),
+    }))
+    .sort((a, b) => b.time - a.time);
 
-  const sorted = [...entries].sort((a, b) => getTime(b) - getTime(a));
-
-  const toNeighborInfo = (
-    entry?: CollectionEntry<C>,
-  ): NeighborInfo | undefined =>
-    entry
+  const toPrevNextInfo = (
+    item?: (typeof sorted)[number],
+  ): PrevNextInfo | undefined =>
+    item
       ? {
-          slug: entry.id,
-          title: (entry.data as Record<string, unknown>).title as string,
-          date: new Date(getTime(entry)),
+          slug: item.entry.id,
+          title: (item.entry.data as Record<string, unknown>).title as string,
+          date: new Date(item.time),
         }
       : undefined;
 
-  return sorted.map((entry, i) => ({
+  return sorted.map(({ entry }, i) => ({
     entry,
-    newerEntry: toNeighborInfo(sorted[i - 1]),
-    olderEntry: toNeighborInfo(sorted[i + 1]),
+    newerEntry: toPrevNextInfo(sorted[i - 1]),
+    olderEntry: toPrevNextInfo(sorted[i + 1]),
   }));
 }
