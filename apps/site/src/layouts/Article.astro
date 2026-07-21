@@ -40,24 +40,20 @@ const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
         )}
 
         {updateType === "Monthly Update" && (
-          <div class="usa-card__container padding-3 margin-y-4 display-flex flex-align-center margin-x-10">
-            <div class="flex-fill">
-              <p class="margin-0 font-sans-sm">
-                Read the latest monthly update, including recent ecosystem news, data 
-                updates, events, training opportunities, and reminders for the BDC community. 
-                This update opens in Mailchimp.
-              </p>
-            </div>
+          <div class="usa-card__container">
+            <p class="margin-0 font-sans-sm">
+              Read the latest monthly update, including recent ecosystem news, data 
+              updates, events, training opportunities, and reminders for the BDC community. 
+              This update opens in Mailchimp.
+            </p>
           </div>
         )}
         {updateType === "Release Notes" && (
-          <div class="usa-card__container padding-3 margin-y-4 display-flex flex-align-center margin-x-10">
-            <div class="flex-fill">
-              <p class="margin-0 font-sans-sm">
-                The BDC release notes summarize recent updates across the BDC ecosystem, 
-                including data availability, documentation, and platform functionality.
-              </p>
-            </div>
+          <div class="usa-card__container">
+            <p class="margin-0 font-sans-sm">
+              The BDC release notes summarize recent updates across the BDC ecosystem, 
+              including data availability, documentation, and platform functionality.
+            </p>
           </div>
         )}
 
