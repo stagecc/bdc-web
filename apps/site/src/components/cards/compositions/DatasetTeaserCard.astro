@@ -10,7 +10,14 @@ interface Props {
   border?: boolean;
 }
 
-const { topic, title, summary, href, mediaVariant = 1, border = true } = Astro.props;
+const {
+  topic,
+  title,
+  summary,
+  href,
+  mediaVariant = 1,
+  border = true,
+} = Astro.props;
 ---
 
 <CardMediaStack
