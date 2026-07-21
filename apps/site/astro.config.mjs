@@ -7,6 +7,7 @@ import { defineConfig } from 'astro/config';
 import favicons from 'astro-favicons';
 import robotsTxt from 'astro-robots-txt';
 import { loadEnv } from 'vite';
+import { remarkReadingTime } from './src/util/remark-reading-time.mjs';
 
 const siteUrl = process.env.SITE_URL || 'https://biodatacatalyst.nhlbi.nih.gov';
 
@@ -57,7 +58,7 @@ export default defineConfig({
     robotsTxt(robotsTxtConfig),
   ],
   markdown: {
-    remarkPlugins: [['remark-excerpt', { remove: true }]],
+    remarkPlugins: [['remark-excerpt', { remove: true }], remarkReadingTime],
     rehypePlugins: [externalLinks],
   },
   vite: {
