@@ -1,0 +1,36 @@
+---
+import Card from '@components/cards/Card.astro';
+
+interface Props {
+  quote: string;
+  person: string;
+  affiliation: string;
+  border?: boolean;
+}
+
+const { quote, person, affiliation, border = true } = Astro.props;
+---
+
+<Card variant="testimonial" class="card-quote height-full display-flex flex-column" border={border}>
+  <p class="margin-top-0 margin-bottom-2 flex-1">{quote}</p>
+  <strong class="display-block">{person}</strong>
+  <span>{affiliation}</span>
+</Card>
+
+<style>
+  .card-quote p {
+    color: var(--bdc-copy);
+    font-size: 1.03rem;
+    line-height: 1.55;
+  }
+
+  .card-quote strong {
+    color: var(--bdc-brand-900);
+    font-size: 0.95rem;
+  }
+
+  .card-quote span {
+    color: var(--bdc-meta);
+    font-size: 0.85rem;
+  }
+</style>

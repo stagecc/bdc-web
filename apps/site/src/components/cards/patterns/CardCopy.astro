@@ -1,0 +1,72 @@
+---
+import Card from '@components/cards/Card.astro';
+import Icon from '@components/Icon.astro';
+
+type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+type IconSize = 3 | 4 | 5 | 6 | 7 | 8 | 9;
+
+interface Props {
+  eyebrow?: string;
+  icon?: string;
+  iconSize?: IconSize;
+  title: string;
+  headingLevel?: HeadingLevel;
+  paragraphs: string[];
+  linkHref?: string;
+  linkLabel?: string;
+  bgColor?: string;
+  border?: boolean;
+}
+
+const {
+  eyebrow,
+  icon,
+  iconSize,
+  title,
+  headingLevel = 'h2',
+  paragraphs,
+  linkHref,
+  linkLabel,
+  bgColor,
+  border = true,
+} = Astro.props;
+
+const HeadingTag = headingLevel;
+---
+
+<Card variant="overview" class=`card-copy bg-${bgColor}` border={border}>
+  {icon && (<Icon name={icon} size={iconSize}class="margin-top-2 margin-bottom-4"/>)}
+  {eyebrow && (<p class="card-copy__eyebrow margin-top-0 margin-bottom-1">{eyebrow}</p>)}
+  <HeadingTag class="margin-top-0 margin-bottom-1">{title}</HeadingTag>
+  {paragraphs.map((paragraph) => <p class="card-copy__paragraph margin-top-0 margin-bottom-1">{paragraph}</p>)}
+  {linkHref && (<a class="card-copy__link" href={linkHref}>{linkLabel}</a>)}
+</Card>
+
+<style>
+  .card-copy__eyebrow {
+    color: var(--bdc-brand-700);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .card-copy__paragraph {
+    color: var(--bdc-copy);
+    line-height: 1.6;
+  }
+
+  .card-copy__paragraph:last-of-type {
+    margin-bottom: 1rem;
+  }
+
+  .card-copy__link {
+    color: var(--bdc-brand-700);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .card-copy__link:hover {
+    text-decoration: underline;
+  }
+</style>

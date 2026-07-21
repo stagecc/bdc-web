@@ -2,8 +2,9 @@
 title: Share Data
 layout: ../../layouts/Page.astro
 ---
-import Callout from '@components/Callout.astro';
 import Button from '@components/Button.astro'
+import CardMediaStack from '@components/cards/patterns/CardMediaStack.astro'
+import CardCopy from '@components/cards/patterns/CardCopy.astro'
 
 Sharing scientific data through BDC helps make approved research data available for access, reuse, and future biomedical discovery.
 
@@ -15,42 +16,41 @@ BDC can be used as a data repository for researchers preparing to submit or shar
 
 Researchers preparing to submit data to BDC should begin with the data submission instructions. 
 
-<Callout icon="upload_file">
-### Instructions for Data Submission to BDC
-
-These instructions describe the submission process and help study teams understand what to prepare before working with the BDC Data Management Core (DMC). They include step-by-step guidance for submitting data to BDC, including registration, preparation, submission, and release.
-
-[→ View Instructions in BDC Documentation](/)
-</Callout>
+<CardCopy
+  as="div"
+  bgColor="base-lightest"
+  icon="upload_file"
+  iconSize={4}
+  title="Instructions for Data Submission to BDC"
+  headingLevel="h3"
+  paragraphs={[
+    'These instructions describe the submission process and help study teams understand what to prepare before working with the BDC Data Management Core (DMC). They include step-by-step guidance for submitting data to BDC, including registration, preparation, submission, and release.',
+  ]}
+  linkHref="/"
+  linkLabel="→ View Instructions in BDC Documentation"
+/>
 
 ## Additional resources
 
 NHLBI and BDC provide instructions and FAQs to researchers preparing and submitting data to BDC.
 
-<div class="display-flex flex-row">
-  <div class="usa-card usa-card__container padding-1">
-    <div class="usa-card__header">
-      <h2 class="usa-card__heading heading">
-        Instructions for Preparing Clinical Research Datasets
-      </h2>
-    </div>
-    <div slot="content" class="usa-card__body">
-      Review guidance, best practices, and requirements for preparing clinical research datasets for submission to BDC.
-
-      [View on NHLBI website >](/)
-    </div>
+<div class="grid-row grid-gap-3">
+  <div class="tablet:grid-col-12 desktop:grid-col-6">
+    <CardMediaStack 
+      title="Instructions for Preparing Clinical Research Datasets"
+      summary="Review guidance, best practices, and requirements for preparing clinical research datasets for submission to BDC."
+      cta="View on NHLBI website >"
+      href="/"
+    />
   </div>
-  <div class="usa-card usa-card__container padding-1">
-    <div class="usa-card__header">
-      <h2 class="usa-card__heading heading">
-        Data Submission FAQs
-      </h2>
-    </div>
-    <div slot="content" class="usa-card__body">
-      See Answers to common questions about data submission, file requirements, and the review and approval process.
-
-      [View FAQs >](/)
-    </div>
+  <div class="tablet:grid-col-12 desktop:grid-col-6">
+    <CardMediaStack 
+      title="Data Submission FAQs"
+      summary="See Answers to common questions about data submission, file requirements, and the review and approval process."
+      cta="View FAQs >"
+      href="/"
+      mediaVariant={2}
+    />
   </div>
 </div>
 
@@ -66,4 +66,4 @@ Researchers who plan to use BDC as their data repository should include "NHLBI B
 Researchers with BDC data-sharing or data-submission questions can use the Support page and select Data Submission from the form dropdown.
 Special cases or questions about specific data types can be discussed during the intake and submission process.
 
-<Button centered>Contact Us about Data Submission</Button>
+<Button href="/" centered>Contact Us about Data Submission</Button>
