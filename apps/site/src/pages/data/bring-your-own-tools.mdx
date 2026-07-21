@@ -4,16 +4,14 @@ layout: ../../layouts/Page.astro
 ---
 import InlineAlert from '@components/InlineAlert.astro';
 import Button from '@components/Button.astro'
-import Callout from '@components/Callout.astro'
-import SummaryCard from '@components/SummaryCard.astro'
 
-<SummaryCard float="right">
+<div class="usa-card usa-card__container padding-1 float-right width-mobile">
   **Key Terms:**
 
   - Tool: Single command or script (R, Python, Bash, etc.) that performs one task.
   - Workflow: Multi-step pipeline connecting tools.
   - App: Tool or full workflow packaged for use.
-</SummaryCard>
+ </div>
 
 BDC supports bringing your scripts, tools, and workflows into BDC-Seven Bridges for scalable, reproducible analysis in a secure cloud environment.
 
@@ -64,7 +62,8 @@ You may benefit from bringing a tool to BDC if you:
     </div>
   </div>
 </div>
-<InlineAlert variant="info">
+
+<InlineAlert variant="warning">
   Tools created with proprietary licensing agreements, such as MatLab, may not be supported. 
 </InlineAlert>
 
@@ -87,12 +86,12 @@ Not all tools are immediately compatible. Before getting started, consider:
 * **Unsupported architectures**: Multi-container architectures are not supported.  
 * **Dependencies**: Tools with unavailable or non-portable dependencies are not supported.
 
-<Callout icon="info">
-### Important Guidance for Regulated and AI-Based Tools
-If you are developing tools for clinical or regulatory use (such as Software as a Medical Device), contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC requirements.
+<div class="usa-card usa-card__container padding-1">
+  ### Important Guidance for Regulated and AI-Based Tools
+  If you are developing tools for clinical or regulatory use (such as Software as a Medical Device), contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC requirements.
 
-Additionally, while AI-assisted tools can accelerate development, they may introduce risks related to security, reproducibility, and transparency. Tools brought into BDC must meet requirements for controlled-access data and reproducibility, and will need to be validated prior to use.
-</Callout>
+  Additionally, while AI-assisted tools can accelerate development, they may introduce risks related to security, reproducibility, and transparency. Tools brought into BDC must meet requirements for controlled-access data and reproducibility, and will need to be validated prior to use.
+</div>
 
 ## How It Works
 
@@ -149,7 +148,7 @@ At a high level, bringing a tool into BDC typically involves:
     </div>
 </div>
 
-<Callout icon="construction">
+<div class="usa-card usa-card__container padding-1">
 ### Thinking about bringing a tool to BDC?
 
 Whether you've developed a custom tool or pipeline, packaged a tool in Docker, or are exploring how your analysis could run on BDC, we can help you evaluate your approach. Our team can help determine feasibility, guide implementation, and avoid common pitfalls. Early conversations save time and prevent rework.
@@ -157,4 +156,4 @@ Whether you've developed a custom tool or pipeline, packaged a tool in Docker, o
 Submit a request through our Help Desk to get started. Our team can help assess your approach and guide next steps.
 
 [→ Request Tool or Workflow Integration](/)
-</Callout>
+</div>
