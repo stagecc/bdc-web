@@ -11,7 +11,6 @@ This package provides a single source of truth for colors, typography, and compo
 | `src/_colors.scss` | Color token overrides (primary, secondary, accent, base) |
 | `src/_typography.scss` | Font families, roles, sizes, and weights |
 | `src/_in-page-nav-bar.scss` | In-page navigation component settings |
-| `src/_css-vars.scss` | Shared BDC CSS custom properties (`--bdc-*`) for app/runtime use |
 | `src/_settings.scss` | Aggregates all settings partials |
 | `src/_uswds-init.scss` | Configures and forwards `uswds-core` with all BDC settings |
 
@@ -74,12 +73,6 @@ export default {
 @use "@bdc/uswds-theme/src/uswds-init" as core;
 ```
 
-If you want shared runtime CSS custom properties (for app/page/component CSS), import:
-
-```scss
-@use "@bdc/uswds-theme/src/css-vars";
-```
-
 You can then use forwarded `uswds-core` functions with the `core-` prefix:
 
 ```scss
@@ -103,15 +96,3 @@ USWDS expects certain assets (icon sprite, fonts, images) to be served from your
 See the existing apps for working examples:
 - **`apps/site`** — Full USWDS compilation with component styles
 - **`apps/docs`** — Core-only import with Starlight CSS custom property mapping
-
-## Color token strategy
-
-Use this order when adding or changing color tokens:
-
-1. **Prefer built-in USWDS theme tokens** when a concept already exists (`$theme-color-primary*`, `$theme-color-base*`, etc.).
-2. **Add BDC semantic tokens** in `src/_colors.scss` only when USWDS does not provide the needed semantic meaning (for example: `$bdc-color-divider-soft`, `$bdc-color-meta`).
-3. **Expose runtime variables once** in `src/_css-vars.scss` so apps can consume `--bdc-*` without redefining them per app.
-
-### Important note on `$theme-text-color`
-
-Treat `$theme-text-color` as a system-wide setting. It affects USWDS component internals (including button contrast logic), not just paragraph/body copy tone. Only change it if you intend to re-evaluate contrast behavior across all components and apps.

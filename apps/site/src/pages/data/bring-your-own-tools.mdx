@@ -4,23 +4,16 @@ layout: ../../layouts/Page.astro
 ---
 import InlineAlert from '@components/InlineAlert.astro';
 import Button from '@components/Button.astro'
-import CardMediaStack from '@components/cards/patterns/CardMediaStack.astro'
-import CardList from '@components/cards/patterns/CardList.astro'
-import CardCopy from '@components/cards/patterns/CardCopy.astro'
+import Callout from '@components/Callout.astro'
+import SummaryCard from '@components/SummaryCard.astro'
 
-  <div class="float-right width-mobile margin-bottom-4">
-    <CardCopy
-      as="div"
-      bgColor="base-lightest"
-      title="Key Terms:"
-      headingLevel="h3"
-      paragraphs={[
-        '- Tool: Single command or script (R, Python, Bash, etc.) that performs one task.',
-        '- Workflow: Multi-step pipeline connecting tools',
-        '- App: Tool or full workflow packaged for use.'
-      ]}
-    />
-  </div>
+<SummaryCard float="right">
+  **Key Terms:**
+
+  - Tool: Single command or script (R, Python, Bash, etc.) that performs one task.
+  - Workflow: Multi-step pipeline connecting tools.
+  - App: Tool or full workflow packaged for use.
+</SummaryCard>
 
 BDC supports bringing your scripts, tools, and workflows into BDC-Seven Bridges for scalable, reproducible analysis in a secure cloud environment.
 
@@ -39,31 +32,39 @@ You may benefit from bringing a tool to BDC if you:
 - ✅  Want application versioning
 
 ## What You Can Bring
-
-<div class="grid-row grid-gap-1">
-  <div class="tablet:grid-col-6 desktop:grid-col-4">
-    <CardMediaStack 
-      title="Scripts or Command-Line Tools"
-      summary="Determine whether you are bringing in a tool (single script) or a workflow (multi-step pipeline)"
-    />
+<div class="display-flex flex-row">
+  <div class="usa-card usa-card__container padding-1">
+    <div class="usa-card__header">
+      <h2 class="usa-card__heading heading">
+        Scripts or Command-Line Tools
+      </h2>
+    </div>
+    <div slot="content" class="usa-card__body">
+      Single scripts (R, Python, Bash, etc.) that run independently
+    </div>
   </div>
-  <div class="tablet:grid-col-6 desktop:grid-col-4">
-    <CardMediaStack 
-      title="Containerized Tools"
-      summary="Docker-packaged tools that include environmental dependencies"
-      mediaVariant={2}
-    />
+  <div class="usa-card usa-card__container padding-1">
+    <div class="usa-card__header">
+      <h2 class="usa-card__heading heading">
+        Containerized Tools
+      </h2>
+    </div>
+    <div slot="content" class="usa-card__body">
+      Docker-packaged tools that include environmental dependencies
+    </div>
   </div>
-  <div class="tablet:grid-col-6 desktop:grid-col-4">
-    <CardMediaStack 
-      title="Workflows and Pipelines"
-      summary="Multi-step workflow consisting of multiple connected tools"
-      mediaVariant={3}
-    />
+  <div class="usa-card usa-card__container padding-1">
+    <div class="usa-card__header">
+      <h2 class="usa-card__heading heading">
+        Workflows and Pipelines
+      </h2>
+    </div>
+    <div slot="content" class="usa-card__body">
+      Multi-step workflow consisting of multiple connected tools
+    </div>
   </div>
 </div>
-
-<InlineAlert variant="warning">
+<InlineAlert variant="info">
   Tools created with proprietary licensing agreements, such as MatLab, may not be supported. 
 </InlineAlert>
 
@@ -86,63 +87,74 @@ Not all tools are immediately compatible. Before getting started, consider:
 * **Unsupported architectures**: Multi-container architectures are not supported.  
 * **Dependencies**: Tools with unavailable or non-portable dependencies are not supported.
 
-<CardCopy
-  as="div"
-  bgColor="base-lightest"
-  icon="security"
-  iconSize={4}
-  title="Important Guidance for Regulated and AI-Based Tools"
-  headingLevel="h3"
-  paragraphs={[
-    'If you are developing tools for clinical or regulatory use (such as Software as a Medical Device), contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC requirements.',
-    'Additionally, while AI-assisted tools can accelerate development, they may introduce risks related to security, reproducibility, and transparency. Tools brought into BDC must meet requirements for controlled-access data and reproducibility, and will need to be validated prior to use.',
-  ]}
-/>
+<Callout icon="info">
+### Important Guidance for Regulated and AI-Based Tools
+If you are developing tools for clinical or regulatory use (such as Software as a Medical Device), contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC requirements.
+
+Additionally, while AI-assisted tools can accelerate development, they may introduce risks related to security, reproducibility, and transparency. Tools brought into BDC must meet requirements for controlled-access data and reproducibility, and will need to be validated prior to use.
+</Callout>
 
 ## How It Works
 
 At a high level, bringing a tool into BDC typically involves:
 
-<CardList
-  items={[
-    {
-      title: "Identify what you're bringing",
-      secondary: "Determine whether you are bringing in a tool (single script) or a workflow (multi-step pipeline)"
-    },
-    {
-      title: "Define tool specifications",
-      secondary: "Share technical requirements, dependencies, and needs"
-    },
-    {
-      title: "Test your tool",
-      secondary: "Validate it runs as expected in BDC"
-    },
-    {
-      title: "Create and register your tool",
-      secondary: "Package or containerize and register in BDC"
-    },
-    {
-      title: "Optional: Create a workflow",
-      secondary: "Connect tools and data into a reproducible pipeline"
-    },
-    {
-      title: "Share and scale",
-      secondary: "Share with collaborators and run at scale with confidence"
-    }
-  ]}
-/>
+  <div class="usa-card usa-card__container">
+    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
+      <div class="width-10 font-sans-xl text-center">1</div>
+      <div>
+        **Identify what you're bringing**
 
-<CardCopy
-  as="div"
-  bgColor="base-lightest"
-  icon="construction"
-  iconSize={4}
-  title="Thinking about bringing a tool to BDC?"
-  headingLevel="h3"
-  paragraphs={[
-    `Whether you've developed a custom tool or pipeline, packaged a tool in Docker, or are exploring how your analysis could run on BDC, we can help you evaluate your approach. Our team can help determine feasibility, guide implementation, and avoid common pitfalls. Early conversations save time and prevent rework.`,
-    'Submit a request through our Help Desk to get started. Our team can help assess your approach and guide next steps.',
-  ]}
-  linkHref="/"
-  linkLabel="→ Request Tool or Workflow Integration"
-/>
+        Determine whether you are bringing in a tool (single script) or a workflow (multi-step pipeline)
+      </div>
+    </div>
+    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
+      <div class="width-10 font-sans-xl text-center">2</div>
+      <div>
+        **Define tool specifications**
+
+        Share technical requirements, dependencies, and needs
+      </div>
+    </div>
+    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
+      <div class="width-10 font-sans-xl text-center">3</div>
+      <div>
+        **Test your tool**
+
+        Validate it runs as expected in BDC
+      </div>
+    </div>
+    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
+      <div class="width-10 font-sans-xl text-center">4</div>
+      <div>
+        **Create and register your tool**
+
+        Package or containerize and register in BDC
+      </div>
+    </div>
+    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
+      <div class="width-10 font-sans-xl text-center">5</div>
+      <div>
+        **Optional: Create a workflow**
+
+        Connect tools and data into a reproducible pipeline
+      </div>
+    </div>
+    <div class="padding-x-1 padding-y-1 display-flex flex-align-start">
+      <div class="width-10 font-sans-xl text-center">6</div>
+      <div>
+        **Share and scale**
+
+        Share with collaborators and run at scale with confidence
+      </div>
+    </div>
+</div>
+
+<Callout icon="construction">
+### Thinking about bringing a tool to BDC?
+
+Whether you've developed a custom tool or pipeline, packaged a tool in Docker, or are exploring how your analysis could run on BDC, we can help you evaluate your approach. Our team can help determine feasibility, guide implementation, and avoid common pitfalls. Early conversations save time and prevent rework.
+
+Submit a request through our Help Desk to get started. Our team can help assess your approach and guide next steps.
+
+[→ Request Tool or Workflow Integration](/)
+</Callout>
