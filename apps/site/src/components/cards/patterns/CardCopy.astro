@@ -1,0 +1,57 @@
+---
+import Card from '@components/cards/Card.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  paragraphs: string[];
+  linkHref: string;
+  linkLabel: string;
+  border?: boolean;
+}
+
+const {
+  eyebrow,
+  title,
+  paragraphs,
+  linkHref,
+  linkLabel,
+  border = true,
+} = Astro.props;
+---
+
+<Card variant="overview" class="card-copy" border={border}>
+  <p class="card-copy__eyebrow margin-top-0 margin-bottom-1">{eyebrow}</p>
+  <h2 class="margin-top-0 margin-bottom-1">{title}</h2>
+  {paragraphs.map((paragraph) => <p class="card-copy__paragraph margin-top-0 margin-bottom-1">{paragraph}</p>)}
+  <a class="card-copy__link" href={linkHref}>{linkLabel}</a>
+</Card>
+
+<style>
+  .card-copy__eyebrow {
+    color: var(--bdc-brand-700);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .card-copy__paragraph {
+    color: var(--bdc-copy);
+    line-height: 1.6;
+  }
+
+  .card-copy__paragraph:last-of-type {
+    margin-bottom: 1rem;
+  }
+
+  .card-copy__link {
+    color: var(--bdc-brand-700);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .card-copy__link:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,12 @@
+@use "uswds-init" as core;
+
+:root {
+  --bdc-brand-900: #{core.core-color(core.$theme-color-primary-darker)};
+  --bdc-brand-800: #{core.core-color(core.$theme-color-primary-dark)};
+  --bdc-brand-700: #{core.core-color(core.$theme-color-primary)};
+  --bdc-copy: #{core.core-color(core.$bdc-color-copy)};
+  --bdc-surface: #{core.core-color("white")};
+  --bdc-border-soft: #{core.core-color("blue-10")};
+  --bdc-divider-soft: #{core.core-color("blue-warm-10")};
+  --bdc-meta: #{core.core-color("blue-warm-50")};
+}
