@@ -2,10 +2,9 @@
 title: Bring Your Own Tools
 layout: ../../layouts/Page.astro
 ---
-import InlineAlert from '@components/InlineAlert.astro';
-import Button from '@components/Button.astro'
+import Icon from '@components/Icon.astro'
 
-<div class="usa-card usa-card__container padding-1 float-right width-mobile">
+<div class="usa-card usa-card__container padding-x-2 float-right width-mobile">
   **Key Terms:**
 
   - Tool: Single command or script (R, Python, Bash, etc.) that performs one task.
@@ -31,7 +30,7 @@ You may benefit from bringing a tool to BDC if you:
 
 ## What You Can Bring
 <div class="display-flex flex-row">
-  <div class="usa-card usa-card__container padding-1">
+  <div class="usa-card usa-card__container">
     <div class="usa-card__header">
       <h2 class="usa-card__heading heading">
         Scripts or Command-Line Tools
@@ -41,7 +40,7 @@ You may benefit from bringing a tool to BDC if you:
       Single scripts (R, Python, Bash, etc.) that run independently
     </div>
   </div>
-  <div class="usa-card usa-card__container padding-1">
+  <div class="usa-card usa-card__container">
     <div class="usa-card__header">
       <h2 class="usa-card__heading heading">
         Containerized Tools
@@ -51,7 +50,7 @@ You may benefit from bringing a tool to BDC if you:
       Docker-packaged tools that include environmental dependencies
     </div>
   </div>
-  <div class="usa-card usa-card__container padding-1">
+  <div class="usa-card usa-card__container">
     <div class="usa-card__header">
       <h2 class="usa-card__heading heading">
         Workflows and Pipelines
@@ -63,9 +62,12 @@ You may benefit from bringing a tool to BDC if you:
   </div>
 </div>
 
-<InlineAlert variant="warning">
-  Tools created with proprietary licensing agreements, such as MatLab, may not be supported. 
-</InlineAlert>
+<div class="usa-card usa-card__container padding-x-2">
+  **Notes on what you can bring:**
+
+  * Tools created with proprietary licensing agreements, such as MatLab, may not be supported.   
+  * This page focuses on bringing tools and workflows into BDC-Seven Bridges. BDC-Terra also supports workflow-based analysis using WDL. Current BDC-Terra users can refer to [documentation](https://support.terra.bio/hc/en-us/sections/360007274612) for guidance on writing and running WDL workflows.
+</div>
 
 ## Before You Start
 
@@ -74,6 +76,7 @@ Bringing tools into BDC typically requires:
 * Command-line tools or scripts familiarity (R, Python, Bash)  
 * Understanding of inputs, outputs, and dependencies for each script/tool/workflow  
 * Docker experience, ideally with publishing containers or willingness to learn
+* Ability to identify the software, packages, and runtime environment your tool needs to run
 
 ### **Compatibility Considerations**
 
@@ -86,16 +89,17 @@ Not all tools are immediately compatible. Before getting started, consider:
 * **Unsupported architectures**: Multi-container architectures are not supported.  
 * **Dependencies**: Tools with unavailable or non-portable dependencies are not supported.
 
-<div class="usa-card usa-card__container padding-1">
+<div class="usa-card usa-card__container padding-4 usa-prose">
+  <Icon name="info_outline" size={4}/>
   ### Important Guidance for Regulated and AI-Based Tools
   If you are developing tools for clinical or regulatory use (such as Software as a Medical Device), contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC requirements.
 
   Additionally, while AI-assisted tools can accelerate development, they may introduce risks related to security, reproducibility, and transparency. Tools brought into BDC must meet requirements for controlled-access data and reproducibility, and will need to be validated prior to use.
 </div>
 
-## How It Works
+## How It Works on BDC-Seven Bridges
 
-At a high level, bringing a tool into BDC typically involves:
+At a high level, bringing a tool into BDC-Seven Bridges typically involves:
 
   <div class="usa-card usa-card__container">
     <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
@@ -109,9 +113,19 @@ At a high level, bringing a tool into BDC typically involves:
     <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
       <div class="width-10 font-sans-xl text-center">2</div>
       <div>
-        **Define tool specifications**
+        **Define your tool's specifications**
 
-        Share technical requirements, dependencies, and needs
+        Clearly define:
+
+        * Inputs (files required by your application)  
+        * Parameters (any variables required by your application)  
+        * Expected outputs  
+        * Dependencies (libraries, packages)  
+        * Resource requirements (CPU, memory, runtime expectations)
+
+        Understand if it should be Dockerized
+
+        * *Note: This will be based on details such as the number of dependencies, install vs load times, and your familiarity with Docker.*
       </div>
     </div>
     <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
@@ -119,7 +133,9 @@ At a high level, bringing a tool into BDC typically involves:
       <div>
         **Test your tool**
 
-        Validate it runs as expected in BDC
+        Run the tool on sample data  
+        * Validate outputs  
+        * Iterate and refine before scaling or combining into workflows
       </div>
     </div>
     <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
@@ -127,7 +143,9 @@ At a high level, bringing a tool into BDC typically involves:
       <div>
         **Create and register your tool**
 
-        Package or containerize and register in BDC
+        Use the Tool Creator to create command line tools
+        * Reference an open source Docker image or provide your own (for example, via DockerHub or another registry)  
+        * If the Docker image requires credentials/ is not publicly accessible, register the tool using the [BioData Catalyst Image Registry](https://sb-biodatacatalyst.readme.io/docs/the-image-registry)
       </div>
     </div>
     <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
@@ -148,12 +166,15 @@ At a high level, bringing a tool into BDC typically involves:
     </div>
 </div>
 
-<div class="usa-card usa-card__container padding-1">
-### Thinking about bringing a tool to BDC?
+<div class="usa-card usa-card__container padding-4 usa-prose">
+  <Icon name="construction" size={4}/>
+  ### Thinking about bringing a tool to BDC?
 
-Whether you've developed a custom tool or pipeline, packaged a tool in Docker, or are exploring how your analysis could run on BDC, we can help you evaluate your approach. Our team can help determine feasibility, guide implementation, and avoid common pitfalls. Early conversations save time and prevent rework.
+  Whether you've developed a custom tool or pipeline, packaged a tool in Docker, or are exploring how your analysis could run on BDC, our team can help determine feasibility, guide implementation, and avoid common pitfalls. Early conversations save time and prevent rework.
 
-Submit a request through our Help Desk to get started. Our team can help assess your approach and guide next steps.
+  Reach out if you need help moving from a script or analysis to a scalable workflow, integrating a custom or containerized tool, understanding which workflow format or platform approach fits your analysis, or sharing a reusable tool, workflow, or workspace for others to use.
 
-[→ Request Tool or Workflow Integration](/)
+  Submit a request through our Help Desk and select **Tool or Workflow Integration** to get started.
+
+  [→ Request Tool or Workflow Integration](/help/contact-and-support)
 </div>
