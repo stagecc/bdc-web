@@ -1,5 +1,4 @@
 @use "@bdc/uswds-theme/src/uswds-init" as core;
-@use "@bdc/uswds-theme/src/css-vars";
 @use "uswds";
 @use "components/site-alert";
 
@@ -22,13 +21,53 @@ h3 {
 h4 {
   font-size: clamp(1.125rem, 1.8vw, 1.5rem);
 }
+
+.usa-search__input--no-button {
+  border-right: 1px solid !important;
+  border-bottom-right-radius: 2px !important;
+  border-top-right-radius: 2px !important;
+}
+
 .usa-prose--full-width p {
   max-width: 100%;
 }
+
 .usa-modal--lg .usa-modal__main {
   max-width: 1000px !important;
 }
+
 .usa-modal--lg .usa-modal__heading {
   font-size: 1.5rem;
   margin-bottom: 0
+}
+
+.usa-form--large {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  padding: 2rem;
+  background-color: #f9f9f9; // replace #b5bdbc with whatever feels right
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+}
+
+.usa-fieldset {
+  margin-top: 1.5rem;
+}
+
+.usa-legend, .usa-label {
+  // font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+input[type="search"]::-webkit-search-cancel-button {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.usa-form--large {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
 }
