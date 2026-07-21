@@ -1,30 +1,45 @@
 ---
 import Card from '@components/cards/Card.astro';
+import Icon from '@components/Icon.astro';
+
+type HeadingLevel = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+type IconSize = 3 | 4 | 5 | 6 | 7 | 8 | 9;
 
 interface Props {
-  eyebrow: string;
+  eyebrow?: string;
+  icon?: string;
+  iconSize?: IconSize;
   title: string;
+  headingLevel?: HeadingLevel;
   paragraphs: string[];
-  linkHref: string;
-  linkLabel: string;
+  linkHref?: string;
+  linkLabel?: string;
+  bgColor?: string;
   border?: boolean;
 }
 
 const {
   eyebrow,
+  icon,
+  iconSize,
   title,
+  headingLevel = 'h2',
   paragraphs,
   linkHref,
   linkLabel,
+  bgColor,
   border = true,
 } = Astro.props;
+
+const HeadingTag = headingLevel;
 ---
 
-<Card variant="overview" class="card-copy" border={border}>
-  <p class="card-copy__eyebrow margin-top-0 margin-bottom-1">{eyebrow}</p>
-  <h2 class="margin-top-0 margin-bottom-1">{title}</h2>
+<Card variant="overview" class=`card-copy bg-${bgColor}` border={border}>
+  {icon && (<Icon name={icon} size={iconSize}class="margin-top-2 margin-bottom-4"/>)}
+  {eyebrow && (<p class="card-copy__eyebrow margin-top-0 margin-bottom-1">{eyebrow}</p>)}
+  <HeadingTag class="margin-top-0 margin-bottom-1">{title}</HeadingTag>
   {paragraphs.map((paragraph) => <p class="card-copy__paragraph margin-top-0 margin-bottom-1">{paragraph}</p>)}
-  <a class="card-copy__link" href={linkHref}>{linkLabel}</a>
+  {linkHref && (<a class="card-copy__link" href={linkHref}>{linkLabel}</a>)}
 </Card>
 
 <style>
