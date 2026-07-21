@@ -1,13 +1,17 @@
 ---
-import { render } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import ArticleLayout from '@layouts/Article.astro';
-import { getEntriesWithPrevNext } from '../../../util/prev-next.ts';
 
 export async function getStaticPaths() {
-  const entries = await getEntriesWithPrevNext('news', 'date');
+  const posts = (await getCollection('news')).sort(
+    (a, b) => (b.data.date?.valueOf() ?? 0) - (a.data.date?.valueOf() ?? 0),
+  );
 
-  return entries.map(
-    ({ entry: post, newerEntry: newerPost, olderEntry: olderPost }) => ({
+  return posts.map((post, index) => {
+    const newerPost = index > 0 ? posts[index - 1] : undefined;
+    const olderPost = index < posts.length - 1 ? posts[index + 1] : undefined;
+
+    return {
       params: {
         slug: post.id,
       },
@@ -16,8 +20,8 @@ export async function getStaticPaths() {
         newerPost,
         olderPost,
       },
-    }),
-  );
+    };
+  });
 }
 
 const { post, newerPost, olderPost } = Astro.props;

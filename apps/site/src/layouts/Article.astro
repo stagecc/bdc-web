@@ -68,7 +68,7 @@ const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
           </div>
         )}
 
-        <div class="article__content">
+        <div class="article__content clearfix">
           <slot />
         </div>
 
@@ -79,20 +79,20 @@ const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
         }
         
         <nav aria-label="More news articles" class="margin-top-10">
-          <div class="display-flex flex-justify">
+          <div class="display-flex flex-justify grid-row">
             {olderPost && (
-              <a href={`/news/latest-updates/${olderPost.slug}/`} rel="prev" class="width-mobile-lg">
+              <a href={`/news/latest-updates/${olderPost.id}/`} rel="prev" class="grid-col-4">
                 ← PREVIOUS
                 <span class="usa-collection__meta-item">
-                  {olderPost.title}
+                  {olderPost.data.title}
                 </span>
               </a>
             )}
             {newerPost && (
-              <a href={`/news/latest-updates/${newerPost.slug}/`} rel="next" class="width-mobile-lg text-right">
+              <a href={`/news/latest-updates/${newerPost.id}/`} rel="next" class="grid-col-4 text-right">
                 NEXT →
                 <span class="usa-collection__meta-item">
-                  {newerPost.title}
+                  {newerPost.data.title}
                 </span>
               </a>
             )}
