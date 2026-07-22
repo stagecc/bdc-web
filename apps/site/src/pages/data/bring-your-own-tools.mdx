@@ -12,7 +12,9 @@ import Icon from '@components/Icon.astro'
   - App: Tool or full workflow packaged for use.
  </div>
 
-BDC supports bringing your scripts, tools, and workflows into BDC-Seven Bridges for scalable, reproducible analysis in a secure cloud environment.
+<span class="usa-intro">
+  BDC supports bringing your scripts, tools, and workflows into BDC-Seven Bridges for scalable, reproducible analysis in a secure cloud environment.
+</span>
 
 **Need help getting started?** [Submit a request through our help desk](/help/contact-and-support) and select “Tool or Workflow Integration.”
 
@@ -21,12 +23,12 @@ BDC supports bringing your scripts, tools, and workflows into BDC-Seven Bridges 
 
 You may benefit from bringing a tool to BDC if you:
 
-- ✅  Have a script you want to run or reuse across multiple files
-- ✅  Have a process or analysis that is expected to take several hours
-- ✅  Need to formalize and scale a multi-step workflow
-- ✅  Have dependencies that would benefit from containerization
-- ✅  Want to reuse or integrate an existing Dockerized tool
-- ✅  Want application versioning
+- Have a script you want to run or reuse across multiple files
+- Have a process or analysis that is expected to take several hours
+- Need to formalize and scale a multi-step workflow
+- Have dependencies that would benefit from containerization
+- Want to reuse or integrate an existing Dockerized tool
+- Want application versioning
 
 ## What You Can Bring
 <div class="display-flex flex-row">
@@ -75,7 +77,6 @@ Bringing tools into BDC typically requires:
 
 * Command-line tools or scripts familiarity (R, Python, Bash)  
 * Understanding of inputs, outputs, and dependencies for each script/tool/workflow  
-* Docker experience, ideally with publishing containers or willingness to learn
 * Ability to identify the software, packages, and runtime environment your tool needs to run
 
 ### **Compatibility Considerations**
@@ -86,7 +87,7 @@ Not all tools are immediately compatible. Before getting started, consider:
 * **Licensing**: Tools that depend on proprietary software (for example, MatLab) or have licensing restrictions are not supported.  
 * **Interactive tools**: Tools or workflows that rely on interactive inputs or provide interactive visualizations are not typically supported through standard, self-service workflows. These use cases may be supported through dedicated, funded projects within BDC.  
 * **Containerization**: Tools must be containerizable and describable in supported workflow languages. Thus tools requiring direct hardware access, always-on services, and tools with no defined input are not supported.  
-* **Unsupported architectures**: Multi-container architectures are not supported.  
+* **Nested containers**: Tools that require one Docker container to call or run another Docker container are not supported. Workflows may include multiple tools, with each tool using its own container
 * **Dependencies**: Tools with unavailable or non-portable dependencies are not supported.
 
 <div class="usa-card usa-card__container padding-4 usa-prose">
