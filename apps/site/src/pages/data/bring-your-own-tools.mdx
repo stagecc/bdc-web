@@ -4,20 +4,25 @@ layout: ../../layouts/Page.astro
 ---
 import Icon from '@components/Icon.astro'
 
-<div class="usa-card usa-card__container padding-x-2 float-right width-mobile">
-  **Key Terms:**
+<div class="clearfix">
+<div class="usa-card float-right width-mobile">
+  <div class=" usa-card__container">
+    <div class="usa-card__body">
+      **Key Terms:**
 
-  - Tool: Single command or script (R, Python, Bash, etc.) that performs one task.
-  - Workflow: Multi-step pipeline connecting tools.
-  - App: Tool or full workflow packaged for use.
- </div>
+      - Tool: Single command or script (R, Python, Bash, etc.) that performs one task.
+      - Workflow: Multi-step pipeline connecting tools.
+      - App: Tool or full workflow packaged for use.
+    </div>
+  </div>
+</div>
 
 <span class="usa-intro">
   BDC supports bringing your scripts, tools, and workflows into BDC-Seven Bridges for scalable, reproducible analysis in a secure cloud environment.
 </span>
 
 **Need help getting started?** [Submit a request through our help desk](/help/contact-and-support) and select “Tool or Workflow Integration.”
-
+</div>
 
 ## Is bringing your own tool right for your work?
 
@@ -31,44 +36,55 @@ You may benefit from bringing a tool to BDC if you:
 - Want application versioning
 
 ## What You Can Bring
-<div class="display-flex flex-row">
-  <div class="usa-card usa-card__container">
-    <div class="usa-card__header">
-      <h2 class="usa-card__heading heading">
-        Scripts or Command-Line Tools
-      </h2>
-    </div>
-    <div slot="content" class="usa-card__body">
-      Single scripts (R, Python, Bash, etc.) that run independently
-    </div>
-  </div>
-  <div class="usa-card usa-card__container">
-    <div class="usa-card__header">
-      <h2 class="usa-card__heading heading">
-        Containerized Tools
-      </h2>
-    </div>
-    <div slot="content" class="usa-card__body">
-      Docker-packaged tools that include environmental dependencies
+<div class="grid-row grid-gap-2">
+  <div class="usa-card grid-col-4">
+    <div class="usa-card__container">
+      <div class="usa-card__header">
+        <h2 class="usa-card__heading">
+          Scripts or Command-Line Tools
+        </h2>
+      </div>
+      <div class="usa-card__body">
+        Single scripts (R, Python, Bash, etc.) that run independently
+      </div>
+    
     </div>
   </div>
-  <div class="usa-card usa-card__container">
-    <div class="usa-card__header">
-      <h2 class="usa-card__heading heading">
-        Workflows and Pipelines
-      </h2>
+  <div class="usa-card grid-col-4">
+    <div class="usa-card__container">
+      <div class="usa-card__header">
+        <h2 class="usa-card__heading heading">
+          Containerized Tools
+        </h2>
+      </div>
+      <div class="usa-card__body">
+        Docker-packaged tools that include environmental dependencies
+      </div>
     </div>
-    <div slot="content" class="usa-card__body">
-      Multi-step workflow consisting of multiple connected tools
+  </div>
+  <div class="usa-card grid-col-4">
+    <div class="usa-card__container">
+      <div class="usa-card__header">
+        <h2 class="usa-card__heading heading">
+          Workflows and Pipelines
+        </h2>
+      </div>
+      <div class="usa-card__body">
+        Multi-step workflow consisting of multiple connected tools
+      </div>
     </div>
   </div>
 </div>
 
-<div class="usa-card usa-card__container padding-x-2">
-  **Notes on what you can bring:**
+<div class="usa-card">
+  <div class="usa-card__container">
+    <div class="usa-card__body">
+      **Notes on what you can bring:**
 
-  * Tools created with proprietary licensing agreements, such as MatLab, may not be supported.   
-  * This page focuses on bringing tools and workflows into BDC-Seven Bridges. BDC-Terra also supports workflow-based analysis using WDL. Current BDC-Terra users can refer to [documentation](https://support.terra.bio/hc/en-us/sections/360007274612) for guidance on writing and running WDL workflows.
+      * Tools created with proprietary licensing agreements, such as MatLab, may not be supported.   
+      * This page focuses on bringing tools and workflows into BDC-Seven Bridges. BDC-Terra also supports workflow-based analysis using WDL. Current BDC-Terra users can refer to [documentation](https://support.terra.bio/hc/en-us/sections/360007274612) for guidance on writing and running WDL workflows.
+    </div>
+  </div>
 </div>
 
 ## Before You Start
@@ -90,92 +106,127 @@ Not all tools are immediately compatible. Before getting started, consider:
 * **Nested containers**: Tools that require one Docker container to call or run another Docker container are not supported. Workflows may include multiple tools, with each tool using its own container
 * **Dependencies**: Tools with unavailable or non-portable dependencies are not supported.
 
-<div class="usa-card usa-card__container padding-4 usa-prose">
-  <Icon name="info_outline" size={4}/>
-  ### Important Guidance for Regulated and AI-Based Tools
-  If you are developing tools for clinical or regulatory use (such as Software as a Medical Device), contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC requirements.
+<div class="usa-card">
+  <div class="usa-card__container">
+    <div class="usa-card__header">
+       <Icon name="info_outline" size={4}/>
+      <div class="usa-card__heading">
+        Important Guidance for Regulated and AI-Based Tools
+      </div>
+    </div>
+    <div class="usa-card__body">
+      If you are developing tools for clinical or regulatory use (such as Software as a Medical Device), contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC requirements.
 
-  Additionally, while AI-assisted tools can accelerate development, they may introduce risks related to security, reproducibility, and transparency. Tools brought into BDC must meet requirements for controlled-access data and reproducibility, and will need to be validated prior to use.
+      Additionally, while AI-assisted tools can accelerate development, they may introduce risks related to security, reproducibility, and transparency. Tools brought into BDC must meet requirements for controlled-access data and reproducibility, and will need to be validated prior to use.      
+    </div>
+  </div>
 </div>
 
 ## How It Works on BDC-Seven Bridges
 
 At a high level, bringing a tool into BDC-Seven Bridges typically involves:
 
-  <div class="usa-card usa-card__container">
-    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
-      <div class="width-10 font-sans-xl text-center">1</div>
-      <div>
-        **Identify what you're bringing**
+{/* This will become a Process list component */}
+<div class="usa-card">
+  <div class="usa-card__container">
+    <div class="usa-card__body">
+      <div class="grid-row">
+        <div class="font-sans-xl grid-col-1">1</div>
+        <div class="grid-col-11">
+          **Identify what you're bringing**
 
-        Determine whether you are bringing in a tool (single script) or a workflow (multi-step pipeline)
+          Determine whether you are bringing in a tool (single script) or a workflow (multi-step pipeline)
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="grid-row">
+        <div class="font-sans-xl grid-col-1">2</div>
+        <div class="grid-col-11">
+          **Define your tool's specifications**
+
+          Clearly define:
+
+          * Inputs (files required by your application)  
+          * Parameters (any variables required by your application)  
+          * Expected outputs  
+          * Dependencies (libraries, packages)  
+          * Resource requirements (CPU, memory, runtime expectations)
+
+          Understand if it should be Dockerized
+
+          * *Note: This will be based on details such as the number of dependencies, install vs load times, and your familiarity with Docker.*
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="grid-row">
+        <div class="font-sans-xl grid-col-1">3</div>
+        <div class="grid-col-11">
+          **Test your tool**
+
+          Run the tool on sample data  
+          * Validate outputs  
+          * Iterate and refine before scaling or combining into workflows
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="grid-row">
+        <div class="font-sans-xl grid-col-1">4</div>
+        <div class="grid-col-11">
+          **Create and register your tool**
+
+          Use the Tool Creator to create command line tools
+          * Reference an open source Docker image or provide your own (for example, via DockerHub or another registry)  
+          * If the Docker image requires credentials/ is not publicly accessible, register the tool using the [BioData Catalyst Image Registry](https://sb-biodatacatalyst.readme.io/docs/the-image-registry)
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="grid-row">
+        <div class="font-sans-xl grid-col-1">5</div>
+        <div class="grid-col-11">
+          **Optional: Create a workflow**
+
+          Connect tools and data into a reproducible pipeline
+        </div>
+      </div>
+
+      <hr/>
+      <div class="grid-row">
+        <div class="font-sans-xl grid-col-1">6</div>
+        <div class="grid-col-11">
+          **Share and scale**
+
+          Share with collaborators and run at scale with confidence
+        </div>
       </div>
     </div>
-    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
-      <div class="width-10 font-sans-xl text-center">2</div>
-      <div>
-        **Define your tool's specifications**
-
-        Clearly define:
-
-        * Inputs (files required by your application)  
-        * Parameters (any variables required by your application)  
-        * Expected outputs  
-        * Dependencies (libraries, packages)  
-        * Resource requirements (CPU, memory, runtime expectations)
-
-        Understand if it should be Dockerized
-
-        * *Note: This will be based on details such as the number of dependencies, install vs load times, and your familiarity with Docker.*
-      </div>
-    </div>
-    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
-      <div class="width-10 font-sans-xl text-center">3</div>
-      <div>
-        **Test your tool**
-
-        Run the tool on sample data  
-        * Validate outputs  
-        * Iterate and refine before scaling or combining into workflows
-      </div>
-    </div>
-    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
-      <div class="width-10 font-sans-xl text-center">4</div>
-      <div>
-        **Create and register your tool**
-
-        Use the Tool Creator to create command line tools
-        * Reference an open source Docker image or provide your own (for example, via DockerHub or another registry)  
-        * If the Docker image requires credentials/ is not publicly accessible, register the tool using the [BioData Catalyst Image Registry](https://sb-biodatacatalyst.readme.io/docs/the-image-registry)
-      </div>
-    </div>
-    <div class="border-bottom border-base-lighter padding-x-1 padding-y-1 display-flex flex-align-start">
-      <div class="width-10 font-sans-xl text-center">5</div>
-      <div>
-        **Optional: Create a workflow**
-
-        Connect tools and data into a reproducible pipeline
-      </div>
-    </div>
-    <div class="padding-x-1 padding-y-1 display-flex flex-align-start">
-      <div class="width-10 font-sans-xl text-center">6</div>
-      <div>
-        **Share and scale**
-
-        Share with collaborators and run at scale with confidence
-      </div>
-    </div>
+  </div>
 </div>
 
-<div class="usa-card usa-card__container padding-4 usa-prose">
-  <Icon name="construction" size={4}/>
-  ### Thinking about bringing a tool to BDC?
+<div class="usa-card">
+  <div class="usa-card__container">
+    <div class="usa-card__header">
+      <Icon name="construction" size={4}/>
+      <div class="usa-card__heading">
+        Thinking about bringing a tool to BDC?
+      </div>
+    </div>
+    <div class="usa-card__body">
+      Whether you've developed a custom tool or pipeline, packaged a tool in Docker, or are exploring how your analysis could run on BDC, our team can help determine feasibility, guide implementation, and avoid common pitfalls. Early conversations save time and prevent rework.
 
-  Whether you've developed a custom tool or pipeline, packaged a tool in Docker, or are exploring how your analysis could run on BDC, our team can help determine feasibility, guide implementation, and avoid common pitfalls. Early conversations save time and prevent rework.
+      Reach out if you need help moving from a script or analysis to a scalable workflow, integrating a custom or containerized tool, understanding which workflow format or platform approach fits your analysis, or sharing a reusable tool, workflow, or workspace for others to use.
 
-  Reach out if you need help moving from a script or analysis to a scalable workflow, integrating a custom or containerized tool, understanding which workflow format or platform approach fits your analysis, or sharing a reusable tool, workflow, or workspace for others to use.
-
-  Submit a request through our Help Desk and select **Tool or Workflow Integration** to get started.
-
-  [→ Request Tool or Workflow Integration](/help/contact-and-support)
+      Submit a request through our Help Desk and select **Tool or Workflow Integration** to get started.
+    </div>
+    <div class="usa-card__footer">
+      [→ Request Tool or Workflow Integration](/help/contact-and-support)
+    </div>
+  </div>
 </div>

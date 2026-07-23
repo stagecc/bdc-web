@@ -33,20 +33,22 @@ const years = Object.keys(postsByYear)
     <div class="grid-container">
 
       <h1>Latest Updates</h1>
-      
-      <div class="usa-card usa-card__container padding-1 float-right width-mobile">
-        <Icon name="mail_outline" size={4}/>
 
-        <p class="text-bold">Never miss an update</p>
-
-        → <Link to="/join-bdc">Click here</Link> to subscribe to receive monthly BDC updates and other announcements.
+      <div class="clearfix">
+        <div class="usa-card float-right width-mobile">
+          <div class="usa-card__container padding-2">
+            <Icon name="mail_outline" size={4}/>
+    
+            <p class="text-bold">Never miss an update</p>
+    
+            → <Link to="/join-bdc">Click here</Link> to subscribe to receive monthly BDC updates and other announcements.
+          </div>
+        </div>
+        
+        <p class="usa-intro">
+          Stay current on BDC data releases, ecosystem updates, research highlights, newsletters, and other ecosystem news.
+        </p>
       </div>
-      
-      <p class="usa-prose">
-        Stay current on BDC data releases, ecosystem updates, research highlights, newsletters, and other ecosystem news.
-      </p>
-
-      <div class="height-15"></div>
 
       <p>Showing {posts.length} Updates</p>
 

@@ -3,43 +3,49 @@ import Button from '@components/Button.astro';
 import Icon from '@components/Icon.astro';
 ---
 
-<aside class="usa-card__container padding-3 margin-top-10 margin-bottom-4" >
-  <div class="display-flex flex-align-center margin-bottom-1" >
-    <Icon name="mail_outline" size={4} class="margin-right-1" />
-    <h2 class="font-sans-lg text-bold margin-0">Never miss an update</h2>
-  </div>
+<aside class="usa-card margin-top-10" >
+  <div class="usa-card__container">
+    <div class="usa-card__header display-flex flex-align-center">
+      <Icon name="mail_outline" size={4} class="margin-right-1" />
+      <h2 class="usa-card_heading font-sans-lg text-bold margin-0">Never miss an update</h2>
 
-  <p class="font-sans-sm margin-bottom-2">
-    Subscribe to receive monthly BDC updates and other announcements.
-  </p>
+    </div>
+    <div class="usa-card__body">
+      <p class="font-sans-sm margin-bottom-2">
+        Subscribe to receive monthly BDC updates and other announcements.
+      </p>
 
-    <form class="usa-form maxw-full" >
-      <div class="display-flex grid-row">
-        <div class="usa-form-group margin-0 grid-col">
-          <label class="usa-label" for="signup-name">Name</label>
-          <input
-            class="usa-input"
-            id="signup-name"
-            name="name"
-            type="text"
-            autocomplete="name"
-          />
-        </div>
+      <form class="usa-form maxw-full" >
+        <div class="display-flex grid-row">
+          <div class="usa-form-group margin-0 grid-col">
+            <label class="usa-label" for="signup-name">Name</label>
+            <input
+              class="usa-input"
+              id="signup-name"
+              name="name"
+              type="text"
+              autocomplete="name"
+            />
+          </div>
+    
+          <div class="usa-form-group margin-0 grid-col margin-left-5">
+            <label class="usa-label" for="signup-email">Email</label>
+            <input
+              class="usa-input"
+              id="signup-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+            />
+          </div>
   
-        <div class="usa-form-group margin-0 grid-col margin-left-5">
-          <label class="usa-label" for="signup-email">Email</label>
-          <input
-            class="usa-input"
-            id="signup-email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            required
-          />
         </div>
+        <Button type="submit">Subscribe to Updates</Button>
+      </form>
+    </div>
+  
 
-      </div>
-      <Button type="submit">Subscribe to Updates</Button>
-    </form>
+  </div>
   </div>
 </aside>

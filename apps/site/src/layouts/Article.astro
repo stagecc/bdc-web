@@ -8,7 +8,7 @@ import Base from '@layouts/Base.astro';
 const { frontmatter, newerPost, olderPost } = Astro.props;
 
 const crumbs = [
-  { label: 'News', href: '/news/latest-updates/' },
+  { label: 'Latest Updates', href: '/news/latest-updates/' },
   { label: frontmatter.title },
 ];
 
@@ -47,10 +47,14 @@ const updateTypeCardText = {
 
       {
         (updateType === "Monthly Update" || updateType === "Release Notes") && (
-          <div class="usa-card__container margin-y-4 padding-2">
-            <p class="margin-0 font-sans-sm">
-              {updateTypeCardText[updateType]}
-            </p>
+          <div class="usa-card margin-top-4">
+            <div class="usa-card__container">
+              <div class="usa-card__body">
+                <p class="margin-0 font-sans-sm">
+                  {updateTypeCardText[updateType]}
+                </p>
+              </div>
+            </div>
           </div>
         )
       }
