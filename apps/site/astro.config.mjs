@@ -57,7 +57,7 @@ export default defineConfig({
     robotsTxt(robotsTxtConfig),
   ],
   markdown: {
-    remarkPlugins: [['remark-excerpt', { remove: true }]],
+    remarkPlugins: [],
     rehypePlugins: [externalLinks],
   },
   vite: {
