@@ -2,11 +2,15 @@
 date: 2023-05-19
 title: NHLBI BioData Catalyst® (BDC) Provides Collaborative Cloud Computing Environment to Meet Evolving Researcher Needs
 subtitle: ""
+updateType: General Update
 tags:
   - news
   - publication
 seo:
   title: NHLBI BioData Catalyst® (BDC) Provides Collaborative Cloud Computing Environment to Meet Evolving Researcher Needs
+excerpt: >
+  This week, the Journal of the American Medical Informatics Association (JAMIA) published 
+  the BDC Consortium’s manuscript about the BDC ecosystem and some of its early successes.
 ---
 
 This week, the Journal of the American Medical Informatics Association (JAMIA) [published the BDC Consortium’s manuscript](https://academic.oup.com/jamia/advance-article/doi/10.1093/jamia/ocad048/7165700?searchresult=1) about the BDC ecosystem and some of its early successes. Authored by several members of the BDC Consortium (representatives from many organizations working with the National Heart, Lung, and Blood Institute (NHLBI) to develop the ecosystem), the article offers readers a glimpse into what BDC is, what it does, and how it can help investigators attain their research goals.

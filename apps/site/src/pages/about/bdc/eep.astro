@@ -1,6 +1,5 @@
 ---
 import { getCollection, render } from 'astro:content';
-import Callout from '@components/Callout.astro';
 import EepMember from '@components/eep/EepMember.astro';
 import EepNav from '@components/eep/EepNav.astro';
 import SummaryCard from '@components/SummaryCard.astro';
@@ -31,10 +30,6 @@ const rendered = await Promise.all(
     <div class="grid-container">
       <h1>BDC External Expert Panel</h1>
       <div class="usa-prose usa-prose--full-width">
-        <!-- <Callout title="7 Panel Members" float="right" width="250px">
-          <hr/>
-          Independent experts advising NHLBI leadership on the BDC ecosystem
-        </Callout> -->
         <SummaryCard icon="people" number="7" qualifier="Panel Members" float="right">
           Plus 1 Ad-hoc Member
           <hr/>

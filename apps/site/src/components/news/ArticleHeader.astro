@@ -1,19 +1,24 @@
 ---
-const { title, date, tags = [] } = Astro.props;
+const { title, date, updateType, tags = [] } = Astro.props;
 
 import TagLink from '@components/link/TagLink.astro';
 ---
 
 <header class="article__header">
 
+  <span class="usa-tag">
+    {updateType}
+  </span>
+
   <h1>{title}</h1>
+  <div class="display-flex flex-align-center">
+    <time datetime={date.toISOString()} class="meta-text">
+      Published on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+    </time>
+  </div>
 
   <div class="display-flex flex-justify flex-align-center border-bottom">
     
-    <time datetime={date.toISOString()} class="publish-date">
-      Published on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-    </time>
-
     {tags.length > 0 && (
       <div class="tags display-flex padding-0 margin-y-1">
         {tags.map(tag => <TagLink tag={tag} />)}
@@ -23,7 +28,7 @@ import TagLink from '@components/link/TagLink.astro';
 </header>
 
 <style>
-  .publish-date {
+  .meta-text {
     color: #666;
   }
 </style>

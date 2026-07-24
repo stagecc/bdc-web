@@ -1,17 +1,25 @@
 ---
 import { Image } from 'astro:assets';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
+import EmailSignup from '@components/EmailSignup.astro';
 import ArticleHeader from '@components/news/ArticleHeader.astro';
 import Base from '@layouts/Base.astro';
 
-const { frontmatter } = Astro.props;
+const { frontmatter, newerPost, olderPost } = Astro.props;
 
 const crumbs = [
-  { label: 'News', href: '/updates/news/' },
+  { label: 'Latest Updates', href: '/news/latest-updates/' },
   { label: frontmatter.title },
 ];
 
-const { title, date, tags, heroImage, heroAlt } = frontmatter;
+const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
+
+const updateTypeCardText = {
+  'Monthly Update': `Read the latest monthly update, including recent ecosystem news, 
+    data updates, events, training opportunities, and reminders for the BDC community. This update opens in Mailchimp.`,
+  'Release Notes': `The BDC release notes summarize recent updates across the BDC ecosystem, 
+  including data availability, documentation, and platform functionality.`,
+};
 ---
 
 <Base title={title}>
@@ -26,6 +34,7 @@ const { title, date, tags, heroImage, heroAlt } = frontmatter;
           title={title}
           date={date}
           tags={tags}
+          updateType={updateType}
         />
 
         {heroImage && (
@@ -36,10 +45,50 @@ const { title, date, tags, heroImage, heroAlt } = frontmatter;
           />
         )}
 
-        <div class="article__content">
+      {
+        (updateType === "Monthly Update" || updateType === "Release Notes") && (
+          <div class="usa-card margin-top-4">
+            <div class="usa-card__container">
+              <div class="usa-card__body">
+                <p class="margin-0 font-sans-sm">
+                  {updateTypeCardText[updateType]}
+                </p>
+              </div>
+            </div>
+          </div>
+        )
+      }
+
+        <div class="article__content clearfix">
           <slot />
         </div>
 
+        {
+          (updateType === "Monthly Update" || updateType === "Release Notes") && (
+            <EmailSignup/>
+          )
+        }
+        
+        <nav aria-label="More news articles" class="margin-top-10">
+          <div class="display-flex flex-justify grid-row">
+            {olderPost && (
+              <a href={`/news/latest-updates/${olderPost.id}/`} rel="prev" class="grid-col-4">
+                ← PREVIOUS
+                <span class="usa-collection__meta-item">
+                  {olderPost.data.title}
+                </span>
+              </a>
+            )}
+            {newerPost && (
+              <a href={`/news/latest-updates/${newerPost.id}/`} rel="next" class="grid-col-4 text-right">
+                NEXT →
+                <span class="usa-collection__meta-item">
+                  {newerPost.data.title}
+                </span>
+              </a>
+            )}
+          </div>
+        </nav>
       </div>
     </article>
   </section>

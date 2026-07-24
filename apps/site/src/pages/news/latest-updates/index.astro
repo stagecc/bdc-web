@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
-import TagLink from '@components/link/TagLink.astro';
+import Icon from '@components/Icon.astro';
+import Link from '@components/link/Link.astro';
 import NewsList from '@components/news/NewsList.astro';
 import Base from '@layouts/Base.astro';
 
@@ -26,15 +27,34 @@ const years = Object.keys(postsByYear)
   .sort((a, b) => b - a);
 ---
 
-<Base title="News">
+<Base title="Latest Updates">
 
   <section class="usa-section">
     <div class="grid-container">
 
-      <h1>News</h1>
+      <h1>Latest Updates</h1>
+
+      <div class="clearfix">
+        <div class="usa-card float-right width-mobile">
+          <div class="usa-card__container padding-2">
+            <Icon name="mail_outline" size={4}/>
+    
+            <p class="text-bold">Never miss an update</p>
+    
+            → <Link to="/join-bdc">Click here</Link> to subscribe to receive monthly BDC updates and other announcements.
+          </div>
+        </div>
+        
+        <p class="usa-intro">
+          Stay current on BDC data releases, ecosystem updates, research highlights, newsletters, and other ecosystem news.
+        </p>
+      </div>
+
+      <p>Showing {posts.length} Updates</p>
+
       {years.map(year => (
         <section class="margin-top-4">
-          <h2 class="font-heading-lg margin-bottom-2">
+          <h2 class="font-heading-lg margin-bottom-05">
             {year}
           </h2>
           <NewsList items={postsByYear[year]} />

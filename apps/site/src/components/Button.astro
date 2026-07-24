@@ -1,5 +1,6 @@
 ---
 import Icon from '@components/Icon.astro';
+import { isExternalUrl } from '../util/url';
 
 interface Props extends astroHTML.JSX.ButtonHTMLAttributes {
   variant?:
@@ -32,6 +33,7 @@ const {
 
 const targetUrl = href || to;
 const Tag = targetUrl ? 'a' : 'button';
+const isExternal = !!targetUrl && isExternalUrl(targetUrl);
 
 const classes = [
   'usa-button',
@@ -45,7 +47,12 @@ const classes = [
   .join(' ');
 
 const tagProps = {
-  ...(targetUrl ? { href: targetUrl } : { type }),
+  ...(targetUrl
+    ? {
+        href: targetUrl,
+        ...(isExternal && { rel: 'noopener', target: '_blank' }),
+      }
+    : { type }),
   class: classes,
   ...rest,
 };
