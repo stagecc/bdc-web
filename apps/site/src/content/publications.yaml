@@ -44,7 +44,7 @@
   researchArea:
     - "Heart"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Genetic determinants and genomic consequences of non-leukemogenic somatic point mutations"
   date: 2025-10-16
@@ -166,7 +166,7 @@
   researchArea:
     - "COVID-19"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Age-Related Changes in the Clinical Picture of Long COVID"
   date: 2025-09-01
@@ -245,7 +245,7 @@
   researchArea:
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Sequencing of 53,831 diverse genomes from the NHLBI TOPMed Program"
   date: 2021-02-10
@@ -267,7 +267,7 @@
   researchArea:
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Aberrant activation of TCL1A promotes stem cell expansion in clonal haematopoiesis"
   date: 2023-04-12
@@ -279,7 +279,7 @@
   researchArea:
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Accounting for population structure in genetic studies of cystic fibrosis"
   date: 2022-07-14
@@ -289,7 +289,7 @@
   researchArea:
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Opportunities and challenges for the use of common controls in sequencing studies"
   date: 2022-05-17
@@ -343,7 +343,7 @@
     - "Lung"
     - "COVID-19"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "A System for Phenotype Harmonization in the National Heart, Lung, and Blood Institute Trans-Omics for Precision Medicine (TOPMed) Program"
   date: 2021-04-16
@@ -355,7 +355,7 @@
   researchArea:
     - "Management"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "FAVOR: functional annotation of variants online resource and annotator for variation across the human genome"
   date: 2022-11-09
@@ -426,7 +426,7 @@
   researchArea:
     - "Technology"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "A Dynamic Framework for Semantic Grouping of Common Data Elements (CDE) Using Embeddings and Clustering"
   date: 2025-06-02
@@ -463,7 +463,7 @@
     - "Heart"
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Sparse Bernoulli mixture modeling with negative-unlabeled data: an approach to identify and characterize long COVID"
   date: 2025-03-12
@@ -485,7 +485,7 @@
   researchArea:
     - "Heart"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Recessive genetic contribution to congenital heart disease in 5,424 probands"
   date: 2025-03-03
@@ -495,7 +495,7 @@
   researchArea:
     - "Heart"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "The circulating renin-angiotensin system and mortality among patients hospitalized for COVID-19: a mechanistic substudy of the ACTIV-4 Host Tissue trials"
   date: 2025-02-27
@@ -508,7 +508,7 @@
     - "Lung"
     - "COVID-19"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Shock prediction with dipeptidyl peptidase-3 and renin (SPiDeR) in hypoxemic patients with COVID-19"
   date: 2024-11-14
@@ -518,7 +518,7 @@
   researchArea:
     - "COVID-19"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Whole-genome analysis of plasma fibrinogen reveals population-differentiated genetic regulators with putative liver roles"
   date: 2024-11-21
@@ -531,7 +531,7 @@
     - "Blood"
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Pre-pregnancy substance use and first trimester cardiovascular health among nulliparous pregnant people: The nuMoM2b Study"
   date: 2024-09-03
@@ -541,7 +541,7 @@
   researchArea:
     - "Heart"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Effect of sodium–glucose co-transporter-2 inhibitors on survival free of organ support in patients hospitalised for COVID-19 (ACTIV-4a): a pragmatic, multicentre, open-label, randomised, controlled, platform trial"
   date: 2024-09-06
@@ -552,7 +552,7 @@
     - "Heart"
     - "COVID-19"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Post–Acute Sequelae of Severe Acute Respiratory Syndrome Coronavirus 2 (SARS-CoV-2) After Infection During Pregnancy"
   date: 2024-09-01
@@ -576,7 +576,7 @@
     - "Technology"
     - "AI/ML"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "RECOVER-NEURO: study protocol for a multi-center, multi-arm, phase 2, randomized, active comparator trial evaluating three interventions for cognitive dysfunction in post-acute sequelae of SARS-CoV-2 infection (PASC)"
   date: 2024-05-17
@@ -600,7 +600,7 @@
   researchArea:
     - "COVID-19"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Researching COVID to enhance recovery (RECOVER) tissue pathology study protocol: Rationale, objectives, and design"
   date: 2024-01-10
@@ -622,7 +622,7 @@
   researchArea:
     - "COVID-19"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Survival After Invasive or Conservative Management of Stable Coronary Disease"
   date: 2022-11-06
@@ -632,7 +632,7 @@
   researchArea:
     - "Heart"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Whole genome sequence association analysis of brain structural volume measures in the NHLBI TOPMed Program highlights novel loci in diverse participants"
   date: 2025-06-13
@@ -666,7 +666,7 @@
   researchArea:
     - "Other"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Long COVID trajectories in the prospectively followed RECOVER-Adult US cohort"
   date: 2025-11-17
@@ -708,7 +708,7 @@
   researchArea:
     - "Heart"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Molecular Phenogroups in Heart Failure: Large-Scale Proteomics in a Population-Based Cohort"
   date: 2025-07-16
@@ -718,7 +718,7 @@
   researchArea:
     - "Heart"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Genetic Architecture and Analysis Practices of Circulating Metabolites in the NHLBI Trans-Omics for Precision Medicine (TOPMed) Program"
   date: 2025-11-06
@@ -809,7 +809,7 @@
   researchArea:
     - "Blood"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Centralized clinical research operations reporting for a multi-network, multi-study research program: The NHLBI COVID-19 CONNECTS experience"
   date: 2025-11-11
@@ -866,7 +866,7 @@
     - "Blood"
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Relationships among host genetics, gut microbiota, and asthma in US Hispanic/Latino adults"
   date: 2025-11-20
@@ -958,7 +958,7 @@
   researchArea:
     - "COVID-19"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Whole-genome sequencing uncovers two loci for coronary artery calcification and identifies ARSE as a regulator of vascular calcification"
   date: 2023-12-04
@@ -995,7 +995,7 @@
     - "Lung"
     - "COVID-19"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Type 1 diabetes genetic risk score variation across ancestries using whole genome sequencing and array-based approaches"
   date: 2024-12-28
@@ -1007,7 +1007,7 @@
   researchArea:
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Increased frequency of repeat expansion mutations across different populations"
   date: 2024-10-01
@@ -1165,7 +1165,7 @@
   researchArea:
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "Whole genome DNA and RNA sequencing of whole blood elucidates the genetic architecture of gene expression underlying a wide range of diseases"
   date: 2022-11-23
@@ -1176,7 +1176,7 @@
     - "Blood"
     - "Genomics"
   bdcContribution:
-    - "Data Deposition (Data Access and/or Storage)"
+    - "Data Deposition"
 -
   title: "The genetic determinants of recurrent somatic mutations in 43,693 blood genomes"
   date: 2023-04-26

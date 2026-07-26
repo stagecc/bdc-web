@@ -1,7 +1,9 @@
 ---
 import { getCollection } from 'astro:content';
-import PublicationsFilter from '@components/publications/PublicationsFilter';
-import SummaryCard from '@components/SummaryCard.astro';
+import Card from '@bdc/ui-astro/card/Card.astro';
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import Icon from '@components/Icon.astro';
+import PublicationsExplorer from '@components/publications/PublicationsExplorer.tsx';
 import Base from '@layouts/Base.astro';
 
 const publications = (await getCollection('publications')).map((pub) => ({
@@ -11,23 +13,32 @@ const publications = (await getCollection('publications')).map((pub) => ({
 ---
 
 <Base title="BDC-Enabled Research">
-  <section class="usa-section">
-    <div class="grid-container usa-prose--full-width">
-      <h1>BDC-Enabled Research</h1>
-      <div style="height: 200px">
-        <SummaryCard number={publications.length} qualifier="Total Publications" float="right">
-          <a href="/news/bdc-enabled-research/publication-submission">Submit a Publication →</a>
-        </SummaryCard>
-        <div class="usa-prose">
-          <p>
-            This page highlights publications that used BDC-hosted datasets, computational workspaces, tools, or other ecosystem resources in conducting their research.
-          </p>
-          <p>
-            Remember to include BDC's citation/acknowledgment in the manuscripts you submit to journals.
-          </p>
+  <Hero
+    eyebrow="Research"
+    title="BDC-Enabled Research"
+    description="Discover publications that used BDC-hosted datasets, computational workspaces, tools, or other ecosystem resources."
+    primaryCta={{ label: 'Submit a Publication', href: '/news/bdc-enabled-research/publication-submission' }}
+    secondaryCta={{ label: 'Browse Publications', href: '#publications' }}
+  >
+    <div slot="visual" class="width-full maxw-mobile">
+      <Card variant="panel" class="padding-3">
+        <div class="display-flex flex-align-center margin-bottom-1">
+          <Icon name="local_library" size={4} class="margin-right-1 text-primary" />
+          <p class="margin-0 text-bold">Total Publications</p>
         </div>
-      </div>
+        <p class="margin-y-0 font-heading-xl text-primary-dark">{publications.length}</p>
+      </Card>
     </div>
-    <PublicationsFilter client:visible publications={publications} />
+  </Hero>
+
+  <section class="usa-section">
+    <div class="grid-container usa-prose usa-prose--full-width padding-top-6 margin-top-neg-6" id="publications" data-scroll-offset="1200">
+      <p>
+        Remember to include BDC's citation and acknowledgment in manuscripts submitted to journals.
+      </p>
+    </div>
+    <div class="grid-container">
+      <PublicationsExplorer client:visible publications={publications} />
+    </div>
   </section>
 </Base>

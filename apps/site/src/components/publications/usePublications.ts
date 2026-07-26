@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 const PAGE_SIZE = 20;
 
@@ -26,13 +26,6 @@ export type Filters = {
   bdcContribution: string[];
 };
 
-const EMPTY_FILTERS: Filters = {
-  year: [],
-  researchCommunity: [],
-  researchArea: [],
-  bdcContribution: [],
-};
-
 const VALID_SORT_OPTIONS: SortOption[] = [
   'most-recent',
   'least-recent',
@@ -40,29 +33,72 @@ const VALID_SORT_OPTIONS: SortOption[] = [
   'title-za',
 ];
 
+const FILTER_KEYS: (keyof Filters)[] = [
+  'year',
+  'researchCommunity',
+  'researchArea',
+  'bdcContribution',
+];
+
+function createEmptyFilters(): Filters {
+  return {
+    year: [],
+    researchCommunity: [],
+    researchArea: [],
+    bdcContribution: [],
+  };
+}
+
+function isSortOption(value: string | null | undefined): value is SortOption {
+  return (
+    typeof value === 'string' &&
+    VALID_SORT_OPTIONS.includes(value as SortOption)
+  );
+}
+
+function getYear(dateValue: string) {
+  const date = new Date(dateValue);
+  return Number.isNaN(date.getTime()) ? null : String(date.getFullYear());
+}
+
+function matchesSearch(pub: Publication, term: string) {
+  const title = typeof pub.title === 'string' ? pub.title : '';
+  const journalName =
+    typeof pub.journalName === 'string' ? pub.journalName : '';
+  const url = typeof pub.url === 'string' ? pub.url : '';
+  const communities = Array.isArray(pub.researchCommunity)
+    ? pub.researchCommunity
+    : [];
+
+  return (
+    title.toLowerCase().includes(term) ||
+    journalName.toLowerCase().includes(term) ||
+    url.toLowerCase().includes(term) ||
+    communities.some(
+      (rc) => typeof rc === 'string' && rc.toLowerCase().includes(term),
+    )
+  );
+}
+
 function readParamsFromURL(): {
   search: string;
   filters: Filters;
   sort: SortOption;
 } {
   if (typeof window === 'undefined') {
-    return { search: '', filters: EMPTY_FILTERS, sort: 'most-recent' };
+    return { search: '', filters: createEmptyFilters(), sort: 'most-recent' };
   }
 
   const params = new URLSearchParams(window.location.search);
 
   const search = params.get('search') ?? '';
+  const rawSort = params.get('sort');
+  const sort = isSortOption(rawSort) ? rawSort : 'most-recent';
+  const filters = createEmptyFilters();
 
-  const sort = VALID_SORT_OPTIONS.includes(params.get('sort') as SortOption)
-    ? (params.get('sort') as SortOption)
-    : 'most-recent';
-
-  const filters: Filters = {
-    year: params.getAll('year'),
-    researchCommunity: params.getAll('researchCommunity'),
-    researchArea: params.getAll('researchArea'),
-    bdcContribution: params.getAll('bdcContribution'),
-  };
+  for (const key of FILTER_KEYS) {
+    filters[key] = params.getAll(key);
+  }
 
   return { search, filters, sort };
 }
@@ -92,12 +128,17 @@ function writeParamsToURL(search: string, filters: Filters, sort: SortOption) {
 }
 
 export function usePublications(publications: Publication[]) {
-  const initial = readParamsFromURL();
-
-  const [search, setSearch] = useState(initial.search);
-  const [filters, setFilters] = useState<Filters>(initial.filters);
-  const [sort, setSort] = useState<SortOption>(initial.sort);
+  const [search, setSearch] = useState('');
+  const [filters, setFilters] = useState<Filters>(createEmptyFilters());
+  const [sort, setSort] = useState<SortOption>('most-recent');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+
+  useEffect(() => {
+    const initial = readParamsFromURL();
+    setSearch(initial.search);
+    setFilters(initial.filters);
+    setSort(initial.sort);
+  }, []);
 
   const filtered = useMemo(() => {
     let result = publications;
@@ -127,13 +168,7 @@ export function usePublications(publications: Publication[]) {
 
     if (search.trim()) {
       const term = search.trim().toLowerCase();
-      result = result.filter(
-        (pub) =>
-          pub.title.toLowerCase().includes(term) ||
-          pub.journalName.toLowerCase().includes(term) ||
-          pub.url.toLowerCase().includes(term) ||
-          pub.researchCommunity?.some((rc) => rc.toLowerCase().includes(term)),
-      );
+      result = result.filter((pub) => matchesSearch(pub, term));
     }
 
     result = [...result].sort((a, b) => {
@@ -163,6 +198,8 @@ export function usePublications(publications: Publication[]) {
   }
 
   function toggleFilter(key: keyof Filters, value: string) {
+    if (!FILTER_KEYS.includes(key)) return;
+
     setFilters((prev) => {
       const current = prev[key];
       const next = current.includes(value)
@@ -176,15 +213,17 @@ export function usePublications(publications: Publication[]) {
   }
 
   function clearFilters() {
-    setFilters(EMPTY_FILTERS);
-    writeParamsToURL(search, EMPTY_FILTERS, sort);
+    const nextFilters = createEmptyFilters();
+    setFilters(nextFilters);
+    writeParamsToURL(search, nextFilters, sort);
     setVisibleCount(PAGE_SIZE);
   }
 
   function clearAll() {
-    setFilters(EMPTY_FILTERS);
+    const nextFilters = createEmptyFilters();
+    setFilters(nextFilters);
     setSearch('');
-    writeParamsToURL('', EMPTY_FILTERS, sort);
+    writeParamsToURL('', nextFilters, sort);
     setVisibleCount(PAGE_SIZE);
   }
 
@@ -194,7 +233,9 @@ export function usePublications(publications: Publication[]) {
     setVisibleCount(PAGE_SIZE);
   }
 
-  function updateSort(option: SortOption) {
+  function updateSort(option: string) {
+    if (!isSortOption(option)) return;
+
     setSort(option);
     writeParamsToURL(search, filters, option);
     setVisibleCount(PAGE_SIZE);
@@ -207,8 +248,8 @@ export function usePublications(publications: Publication[]) {
     const bdcContributions = new Map<string, number>();
 
     for (const pub of publications) {
-      const year = String(new Date(pub.date).getFullYear());
-      if (!years.has(year)) years.set(year, 0);
+      const year = getYear(pub.date);
+      if (year && !years.has(year)) years.set(year, 0);
       for (const rc of pub.researchCommunity ?? []) {
         if (!researchCommunities.has(rc)) researchCommunities.set(rc, 0);
       }
@@ -223,13 +264,7 @@ export function usePublications(publications: Publication[]) {
     const applySearch = (pubs: Publication[]) => {
       if (!search.trim()) return pubs;
       const term = search.trim().toLowerCase();
-      return pubs.filter(
-        (pub) =>
-          pub.title.toLowerCase().includes(term) ||
-          pub.journalName.toLowerCase().includes(term) ||
-          pub.url.toLowerCase().includes(term) ||
-          pub.researchCommunity?.some((rc) => rc.toLowerCase().includes(term)),
-      );
+      return pubs.filter((pub) => matchesSearch(pub, term));
     };
 
     const forYearCounts = applySearch(
@@ -252,8 +287,8 @@ export function usePublications(publications: Publication[]) {
     );
 
     for (const pub of forYearCounts) {
-      const year = String(new Date(pub.date).getFullYear());
-      years.set(year, (years.get(year) ?? 0) + 1);
+      const year = getYear(pub.date);
+      if (year) years.set(year, (years.get(year) ?? 0) + 1);
     }
 
     const forCommunityCounts = applySearch(
@@ -331,13 +366,19 @@ export function usePublications(publications: Publication[]) {
       [...years.entries()].sort((a, b) => Number(b[0]) - Number(a[0])),
     );
     const sortedCommunities = new Map(
-      [...researchCommunities.entries()].sort((a, b) => b[1] - a[1]),
+      [...researchCommunities.entries()].sort((a, b) =>
+        a[0].localeCompare(b[0], undefined, { sensitivity: 'base' }),
+      ),
     );
     const sortedAreas = new Map(
-      [...researchAreas.entries()].sort((a, b) => b[1] - a[1]),
+      [...researchAreas.entries()].sort((a, b) =>
+        a[0].localeCompare(b[0], undefined, { sensitivity: 'base' }),
+      ),
     );
     const sortedOrgs = new Map(
-      [...bdcContributions.entries()].sort((a, b) => b[1] - a[1]),
+      [...bdcContributions.entries()].sort((a, b) =>
+        a[0].localeCompare(b[0], undefined, { sensitivity: 'base' }),
+      ),
     );
 
     return {
