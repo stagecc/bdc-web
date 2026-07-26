@@ -23,7 +23,7 @@ When building UI components, follow this order:
 
 - Native HTML + USWDS classes
 - Astro component
-- React USWDS component (`@trussworks/react-uswds`)
+- React wrapper from `@bdc/ui-react` (which may use `@trussworks/react-uswds` internally)
 - Custom React component
 
 Styling follows the same priority: USWDS utility classes first, scoped custom CSS only when utilities cannot express the design.
@@ -78,6 +78,7 @@ Avoid `client:load` unless justified.
 - Using collections for static pages
 - Global overrides of USWDS
 - Building custom React components when USWDS already provides one
+- Importing `@trussworks/react-uswds` directly in app code instead of via `@bdc/ui-react`
 
 ---
 

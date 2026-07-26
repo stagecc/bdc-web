@@ -1,73 +1,90 @@
 import type { CollectionEntry } from 'astro:content';
-import { Icon } from '@trussworks/react-uswds';
+import Card from '@bdc/ui-react/card/Card';
+import Icon from '@bdc/ui-react/icon/Icon';
+import Link from '@bdc/ui-react/link/Link';
+import TagPill from '@bdc/ui-react/tag/TagPill';
+import type { ComponentProps } from 'react';
+import { publicationTagGroups } from './publicationTagGroups';
 
 type Props = {
   pub: CollectionEntry<'publications'>['data'] & { date: string };
 };
 
-export default function PublicationCard({ pub }: Props) {
-  const formattedDate = new Date(pub.date).toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-  });
+type TagTone = NonNullable<ComponentProps<typeof TagPill>['tone']>;
 
-  const metaRows = [
-    pub.researchCommunity?.length
-      ? { label: 'Research Community', values: pub.researchCommunity }
-      : null,
-    pub.researchArea?.length
-      ? { label: 'Research Area', values: pub.researchArea }
-      : null,
-    pub.bdcContribution?.length
-      ? { label: 'BDC Contribution', values: pub.bdcContribution }
-      : null,
-  ].filter(Boolean) as { label: string; values: string[] }[];
+type TagGroup = {
+  label: string;
+  values: string[];
+  tone: TagTone;
+};
+
+export default function PublicationCard({ pub }: Props) {
+  if (!pub) return null;
+
+  const publicationDate = new Date(pub.date);
+  const formattedDate = Number.isNaN(publicationDate.getTime())
+    ? 'Date unavailable'
+    : publicationDate.toLocaleDateString('en-US', {
+        month: 'long',
+        day: 'numeric',
+        year: 'numeric',
+      });
+
+  const tagGroups = publicationTagGroups
+    .map((group) => {
+      const values = pub[group.key];
+      return values?.length ? { ...group, values } : null;
+    })
+    .filter((group): group is TagGroup => group !== null);
 
   return (
-    <li className="usa-collection__item maxw-full margin-y-3">
-      <div className="usa-collection__body">
-        <h4 className="usa-collection__heading">
-          <a
-            href={pub.url}
-            className="usa-link usa-link--external"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            {pub.title}
-          </a>
-        </h4>
-        <ul className="usa-collection__meta margin-y-1">
-          <li className="usa-collection__meta-item text-bold">
-            <Icon.CalendarToday aria-hidden size={3} />
-            <time dateTime={pub.date}>{formattedDate}</time>
-          </li>
-          <li className="usa-collection__meta-item text-bold">
-            <Icon.LocalLibrary aria-hidden size={3} />
-            {pub.journalName}
-          </li>
-        </ul>
-        {pub.status && (
-          <div className="margin-top-1">
-            <span className="usa-tag padding-x-2 padding-y-05 font-body-2xs">
-              {pub.status}
-            </span>
-          </div>
-        )}
-        {metaRows.length > 0 && (
-          <p className="margin-top-1 margin-bottom-0 font-body-xs line-height-body-5">
-            {metaRows.map((row, i) => (
-              <span key={row.label}>
-                <span className="text-base-dark">{row.label}: </span>
-                <span className="text-base">{row.values.join(' · ')}</span>
-                {i < metaRows.length - 1 && (
-                  <span className="text-base-light margin-x-1">|</span>
-                )}
-              </span>
-            ))}
-          </p>
-        )}
+    <Card
+      as="article"
+      variant="panel"
+      className="margin-y-2 tablet:margin-0 tablet:margin-bottom-2"
+    >
+      <h3 className="font-heading-md margin-top-0 margin-bottom-1">
+        <Link to={pub.url} className="usa-link--external">
+          {pub.title}
+        </Link>
+      </h3>
+
+      <div className="font-body-2xs text-base-dark display-block tablet:display-flex tablet:flex-justify margin-bottom-1">
+        <div className="display-flex flex-align-center">
+          <Icon.Public aria-hidden />
+          <span className="margin-left-05 text-italic">{pub.journalName}</span>
+        </div>
+
+        <div className="display-flex flex-align-center margin-top-05 tablet:margin-top-0">
+          <Icon.CalendarToday aria-hidden />
+          <time className="margin-left-05" dateTime={pub.date}>
+            {formattedDate}
+          </time>
+          {pub.status && (
+            <>
+              <span className="margin-x-1">•</span>
+              <span>{pub.status}</span>
+            </>
+          )}
+        </div>
       </div>
-    </li>
+
+      {tagGroups.length > 0 && (
+        <div className="margin-0 display-flex flex-wrap flex-align-start margin-left-neg-1">
+          {tagGroups.map((group) => (
+            <span key={group.label}>
+              {group.values.map((value) => (
+                <TagPill
+                  key={`${group.label},${value}`}
+                  label={value}
+                  tone={group.tone}
+                  className="margin-left-1"
+                />
+              ))}
+            </span>
+          ))}
+        </div>
+      )}
+    </Card>
   );
 }

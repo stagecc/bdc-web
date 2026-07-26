@@ -50,6 +50,13 @@ src/components/
 
 ```
 
+Dependency boundary:
+
+- App code should import React UI primitives from `@bdc/ui-react`, not directly from `@trussworks/react-uswds`.
+- `@bdc/ui-react` should provide thin wrappers over Trussworks components where available.
+- If a needed primitive does not exist yet, add it to `@bdc/ui-react` first, then use it in app code.
+- This boundary allows swapping the underlying USWDS React library later with minimal app-level changes.
+
 ---
 
 ## Component Decision Tree
@@ -66,7 +73,7 @@ Does USWDS provide static HTML?
 
 Does `@trussworks/react-uswds` provide it?
 
-- Yes → Use it
+- Yes → Add/use a thin wrapper in `@bdc/ui-react`, then consume that wrapper in app code
 - No → Build custom React component
 
 ---

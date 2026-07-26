@@ -1,7 +1,7 @@
 ---
 import Card from '@bdc/ui-astro/card/Card.astro';
-import Link from '@components/link/Link.astro';
 import TagCapsule from '@bdc/ui-astro/tag/TagCapsule.astro';
+import Link from '@components/link/Link.astro';
 
 interface Props {
   kind: 'latest' | 'news' | 'event';
@@ -13,7 +13,15 @@ interface Props {
   lead?: boolean;
 }
 
-const { kind, meta, title, href, linkLabel, summary, lead = false } = Astro.props;
+const {
+  kind,
+  meta,
+  title,
+  href,
+  linkLabel,
+  summary,
+  lead = false,
+} = Astro.props;
 
 const badgeByKind = {
   latest: 'Latest',

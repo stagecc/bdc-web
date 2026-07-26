@@ -1,0 +1,26 @@
+{
+  "name": "@bdc/ui-react",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared React UI components for BDC apps",
+  "files": [
+    "src"
+  ],
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "dependencies": {
+    "@trussworks/react-uswds": "^11.0.0"
+  },
+  "exports": {
+    "./button/Button": "./src/button/Button.tsx",
+    "./card/Card": "./src/card/Card.tsx",
+    "./icon/Icon": "./src/icon/Icon.tsx",
+    "./link/Link": "./src/link/Link.tsx",
+    "./tag/RemovableTagPill": "./src/tag/RemovableTagPill.tsx",
+    "./tag/TagPill": "./src/tag/TagPill.tsx",
+    "./tooltip/InfoTooltip": "./src/tooltip/InfoTooltip.tsx",
+    "./tooltip/Tooltip": "./src/tooltip/Tooltip.tsx"
+  }
+}

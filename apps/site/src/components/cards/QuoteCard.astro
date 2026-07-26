@@ -9,7 +9,13 @@ interface Props {
   border?: boolean;
 }
 
-const { quote, person, affiliation, tone = 'secondary', border = false } = Astro.props;
+const {
+  quote,
+  person,
+  affiliation,
+  tone = 'secondary',
+  border = false,
+} = Astro.props;
 
 const toneClasses = {
   secondary: 'border-secondary',
