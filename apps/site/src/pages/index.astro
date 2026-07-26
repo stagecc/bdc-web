@@ -1,19 +1,19 @@
 ---
 import { getCollection } from 'astro:content';
-import Button from '@components/Button.astro';
-import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
-import HappeningCard from '@components/cards/HappeningCard.astro';
-import CardCta from '@bdc/ui-astro/card/CardCta.astro';
 import CardCopy from '@bdc/ui-astro/card/CardCopy.astro';
+import CardCta from '@bdc/ui-astro/card/CardCta.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
-import QuoteCard from '@components/cards/QuoteCard.astro';
-import ProcessSteps from '@components/home/ProcessSteps.astro';
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
 import TwoColumnSection from '@bdc/ui-astro/layout/TwoColumnSection.astro';
-import YouTubeEmbed from '@components/YouTubeEmbed.astro';
-import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import Button from '@components/Button.astro';
+import HappeningCard from '@components/cards/HappeningCard.astro';
+import QuoteCard from '@components/cards/QuoteCard.astro';
+import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
+import ProcessSteps from '@components/home/ProcessSteps.astro';
 import Icon from '@components/Icon.astro';
 import Link from '@components/link/Link.astro';
+import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
 import Base from '@layouts/Base.astro';
 import { slugify } from '../util/slugify';
@@ -37,9 +37,13 @@ const events = (
 const publications = (await getCollection('publications')).sort(
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
-const featuredPublications = publications.slice(0, 2).map((publication) => publication.data);
+const featuredPublications = publications
+  .slice(0, 2)
+  .map((publication) => publication.data);
 
-const featuredCommunities = programs.sort(() => 0.5 - Math.random()).slice(0, 4);
+const featuredCommunities = programs
+  .sort(() => 0.5 - Math.random())
+  .slice(0, 4);
 
 const quickActions = [
   {
@@ -93,7 +97,11 @@ const testimonials = [
   },
 ];
 
-const testimonialTones: Array<'secondary' | 'cool' | 'warm'> = ['secondary', 'cool', 'warm'];
+const testimonialTones: Array<'secondary' | 'cool' | 'warm'> = [
+  'secondary',
+  'cool',
+  'warm',
+];
 
 const lifecycleSteps = [
   {

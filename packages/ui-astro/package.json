@@ -23,6 +23,8 @@
     "./layout/TwoColumnSection.astro": "./src/layout/TwoColumnSection.astro",
     "./link/Link.astro": "./src/link/Link.astro",
     "./tag/TagCapsule.astro": "./src/tag/TagCapsule.astro",
-    "./tag/TagPill.astro": "./src/tag/TagPill.astro"
+    "./tag/TagPill.astro": "./src/tag/TagPill.astro",
+    "./tooltip/InfoTooltip.astro": "./src/tooltip/InfoTooltip.astro",
+    "./tooltip/Tooltip.astro": "./src/tooltip/Tooltip.astro"
   }
 }

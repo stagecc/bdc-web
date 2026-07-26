@@ -4,7 +4,16 @@ import Button from '../button/Button.astro';
 interface HeroCta {
   label: string;
   href: string;
-  variant?: 'default' | 'secondary' | 'accent-cool' | 'accent-warm' | 'base' | 'outline' | 'outline-inverse' | 'inverse' | 'unstyled';
+  variant?:
+    | 'default'
+    | 'secondary'
+    | 'accent-cool'
+    | 'accent-warm'
+    | 'base'
+    | 'outline'
+    | 'outline-inverse'
+    | 'inverse'
+    | 'unstyled';
 }
 
 interface Props {

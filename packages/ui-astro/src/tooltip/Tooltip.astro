@@ -1,0 +1,11 @@
+---
+interface Props {
+  text: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  class?: string;
+}
+
+const { text, position = 'top', class: className } = Astro.props;
+---
+
+<span class={className} title={text} data-position={position} aria-label={text} tabindex="0"><slot /></span>
