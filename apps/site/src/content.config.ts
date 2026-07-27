@@ -48,7 +48,6 @@ const events = defineCollection({
       location: z.string().optional(),
       url: z.string().optional(),
       eventType: z.string().optional(),
-      forum_post: z.string().optional(),
       meeting_info: z.record(z.string(), z.string()).optional(),
       registration_required: z.boolean().optional(),
       flyer: z.string().optional(),
