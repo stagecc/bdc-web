@@ -39,9 +39,9 @@ const { items } = Astro.props;
         <CalendarDate date={date} endDate={end_date} />
 
         <div class="usa-collection__body">
-          <div class="display-flex flex-row flex-align-start">
+          <div class="grid-row">
 
-            <div class="flex-shrink-0 margin-right-1" style="width: 24px;">
+            <div class="grid-col-1 text-center">
               {!externalEvent && (
                 <img
                   src={bdcLogo.src}
@@ -53,7 +53,7 @@ const { items } = Astro.props;
               )}
             </div>
 
-            <div class="display-flex minw-none">
+            <div class="grid-col-11 display-flex flex-column">
 
               <div class="display-flex flex-align-center margin-bottom-05">
                 <h4 class="usa-collection__heading margin-0">
