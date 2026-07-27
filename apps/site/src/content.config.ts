@@ -209,6 +209,22 @@ const eep = defineCollection({
     }),
 });
 
+const fellows = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/fellows' }),
+  schema: ({ image }) =>
+    z.object({
+      name: z.string(),
+      university: z.string(),
+      photo: image(),
+      cohort: z.string(),
+      bio: z.string(),
+      project: z.object({
+        title: z.string(),
+        abstract: z.string(),
+      }),
+    }),
+});
+
 export const collections = {
   news,
   events,
@@ -218,4 +234,5 @@ export const collections = {
   programs,
   eep,
   banners,
+  fellows,
 };

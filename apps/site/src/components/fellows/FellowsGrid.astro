@@ -1,0 +1,19 @@
+---
+import { getCollection } from 'astro:content';
+import { FellowsGrid as FellowsGridReact } from './FellowsGrid';
+
+const fellowEntries = await getCollection('fellows');
+
+const fellows = await Promise.all(
+  fellowEntries.map(async (entry) => ({
+    name: entry.data.name,
+    university: entry.data.university,
+    cohort: entry.data.cohort,
+    bio: entry.data.bio,
+    project: entry.data.project,
+    photo: entry.data.photo.src,
+  })),
+);
+---
+
+<FellowsGridReact fellows={fellows} client:only="react" />
