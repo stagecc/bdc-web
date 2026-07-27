@@ -33,8 +33,8 @@ const toneClasses = {
   ]}
   border={border}
 >
-  <span class="card-quote__mark" aria-hidden="true">&ldquo;</span>
-  <p class="margin-top-0 margin-bottom-3 flex-1 line-height-sans-5 font-sans-sm text-base-dark text-italic">{quote}</p>
+  <span class="card-quote__mark position-absolute top-0 right-0" aria-hidden="true">&rdquo;</span>
+  <p class="margin-top-0 margin-bottom-4 flex-1 line-height-sans-5 font-sans-sm text-base-dark text-italic">{quote}</p>
   <strong class="display-block font-sans-sm text-primary-darker">{person}</strong>
   <span class="font-sans-2xs text-base">{affiliation}</span>
 </Card>
@@ -58,11 +58,8 @@ const toneClasses = {
   .card-quote__mark {
     font-family: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
     font-size: 10rem;
-    left: 0;
     line-height: 1;
     pointer-events: none;
-    position: absolute;
-    top: -0.5rem;
   }
 
   .card-quote.border-secondary .card-quote__mark {

@@ -136,10 +136,11 @@ export default function PublicationsExplorer({ publications }: Props) {
                     <Button
                       type="button"
                       unstyled
-                      className="usa-button usa-button--unstyled"
+                      size="big"
+                      className="usa-button usa-button--unstyled text-no-underline hover:text-no-underline"
                       onClick={() => setIsMobileDrawerOpen(false)}
                     >
-                      Close
+                      &times;
                     </Button>
                   </div>
                 </div>

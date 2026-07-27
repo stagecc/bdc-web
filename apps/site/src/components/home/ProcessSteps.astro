@@ -1,45 +1,84 @@
 ---
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
+
 interface Step {
   number: string;
+  icon?: string;
   title: string;
   description?: string;
+  action: {
+    label: string;
+    path: string;
+  };
 }
 
 interface Props {
   steps: Step[];
+  tone?: 'dark' | 'muted';
 }
 
-const { steps } = Astro.props;
+const { steps, tone = 'dark' } = Astro.props;
+const iconTone = tone === 'muted' ? 'secondary' : 'cool';
+const toneClasses = {
+  dark: {
+    item: 'bg-primary-dark border-left-05',
+    title: 'text-base-lightest',
+    description: 'text-base-lightest',
+    link: 'text-base-lightest hover:text-white',
+    segment: 'bg-primary',
+    segmentActive: 'bg-info-lighter',
+  },
+  muted: {
+    item: 'bg-white border-left-05 shadow-1',
+    title: 'text-primary-darker',
+    description: 'text-base-dark',
+    link: 'text-primary hover:text-primary-dark',
+    segment: 'bg-base-lighter',
+    segmentActive: 'bg-primary',
+  },
+} as const;
+
+const accentBorderClasses = [
+  'border-primary',
+  'border-secondary',
+  'border-accent-cool',
+  'border-accent-warm',
+];
 ---
 
-<ol class="process-steps">
+<ol class="process-steps add-list-reset margin-y-3 padding-0">
   {steps.map((step, index) => (
-    <li class="process-steps__item padding-2 radius-lg display-flex flex-column">
-      <div class="display-flex">
-        {[...Array(index).keys()].map(i => (
-          <div class="process-steps__number--prev flex-1 text-uppercase text-bold text-ls-2 font-sans-2xs margin-0 radius-md display-inline-flex flex-align-center flex-justify-center padding-y-05 padding-x-2">
-            {steps[i].number}
-          </div>
-        ))}
-        <div class="process-steps__number flex-1 text-uppercase text-bold text-ls-2 font-sans-2xs margin-0 radius-md display-inline-flex flex-align-center flex-justify-center padding-y-05 padding-x-2">
-          {step.number}
-        </div>
-        {[...Array(steps.length - index - 1).keys()].map(() => (
-          <div class="process-steps__number flex-1 text-uppercase text-ls-2 margin-0 radius-md padding-y-05 padding-x-2"></div>
-        ))}
+    <li
+      class:list={[
+        'process-steps__item padding-2 radius-lg display-flex flex-column',
+        toneClasses[tone].item,
+        accentBorderClasses[index % accentBorderClasses.length],
+      ]}
+    >
+      <div class="display-flex flex-align-center margin-top-1 margin-bottom-2">
+        {step.icon && (
+          <IconBadge icon={step.icon} tone={iconTone} class="margin-right-1" />
+        )}
+        <h3 class:list={['font-heading-md margin-0', toneClasses[tone].title]}>{step.title}</h3>
       </div>
 
-      <div class="process-steps__progress margin-y-1" aria-hidden="true" style={`--process-step-count: ${steps.length};`}>
+      {step.description && <p class:list={['margin-0 flex-1 line-height-sans-5', toneClasses[tone].description]}>{step.description}</p>}
+
+      <Link to={step.action.path} class:list={['text-bold text-center margin-y-2', toneClasses[tone].link]}>
+        {step.action.label} &raquo;
+      </Link>
+
+      <div class="process-steps__progress margin-top-2" aria-hidden="true" style={`--process-step-count: ${steps.length};`}>
         {steps.map((_, segmentIndex) => (
           <span
-            class:list={["process-steps__segment", "radius-pill", segmentIndex <= index && "process-steps__segment--active"]}
+            class:list={[
+              'process-steps__segment radius-pill',
+              segmentIndex <= index ? toneClasses[tone].segmentActive : toneClasses[tone].segment,
+            ]}
           ></span>
         ))}
       </div>
-
-      <h3 class="font-heading-md margin-y-1">{step.title}</h3>
-
-      {step.description && <p class="process-steps__description margin-0 flex-1 line-height-sans-5">{step.description}</p>}
     </li>
   ))}
 </ol>
@@ -48,52 +87,14 @@ const { steps } = Astro.props;
   .process-steps {
     display: grid;
     gap: 0.95rem;
-    list-style: none;
-    margin: 1.5rem 0;
-    padding: 0;
   }
 
   .process-steps__item {
-    background: rgb(255 255 255 / 10%);
-    border: 1px solid rgb(255 255 255 / 24%);
-    border-left: 4px solid rgb(147 209 255 / 72%);
-    position: relative;
-    transition: transform 180ms ease, background-color 180ms ease;
-  }
-
-  .process-steps__item:nth-child(2) {
-    border-left-color: rgb(175 198 255 / 78%);
-  }
-
-  .process-steps__item:nth-child(3) {
-    border-left-color: rgb(142 227 230 / 78%);
-  }
-
-  .process-steps__item:nth-child(4) {
-    border-left-color: rgb(167 235 192 / 78%);
+    transition: transform 180ms ease;
   }
 
   .process-steps__item:hover {
-    background: rgb(255 255 255 / 15%);
     transform: translateY(-2px);
-  }
-
-  .process-steps__number {
-    color: rgb(234 245 255 / 96%);
-    min-width: 3rem;
-  }
-
-  .process-steps__number--prev {
-    color: rgb(234 245 255 / 10%);
-  }
-
-  .process-steps h3 {
-    color: #fff;
-    line-height: 1.25;
-  }
-
-  .process-steps__description {
-    color: rgb(255 255 255 / 88%);
   }
 
   .process-steps__progress {
@@ -103,12 +104,7 @@ const { steps } = Astro.props;
   }
 
   .process-steps__segment {
-    background: rgb(255 255 255 / 16%);
     height: 0.28rem;
-  }
-
-  .process-steps__segment--active {
-    background: linear-gradient(90deg, rgb(157 220 255 / 90%) 0%, rgb(193 236 255 / 100%) 100%);
   }
 
   @media (min-width: 40em) {
