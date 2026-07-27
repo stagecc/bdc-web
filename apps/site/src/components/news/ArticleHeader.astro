@@ -1,7 +1,8 @@
 ---
 const { title, date, updateType, tags = [] } = Astro.props;
 
-import TagLink from '@components/link/TagLink.astro';
+import Link from '@components/link/Link.astro';
+import TagPill from '@bdc/ui-astro/tag/TagPill.astro';
 ---
 
 <header class="article__header">
@@ -12,7 +13,7 @@ import TagLink from '@components/link/TagLink.astro';
 
   <h1>{title}</h1>
   <div class="display-flex flex-align-center">
-    <time datetime={date.toISOString()} class="meta-text">
+    <time datetime={date.toISOString()} class="text-base-dark">
       Published on {date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
     </time>
   </div>
@@ -21,14 +22,12 @@ import TagLink from '@components/link/TagLink.astro';
     
     {tags.length > 0 && (
       <div class="tags display-flex padding-0 margin-y-1">
-        {tags.map(tag => <TagLink tag={tag} />)}
+        {tags.map((tag) => (
+          <Link to={`/tagged/${tag}`} class="margin-right-05 margin-bottom-05 text-no-underline">
+            <TagPill label={tag} tone="neutral" />
+          </Link>
+        ))}
       </div>
     )}
   </div>
 </header>
-
-<style>
-  .meta-text {
-    color: #666;
-  }
-</style>

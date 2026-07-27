@@ -1,5 +1,6 @@
 ---
 import Card from './Card.astro';
+import Link from '../link/Link.astro';
 
 interface Props {
   eyebrow: string;
@@ -31,6 +32,6 @@ const Heading = headingTag;
   </Heading>
   <div class="display-flex flex-justify">
     <p class="margin-y-0 text-base line-height-sans-5">{description}</p>
-    <a class="usa-link text-bold" href={href}>{linkLabel}</a>
+    <Link class="usa-link text-bold" to={href}>{linkLabel}</Link>
   </div>
 </Card>
