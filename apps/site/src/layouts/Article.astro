@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import EmailSignup from '@components/EmailSignup.astro';
+import Link from '@components/link/Link.astro';
 import ArticleHeader from '@components/news/ArticleHeader.astro';
 import Base from '@layouts/Base.astro';
 
@@ -72,20 +73,20 @@ const updateTypeCardText = {
         <nav aria-label="More news articles" class="margin-top-10">
           <div class="display-flex flex-justify grid-row">
             {olderPost && (
-              <a href={`/news/latest-updates/${olderPost.id}/`} rel="prev" class="grid-col-4">
+              <Link to={`/news/latest-updates/${olderPost.id}/`} rel="prev" class="grid-col-4">
                 ← PREVIOUS
                 <span class="usa-collection__meta-item">
                   {olderPost.data.title}
                 </span>
-              </a>
+              </Link>
             )}
             {newerPost && (
-              <a href={`/news/latest-updates/${newerPost.id}/`} rel="next" class="grid-col-4 text-right">
+              <Link to={`/news/latest-updates/${newerPost.id}/`} rel="next" class="grid-col-4 text-right">
                 NEXT →
                 <span class="usa-collection__meta-item">
                   {newerPost.data.title}
                 </span>
-              </a>
+              </Link>
             )}
           </div>
         </nav>

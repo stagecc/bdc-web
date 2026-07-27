@@ -23,6 +23,7 @@ export default function Card<T extends ElementType = 'article'>({
     'card',
     `card--${variant}`,
     'bg-white radius-lg',
+    'width-full',
     border && 'border border-base-lighter',
     variant === 'dataset' && 'overflow-hidden',
     ['feature', 'panel', 'testimonial', 'overview'].includes(variant) &&

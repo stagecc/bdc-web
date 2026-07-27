@@ -1,60 +1,48 @@
 ---
-import TagLink from '@components/link/TagLink.astro';
+import Link from '@components/link/Link.astro';
+import TagPill from '@bdc/ui-astro/tag/TagPill.astro';
+import Card from '@bdc/ui-astro/card/Card.astro';
 
 const { items } = Astro.props;
 ---
 <ul class="usa-list usa-list--unstyled">
-  {items.map(post => (
-    <li class="usa-collection__item">
-      <div class="usa-collection__body">
-        <span class="usa-tag">
-          {post.data.updateType}
-        </span>
-        <h4 class="usa-collection__heading">
-          <a href={`/news/latest-updates/${post.id}/`} class="usa-link">
+  {items.map((post) => (
+    <li>
+      <Card class="display-flex flex-column flex-align-start height-full margin-bottom-2">
+        <TagPill label={post.data.updateType} tone="neutral" />
+        <h3 class="margin-y-1 font-heading-md">
+          <Link to={`/news/latest-updates/${post.id}/`}>
             {post.data.title}
-          </a>
-        </h4>
+          </Link>
+        </h3>
 
-        <ul class="usa-collection__meta display-flex flex-align-center">
-          {/* date */}
-          <li class="usa-collection__meta-item margin-right-0">
-            <time datetime={post.data.date.toISOString()}>
-              {post.data.date.toLocaleDateString('en-US', {
-                month: 'long',
-                day: 'numeric',
-                year: 'numeric'
-              })}
-            </time>
-          </li>
-        </ul>
+        <time datetime={post.data.date.toISOString()} class="display-block font-sans-2xs text-base-dark margin-bottom-1">
+          {post.data.date.toLocaleDateString('en-US', {
+            month: 'long',
+            day: 'numeric',
+            year: 'numeric'
+          })}
+        </time>
 
-        <p class="usa-collection__description">{post.data.excerpt}</p>
-        
-        {/* tags */}
-        <ul class="usa-collection__meta">
-          {
-            post.data.tags.length > 0 && (
-            <li class="usa-collection__meta-item">
-              <div class="display-flex flex-wrap flex-align-center">
-                <span class="margin-right-05">
-                  Topics:
-                </span>
-                {post.data.tags.map(tag => (
-                  <TagLink tag={tag} />
-                ))}
-              </div>
-            </li>
-          )}
+        <p class="margin-top-0 margin-bottom-1">{post.data.excerpt}</p>
 
-        </ul>
+        {post.data.tags.length > 0 && (
+          <div class="display-flex flex-wrap flex-align-center margin-bottom-1">
+            <span class="margin-right-05 font-sans-2xs text-base-dark">Topics:</span>
+            {post.data.tags.map((tag) => (
+              <Link to={`/tagged/${tag}`} class="margin-right-05 margin-bottom-05 text-no-underline">
+                <TagPill label={tag} tone="warm" />
+              </Link>
+            ))}
+          </div>
+        )}
 
-        <p>
-          <a href={`/news/latest-updates/${post.id}/`}>
-            → Read Update
-          </a>
+        <p class="margin-top-auto margin-bottom-0 width-full text-right">
+          <Link to={`/news/latest-updates/${post.id}/`}>
+            Read Article
+          </Link>
         </p>
-      </div>
+      </Card>
     </li>
   ))}
 </ul>
