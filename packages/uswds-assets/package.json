@@ -1,0 +1,14 @@
+{
+  "name": "@bdc/uswds-assets",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Shared USWDS asset sync tooling for BDC apps",
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "bin": {
+    "bdc-uswds-assets-sync": "./src/cli.mjs"
+  }
+}

@@ -12,6 +12,18 @@ USWDS is compiled **only** in `src/styles/global.scss`. This file:
 
 This file is imported in the root layout (`src/layouts/Base.astro`), making USWDS styles available globally.
 
+## USWDS static assets
+
+USWDS CSS expects runtime assets under `/img` and `/fonts`. In this app, those files are synced into `public/` from shared tooling in `@bdc/uswds-assets`.
+
+- Sync command: `npm run sync:uswds-assets`
+- Automatically runs before `dev`, `build`, and `preview` via `pre*` scripts
+- Source of truth for what gets synced: `packages/uswds-assets/src/presets/site.mjs`
+- Canonical favicon source: `packages/uswds-assets/src/assets/favicon.svg`
+- Legacy `public/img/favicons` files are pruned during sync; `astro-favicons` generates favicon outputs in the build output (`dist/`)
+
+When adding new font weights/styles or USWDS image assets, update the shared preset, then rerun the sync command.
+
 ## Why compile only once?
 
 USWDS outputs a large CSS bundle. Importing it in multiple files would duplicate that output, increasing bundle size and causing specificity conflicts. A single compilation point ensures consistent, predictable styling.
