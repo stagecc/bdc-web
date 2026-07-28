@@ -1,5 +1,5 @@
 ---
-const { date, endDate } = Astro.props;
+const { date, endDate, class: className } = Astro.props;
 
 const startMonth = date
   .toLocaleString('en-US', { month: 'short' })
@@ -23,7 +23,7 @@ const sameMonth =
   date.getFullYear() === endDate.getFullYear();
 ---
 
-<div class="usa-collection__calendar-date">
+<div class:list={["usa-collection__calendar-date", className]}>
 
   {endDate ? (
 

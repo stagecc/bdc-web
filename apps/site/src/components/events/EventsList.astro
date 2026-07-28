@@ -1,22 +1,22 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import Button from '@components/Button.astro';
+import Card from '@bdc/ui-astro/card/Card.astro';
+import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
+import TagPill from '@bdc/ui-astro/tag/TagPill.astro';
+import BdcHostedIndicator from '@components/events/BdcHostedIndicator.astro';
 import CalendarDate from '@components/events/CalendarDate.astro';
-import Icon from '@components/Icon.astro';
-import TagLink from '@components/link/TagLink.astro';
-import bdcLogo from '../../../public/favicon.svg';
 
 interface Props {
-  items: {
-    event: CollectionEntry<'events'>;
-  }[];
+  items: (CollectionEntry<'events'> | { event: CollectionEntry<'events'> })[];
 }
 
 const { items } = Astro.props;
 ---
 
-<ul class="usa-collection">
-  {items.map(({ event }) => {
+<ul class="add-list-reset margin-0 padding-0">
+  {items.map((item) => {
+    const event = 'event' in item ? item.event : item;
     const {
       title,
       date,
@@ -34,97 +34,83 @@ const { items } = Astro.props;
     const isPast = (end_date ?? date) < new Date();
 
     return (
-      <li class="usa-collection__item maxw-none">
-
-        <CalendarDate date={date} endDate={end_date} />
-
-        <div class="usa-collection__body">
-          <div class="grid-row">
-
-            <div class="grid-col-1 text-center">
-              {!externalEvent && (
-                <img
-                  src={bdcLogo.src}
-                  alt="bdc-hosted event"
-                  width="24"
-                  height="24"
-                  class="radius-pill border-1px border-base-lighter"
-                />
-              )}
+      <li class="margin-bottom-2">
+        <Card variant="panel">
+          <div class="grid-row grid-gap-1 tablet:grid-gap-2">
+            <div class="tablet:grid-col-auto">
+              <CalendarDate date={date} endDate={end_date} />
             </div>
+            <div class="tablet:grid-col-fill display-flex flex-column">
+              <div class="display-flex flex-wrap flex-align-center flex-justify margin-bottom-1">
+                <div class="font-sans-xs text-bold text-base">
+                  {date.toLocaleDateString('en-US', {
+                    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+                  })}
+                  {end_date && ` - ${end_date.toLocaleDateString('en-US', {
+                    weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
+                  })}`}
+                </div>
+                <div class="display-flex flex-align-center">
+                  {eventType && <TagPill label={eventType} tone="neutral" class="text-normal margin-left-1" />}
+                  {!externalEvent && (
+                    <BdcHostedIndicator decorative class="margin-left-1" />
+                  )}
+                </div>
+              </div>
 
-            <div class="grid-col-11 display-flex flex-column">
-
-              <div class="display-flex flex-align-center margin-bottom-05">
-                <h4 class="usa-collection__heading margin-0">
-                  <a href={`/news/events/${event.id}/`} class="usa-link">
+              <div class="display-flex flex-wrap flex-align-center gap-1 margin-bottom-1">
+                <h3 class="font-heading-sm tablet:font-heading-md line-height-heading-2 margin-0">
+                  <Link to={`/news/events/${event.id}/`} class="text-no-underline hover:text-underline">
                     {title}
-                  </a>
-                </h4>
-                {eventType && (
-                  <span class="usa-tag margin-left-3">{eventType}</span>
+                  </Link>
+                </h3>
+              </div>
+
+
+              <div>
+                {time && (
+                  <p class="display-flex flex-align-center margin-0 font-sans-xs text-base-dark maxw-full">
+                    <Icon name="schedule" size={2} class="margin-right-05" />
+                    {time}
+                  </p>
+                )}
+                {location && (
+                  <p class="display-flex flex-align-center margin-0 font-sans-xs text-base-dark maxw-full">
+                    <Icon name="location_on" size={2} class="margin-right-05" />
+                    {location}
+                  </p>
                 )}
               </div>
 
-              <ul class="usa-collection__meta">
-
-                <li class="usa-collection__meta-item display-flex flex-align-center">
-                  <Icon name="calendar_today" size={3}/>
-                  <span class="margin-left-1">
-                    {date.toLocaleDateString('en-US', {
-                      weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
-                    })}
-                    {end_date && ` – ${end_date.toLocaleDateString('en-US', {
-                      weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
-                    })}`}
-                    {time && <> &middot; {time}</>}
-                  </span>
-                </li>
-
-                {location && (
-                  <li class="usa-collection__meta-item display-flex flex-align-center">
-                    <Icon name="location_on" size={3}/>
-                    <span class="margin-left-1">{location}</span>
-                  </li>
-                )}
-
-                {tags?.length > 0 && (
-                  <li class="usa-collection__meta-item">
-                    <div class="display-flex flex-wrap">
-                      {tags.map((tag: string) => (
-                        <span class="margin-right-05">
-                          <TagLink tag={tag} />
-                        </span>
-                      ))}
-                    </div>
-                  </li>
-                )}
-
-              </ul>
-
               {excerpt && (
-                <p class="font-sans-xs margin-top-1 margin-bottom-1">
+                <p class="font-sans-sm text-base-dark line-height-sans-5 margin-top-1 margin-bottom-1">
                   {excerpt}
                 </p>
               )}
 
-              <div class="display-flex margin-top-2 flex-wrap">
-                {url && (!isPast || !registration_required) && (
-                  <span class="margin-right-1">
-                    <Button href={url} variant="default">
-                      {registration_required ? 'Register Now' : 'Event website'}
-                    </Button>
-                  </span>
+              <div class="display-flex margin-top-2 flex-wrap flex-align-center gap-1">
+                {tags?.length > 0 && (
+                  <div class="display-flex flex-wrap gap-05 margin-right-1">
+                    {tags.map((tag: string) => (
+                      <Link to={`/tagged/${tag}`} class="text-no-underline hover:text-no-underline">
+                        <TagPill label={tag} tone="cool" />
+                      </Link>
+                    ))}
+                  </div>
                 )}
-                <Button href={`/news/events/${event.id}/`} variant="outline">
-                  View Details
-                </Button>
               </div>
 
+              <div class="display-flex flex-justify margin-top-2 flex-wrap gap-2 flex-align-center">
+                {url && (!isPast || !registration_required) && (
+                  <Link to={url} class="text-bold">
+                    {registration_required ? 'Register now' : 'Event website'}
+                  </Link>
+                )}
+                <Link to={`/news/events/${event.id}/`} class="text-bold">View details &raquo;</Link>
+              </div>
             </div>
           </div>
-        </div>
-
+        </Card>
       </li>
 
     );

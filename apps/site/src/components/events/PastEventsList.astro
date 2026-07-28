@@ -1,7 +1,11 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import Icon from '@components/Icon.astro';
-import bdcLogo from '../../../public/favicon.svg';
+import Card from '@bdc/ui-astro/card/Card.astro';
+import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
+import TagPill from '@bdc/ui-astro/tag/TagPill.astro';
+import BdcHostedIndicator from '@components/events/BdcHostedIndicator.astro';
+import CalendarDate from '@components/events/CalendarDate.astro';
 
 interface Props {
   items: CollectionEntry<'events'>[];
@@ -31,92 +35,84 @@ const years = Object.keys(byYear)
 ---
 
 {years.map((year) => (
-  <section class="">
+  <section class="margin-top-4">
+    <h2 class="font-heading-lg margin-bottom-2">{year}</h2>
 
-    <h2 class="font-heading-lg margin-bottom-1">{year}</h2>
-
-    <ul class="usa-list usa-list--unstyled">
+    <ul class="add-list-reset margin-0 padding-0">
       {byYear[year].map((event) => {
         const { title, date, externalEvent, materials, time, eventType } = event.data;
         
         return (
-          <li class="usa-collection__item maxw-none margin-bottom-2 border-base-lightest">
-
-            <div class="usa-collection__body">
-              <div class="display-flex flex-row flex-align-start">
-
-                <div class="flex-shrink-0 width-5">
-                  {!externalEvent && (
-                    <img
-                      src={bdcLogo.src}
-                      alt="org-hosted event"
-                      width="24"
-                      height="24"
-                      class="radius-pill border-1px border-base-lighter"
-                    />
-                  )}
+          <li class="margin-bottom-2">
+            <Card variant="panel">
+              <div class="grid-row grid-gap-1 tablet:grid-gap-2">
+                <div class="tablet:grid-col-auto">
+                  <CalendarDate date={date} class="margin-top-0" />
                 </div>
 
-                {/* Right column */}
-                <div style="flex: 1; min-width: 0;">
-                  <div class="display-flex flex-align-center">
-
-                    <p class="font-sans-xs text-base-dark margin-0">
+                <div class="tablet:grid-col-fill">
+                  <div class="display-flex flex-wrap flex-align-center flex-justify margin-bottom-1">
+                    <div class="font-sans-xs text-bold text-base margin-0">
                       {date.toLocaleDateString('en-US', {
-                        month: 'long', day: 'numeric', year: 'numeric'
+                        month: 'long', day: 'numeric', year: 'numeric',
                       })}
                       {time && <> &middot; {time}</>}
-                    </p>
-
-                    {
-                      eventType && (
-                        <span class="usa-tag margin-left-3">{eventType}</span>
-                      )
-                    }
+                    </div>
+                    <div class="display-flex flex-align-center">
+                      {eventType && (
+                        <TagPill label={eventType} tone="neutral" />
+                      )}
+                      {!externalEvent && (
+                        <BdcHostedIndicator decorative class="margin-left-1" />
+                      )}
+                    </div>
                   </div>
 
-                  <h4 class="usa-collection__heading margin-top-05">
-                    <a href={`/news/events/${event.id}/`} class="usa-link">
-                      {title}
-                    </a>
-                  </h4>
+                  <div class="display-flex flex-wrap flex-align-center gap-1 margin-bottom-1">
+                    <h3 class="font-heading-sm tablet:font-heading-md line-height-heading-2 margin-0">
+                      <Link to={`/news/events/${event.id}/`} class="text-no-underline hover:text-underline">
+                        {title}
+                      </Link>
+                    </h3>
+                  </div>
 
-
-                    {materials && materials.length > 0 && (
-                      <div class="display-flex gap-5 flex-wrap margin-top-1">
-                      {
-                        materials.map(
-                        (material: { 
-                          type: string; 
-                          url: string; 
-                          label: string }) => (
-                        <a
-                          href={material.url}
-                          class="usa-link display-flex flex-align-center font-sans-xs margin-right-2"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <Icon
-                            name={materialIcons[material.type] ?? 'link'}
-                            size={3}
-                            aria-hidden="true"
-                          />
-                          <span class="margin-left-05">{material.label}</span>
-                        </a>
-                      ))}
-                    </div>
-                  )}
+                  <div class="display-flex flex-justify margin-top-2 flex-wrap gap-2 flex-align-center">
+                    {(materials && materials.length > 0) ? (
+                      <div class="display-flex flex-wrap gap-1 margin-top-1">
+                        {
+                          materials.map(
+                            (material: {
+                              type: string;
+                              url: string;
+                              label: string;
+                            }) => (
+                              <a
+                                href={material.url}
+                                class="usa-link display-flex flex-align-center font-sans-xs"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                              >
+                                <Icon
+                                  name={materialIcons[material.type] ?? 'link'}
+                                  size={3}
+                                  aria-hidden="true"
+                                />
+                                <span class="margin-left-05">{material.label}</span>
+                              </a>
+                            ),
+                          )
+                        }
+                      </div>
+                    ) : <span />}
+                    <Link to={`/news/events/${event.id}/`} class="text-bold">View details &raquo;</Link>
+                  </div>
 
                 </div>
               </div>
-            </div>
-
+            </Card>
           </li>
         );
       })}
     </ul>
-
-    <hr class="margin-top-5 border-base-light" />
-
   </section>
 ))}

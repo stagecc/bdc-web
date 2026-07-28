@@ -1,11 +1,12 @@
 ---
 import { Image } from 'astro:assets';
+import Card from '@bdc/ui-astro/card/Card.astro';
+import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import AddToCalendar from '@components/events/AddToCalendar.astro';
 import EventHeader from '@components/events/EventHeader.astro';
-import Icon from '@components/Icon.astro';
 import InlineAlert from '@components/InlineAlert.astro';
-import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 
 const { frontmatter } = Astro.props;
@@ -29,6 +30,7 @@ const {
   registration_required,
   eventType,
   tags,
+  externalEvent,
   heroImage,
   heroAlt,
   materials,
@@ -66,49 +68,50 @@ const isPast = eventEnd < now;
           tags={tags}
           registration_required={registration_required}
           eventType={eventType}
+          externalEvent={externalEvent}
           isPast={isPast}
         />
 
-        <AddToCalendar
-          title={title}
-          date={date}
-          endDate={end_date}
-          location={location}
-        />
+        {!isPast && (
+          <p class="margin-top-0 margin-bottom-2">
+            <AddToCalendar
+              title={title}
+              date={date}
+              endDate={end_date}
+              location={location}
+            />
+          </p>
+        )}
 
         {heroImage && (
           <Image
             src={heroImage}
             alt={heroAlt || ''}
-            class="event__hero"
+            class="width-full height-auto margin-y-2 radius-md"
           />
         )}
 
         {materials && materials.length > 0 && (
-          <div class="margin-top-1">
-            <InlineAlert variant="info">
-              <strong>Event Materials</strong>
-              <ul class="usa-list usa-list--unstyled font-body-3xs">
-              {materials.map((material: { type: string; url: string; label: string }) => (
-                <li class="usa-collection__meta-item">
-                  <Link to={material.url}>
+          <div class="margin-top-2">
+            <Card variant="panel">
+              <h2 class="font-heading-sm margin-top-0 margin-bottom-1">Event Materials</h2>
+              <div class="display-flex flex-wrap gap-1">
+                {materials.map((material: { type: string; url: string; label: string }) => (
+                  <Link to={material.url} class="display-inline-flex flex-align-center font-sans-xs">
                     <Icon
                       name={materialIcons[material.type] ?? 'link'}
                       aria-hidden="true"
-                    /> {material.label}
+                      class="margin-right-05"
+                    />
+                    {material.label}
                   </Link>
-
-                </li>
-
-              ))}
-                
-              </ul>
-
-            </InlineAlert>
+                ))}
+              </div>
+            </Card>
           </div>
         )}
 
-        <div class="event__content">
+        <div class="line-height-sans-5 margin-top-3">
           <slot />
         </div>
 
@@ -117,18 +120,3 @@ const isPast = eventEnd < now;
   </section>
 
 </Base>
-
-<style>
-  .event__content {
-    line-height: 1.5;
-    margin-top: 2rem;
-  }
-
-  .event__hero {
-    width: 100%;
-    height: auto;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
-    border-radius: 4px;
-  }
-</style>
