@@ -20,7 +20,8 @@ const news = (await getCollection('news'))
   .slice(0, 2);
 const events = (await getCollection('events'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
-  .slice(0, 2);
+  .slice(0, 2)
+  .map((event) => ({ event, excerpt: null }));
 
 // find latest publication
 const publications = (await getCollection('publications')).sort(
