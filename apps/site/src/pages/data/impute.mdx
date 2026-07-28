@@ -1,0 +1,97 @@
+---
+title: Impute Genotypes with the TOPMed Imputation Server
+layout: ../../layouts/Page.astro
+---
+import Button from '@components/Button.astro'
+
+<span class="usa-intro">
+  Use the TOPMed reference panel to perform quality control, phasing, and genotype imputation for your own GWAS genotype data.
+</span>
+
+<Button>Open the TOPMed Imputation Server</Button> <Button variant="outline">View technical documentation</Button>
+
+The TOPMed Imputation Server is a specialized BDC-supported service powered by software invented and developed by the [University of Michigan](https://imputationserver.sph.umich.edu/index.html#!) and driven by data provided by the investigators of the [TOPMed Program](https://nhlbiwgs.org/).
+
+## What is genotype imputation?
+
+Genotype imputation is a statistical method used in genetic association studies to infer genetic variants that were not directly measured in a study’s samples. It works by comparing short segments of an individual’s genome with previously characterized genomes in a reference panel.
+
+Imputation can expand an array-genotyped dataset from hundreds of thousands of directly measured variants to tens of millions of high-confidence variants. This additional information can increase statistical power, support meta-analysis across studies, and help researchers interpret association signals.
+
+The TOPMed Imputation Server allows registered users to perform genotype imputation for samples they provide.
+
+## Why use the TOPMed Imputation Server?
+
+* **Large and diverse reference panel**  
+  Use the TOPMed reference panel to improve the coverage and accuracy of genotype imputation across diverse study populations.  
+* **Automated validation and quality control**  
+  Uploaded files are validated before processing, and variants that do not meet quality-control requirements are identified and filtered.  
+* **Integrated phasing and imputation**  
+  The server can phase unphased genotype data and perform imputation through an automated workflow using established tools and methods.  
+* **Secure, no-cost service**  
+  Researchers can register and use the service without cost. Uploaded files and completed results are protected through access controls and encryption.
+
+## How it works
+
+1. **Prepare and upload genotype files**  
+   Prepare phased or unphased GWAS genotype data that meet the server’s file and quality requirements, then upload the files through the secure service.  
+2. **Configure the imputation job**  
+   Select the appropriate genome build, phasing option, quality settings, and other job parameters.  
+3. **Run quality control, phasing, and imputation**  
+   The server validates the uploaded files, performs quality control, phases the data when needed, and runs genotype imputation.  
+4. **Download encrypted results**  
+   When the job is complete, the server sends an email notification. Results are compressed and encrypted, and a one-time password is provided separately. Completed-job data must be downloaded within seven days.
+
+## Before you begin
+
+* Registration and email verification are required.  
+* Users submit genotype data from their own study samples.  
+* Files must meet the format and quality requirements described in the technical documentation.  
+* The server currently supports hg19 and hg38 input data.  
+* The TOPMed reference panel uses hg38 coordinates; hg19 positions are converted during processing.  
+* Phased and unphased genotype files are supported.  
+* Completed results are available for seven calendar days and cannot be recovered after deletion.
+
+[**→ Review the data-preparation requirements**](/)
+
+## Security and privacy
+
+Uploaded data and results are protected through access controls and encryption. Users can retrieve only results associated with their own accounts.
+
+Following successful imputation, results are compressed and encrypted. The decryption password is sent by email and is not stored by the server. All uploaded data and completed-job results are automatically deleted after seven days. 
+
+[**→ Read the data-security documentation**]()
+
+## Learn more
+
+**Getting started**  
+Review registration, job setup, available options, and instructions for submitting your first imputation job.  
+[→ View the getting-started guide]()
+
+**Prepare your data**  
+Review supported file formats, genome builds, naming conventions, quality requirements, and common preparation issues.  
+[→ View data-preparation guidance](/)
+
+**Reference panel information**  
+Learn more about the TOPMed reference panel and the options currently available through the server.  
+[→ Review reference-panel documentation](/)
+
+**Citation guidance**  
+Researchers using the TOPMed Imputation Server should review and follow the citation requirements for the TOPMed study, the Imputation Server, and the imputation software.  
+[→ Review citation guidance](/)
+
+<div class="usa-card margin-top-4">
+  <div class="usa-card__container">
+    <div class="usa-card__body">
+      ## **Ready to run an imputation job?**
+
+      Register or sign in to upload genotype files and begin an imputation job.
+
+      [**→ Open the TOPMed Imputation Server**](/)
+
+      Need technical help preparing files or configuring a job?
+
+      [**→ View the TOPMed Imputation Server documentation**](/)
+    </div>
+  </div>
+</div>
