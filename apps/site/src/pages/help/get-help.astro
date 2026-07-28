@@ -1,0 +1,50 @@
+---
+import DynamicForm from '@components/forms/DynamicForm.tsx';
+import Link from '@components/link/Link.astro';
+import Base from '@layouts/Base.astro';
+import { getFormFields } from '../../util/freshdesk/getFormFields';
+import type { FreshdeskField } from '../../util/freshdesk/types';
+
+let fields: FreshdeskField[] = [];
+let formError = false;
+
+try {
+  fields = await getFormFields(import.meta.env.FRESHDESK_FORM_GET_HELP);
+} catch (e) {
+  console.error('Failed to fetch get help form fields:', e);
+  formError = true;
+}
+
+---
+
+<Base title="Get Help" enableRecaptcha>
+  <section class="usa-section">
+    <div class="grid-container">
+
+    <h1>Get Help</h1>
+    <p class="usa-intro">
+      Use this form to report technical issues, access problems, platform errors, suspected bugs, or other blockers affecting your use of BDC.
+    </p>
+    <p>
+      Generally helpful to include in the description of your problem, if applicable: 
+    </p>
+    <ul>
+      <li>Include the platform or service you were using.</li>
+      <li>Describe what you expected to happen and what occurred instead.</li>
+      <li>Include the exact error message, if available.</li>
+      <li>Do not include controlled data, participant information, credentials, or other sensitive information.</li>
+    </ul>
+    <h2>Get Help Form</h2>
+
+              <DynamicForm
+            fields={fields}
+            formType="Contact & Support"
+            submitUrl={import.meta.env.FRESHDESK_PROXY_URL}
+            recaptchaSiteKey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
+            error={formError}
+            client:load
+          />
+
+    </div>
+  </section>
+</Base>
