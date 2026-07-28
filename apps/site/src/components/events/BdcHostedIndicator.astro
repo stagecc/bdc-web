@@ -1,0 +1,26 @@
+---
+import bdcLogo from '../../../public/favicon.svg';
+
+interface Props {
+  size?: 20 | 24;
+  class?: string;
+  decorative?: boolean;
+  alt?: string;
+}
+
+const {
+  size = 24,
+  class: className,
+  decorative = false,
+  alt = 'BDC-hosted event',
+} = Astro.props;
+---
+
+<img
+  src={bdcLogo.src}
+  alt={decorative ? '' : alt}
+  aria-hidden={decorative ? 'true' : undefined}
+  width={size}
+  height={size}
+  class:list={['radius-md border-1px border-base-lighter', className]}
+/>

@@ -1,9 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
+import CardCta from '@bdc/ui-astro/card/CardCta.astro';
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
+import BdcHostedIndicator from '@components/events/BdcHostedIndicator.astro';
 import PastEventsList from '@components/events/PastEventsList.astro';
 import InlineAlert from '@components/InlineAlert.astro';
 import Base from '@layouts/Base.astro';
-import orgLogo from '../../../../public/favicon.svg';
 
 const now = new Date();
 
@@ -13,26 +16,30 @@ const past = (await getCollection('events'))
 ---
 
 <Base title="Past Events">
+  <Hero
+    eyebrow="News"
+    title="Past Events"
+    description="Browse archived events from the BDC ecosystem, including links to recordings, slides, and additional resources when available."
+    primaryCta={{ label: 'View Upcoming Events', href: '/news/events' }}
+    secondaryCta={{ label: 'View Latest Updates', href: '/news/latest-updates' }}
+  >
+    <div slot="visual" class="width-full maxw-mobile-lg">
+      <CardCta
+        icon="event"
+        title="Explore the archive"
+        text={`${past.length} past event${past.length === 1 ? '' : 's'} available.`}
+        href="#past-events"
+        cta="Browse archive"
+      />
+    </div>
+  </Hero>
 
-  <section class="usa-section margin-x-auto maxw-tablet-lg">
+  <section id="past-events" class="usa-section margin-x-auto padding-top-4">
     <div class="grid-container">
-      <p>
-        <a href="/news/events">← Upcoming events</a>
+      <p class="usa-prose">Events denoted with
+        <BdcHostedIndicator decorative size={20} class="text-baseline" />
+        were hosted by BDC.
       </p>
-
-      <h1>Past Events</h1>
-      <p class="usa-prose">
-        Browse past events supported by the BDC ecosystem. Archived events may include recordings, slides, and additional resources when available. 
-      </p>
-      <p class="usa-prose">Items denoted with a 
-          <img
-          src={orgLogo.src}
-          alt="org-hosted event"
-          width="24"
-          height="24"
-          class="radius-pill margin-x-05 border-1px border-base-lighter"
-        />{" "}indicate events hosted by BDC.
-        </p>
       <InlineAlert variant="info">
         Don't see the event you're looking for? Check back soon as more materials are added.
       </InlineAlert>
