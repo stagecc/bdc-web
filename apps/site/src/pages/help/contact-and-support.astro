@@ -1,40 +1,6 @@
 ---
-/**
- * Contact & Support
- *
- * Converted from MDX (Page.astro) to Astro (Base.astro) to support
- * build-time fetching of Freshdesk form field config. MDX frontmatter
- * does not support async data fetching — the form requires getFormFields
- * to run at build time in the Astro frontmatter block.
- *
- * Page structure:
- *   - DynamicForm (React island) — Contact/Support form via Freshdesk
- *   - Static help links — FAQs, knowledge base, documentation, forum, etc.
- *
- * The form may use dynamic sections depending on how the Freshdesk form
- * is configured — this is handled automatically by DynamicForm and renderField.
- *
- * Environment variables required:
- *   FRESHDESK_FORM_CONTACT_SUPPORT — Freshdesk form ID
- *   FRESHDESK_PROXY_URL            — Lambda proxy endpoint
- *   PUBLIC_RECAPTCHA_SITE_KEY      — reCAPTCHA v3 site key
- */
-
-import DynamicForm from '@components/forms/DynamicForm.tsx';
 import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
-import { getFormFields } from '../../util/freshdesk/getFormFields';
-import type { FreshdeskField } from '../../util/freshdesk/types';
-
-let fields: FreshdeskField[] = [];
-let formError = false;
-
-try {
-  fields = await getFormFields(import.meta.env.FRESHDESK_FORM_CONTACT_SUPPORT);
-} catch (e) {
-  console.error('Failed to fetch contact/support form fields:', e);
-  formError = true;
-}
 ---
 
 <Base title="Contact & Support" enableRecaptcha>
@@ -44,56 +10,58 @@ try {
         <div class="grid-col-12">
 
           <h1>Contact & Support</h1>
-
+          
           <p class="usa-intro">
-            Use the form below to contact us, and a representative will reply
-            as soon as possible (usually within two business days).
+            Find technical help, documentation, live support, or the right contact 
+            for your question.
           </p>
 
           <p class="usa-hint margin-bottom-3">
-            Do not include personally identifiable information or personal health
-            information in the form. If access to such information is needed to
-            resolve your request, send that information securely through external
-            means such as U.S. mail.
+            Not sure where to start? Use <strong>Get Help</strong> for problems using BDC. Use <strong>Contact BDC</strong> for general questions, partnerships, and collaboration inquiries.
           </p>
-
-          <DynamicForm
-            fields={fields}
-            formType="Contact & Support"
-            submitUrl={import.meta.env.FRESHDESK_PROXY_URL}
-            recaptchaSiteKey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
-            error={formError}
-            client:load
-          />
-
-          {/* ---------------------------------------------------------------------------
-              Additional help resources — static content below the form
-          --------------------------------------------------------------------------- */}
 
           <div class="usa-prose margin-top-6">
 
-            <h2>User FAQs</h2>
-            <Link to="/help/faqs">Read answers to common questions</Link>
+            <h2>Get Help</h2>
 
-            <h2>Knowledge Base</h2>
-            <Link to="https://org.freshdesk.com/support/solutions">
-              Search informational articles
+            <p>
+              Report an access problem, error, platform issue, suspected bug, or other blocker affecting your use of BDC.
+            </p>
+
+            <Link to="/help/get-help">Get Help →</Link>
+
+            <h2>Contact BDC</h2>
+            <p>
+              Contact the BDC team about partnerships, collaborations, communications, or other general inquiries that are not technical-support requests
+            </p>
+            <Link to="/help/contact-bdc">
+              Contact BDC →
             </Link>
 
-            <h2>Documentation</h2>
+            <h2>Find Answers</h2>
+            <p>
+              Browse documentation and tutorials to learn how to work in BDC.
+            </p>
             <Link to="/help/documentation">
-              Read the release notes and get more instructions
+              Go to BDC documentation →
             </Link>
 
-            <h2>Forum</h2>
-            <Link to="https://org.freshdesk.com/support/discussions">
-              Interact with the community or find answers
-            </Link>
 
-            <h2>YouTube</h2>
-            <Link to="https://www.youtube.com/channel/[id]">
-              Watch demos, webinars, and more
-            </Link>
+
+            <h2>Join Office Hours</h2>
+            <p>
+              Bring questions to a live drop-in session with BDC-Seven Bridges for everything from getting started to workflow integration to cost estimation. 
+            </p>
+            <h3>BDC-Seven Bridges Office Hours</h3>
+            <ul>
+              <li>Tuesdays, 10:00 - 11:00 am ET</li>
+              <li>Thursdays, 2:00 - 3:00 pm ET</li>
+            </ul>
+            
+            <p>
+              Session are held over Google Meet using the following link: <Link to="https://meet.google.com/kbs-ojnj-dcg ">https://meet.google.com/kbs-ojnj-dcg</Link>
+            </p>
+
 
           </div>
 
