@@ -1,5 +1,7 @@
 ---
 import DynamicCustomObjectForm from '@components/forms/DynamicCustomObjectForm.tsx';
+import Icon from '@components/Icon.astro';
+import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 import { getCustomObjectSchema } from '../../util/freshdesk/getCustomObjectSchema';
 import type { CustomObjectField } from '../../util/freshdesk/typesCustomObjects';
@@ -17,19 +19,30 @@ try {
   console.error('Failed to fetch publication submission form config:', e);
   formError = true;
 }
-
 ---
 
 <Base title="Contact BDC" enableRecaptcha>
   <section class="usa-section">
     <div class="grid-container">
 
-    <h1>Contact BDC</h1>
-    <p class="usa-intro">
-      Use this form for general inquiries, partnerships, collaborations, outreach, and other questions that are not technical-support requests.
-    </p>
+      <h1>Contact BDC</h1>
+      <p class="usa-intro">
+        Use this form for general inquiries, partnerships, collaborations, outreach, and other questions that are not technical-support requests.
+      </p>
 
-    <h2>Contact BDC Form</h2>
+      <div class="usa-card">
+        <div class="usa-card__container">
+          <div class="usa-card__body">
+            <Icon name="help_outline" size={4}/>
+            <p>
+              Need help with an error, data access, account issue, or platform problem?
+            </p>
+            <Link to="/help/get-help">Get Help instead→</Link>
+          </div>
+        </div>
+      </div>
+
+      <h2>Contact BDC Form</h2>
       <DynamicCustomObjectForm
         fields={fields}
         schemaId={schemaId}
