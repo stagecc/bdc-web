@@ -1,0 +1,20 @@
+---
+import DugSearchApp from '@components/dug/DugSearchApp';
+import Base from '@layouts/Base.astro';
+---
+
+<Base title="Disease, Phenotype, Biological Process, or Anatomical Entity Search">
+  <section class="usa-section">
+    <div class="grid-container usa-prose usa-prose--full-width">
+      <h1>Disease, Phenotype, Biological Process, or Anatomical Entity Search</h1>
+      <p>
+        Search BDC-hosted concepts and review related studies and variables using
+        Dug semantic search.
+      </p>
+
+      <br />
+      
+      <DugSearchApp client:load />
+    </div>
+  </section>
+</Base>
