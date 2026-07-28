@@ -2,8 +2,8 @@
 node_modules
 dist
 .astro
-.env
-.env.*
+**/.env
+**/.env.*
 test-results
 
 # apps/freshdesk
