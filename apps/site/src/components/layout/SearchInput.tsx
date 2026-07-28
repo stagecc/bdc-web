@@ -6,7 +6,10 @@ export function SearchInput() {
     const formData = new FormData(e.currentTarget);
     const query = formData.get('search');
     if (query) {
-      window.location.href = `/search?q=${encodeURIComponent(query.toString())}`;
+      window.open(
+        `/data/explore/dug?q=${encodeURIComponent(query.toString())}`,
+        '_self',
+      );
     }
   };
 

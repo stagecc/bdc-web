@@ -12,6 +12,7 @@ import Button from '@components/Button.astro';
 import HappeningCard from '@components/cards/HappeningCard.astro';
 import QuoteCard from '@components/cards/QuoteCard.astro';
 import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
+import DugSearchBar from '@components/dug/DugSearchBar';
 import ProcessSteps from '@components/home/ProcessSteps.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
@@ -146,21 +147,14 @@ const nextEvent = events[0];
       description="Search BDC-hosted data by disease, phenotype, biological process, or anatomical entity."
       action={{ label: 'View All Ways to Explore Data', href: '/data/explore' }}
     >
-      <div class="home-discover-search usa-search usa-search--big display-flex width-full">
-        <form class="usa-search__form display-flex width-full shadow-2" role="search" action="/search" method="get">
-          <label class="usa-sr-only" for="home-discover-search">Search BDC data</label>
-          <input
-            class="usa-input usa-search__input flex-1"
-            id="home-discover-search"
-            type="search"
-            name="q"
-            placeholder="Search BDC data"
-          />
-          <button class="usa-button usa-button--big usa-search__submit-button flex-shrink-0" type="submit">
-            <span class="usa-search__submit-text">Search BDC data</span>
-          </button>
-        </form>
-      </div>
+      <DugSearchBar
+        id="home-discover-search"
+        placeholder="Search BDC data"
+        submitLabel="Search"
+        action="/data/explore/dug"
+        method="get"
+        className="home-discover-search display-flex width-full shadow-2"
+      />
     </PageSection>
 
     <PageSection

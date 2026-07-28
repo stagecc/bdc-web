@@ -48,3 +48,19 @@ Components are hydrated in Astro pages with `client:load` or other hydration dir
 - **Do not** add Sass `@use 'uswds'` anywhere except `global.scss`.
 - **Do not** create path aliases for USWDS packages.
 - **Do not** use the legacy `@import` syntax in any Sass file.
+
+## GTM setup
+
+Dug search interactions push analytics events to `window.dataLayer`.
+To route those events to GA4, configure Google Tag Manager and set:
+
+- `PUBLIC_GTM_ID=GTM-XXXXXXX`
+
+in `apps/site/.env` (or your deployment environment variables).
+
+When `PUBLIC_GTM_ID` is present, the root layout (`src/layouts/Base.astro`) injects:
+
+- GTM bootstrap script in `<head>`
+- GTM `<noscript>` iframe in `<body>`
+
+If `PUBLIC_GTM_ID` is missing, no GTM scripts are loaded.

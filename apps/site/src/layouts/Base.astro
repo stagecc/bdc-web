@@ -18,6 +18,8 @@ const isHomePage = Astro.url.pathname === '/';
 const displayTitle = title.includes('BioData Catalyst')
   ? title
   : `${title} | BioData Catalyst`;
+const gtmId = import.meta.env.PUBLIC_GTM_ID;
+const hasGtm = typeof gtmId === 'string' && gtmId.length > 0;
 ---
 
 <!doctype html>
@@ -28,6 +30,15 @@ const displayTitle = title.includes('BioData Catalyst')
     <title>{displayTitle}</title>
     <link rel="sitemap" href="/sitemap-index.xml" />
     <ClientRouter />
+    {hasGtm && (
+      <script is:inline>
+        {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${gtmId}');`}
+      </script>
+    )}
     {enableRecaptcha && (
       <script
         src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
@@ -47,6 +58,17 @@ const displayTitle = title.includes('BioData Catalyst')
     </style>
   </head>
   <body data-pagefind-ignore>
+    {hasGtm && (
+      <noscript>
+        <iframe
+          src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
+          height="0"
+          width="0"
+          style="display:none;visibility:hidden"
+          title="Google Tag Manager"
+        />
+      </noscript>
+    )}
     <a class="usa-skipnav" href="#main-content">Skip to main content</a>
     <SiteAlertList isHomePage={isHomePage} />
     <SiteHeader client:only="react" transition:persist />

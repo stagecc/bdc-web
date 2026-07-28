@@ -1,0 +1,47 @@
+@use 'uswds-core' as *;
+
+.filtersBackdrop {
+  display: none;
+}
+
+.filtersPanel {
+  position: relative;
+  z-index: 20;
+}
+
+.modalPanel {
+  width: min(66rem, 100%);
+  max-height: min(80vh, 55rem);
+  overflow: auto;
+}
+
+.collectionSticky {
+  top: calc(#{units(15)} - #{units(1)});
+}
+
+@include at-media-max('desktop') {
+  .filtersBackdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(color($theme-color-base-darkest), 0.55);
+    border: 0;
+    padding: 0;
+  }
+
+  .filtersPanel {
+    position: fixed;
+    left: units(1);
+    right: units(1);
+    bottom: units(1);
+    z-index: 41;
+    max-height: 65vh;
+    overflow: auto;
+    box-shadow: 0 units(2) units(4) rgba(color($theme-color-base-darkest), 0.35);
+  }
+
+  .modalPanel {
+    max-height: 88vh;
+  }
+}
