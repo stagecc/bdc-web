@@ -1,7 +1,8 @@
 ---
-import Button from '@components/Button.astro';
-import Icon from '@components/Icon.astro';
-import TagLink from '@components/link/TagLink.astro';
+import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
+import TagPill from '@bdc/ui-astro/tag/TagPill.astro';
+import BdcHostedIndicator from '@components/events/BdcHostedIndicator.astro';
 
 const {
   title,
@@ -12,6 +13,7 @@ const {
   eventType,
   registration_required,
   url,
+  externalEvent = false,
   isPast,
   tags = [],
 } = Astro.props;
@@ -21,56 +23,55 @@ const dateStr = date.toLocaleDateString('en-US', dateOptions);
 const endDateStr = endDate?.toLocaleDateString('en-US', dateOptions);
 ---
 
-<header class="event__header">
+<header class="event__header border-bottom border-base-lighter margin-bottom-2 padding-bottom-2">
+  {eventType && <TagPill label={eventType} tone="neutral" class="margin-bottom-1" />}
 
-  <h1>{title}</h1>
+  <h1 class="margin-y-1">{title}</h1>
 
-  <div class="event__meta border-bottom padding-bottom-1 margin-bottom-2 text-base-dark">
-
-    <ul class="usa-list usa-list--unstyled grid-row wrap margin-bottom-1">
-      <li class="grid-col-4 display-flex flex-align-center">
+  <div class="text-base-dark grid-row grid-gap-2">
+    <div class="grid-col-12 tablet:grid-col-fill">
+      <div class="display-flex flex-align-center margin-bottom-05">
         <Icon name="event" size={3} class="margin-right-05" />
         <time datetime={date.toISOString()}>
-          {dateStr}{endDate && ` – ${endDateStr}`}
+          {dateStr}{endDate && ` - ${endDateStr}`}
         </time>
-      </li>
-
+      </div>
       {time && (
-        <li class="grid-col-4 display-flex flex-align-center">
+        <div class="display-flex flex-align-center margin-bottom-05">
           <Icon name="schedule" size={3} class="margin-right-05" />
           <span>{time}</span>
-        </li>
+        </div>
       )}
-
       {location && (
-        <li class="grid-col-4 display-flex flex-align-center">
+        <div class="display-flex flex-align-start margin-bottom-05 maxw-full">
           <Icon name="location_on" size={3} class="margin-right-05" />
           <span>{location}</span>
-        </li>
-      )}
-    </ul>
-
-    {
-      eventType && (
-        <div>
-          <span class="margin-right-1">Event Type:</span><span class="usa-tag margin-right-5">{eventType}</span>
         </div>
-      )
-    }
-
-    {tags.length > 0 && (
-      <div class="display-flex flex-wrap gap-05 margin-top-1">
-        <span class="margin-right-1">Tags: </span>{tags.map(tag => <TagLink tag={tag} />)}
-      </div>
-      )
-    }
-
-    {url && (!isPast || !registration_required) && (
-      <Button to={url} class="margin-top-2">
-        {registration_required ? 'Register Here' : 'Event website'}
-      </Button>
-    )}
-
+      )}
+      {tags.length > 0 && (
+        <div class="display-flex flex-wrap margin-y-1">
+          {tags.map(tag => (
+            <Link to={`/tagged/${tag}`} class="text-no-underline hover:text-no-underline margin-right-1">
+              <TagPill label={tag} tone="cool" />
+            </Link>
+          ))}
+        </div>
+      )}
+      {url && (!isPast || !registration_required) && (
+        <div class="margin-top-2">
+          <Link to={url} class="text-bold">{
+            registration_required ? 'Register now' : 'Event website'
+          }</Link>
+        </div>
+      )}
+    </div>
+    <div class="grid-col-12 tablet:grid-col-auto display-flex flex-align-end margin-top-1 tablet:margin-top-0">
+      {!externalEvent && (
+        <div class="font-ui-xs display-inline-flex flex-align-center">
+          <BdcHostedIndicator decorative size={20} class="margin-right-1" />
+          BDC-hosted event
+        </div>
+      )}
+    </div>
   </div>
-
 </header>

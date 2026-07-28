@@ -1,8 +1,8 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
-import NewsList from '@components/news/NewsList.astro';
 import CardCta from '@bdc/ui-astro/card/CardCta.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import NewsList from '@components/news/NewsList.astro';
 import Base from '@layouts/Base.astro';
 
 const posts = (await getCollection('news')).sort(

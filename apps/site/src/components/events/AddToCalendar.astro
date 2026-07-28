@@ -1,21 +1,23 @@
 ---
-import Icon from '@components/Icon.astro';
+import Icon from '@bdc/ui-astro/icon/Icon.astro';
 
 interface Props {
   title: string;
   date: Date;
+  endDate?: Date;
   end_date?: Date;
   location?: string;
 }
 
-const { title, date, end_date, location } = Astro.props;
+const { title, date, endDate, end_date, location } = Astro.props;
+const endDateValue = endDate ?? end_date;
 
 function toCalDate(d: Date): string {
   return d.toISOString().slice(0, 10).replace(/-/g, '');
 }
 
 const start = toCalDate(date);
-const end = toCalDate(new Date((end_date ?? date).getTime() + 86400000));
+const end = toCalDate(new Date((endDateValue ?? date).getTime() + 86400000));
 
 const params = new URLSearchParams({
   action: 'TEMPLATE',
@@ -27,7 +29,7 @@ if (location) params.set('location', location);
 const calUrl = `https://calendar.google.com/calendar/render?${params.toString()}`;
 ---
 
-<a href={calUrl} class="usa-button usa-button--outline" target="_blank" rel="noopener noreferrer">
-  <Icon name="calendar_today" class="margin-right-05" />
+<a href={calUrl} class="usa-link text-bold display-inline-flex flex-align-center" target="_blank" rel="noopener noreferrer">
+  <Icon name="calendar_today" size={3} class="margin-right-05" />
   Add to Google Calendar
 </a>
