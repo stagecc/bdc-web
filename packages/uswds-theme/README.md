@@ -89,7 +89,15 @@ That's it. Two lines of Sass to get the full BDC design system.
 
 ## Static assets
 
-USWDS expects certain assets (icon sprite, fonts, images) to be served from your app's `public/` directory. Copy or symlink these from `@uswds/uswds/dist`:
+USWDS expects certain assets (icon sprite, fonts, images) to be served from your app's `public/` directory.
+
+In this monorepo, use `@bdc/uswds-assets` to sync curated assets instead of manually copying files.
+
+```bash
+npm run sync:uswds-assets -w @bdc/site
+```
+
+If you are integrating outside this monorepo, copy or symlink these from `@uswds/uswds/dist`:
 
 - `public/img/` — USWDS images and the icon sprite (`sprite.svg`)
 - `public/fonts/` — USWDS webfonts
