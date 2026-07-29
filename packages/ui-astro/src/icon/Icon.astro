@@ -1,4 +1,5 @@
 ---
+import { customIcons } from './custom-icons';
 import spriteUrl from './sprite.svg?url';
 
 interface Props {
@@ -12,6 +13,7 @@ const { name, label, size = 3, class: className = '' } = Astro.props;
 
 const isDecorative = !label;
 const sizeClass = size ? `usa-icon--size-${size}` : '';
+const customIcon = customIcons[name];
 ---
 
 <svg
@@ -19,7 +21,12 @@ const sizeClass = size ? `usa-icon--size-${size}` : '';
   aria-hidden={isDecorative ? 'true' : undefined}
   role={isDecorative ? undefined : 'img'}
   focusable="false"
+  viewBox={customIcon?.viewBox}
 >
   {label && <title>{label}</title>}
-  <use href={`${spriteUrl}#${name}`} />
+  {customIcon ? (
+    customIcon.paths.map((path) => <path d={path} />)
+  ) : (
+    <use href={`${spriteUrl}#${name}`} />
+  )}
 </svg>

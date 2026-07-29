@@ -1,6 +1,5 @@
 @use "@bdc/uswds-theme/src/uswds-init" as core;
 @use "uswds";
-@use "components/site-alert";
 
 h1, h2, h3, h4, h5, h6 {
   font-family: core.core-font-family('heading');

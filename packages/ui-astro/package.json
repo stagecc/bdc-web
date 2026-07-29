@@ -11,6 +11,8 @@
     "astro": "^6.0.0"
   },
   "exports": {
+    "./alert/InlineAlert.astro": "./src/alert/InlineAlert.astro",
+    "./alert/SiteAlert.astro": "./src/alert/SiteAlert.astro",
     "./button/Button.astro": "./src/button/Button.astro",
     "./card/Card.astro": "./src/card/Card.astro",
     "./card/CardCta.astro": "./src/card/CardCta.astro",

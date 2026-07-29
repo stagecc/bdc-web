@@ -1,0 +1,88 @@
+---
+interface Props {
+  variant: 'info' | 'warning' | 'success' | 'error' | 'emergency';
+  slim?: boolean;
+  noIcon?: boolean;
+  heading?: string;
+  headingLevel?: 2 | 3 | 4;
+}
+
+const {
+  variant,
+  slim = false,
+  noIcon = false,
+  heading,
+  headingLevel = 3,
+} = Astro.props;
+
+const uswdsVariant = variant === 'emergency' ? 'warning' : variant;
+
+const classes = [
+  'usa-alert',
+  'bdc-inline-alert',
+  `usa-alert--${uswdsVariant}`,
+  'margin-y-3',
+  slim && 'usa-alert--slim',
+  noIcon && 'usa-alert--no-icon',
+]
+  .filter(Boolean)
+  .join(' ');
+
+const Heading = `h${headingLevel}` as 'h2' | 'h3' | 'h4';
+const headingId = heading ? `inline-alert-heading-${crypto.randomUUID()}` : undefined;
+---
+
+{heading ? (
+  <section class={classes} aria-labelledby={headingId}>
+    <div class="usa-alert__body">
+      <div class="usa-alert__content">
+        <Heading id={headingId} class="usa-alert__heading">{heading}</Heading>
+        <slot />
+      </div>
+    </div>
+  </section>
+) : (
+  <div class={classes} role="status">
+    <div class="usa-alert__body">
+      <div class="usa-alert__content">
+        <slot />
+      </div>
+    </div>
+  </div>
+)}
+
+<style>
+  .bdc-inline-alert .usa-alert__body {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .bdc-inline-alert .usa-alert__body::before {
+    position: relative;
+    top: auto;
+    left: auto;
+    flex-shrink: 0;
+    margin-top: 0.1rem;
+    transform: scale(0.7);
+    transform-origin: left top;
+  }
+
+  .bdc-inline-alert .usa-alert__body > * {
+    margin-left: 0;
+  }
+
+  .bdc-inline-alert .usa-alert__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .bdc-inline-alert .usa-alert__content :global(p) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  .bdc-inline-alert .usa-alert__content :global(p + p) {
+    margin-top: 0.5rem;
+  }
+</style>

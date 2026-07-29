@@ -4,6 +4,8 @@ Shared Astro UI components for BDC apps.
 
 ## Components
 
+- `@bdc/ui-astro/alert/InlineAlert.astro`
+- `@bdc/ui-astro/alert/SiteAlert.astro`
 - `@bdc/ui-astro/button/Button.astro`
 - `@bdc/ui-astro/tag/TagCapsule.astro`
 - `@bdc/ui-astro/tag/TagPill.astro`
