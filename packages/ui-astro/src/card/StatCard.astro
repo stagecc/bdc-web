@@ -1,0 +1,66 @@
+---
+import Card from './Card.astro';
+import IconBadge from '../icon/IconBadge.astro';
+
+interface Props {
+  icon?: string;
+  number: string | number;
+  qualifier: string;
+  meta?: string;
+  description?: string;
+  width?: string;
+  float?: 'left' | 'right';
+  tone?: 'secondary' | 'cool' | 'warm' | 'neutral';
+}
+
+const {
+  icon,
+  number,
+  qualifier,
+  meta,
+  description,
+  width = '250px',
+  float = 'left',
+  tone = 'cool',
+} = Astro.props;
+
+const toneClasses = {
+  secondary: 'border-left-secondary-light',
+  cool: 'border-left-accent-cool-light',
+  warm: 'border-left-accent-warm-light',
+  neutral: 'border-left-base-light',
+} as const;
+
+const numberToneClasses = {
+  secondary: 'text-secondary-dark',
+  cool: 'text-accent-cool-darker',
+  warm: 'text-accent-warm-darker',
+  neutral: 'text-base-darker',
+} as const;
+---
+
+<Card
+  as="div"
+  variant="overview"
+  border={true}
+  class:list={[
+    'stat-card width-full margin-bottom-2 text-base-dark border-left-05',
+    float === 'left' ? 'float-left tablet:float-left tablet:margin-right-3' : 'float-right tablet:float-right tablet:margin-left-3',
+    toneClasses[tone],
+  ]}
+  style={`--stat-card-width: ${width};`}
+>
+  {icon && <IconBadge icon={icon} tone={tone} size={5} class="margin-bottom-105" />}
+  <div class:list={['font-heading-xl text-bold line-height-heading-2', numberToneClasses[tone]]}>{number}</div>
+  <div class="font-sans-sm text-bold text-base-dark margin-top-1">{qualifier}</div>
+  {meta && <p class="margin-top-105 margin-bottom-0 font-sans-2xs text-bold text-base-dark line-height-sans-3">{meta}</p>}
+  {description && <p class="margin-top-05 margin-bottom-0 font-sans-sm text-base line-height-sans-5">{description}</p>}
+</Card>
+
+<style>
+  @media (min-width: 640px) {
+    .stat-card {
+      width: var(--stat-card-width) !important;
+    }
+  }
+</style>
