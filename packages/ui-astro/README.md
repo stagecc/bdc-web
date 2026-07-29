@@ -17,6 +17,7 @@ Shared Astro UI components for BDC apps.
 - `@bdc/ui-astro/card/CardCta.astro`
 - `@bdc/ui-astro/card/CardCopy.astro`
 - `@bdc/ui-astro/card/CardMediaStack.astro`
+- `@bdc/ui-astro/card/StatCard.astro`
 
 ## Notes
 

@@ -1,8 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
+import Card from '@bdc/ui-astro/card/Card.astro';
+import StatCard from '@bdc/ui-astro/card/StatCard.astro';
+import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
 import EepMember from '@components/eep/EepMember.astro';
-import EepNav from '@components/eep/EepNav.astro';
-import SummaryCard from '@components/SummaryCard.astro';
 import Base from '@layouts/Base.astro';
 import { sortByLastName } from '../../../util/sort-by-lastName';
 
@@ -30,11 +31,15 @@ const rendered = await Promise.all(
     <div class="grid-container">
       <h1>BDC External Expert Panel</h1>
       <div class="usa-prose usa-prose--full-width">
-        <SummaryCard icon="people" number="7" qualifier="Panel Members" float="right">
-          Plus 1 Ad-hoc Member
-          <hr/>
-          Independent experts advising NHLBI leadership on the BDC ecosystem
-        </SummaryCard>
+        <StatCard
+          icon="people"
+          number="7"
+          qualifier="Panel Members"
+          meta="Plus 1 Ad-hoc Member"
+          description="Independent experts advising NHLBI leadership on the BDC ecosystem"
+          float="right"
+          tone="cool"
+        />
         <p>
           The BDC External Expert Panel (EEP) is an independent body of experts that provides feedback and input that helps NHLBI make strategic decisions on the BDC program. Members of the EEP volunteer their time and insights over a multi-year period. The individuals listed below are current members of the BDC EEP.
         </p>
@@ -45,25 +50,39 @@ const rendered = await Promise.all(
           The individuals listed below are current members of the BDC EEP.
         </p>
       </div>
-      <EepNav members={sorted} />
-      
-      <br/>
-      <hr/>
-      <br/>
-
-      {rendered.map(({ member, Content }) => (
-        <EepMember
-          name={member.data.name}
-          slug={member.data.slug}
-          signifier={member.data.signifier}
-          roles={member.data.roles}
-          term_start={member.data.term_start}
-          photo={member.data.photo}
-          adhoc={member.data.adhoc}
-        >
-          <Content />
-        </EepMember>
-      ))}
     </div>
   </section>
+
+  <PageSection eyebrow="Panel Directory" title="Current Members">
+    <section class="margin-bottom-6" aria-labelledby="eep-directory-nav-heading">
+      <Card>
+        <h3 id="eep-directory-nav-heading" class="font-heading-sm margin-top-0 margin-bottom-2">Jump to a member</h3>
+        <nav aria-label="Jump to EEP member">
+          <ul class="usa-list usa-list--unstyled grid-row grid-gap-2 margin-0">
+            {sorted.map((member) => (
+              <li class="tablet:grid-col-6 desktop:grid-col-4 margin-bottom-05">
+                <a href={`#${member.data.slug}`} class="usa-link font-sans">
+                  {member.data.adhoc && 'Ad-hoc Member: '}{member.data.name}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </Card>
+    </section>
+
+    {rendered.map(({ member, Content }) => (
+      <EepMember
+        name={member.data.name}
+        slug={member.data.slug}
+        signifier={member.data.signifier}
+        roles={member.data.roles}
+        term_start={member.data.term_start}
+        photo={member.data.photo}
+        adhoc={member.data.adhoc}
+      >
+        <Content />
+      </EepMember>
+    ))}
+  </PageSection>
 </Base>

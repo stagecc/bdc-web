@@ -7,7 +7,7 @@ export function SearchInput() {
     const query = formData.get('search');
     if (query) {
       window.open(
-        `/data/explore/dug?q=${encodeURIComponent(query.toString())}`,
+        `/search?q=${encodeURIComponent(query.toString())}`,
         '_self',
       );
     }
