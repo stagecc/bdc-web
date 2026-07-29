@@ -1,10 +1,15 @@
 ---
 import { getCollection } from 'astro:content';
-import FaqList from '@components/faqs/FaqList.astro';
+import FaqList from '@components/faqs/FaqList';
 import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 
 const faqs = await getCollection('faqs');
+const faqItems = faqs.map((faq) => ({
+  id: `faq-${faq.id}`,
+  title: faq.data.title,
+  description: faq.data.description,
+}));
 ---
 
 <Base title="User FAQs">
@@ -14,7 +19,7 @@ const faqs = await getCollection('faqs');
 
       <h1>Frequently Asked Questions</h1>
 
-      <FaqList items={faqs} />
+      <FaqList client:load items={faqItems} />
 
       <p class="margin-top-4">
         View our FAQs directly at{' '}
