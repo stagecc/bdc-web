@@ -1,0 +1,187 @@
+---
+interface Props {
+  variant?: 'info' | 'warning' | 'error' | 'success' | 'emergency';
+  slim?: boolean;
+  title?: string;
+  headingLevel?: 'h2' | 'h3' | 'h4';
+  ariaLabel?: string;
+  storageKey: string;
+}
+
+const {
+  variant = 'info',
+  slim = false,
+  title,
+  headingLevel: HeadingTag = 'h3',
+  ariaLabel = 'Site alert',
+  storageKey,
+} = Astro.props;
+
+const alertId = `site-alert-${storageKey}`;
+
+const containerClasses = [
+  'usa-site-alert',
+  'bdc-site-alert',
+  `bdc-site-alert--${variant}`,
+  slim && 'usa-site-alert--slim',
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+<section
+  class={containerClasses}
+  aria-label={ariaLabel}
+  id={alertId}
+  data-bdc-site-alert-id={alertId}
+>
+  <div class="display-flex flex-row flex-align-start flex-justify-center gap-2 margin-x-auto padding-x-2 padding-y-105">
+    <div class="flex-1 text-center font-body-sm line-height-body-5">
+      {title && (
+        <HeadingTag class="margin-0 margin-bottom-05 font-body-md">
+          {title}
+        </HeadingTag>
+      )}
+      <div>
+        <slot />
+      </div>
+    </div>
+    <button
+      class="bdc-site-alert__close flex-shrink-0 bg-transparent border-0 cursor-pointer font-body-md padding-05 line-height-body-1 text-inherit opacity-70"
+      aria-label="Dismiss alert"
+      type="button"
+      data-bdc-site-alert-close
+    >
+      x
+    </button>
+  </div>
+</section>
+
+<script is:inline>
+  (() => {
+    const INIT_FLAG = '__bdcSiteAlertInit';
+
+    const syncDismissedAlerts = () => {
+      document.querySelectorAll('[data-bdc-site-alert-id]').forEach((alertEl) => {
+        const alertId = alertEl.getAttribute('data-bdc-site-alert-id');
+        if (!alertId) {
+          return;
+        }
+
+        if (sessionStorage.getItem(alertId) === 'dismissed') {
+          alertEl.remove();
+        }
+      });
+    };
+
+    const handleDismissClick = (event) => {
+      if (!(event.target instanceof Element)) {
+        return;
+      }
+
+      const closeButton = event.target.closest('[data-bdc-site-alert-close]');
+      if (!closeButton) {
+        return;
+      }
+
+      const alertEl = closeButton.closest('[data-bdc-site-alert-id]');
+      const alertId = alertEl?.getAttribute('data-bdc-site-alert-id');
+      if (!alertId) {
+        return;
+      }
+
+      sessionStorage.setItem(alertId, 'dismissed');
+      alertEl?.remove();
+    };
+
+    const ensureInit = () => {
+      if (window[INIT_FLAG]) {
+        return;
+      }
+
+      document.addEventListener('click', handleDismissClick);
+      document.addEventListener('astro:after-swap', syncDismissedAlerts);
+      window[INIT_FLAG] = true;
+    };
+
+    ensureInit();
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', syncDismissedAlerts, {
+        once: true,
+      });
+    } else {
+      syncDismissedAlerts();
+    }
+  })();
+</script>
+
+<style lang="scss">
+  @use 'uswds-core' as *;
+
+  .bdc-site-alert--info {
+    background: linear-gradient(
+      90deg,
+      color($theme-color-primary-lighter),
+      color($theme-color-primary-light)
+    );
+    border-bottom: 6px solid color($theme-color-primary);
+  }
+
+  .bdc-site-alert--info a {
+    color: color($theme-color-primary-darker);
+    text-decoration-color: color($theme-color-primary-darker);
+  }
+
+  .bdc-site-alert--warning {
+    background: linear-gradient(
+      90deg,
+      color($theme-color-warning-lighter),
+      color($theme-color-warning-light)
+    );
+    border-bottom: 6px solid color($theme-color-warning);
+  }
+
+  .bdc-site-alert--warning a {
+    color: color($theme-color-warning-darker);
+    text-decoration-color: color($theme-color-warning-darker);
+  }
+
+  .bdc-site-alert--error {
+    background: linear-gradient(
+      90deg,
+      color($theme-color-secondary-lighter),
+      color($theme-color-secondary-light)
+    );
+    border-bottom: 6px solid color($theme-color-secondary);
+  }
+
+  .bdc-site-alert--error a {
+    color: color($theme-color-secondary-dark);
+    text-decoration-color: color($theme-color-secondary-dark);
+  }
+
+  .bdc-site-alert--success {
+    background: linear-gradient(
+      90deg,
+      color($theme-color-success-lighter),
+      color($theme-color-success-light)
+    );
+    border-bottom: 6px solid color($theme-color-success);
+  }
+
+  .bdc-site-alert--success a {
+    color: color($theme-color-success-darker);
+    text-decoration-color: color($theme-color-success-darker);
+  }
+
+  .bdc-site-alert--emergency {
+    background: linear-gradient(90deg, color('red-warm-10'), color('red-warm-20v'));
+    border-bottom: 6px solid color($theme-color-emergency);
+  }
+
+  .bdc-site-alert--emergency a {
+    color: color($theme-color-emergency-dark);
+    text-decoration-color: color($theme-color-emergency-dark);
+  }
+</style>

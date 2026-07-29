@@ -14,6 +14,7 @@
     "@trussworks/react-uswds": "^11.0.0"
   },
   "exports": {
+    "./accordion/Accordion": "./src/accordion/Accordion.tsx",
     "./button/Button": "./src/button/Button.tsx",
     "./card/Card": "./src/card/Card.tsx",
     "./icon/Icon": "./src/icon/Icon.tsx",
