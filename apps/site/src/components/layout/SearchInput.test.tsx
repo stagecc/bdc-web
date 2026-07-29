@@ -23,7 +23,7 @@ describe('SearchInput', () => {
     expect(input).toHaveValue('heart disease');
   });
 
-  it('redirects to dug search results on submit', async () => {
+  it('redirects to site search results on submit', async () => {
     const openSpy = vi
       .spyOn(window, 'open')
       .mockImplementation(() => null);
@@ -35,7 +35,7 @@ describe('SearchInput', () => {
     await user.type(input, 'asthma');
     await user.click(screen.getByRole('button', { name: /search/i }));
 
-    expect(openSpy).toHaveBeenCalledWith('/data/explore/dug?q=asthma', '_self');
+    expect(openSpy).toHaveBeenCalledWith('/search?q=asthma', '_self');
 
     openSpy.mockRestore();
   });

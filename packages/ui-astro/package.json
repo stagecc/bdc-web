@@ -16,6 +16,7 @@
     "./card/CardCta.astro": "./src/card/CardCta.astro",
     "./card/CardCopy.astro": "./src/card/CardCopy.astro",
     "./card/CardMediaStack.astro": "./src/card/CardMediaStack.astro",
+    "./card/StatCard.astro": "./src/card/StatCard.astro",
     "./icon/Icon.astro": "./src/icon/Icon.astro",
     "./icon/IconBadge.astro": "./src/icon/IconBadge.astro",
     "./layout/Hero.astro": "./src/layout/Hero.astro",
