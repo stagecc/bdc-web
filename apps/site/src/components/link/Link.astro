@@ -1,12 +1,36 @@
 ---
 import SharedLink from '@bdc/ui-astro/link/Link.astro';
+import { requiresExitNotice } from '../../util/url';
 
 interface Props extends astroHTML.JSX.AnchorHTMLAttributes {
   to: string;
   inheritColor?: boolean;
+  exitNotice?: 'auto' | 'always' | 'never';
 }
 
-const props = Astro.props as Props;
+const {
+  to,
+  exitNotice = 'auto',
+  'data-requires-exit-notice': exitNoticeDataAttribute,
+  ...rest
+} = Astro.props as Props & { 'data-requires-exit-notice'?: string };
+
+const shouldRequireExitNotice =
+  exitNotice === 'always'
+    ? true
+    : exitNotice === 'never'
+      ? false
+      : requiresExitNotice(to);
+
+const props = {
+  to,
+  ...rest,
+  ...(shouldRequireExitNotice
+    ? { 'data-requires-exit-notice': 'true' }
+    : exitNoticeDataAttribute
+      ? { 'data-requires-exit-notice': exitNoticeDataAttribute }
+      : {}),
+};
 ---
 
 <SharedLink {...props}><slot /></SharedLink>

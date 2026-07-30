@@ -10,10 +10,10 @@
   page body as React, sacrificing Astro's zero-JS-by-default static output.
 
   Instead, this Astro component:
-    - Receives headings from Astro's `render()` at build time (free, no JS)
-    - Outputs the standard USWDS markup (usa-in-page-nav-container, etc.)
-    - Adds a small client-side IntersectionObserver script for scroll-spy,
-      replicating the active-link highlighting the trussworks component provides
+    - Outputs the standard USWDS in-page-nav container markup
+    - Uses the USWDS in-page-navigation JavaScript module client-side
+    - Passes behavior config through USWDS data attributes (for example
+      `data-root-margin`, `data-threshold`, and heading selectors)
 
   This preserves the project's architecture rule that USWDS CSS is consumed
   globally, keeps content server-rendered, and avoids pulling React into a
@@ -21,43 +21,23 @@
 -->
 
 ---
-import type { MarkdownHeading } from 'astro';
-
 interface Props {
-  headings: MarkdownHeading[];
   title?: string;
 }
 
-const { headings, title = 'On this page' } = Astro.props;
-const filtered = headings.filter(
-  (h: MarkdownHeading) => h.depth === 2 || h.depth === 3,
-);
+const { title = 'On this page' } = Astro.props;
 ---
 
 <div class="usa-in-page-nav-container">
   <aside
     class="usa-in-page-nav"
-    aria-label={title}
-    data-scroll-offset="1200"
-  >
-    <nav>
-      <p class="usa-in-page-nav__heading" tabindex="0">{title}</p>
-      <ul class="usa-in-page-nav__list">
-        {filtered.map((h) => (
-          <li
-            class:list={[
-              "usa-in-page-nav__item",
-              { "usa-in-page-nav__item--sub-item": h.depth === 3 },
-            ]}
-          >
-            <a href={`#${h.slug}`} class="usa-in-page-nav__link">
-              {h.text}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
-  </aside>
+    data-title-text={title}
+    data-heading-elements="h2 h3"
+    data-main-content-selector=".usa-in-page-nav-container .usa-prose"
+    data-root-margin="-100px 0px -60% 0px"
+    data-threshold="1"
+    data-scroll-offset="110"
+  />
   <div class="usa-prose">
     <slot />
   </div>
@@ -69,41 +49,26 @@ const filtered = headings.filter(
   }
 
   .usa-prose :global(:is(h2, h3)) {
-    scroll-margin-top: 100px;
+    scroll-margin-top: 120px;
   }
 </style>
 
 <script>
-  function initScrollSpy() {
-    const nav = document.querySelector('.usa-in-page-nav');
-    if (!nav) return;
+  import inPageNavigation from '@uswds/uswds/js/usa-in-page-navigation';
 
-    const links = nav.querySelectorAll<HTMLAnchorElement>('.usa-in-page-nav__link');
-    const ids = Array.from(links).map((a) => a.hash.slice(1));
-    const targets = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
+  const initInPageNavController = (root = document.body) => {
+    inPageNavigation.off(root);
+    inPageNavigation.on(root);
 
-    if (!targets.length) return;
-
-    const setCurrent = (id: string) => {
-      links.forEach((a) => {
-        a.classList.toggle('usa-current', a.hash === `#${id}`);
-      });
+    return () => {
+      inPageNavigation.off(root);
     };
+  };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries.findLast((e) => e.isIntersecting);
-        if (visible?.target.id) setCurrent(visible.target.id);
-      },
-      { rootMargin: '-100px 0px -60% 0px', threshold: 1 },
-    );
+  let cleanup = initInPageNavController();
 
-    targets.forEach((el) => observer.observe(el));
-    document.documentElement.style.scrollBehavior = 'smooth';
-  }
-
-  initScrollSpy();
-  document.addEventListener('astro:after-swap', initScrollSpy);
+  document.addEventListener('astro:after-swap', () => {
+    cleanup();
+    cleanup = initInPageNavController();
+  });
 </script>

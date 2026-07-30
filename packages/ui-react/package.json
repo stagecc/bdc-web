@@ -15,10 +15,12 @@
   },
   "exports": {
     "./accordion/Accordion": "./src/accordion/Accordion.tsx",
+    "./banner/GovBanner": "./src/banner/GovBanner.tsx",
     "./button/Button": "./src/button/Button.tsx",
     "./card/Card": "./src/card/Card.tsx",
     "./icon/Icon": "./src/icon/Icon.tsx",
     "./link/Link": "./src/link/Link.tsx",
+    "./modal/useDataAttributeModalController": "./src/modal/useDataAttributeModalController.ts",
     "./tag/RemovableTagPill": "./src/tag/RemovableTagPill.tsx",
     "./tag/TagPill": "./src/tag/TagPill.tsx",
     "./tooltip/InfoTooltip": "./src/tooltip/InfoTooltip.tsx",
