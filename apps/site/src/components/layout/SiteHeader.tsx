@@ -1,4 +1,4 @@
-import { GovBanner } from '@components/layout/GovBanner';
+import { GovBanner } from '@bdc/ui-react/banner/GovBanner';
 import { SearchInput } from '@components/layout/SearchInput';
 import { navConfig } from '@config/navigation';
 import {

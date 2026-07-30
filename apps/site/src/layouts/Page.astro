@@ -1,7 +1,6 @@
 ---
 import InPageNav from '@components/layout/InPageNav.astro';
 import Base from '@layouts/Base.astro';
-import type { MarkdownHeading } from 'astro';
 
 interface Props {
   frontmatter: {
@@ -12,10 +11,9 @@ interface Props {
     lastReviewed?: string;
     in_page_nav?: boolean;
   };
-  headings: MarkdownHeading[];
 }
 
-const { frontmatter, headings }: Props = Astro.props;
+const { frontmatter }: Props = Astro.props;
 const showNav = frontmatter.in_page_nav !== false;
 ---
 
@@ -33,7 +31,7 @@ const showNav = frontmatter.in_page_nav !== false;
 
       {
         showNav ? (
-          <InPageNav headings={headings}>
+          <InPageNav>
             <slot />
           </InPageNav>
         ) : (

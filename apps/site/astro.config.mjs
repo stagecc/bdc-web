@@ -38,6 +38,24 @@ const robotsTxtConfig = {
   ],
 };
 
+const HTTP_PROTOCOLS = new Set(['http:', 'https:']);
+
+const isGovHostname = (hostname) => {
+  const normalized = hostname.toLowerCase().replace(/\.+$/, '');
+  return normalized === 'gov' || normalized.endsWith('.gov');
+};
+
+const requiresExitNotice = (href) => {
+  try {
+    const parsed = new URL(href);
+    return (
+      HTTP_PROTOCOLS.has(parsed.protocol) && !isGovHostname(parsed.hostname)
+    );
+  } catch {
+    return false;
+  }
+};
+
 function externalLinks() {
   return (tree) => {
     tree.children?.forEach(function walk(node) {
@@ -49,6 +67,9 @@ function externalLinks() {
       ) {
         node.properties.target = '_blank';
         node.properties.rel = 'noopener noreferrer';
+        if (requiresExitNotice(node.properties.href)) {
+          node.properties['data-requires-exit-notice'] = 'true';
+        }
         node.properties.className = [
           ...(Array.isArray(node.properties.className)
             ? node.properties.className
