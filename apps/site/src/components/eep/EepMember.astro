@@ -1,20 +1,20 @@
 ---
 /**
- * EepMember.astro
  *
  * Renders a single EEP member with headshot, name, roles, term start, and bio.
- * Adhoc members get a left-side "Ad-hoc Member" label instead of a headshot.
+ * Always renders a left column — shows headshot if provided, empty spacer if not.
+ * Adhoc members are labeled inline with their name.
  * Stacks vertically on mobile, side by side on tablet and above.
  * Bio content is passed via slot and can be any markdown/HTML content.
  *
  * Props:
- *   name       — Member name including signifier (e.g. "First Last")
+ *   name       — Member name (e.g. "First Last")
  *   signifier  — Optional credentials (e.g. "Ph.D., M.D.")
  *   slug       — Used as the section's anchor id
  *   roles      — Array of freeform role/org strings
  *   term_start — Date object for term start date
- *   photo      — Optional resolved ImageMetadata (omit for adhoc members)
- *   adhoc      — If true, renders the "Ad-hoc Member" label instead of a headshot
+ *   photo      — Optional resolved ImageMetadata. If omitted, a spacer maintains layout.
+ *   adhoc      — If true, prepends "Ad-hoc Member:" to the name. Defaults to false.
  */
 
 import { Image } from 'astro:assets';
@@ -45,29 +45,28 @@ const formattedDate = term_start.toLocaleDateString('en-US', {
   month: 'long',
   year: 'numeric',
 });
-
-const NameTag = adhoc ? 'h3' : 'h2';
 ---
 
 <div class="eep-member" id={slug}>
-  {adhoc ? (
-    <div class="eep-member__adhoc-label">
-      <h2>Ad-hoc Member</h2>
-    </div>
-  ) : photo && (
-    <Image
-      src={photo}
-      alt={name}
-      width={200}
-      height={200}
-      class="eep-member__headshot"
-    />
-  )}
+  <div class="eep-member__headshot-col">
+    {photo ? (
+      <Image
+        src={photo}
+        alt={name}
+        width={200}
+        height={200}
+        class="eep-member__headshot"
+      />
+    ) : (
+      <div class="eep-member__headshot-placeholder" />
+    )}
+  </div>
 
   <div class="eep-member__content">
-    <NameTag class="eep-member__name">
+    <h2 class="eep-member__name">
+      {adhoc && ("Ad-hoc Member: ")}
       {name}{signifier && <span class="eep-member__signifier">, {signifier}</span>}
-    </NameTag>
+    </h2>
 
     <div class="eep-member__meta">
       <ul class="eep-member__roles">
@@ -109,25 +108,20 @@ const NameTag = adhoc ? 'h3' : 'h2';
     }
   }
 
-  .eep-member__headshot {
+  .eep-member__headshot-col {
     flex-shrink: 0;
+    width: 200px;
+  }
+
+  .eep-member__headshot-placeholder {
     width: 200px;
     height: 200px;
-    min-width: 200px;
+  }
+  .eep-member__headshot {
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     object-fit: cover;
-  }
-
-  .eep-member__adhoc-label {
-    flex-shrink: 0;
-    width: 200px;
-    text-align: center;
-  }
-
-  .eep-member__adhoc-label h2 {
-    margin: 0;
-    font-size: 1.4rem;
-    text-align: right;
   }
 
   .eep-member__name {

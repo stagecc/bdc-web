@@ -1,6 +1,6 @@
 ---
 name: "Talitha Washington"
-signifier: "Ph.D., D.Sc."
+signifier: "Ph.D."
 slug: "washington-talitha"
 roles:
   - "Office of the Provost"
@@ -13,4 +13,6 @@ term_start: 2024-08-08
 photo: washington-talitha.jpg
 ---
 
-Talitha Washington is a tenured professor of mathematics at Clark Atlanta University and an affiliate faculty at Morehouse College, Morehouse School of Medicine, and Spelman College. Dr. Washington is the Director of the Atlanta University Center (AUC) Data Science Initiative and the Lead Principal Investigator of the National Science Foundation (NSF) National Data Science Alliance. She is the President of the Association for Women in Mathematics (AWM) and was, most recently, a Program Director at the NSF. Her research interests include applied mathematics, dynamical systems, nonstandard finite difference schemes, data science, artificial intelligence, and education. Dr. Washington completed her undergraduate studies in mathematics at Spelman College and her master's and doctoral degrees in mathematics from the University of Connecticut. She is a Fellow of the AWM, the American Mathematical Society, and the American Association for the Advancement of Science.
+Talitha Washington, a distinguished mathematician, serves as the Executive Director of the Center for Applied Data Science & Analytics (CADSA) at Howard University. A transformational leader, Dr. Washington guides CADSA’s direction in harnessing the power of data to address society’s most pressing challenges through groundbreaking research, expanded educational opportunities, and innovative advancements on a global scale. She holds the Sean McCleese Endowed Chair, is a Professor of Mathematics, and is the co-Chair of the President's AI Advisory Council, which guides the university's AI strategy across research, academic, and enterprise initiatives.
+
+Dr. Washington serves as Principal Investigator of the U.S. National Science Foundation–funded Research Coordination Network on Assessing and Predicting Job Outcomes in AI, a national initiative focused on building a coordinated understanding of AI jobs, skills, and credentials to strengthen the nation’s AI workforce ecosystem. She also serves as the Past-President of the Association for Women in Mathematics and a former member of the Census Scientific Advisory Committee of the U.S. Census Bureau. Her research interests include applied mathematics, dynamical systems, nonstandard finite difference schemes, data science, artificial intelligence, and education.

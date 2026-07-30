@@ -3,46 +3,46 @@ title: Terms of Use & Policies
 lastReviewed: June 2026
 layout: ../../layouts/Page.astro
 ---
-import Callout from '@components/Callout.astro';
 import InlineAlert from '@components/InlineAlert.astro';
 import Tooltip from '@components/Tooltip.tsx';
+import Icon from '@components/Icon.astro'
 
 <InlineAlert variant="info">
-These Terms of Use describe the conditions governing use of BDC and related resources. By accessing or using this website, users agree to comply with these terms.
+These **Terms of Use** describe the conditions governing use of BDC and related resources. By accessing or using this website, users agree to comply with these terms.
 
 Additional terms may apply to specific tools, platforms, or datasets. 
 </InlineAlert>
 
 ## Data Use Policy Statement
 
-BDC adheres to internationally recognized policies for data access and release developed to enable broad access to data on the BDC ecosystem. Data on the BDC ecosystem are subject to general and data-set-specific data use policies, and access to controlled data is restricted to authorized users. Each BDC user is solely responsible for adhering to Data Use Agreement(s), Institutional Review Board policies and guidelines, and other Data Use Limitations when uploading, importing, or downloading data on the BDC ecosystem.
+BDC adheres to internationally recognized policies for data access and release developed to enable broad access to data on the BDC ecosystem. Data on the BDC ecosystem are subject to general and dataset-specific data use policies, and access to controlled data is restricted to authorized users. Each BDC user is solely responsible for adhering to Data Use Agreement(s), Institutional Review Board policies and guidelines, and other Data Use Limitations when uploading or importing data or downloading analysis results on the BDC ecosystem.
 
 Whether working with hosted or their own data, BDC users are obligated to protect participant privacy and follow NIH data protection policies. User institutions are accountable and may be subject to sanctions if policies are violated.
 <br/>
 <hr/>
 
-## Hosted Data Access Controls
-
-All hosted data within BDC is de-identified. De-identified data is information that has been stripped of direct and indirect identifiers so it can no longer be linked to a specific person.
-
-### Authorization of Use
-
-Access to hosted data is controlled through the [Database of Genotypes and Phenotypes](https://dbgap.ncbi.nlm.nih.gov/home/) (dbGaP) <Tooltip text="NIH system used to manage access to controlled-access datasets" client:visible /> system, by authorization of the appropriate Data Access Committee (DAC) <Tooltip text="Responsible for reviewing and approving requests to controlled-access datasets" client:visible />. Data Access Committees are established based on programmatic areas of interest as well as technical and ethical expertise. All DACs operate through common principles and under similar mechanisms to ensure the consistency and transparency of the controlled data access process. Use of industry-standard [OAuth 2.0](https://oauth.net/) and [Open ID Connect](https://openid.net/developers/how-connect-works/) (OIDC) services, which are connected to [NIH's electronic Research Administration](https://www.era.nih.gov//) (eRA) infrastructure for authentication and authorization, ensures that only data objects approved for access by NIH DACs and approved in dbGaP are available to a user in BDC.
-
-### Access to Individual Level Data and Download Functionality
-
-All data transfers are made using standard Transport Layer Security (TLS) encrypted sessions, and users must be logged in with their eRA accounts to access individual-level data or download any data (see below for details about downloading data).
-
-### Data Download Restrictions
+## Data Download Restrictions
 
 <InlineAlert variant="warning">
-Important: Individual-level data may not be downloaded from BDC.
+**Important**: Individual-level data may not be downloaded from BDC.
 </InlineAlert>
 
-Download capabilities are limited to metadata and analysis results, and the latter must comply with restrictions defined by NIH for [Summary Results](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-19-023.html). **Downloading sequences, variants, images, phenotypes, and other individual data is prohibited.** BDC notifies and repeatedly reminds users that they may not download individual-level data, including when they receive cloud credits, login, and request downloads. Monitoring of data egress adds another layer of security.
+Download capabilities are limited to metadata and analysis results, and the latter must comply with restrictions defined by NIH for [Summary Results](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-19-023.html). **Downloading sequences, variants, images, phenotypes, and other individual data is prohibited.** 
+
+BDC notifies users of download restrictions at multiple points, including when users receive cloud credits, log in, and request downloads. Data egress is actively monitored and violations to the download policy will be subject to disciplinary actions on behalf of the NIH.
 
 <br/>
 <hr/>
+
+## Controlled Data Access Approval and Use
+
+Access to controlled data hosted in BDC is managed through the [Database of Genotypes and Phenotypes](https://dbgap.ncbi.nlm.nih.gov/home/) (dbGaP) <Tooltip text="NIH system used to manage access to controlled-access datasets" client:visible /> system and authorized by the appropriate Data Access Committee (DAC)<Tooltip text="Responsible for reviewing and approving requests to controlled-access datasets" client:visible />. DACs are established based on programmatic areas of interest as well as technical and ethical expertise. All DACs operate through common principles and under similar mechanisms to ensure the consistency and transparency of the controlled data access process. 
+
+Approval through dbGaP allows authorized users to access approved data within BDC; it does not permit downloading individual-level data from BDC. Authorized users are responsible for following all applicable Data Use Agreements, Institutional Review Board policies and guidelines, Data Use Limitations, and NIH data protection requirements when working with BDC-hosted data.
+
+Approved access is connected to a researcher’s NIH electronic Research Administration (eRA) identity through NIH Researcher Auth Service (RAS) authentication and authorization. This helps ensure that only data approved for a researcher are available to that user in BDC. RAS facilitates access to data repositories across multiple NIH-funded data platforms for researchers internal and external to NIH. RAS also provides account identity consolidation so researchers can move from system to system using one set of credentials. For more information about RAS, refer to [NIH's Registration Guidance page](https://auth.nih.gov/CertAuthV3/forms/IDPregistration.html). 
+
+Individual-level data currently hosted within BDC is de-identified. De-identified data is information that has been stripped of direct and indirect identifiers, reducing the risk that data can be linked to a specific person.
 
 ## Citing and Acknowledging BDC
 
@@ -50,7 +50,37 @@ Researchers who use BDC resources, services, tools, funding, or cloud credits ar
 
 Recipients of support through programs such as NHLBI BDC Pilot Funding Program or Cloud Credit Support Program are also expected to acknowledge that support in any resulting scholarly outputs. 
 
-Standard [citation and acknowledgement language](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement) is available in BDC documentation.
+Standard [citation and acknowledgement language](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement) is available in BDC documentation or can be copied from below.
+
+<div class="display-flex flex-align-center">
+  <p class="text-bold margin-0">For citation of BDC:</p>
+  <button
+    class="usa-button usa-button--outline margin-left-2"
+    aria-label="Copy to clipboard"
+    onclick="navigator.clipboard.writeText(document.getElementById('copy-target-citation').textContent.trim()).then(() => { const msg = this.nextElementSibling; msg.hidden = false; setTimeout(() => msg.hidden = true, 2000); })"
+  >
+    <span>Copy text below</span> <Icon name="content_copy" size={3} />
+  </button>
+  <span hidden class="font-sans-xs text-green margin-left-1">Copied!</span>
+</div>
+<div id="copy-target-citation" class="margin-top-05">
+  National Heart, Lung, and Blood Institute, National Institutes of Health, U.S. Department of Health and Human Services (2020). The NHLBI BioData Catalyst. Zenodo. [https://doi.org/10.5281/zenodo.3822858](https://doi.org/10.5281/zenodo.3822858)
+</div>
+
+<div class="display-flex flex-align-center">
+  <p class="text-bold margin-0">To acknowledge BDC, use:</p>
+  <button
+    class="usa-button usa-button--outline margin-left-2"
+    aria-label="Copy to clipboard"
+    onclick="navigator.clipboard.writeText(document.getElementById('copy-target-acknowledgement').textContent.trim()).then(() => { const msg = this.nextElementSibling; msg.hidden = false; setTimeout(() => msg.hidden = true, 2000); })"
+  >
+    <span>Copy text below</span> <Icon name="content_copy" size={3} />
+  </button>
+  <span hidden class="font-sans-xs text-green margin-left-1">Copied!</span>
+</div>
+<div id="copy-target-acknowledgement">
+  The authors wish to acknowledge the contributions of the consortium working on the development of the NHLBI BioData Catalyst® (BDC) ecosystem.
+</div>
 
 <InlineAlert heading="Citing BDC" variant="info" noIcon>
   [View BDC Citation and Acknowledgement Guidance →](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement)

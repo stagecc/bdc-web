@@ -5,7 +5,7 @@ slug: "craven-mark"
 roles:
   - "Professor, Department of Biostatistics and Medical Informatics"
   - "School of Medicine and Public Health"
-  - "University of Wisconsin – Madison"
+  - "University of Wisconsin-Madison"
 term_start: 2018-08-08
 photo: craven-mark.jpg
 ---

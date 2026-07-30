@@ -1,13 +1,18 @@
 ---
-name: "Jason Williams"
-signifier: "M.D., FACR"
-slug: "williams-jason"
+name: "Talitha Washington"
+signifier: "Ph.D."
+slug: "washington-talitha"
 roles:
-  - "Assistant Director, Diversity and Research Readiness"
-  - "DNA Learning Center"
-  - "Cold Spring Harbor Laboratory"
-term_start: 2018-08-08
-photo: williams-jason.png
+  - "Office of the Provost"
+  - "Executive Director, Center for Applied Data Science and Analytics"
+  - "Co-Chair, President's AI Advisory Council"
+  - "Professor, Department of Mathematics"
+  - "Sean McCleese Endowed Chair"
+  - "Howard University"
+term_start: 2024-08-08
+photo: washington-talitha.jpg
 ---
 
-Jason Williams is Assistant Director, Inclusion and Research Readiness at the Cold Spring Harbor Laboratory DNA Learning Center where he develops national biology education programs. Williams leads education, outreach, and training efforts that have reached thousands of students, researchers, and educators in bioinformatics, data science, and molecular biology. His focus has been developing bioinformatics in undergraduate education and career-spanning learning for biologists. Williams is the founder of LifeSciTrainers.org – a global effort to promote a community of practice among professionals who develop short-format training for life scientists. He is an advisor on cyberinfrastructure, bioinformatics, and education projects and initiatives in the U.S., U.K., Europe, and Australia.
+Talitha Washington, a distinguished mathematician, serves as the Executive Director of the Center for Applied Data Science & Analytics (CADSA) at Howard University. A transformational leader, Dr. Washington guides CADSA’s direction in harnessing the power of data to address society’s most pressing challenges through groundbreaking research, expanded educational opportunities, and innovative advancements on a global scale. She holds the Sean McCleese Endowed Chair, is a Professor of Mathematics, and is the co-Chair of the President's AI Advisory Council, which guides the university's AI strategy across research, academic, and enterprise initiatives.
+
+Dr. Washington serves as Principal Investigator of the U.S. National Science Foundation–funded Research Coordination Network on Assessing and Predicting Job Outcomes in AI, a national initiative focused on building a coordinated understanding of AI jobs, skills, and credentials to strengthen the nation’s AI workforce ecosystem. She also serves as the Past-President of the Association for Women in Mathematics and a former member of the Census Scientific Advisory Committee of the U.S. Census Bureau. Her research interests include applied mathematics, dynamical systems, nonstandard finite difference schemes, data science, artificial intelligence, and education.

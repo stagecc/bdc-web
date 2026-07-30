@@ -206,6 +206,12 @@ export default function PublicationsFilter({ publications }: Props) {
             {/* Filter groups */}
             <div className="padding-x-3">
               <FilterGroup
+                legend="Research Area"
+                options={filterOptions.researchAreas}
+                selected={filters.researchArea}
+                onToggle={(v) => toggleFilter('researchArea', v)}
+              />
+              <FilterGroup
                 legend="Year"
                 options={filterOptions.years}
                 selected={filters.year}
@@ -217,12 +223,6 @@ export default function PublicationsFilter({ publications }: Props) {
                 selected={filters.researchCommunity}
                 onToggle={(v) => toggleFilter('researchCommunity', v)}
                 tooltips={RESEARCH_COMMUNITY_TOOLTIPS}
-              />
-              <FilterGroup
-                legend="Research Area"
-                options={filterOptions.researchAreas}
-                selected={filters.researchArea}
-                onToggle={(v) => toggleFilter('researchArea', v)}
               />
               <FilterGroup
                 legend="BDC Contribution"
