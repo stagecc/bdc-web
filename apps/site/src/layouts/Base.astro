@@ -1,5 +1,8 @@
 ---
 import { ClientRouter } from 'astro:transitions';
+import { AnalyticsController } from '@components/layout/AnalyticsController';
+import { ExitNoticeController } from '@components/layout/ExitNoticeController';
+import { ModalController } from '@components/layout/ModalController';
 import SiteAlertList from '@components/layout/SiteAlertList.astro';
 import SiteFooter from '@components/layout/SiteFooter.astro';
 import { SiteHeader } from '@components/layout/SiteHeader';
@@ -30,15 +33,6 @@ const hasGtm = typeof gtmId === 'string' && gtmId.length > 0;
     <title>{displayTitle}</title>
     <link rel="sitemap" href="/sitemap-index.xml" />
     <ClientRouter />
-    {hasGtm && (
-      <script is:inline>
-        {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','${gtmId}');`}
-      </script>
-    )}
     {enableRecaptcha && (
       <script
         src={`https://www.google.com/recaptcha/api.js?render=${import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}`}
@@ -58,6 +52,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     </style>
   </head>
   <body data-pagefind-ignore>
+    {hasGtm && <AnalyticsController client:load gtmId={gtmId} />}
     {hasGtm && (
       <noscript>
         <iframe
@@ -71,7 +66,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
     )}
     <a class="usa-skipnav" href="#main-content">Skip to main content</a>
     <SiteAlertList isHomePage={isHomePage} />
-    <SiteHeader client:only="react" transition:persist />
+    <SiteHeader client:load transition:persist />
+    <ExitNoticeController client:only="react" />
+    <ModalController client:only="react" />
     <main id="main-content" data-pagefind-body>
       <slot />
     </main>
