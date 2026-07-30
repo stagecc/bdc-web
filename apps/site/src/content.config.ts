@@ -229,5 +229,5 @@ export const collections = {
   programs,
   eep,
   banners,
-  programContent
+  programContent,
 };
