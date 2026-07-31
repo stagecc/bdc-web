@@ -7,10 +7,14 @@ import SummaryCard from '@components/SummaryCard.astro';
 import Page from '@layouts/Page.astro';
 
 const localEntries = await getCollection('programContent');
+const apiPrograms = await getCollection('programs');
+const apiById = new Map(apiPrograms.map((p) => [p.id, p]));
 
 const sections = await Promise.all(
   localEntries.map(async (entry) => {
-    const apiEntry = await getEntry('programs', entry.id);
+    const apiEntry = entry.data.dataAvailable !== false
+      ? apiById.get(entry.id)
+      : undefined;
     const { Content } = await render(entry);
     return {
       id: entry.id,
