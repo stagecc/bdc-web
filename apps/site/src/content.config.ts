@@ -226,7 +226,7 @@ export const collections = {
   coverage,
   faqs,
   programs,
+  programContent,
   eep,
   banners,
-  programContent,
 };
