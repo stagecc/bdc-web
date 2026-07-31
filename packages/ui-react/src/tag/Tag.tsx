@@ -9,17 +9,13 @@ type Props = {
 };
 
 const toneClasses: Record<Tone, string> = {
-  secondary: 'bg-secondary-lighter text-secondary-dark',
+  secondary: 'bg-secondary-lighter text-secondary-darker',
   warm: 'bg-accent-warm-lighter text-accent-warm-darker',
   cool: 'bg-accent-cool-lighter text-accent-cool-darker',
   neutral: 'bg-base-lightest text-base-dark',
 };
 
-export default function TagPill({
-  label,
-  tone = 'secondary',
-  className,
-}: Props) {
+export default function Tag({ label, tone = 'secondary', className }: Props) {
   return (
     <span
       className={[

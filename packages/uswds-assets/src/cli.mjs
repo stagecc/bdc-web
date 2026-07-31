@@ -57,7 +57,9 @@ async function main() {
   const projectRoot = resolve(process.cwd(), args.project);
 
   await syncUswdsAssets({ projectRoot, presetName: args.preset });
-  process.stdout.write(`Synced USWDS assets (${args.preset}) -> ${projectRoot}/public\n`);
+  process.stdout.write(
+    `Synced USWDS assets (${args.preset}) -> ${projectRoot}/public\n`,
+  );
 }
 
 main().catch((error) => {

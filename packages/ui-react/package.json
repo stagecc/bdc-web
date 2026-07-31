@@ -22,7 +22,7 @@
     "./link/Link": "./src/link/Link.tsx",
     "./modal/useDataAttributeModalController": "./src/modal/useDataAttributeModalController.ts",
     "./tag/RemovableTagPill": "./src/tag/RemovableTagPill.tsx",
-    "./tag/TagPill": "./src/tag/TagPill.tsx",
+    "./tag/Tag": "./src/tag/Tag.tsx",
     "./tooltip/InfoTooltip": "./src/tooltip/InfoTooltip.tsx",
     "./tooltip/Tooltip": "./src/tooltip/Tooltip.tsx"
   }

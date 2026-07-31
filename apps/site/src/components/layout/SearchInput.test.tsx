@@ -24,9 +24,7 @@ describe('SearchInput', () => {
   });
 
   it('redirects to site search results on submit', async () => {
-    const openSpy = vi
-      .spyOn(window, 'open')
-      .mockImplementation(() => null);
+    const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null);
 
     const user = userEvent.setup();
     render(<SearchInput />);

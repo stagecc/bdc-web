@@ -1,7 +1,7 @@
 ---
 const { title, date, updateType, tags = [] } = Astro.props;
 
-import TagPill from '@bdc/ui-astro/tag/TagPill.astro';
+import Tag from '@bdc/ui-astro/tag/Tag.astro';
 import Link from '@components/link/Link.astro';
 ---
 
@@ -24,7 +24,7 @@ import Link from '@components/link/Link.astro';
       <div class="tags display-flex padding-0 margin-y-1">
         {tags.map((tag) => (
           <Link to={`/tagged/${tag}`} class="margin-right-05 margin-bottom-05 text-no-underline">
-            <TagPill label={tag} tone="neutral" />
+            <Tag label={tag} tone="neutral" />
           </Link>
         ))}
       </div>

@@ -7,13 +7,13 @@ import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
 import TwoColumnSection from '@bdc/ui-astro/layout/TwoColumnSection.astro';
-import Link from '@bdc/ui-astro/link/Link.astro';
 import Button from '@components/Button.astro';
 import HappeningCard from '@components/cards/HappeningCard.astro';
 import QuoteCard from '@components/cards/QuoteCard.astro';
 import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
 import DugSearchBar from '@components/dug/DugSearchBar';
 import ProcessSteps from '@components/home/ProcessSteps.astro';
+import Link from '@components/link/Link.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
 import Base from '@layouts/Base.astro';
@@ -22,6 +22,13 @@ import { slugify } from '../util/slugify';
 const news = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
+
+const programContentEntries = await getCollection('programContent');
+const programExcerptById = new Map(
+  programContentEntries
+    .filter((entry) => Boolean(entry.data.excerpt))
+    .map((entry) => [entry.id, entry.data.excerpt]),
+);
 
 const upcomingEvents = (await getCollection('events'))
   .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
@@ -42,9 +49,20 @@ const featuredPublications = publications
   .slice(0, 2)
   .map((publication) => publication.data);
 
+const defaultCommunityDescription =
+  'Approved datasets and tools for this research community.';
+
 const featuredCommunities = programs
   .sort(() => 0.5 - Math.random())
-  .slice(0, 4);
+  .slice(0, 4)
+  .map((program) => {
+    const slug = slugify(program.key);
+    return {
+      ...program,
+      slug,
+      excerpt: programExcerptById.get(slug) ?? defaultCommunityDescription,
+    };
+  });
 
 const testimonials = [
   {
@@ -79,7 +97,7 @@ const lifecycleSteps = [
     icon: 'search',
     title: 'Explore data',
     description:
-      'Learn where and how to search available studies and review access requirements.',
+      'Learn where and how to search available studies. No sign-in required to explore.',
     action: {
       label: 'Explore data',
       path: '/data/explor',
@@ -136,7 +154,7 @@ const nextEvent = events[0];
     <Hero
       eyebrow="NHLBI BioData Catalyst (BDC)&#174;"
       titleLines={['Explore data.', 'Run analyses.', 'Advance science.']}
-      description="BDC brings together NHLBI studies, cloud-based analysis tools, and secure collaborative workspaces for heart, lung, blood, and sleep research - from discovery to output."
+      description="BDC brings together NHLBI studies, cloud-based analysis tools, and secure collaborative workspaces to accelerate heart, lung, blood, and sleep research."
       primaryCta={{ label: 'Learn About BDC', href: '/about/bdc', variant: 'accent-warm' }}
       tone="dark"
     />
@@ -144,12 +162,12 @@ const nextEvent = events[0];
     <PageSection
       eyebrow="Search Hosted Data"
       title="Discover Data in BDC"
-      description="Search BDC-hosted data by disease, phenotype, biological process, or anatomical entity."
-      action={{ label: 'View All Ways to Explore Data', href: '/data/explore' }}
+      description="Search by disease, phenotype, biological process, or anatomical entity."
+      action={{ label: 'View all data search tools', href: '/data/explore' }}
     >
       <DugSearchBar
         id="home-discover-search"
-        placeholder="Search BDC data"
+        placeholder="Try “asthma,” “blood pressure,” or “atrial fibrillation”"
         submitLabel="Search"
         action="/data/explore/dug"
         method="get"
@@ -164,23 +182,18 @@ const nextEvent = events[0];
       tone="muted"
     >
       <div class="margin-top-5 margin-bottom-0 text-center display-flex text-primary-darker flex-align-center flex-justify-center">
-        <IconBadge icon="youtube" tone="warm" size={4} class="margin-right-1" />
-        <span class="text-bold margin-right-1">New to BDC?</span>{' '}
-        <button
-          type="button"
-          class="usa-button usa-button--unstyled text-bold text-underline"
-          data-modal-open="home-overview-video-modal"
-          aria-controls="home-overview-video-modal"
-        >
-          Watch the two-minute overview
-        </button>.
+        <IconBadge icon="support" tone="cool" size={4} class="margin-right-1" />
+        <span class="margin-right-1">Need help with BDC?</span>{' '}
+        <Link to="/help/get-help" class="text-bold">
+          Submit a request
+        </Link>.
       </div>
       <ProcessSteps steps={lifecycleSteps} tone="muted" />
       <div class="display-flex flex-justify-center flex-align-center margin-top-2 margin-bottom-0">
         <IconBadge icon="attach_money" tone="cool" class="margin-right-1" />
         <span>
           Funding may be available for you to get started.&nbsp;
-          <Link to="/help/costs" class="text-bold">Learn about usage costs and funding</Link>.
+          <Link to="/help/costs" class="text-bold">Learn about usage costs and funding options</Link>.
         </span>
       </div>
 
@@ -211,9 +224,9 @@ const nextEvent = events[0];
     </PageSection>
 
     <PageSection
-      eyebrow="BDC Research Communities"
+      eyebrow="Featured Communities"
       title="Explore Data by Research Community"
-      action={{ label: 'View All Communities', href: '/about/research-communities' }}
+      action={{ label: 'View all communities', href: '/about/research-communities' }}
       tone="default"
     >
       <div class="grid-row grid-gap-3 margin-bottom-neg-3">
@@ -222,10 +235,10 @@ const nextEvent = events[0];
             <ResearchCommunityCard
               mediaVariant={Math.min(index + 1, 4) as 1 | 2 | 3 | 4}
               title={program.key}
-              description="Approved datasets and tools for this research community."
+              description={program.excerpt}
               badgeLabel={program.description}
               metric={`${program.doc_count} dataset${program.doc_count === 1 ? '' : 's'}`}
-              href={`/about/studies/${slugify(program.key)}`}
+              href={`/about/studies/${program.slug}`}
             />
           </div>
         ))}
@@ -239,10 +252,10 @@ const nextEvent = events[0];
     {
       featuredPublications.length > 0 && (
         <PageSection
-          eyebrow="BDC-Enabled Publications"
-          title="Featured Research"
-          description="Read the most recent publications coming from BDC."
-          action={{ label: 'View All Publications', href: '/news/bdc-enabled-research' }}
+          eyebrow="Research in Action"
+          title="Latest Publications"
+          description="Explore the latest BDC-enabled publications and see how investigators are using BDC data and tools to advance heart, lung, blood, and sleep research"
+          action={{ label: 'View all publications', href: '/news/bdc-enabled-research' }}
           tone="highlight"
         >
           <div class="display-flex flex-column">
@@ -279,8 +292,9 @@ const nextEvent = events[0];
     </TwoColumnSection>
 
     <PageSection
-      eyebrow="News & Events"
+      eyebrow="Latest from BDC"
       title="What's Happening"
+      action={{ label:'View all news', href: '/news/latest-updates' }}
       tone="muted"
     >
       <div class="grid-row grid-gap-3 flex-align-stretch">
@@ -332,7 +346,7 @@ const nextEvent = events[0];
     </PageSection>
 
     <PageSection
-      eyebrow="Testimonials"
+      eyebrow="Researcher Perspectives"
       title="What BDC Researchers Are Saying"
       class="border-top border-bottom border-base-lighter"
       tone="muted"

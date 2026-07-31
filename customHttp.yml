@@ -1,0 +1,30 @@
+applications:
+  - appRoot: apps/site
+    customHeaders:
+      - pattern: '**'
+        headers:
+          - key: Content-Security-Policy-Report-Only
+            value: >-
+              default-src 'self';
+              base-uri 'self';
+              object-src 'none';
+              frame-ancestors 'self';
+              form-action 'self';
+              script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com;
+              style-src 'self' 'unsafe-inline';
+              img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://www.gstatic.com;
+              font-src 'self' data:;
+              connect-src 'self' https://search.biodatacatalyst.renci.org https://www.google.com https://www.google-analytics.com https://www.googletagmanager.com https://epxuifil2cc4sqfqws62zejcwi0cgfds.lambda-url.us-east-1.on.aws;
+              frame-src 'self' https://www.youtube-nocookie.com https://www.googletagmanager.com https://www.google.com https://www.recaptcha.net;
+              manifest-src 'self';
+              worker-src 'self' blob:;
+              upgrade-insecure-requests;
+              report-uri https://epxuifil2cc4sqfqws62zejcwi0cgfds.lambda-url.us-east-1.on.aws
+          - key: X-Content-Type-Options
+            value: nosniff
+          - key: Referrer-Policy
+            value: strict-origin-when-cross-origin
+          - key: X-Frame-Options
+            value: SAMEORIGIN
+          - key: Permissions-Policy
+            value: accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()

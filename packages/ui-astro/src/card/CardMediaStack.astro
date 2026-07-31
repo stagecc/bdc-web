@@ -1,5 +1,5 @@
 ---
-import TagPill from '../tag/TagPill.astro';
+import Tag from '../tag/Tag.astro';
 import Card from './Card.astro';
 
 interface Props {
@@ -29,7 +29,7 @@ const {
     <h3 class="margin-top-0 margin-bottom-1 text-primary-dark font-heading-md"><a class="usa-link" href={href}>{title}</a></h3>
     <p class="margin-top-0 margin-bottom-2 text-base line-height-sans-5 flex-1">{summary}</p>
     <div class="display-flex flex-justify flex-align-center gap-1">
-      <TagPill label={badgeLabel} />
+      <Tag label={badgeLabel} />
       <p class="margin-0 text-bold text-base-dark text-no-wrap">{metric}</p>
     </div>
   </div>

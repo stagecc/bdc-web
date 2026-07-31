@@ -1,7 +1,7 @@
-import type TagPill from '@bdc/ui-react/tag/TagPill';
+import type Tag from '@bdc/ui-react/tag/Tag';
 import type { ComponentProps } from 'react';
 
-type TagTone = NonNullable<ComponentProps<typeof TagPill>['tone']>;
+type TagTone = NonNullable<ComponentProps<typeof Tag>['tone']>;
 
 export type PublicationTagGroupKey =
   | 'researchCommunity'

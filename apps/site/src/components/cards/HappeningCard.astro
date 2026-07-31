@@ -1,6 +1,6 @@
 ---
 import Card from '@bdc/ui-astro/card/Card.astro';
-import TagCapsule from '@bdc/ui-astro/tag/TagCapsule.astro';
+import Badge from '@bdc/ui-astro/tag/Badge.astro';
 import Link from '@components/link/Link.astro';
 
 interface Props {
@@ -51,7 +51,7 @@ const toneByKind = {
   ]}
 >
   <div class="display-flex flex-wrap flex-align-center gap-1 margin-bottom-2">
-    <TagCapsule label={badgeByKind[kind]} icon={iconByKind[kind]} tone={toneByKind[kind]} class="margin-right-1" />
+    <Badge label={badgeByKind[kind]} icon={iconByKind[kind]} tone={toneByKind[kind]} class="margin-right-1" />
     <p class="font-sans-xs text-bold text-base margin-0">{meta}</p>
   </div>
 

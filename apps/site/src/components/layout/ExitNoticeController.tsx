@@ -97,15 +97,24 @@ export function ExitNoticeController() {
                 id="external-link-exit-notice-description"
                 className="margin-top-2"
               >
-                You are leaving the BDC website and going to a website that is not operated by the federal government.              </p>
+                You are leaving the BDC website and going to a website that is
+                not operated by the federal government.{' '}
+              </p>
               <p>
-                Links to non-federal websites are provided for your convenience. Their inclusion does not constitute an endorsement by the federal government of the organization, its products or services, or the information found on the site.              </p>
+                Links to non-federal websites are provided for your convenience.
+                Their inclusion does not constitute an endorsement by the
+                federal government of the organization, its products or
+                services, or the information found on the site.{' '}
+              </p>
               <p>
                 You will be subject to the destination&apos;s privacy policy
                 after leaving BDC.
               </p>
               <p>
-                The destination website is not subject to the same federal information quality, privacy, security, or accessibility policies as this website.              </p>
+                The destination website is not subject to the same federal
+                information quality, privacy, security, or accessibility
+                policies as this website.{' '}
+              </p>
               <p className="text-bold margin-bottom-3">
                 Do you want to continue?
               </p>
