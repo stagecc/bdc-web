@@ -1,6 +1,6 @@
-import { useRef } from 'react';
-import type { FormEvent } from 'react';
 import Icon from '@bdc/ui-react/icon/Icon';
+import type { FormEvent } from 'react';
+import { useRef } from 'react';
 import styles from './DugSearchBar.module.scss';
 
 type Props = {
@@ -34,7 +34,9 @@ export default function DugSearchBar({
 }: Props) {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const isControlled = typeof value === 'string';
-  const shouldShowClear = Boolean(isControlled && value && value.trim().length > 0 && onClear);
+  const shouldShowClear = Boolean(
+    isControlled && value && value.trim().length > 0 && onClear,
+  );
 
   const handleClear = () => {
     if (!onClear) {
@@ -48,7 +50,6 @@ export default function DugSearchBar({
   return (
     <form
       className={`usa-search usa-search--big maxw-none ${styles.searchShell} display-flex bg-base-lightest border border-base-lighter radius-pill padding-05 ${className ?? ''}`}
-      role="search"
       action={action}
       method={method}
       onSubmit={onSubmit}
@@ -65,10 +66,14 @@ export default function DugSearchBar({
           type="search"
           placeholder={placeholder}
           {...(isControlled ? { value } : {})}
-          onChange={onChange ? (event) => onChange(event.target.value) : undefined}
+          onChange={
+            onChange ? (event) => onChange(event.target.value) : undefined
+          }
         />
         {(shouldShowClear || shortcutLabel) && (
-          <div className={`${styles.searchAffordance} display-flex flex-align-center`}>
+          <div
+            className={`${styles.searchAffordance} display-flex flex-align-center`}
+          >
             {shouldShowClear && (
               <button
                 type="button"
@@ -87,7 +92,10 @@ export default function DugSearchBar({
           </div>
         )}
       </div>
-      <button className={`usa-button usa-search__submit-button flex-shrink-0 radius-pill ${styles.submitButton}`} type="submit">
+      <button
+        className={`usa-button usa-search__submit-button flex-shrink-0 radius-pill ${styles.submitButton}`}
+        type="submit"
+      >
         <span className="usa-search__submit-text">{submitLabel}</span>
       </button>
     </form>

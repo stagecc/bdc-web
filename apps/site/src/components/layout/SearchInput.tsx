@@ -6,10 +6,7 @@ export function SearchInput() {
     const formData = new FormData(e.currentTarget);
     const query = formData.get('search');
     if (query) {
-      window.open(
-        `/search?q=${encodeURIComponent(query.toString())}`,
-        '_self',
-      );
+      window.open(`/search?q=${encodeURIComponent(query.toString())}`, '_self');
     }
   };
 

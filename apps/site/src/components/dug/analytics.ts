@@ -1,4 +1,7 @@
-type AnalyticsParams = Record<string, string | number | boolean | Array<string> | null | undefined>;
+type AnalyticsParams = Record<
+  string,
+  string | number | boolean | Array<string> | null | undefined
+>;
 
 type DataLayerEvent = AnalyticsParams & { event: string };
 
@@ -10,7 +13,11 @@ type DugCollectionLike = {
 
 type AnalyticsWindow = Window & {
   dataLayer?: Array<Record<string, unknown>>;
-  gtag?: (command: 'event', eventName: string, params?: AnalyticsParams) => void;
+  gtag?: (
+    command: 'event',
+    eventName: string,
+    params?: AnalyticsParams,
+  ) => void;
 };
 
 function pushAnalyticsEvent(event: DataLayerEvent) {

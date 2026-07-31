@@ -28,8 +28,7 @@ export interface DugStudy {
   elements: DugVariable[];
 }
 
-const SEARCH_BASE_URL =
-  'https://search.biodatacatalyst.renci.org/search-api';
+const SEARCH_BASE_URL = 'https://search.biodatacatalyst.renci.org/search-api';
 
 interface DugConceptHit {
   _source?: Omit<DugConcept, 'explanation'>;

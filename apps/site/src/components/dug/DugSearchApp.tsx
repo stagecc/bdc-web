@@ -1,15 +1,15 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import type { FormEvent } from 'react';
 import Card from '@bdc/ui-react/card/Card';
 import Icon from '@bdc/ui-react/icon/Icon';
-import TagPill from '@bdc/ui-react/tag/TagPill';
+import Tag from '@bdc/ui-react/tag/Tag';
+import type { FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import {
   trackDugCheckoutCollection,
   trackDugDownloadCollection,
   trackDugSearch,
 } from './analytics';
-import { fetchConcepts, fetchStudies } from './api';
 import type { DugConcept, DugStudy } from './api';
+import { fetchConcepts, fetchStudies } from './api';
 import styles from './DugSearchApp.module.scss';
 import DugSearchBar from './DugSearchBar';
 import { useQueryParam } from './useQueryParam';
@@ -55,18 +55,16 @@ function snipText(sentence: string, threshold: number): string {
     return sentence;
   }
 
-  return (
-    sentence
-      .split(' ')
-      .reduce<string[]>((acc, word) => {
-        if (acc.join(' ').length > threshold) {
-          return acc;
-        }
+  return `${sentence
+    .split(' ')
+    .reduce<string[]>((acc, word) => {
+      if (acc.join(' ').length > threshold) {
+        return acc;
+      }
 
-        return acc.concat(word);
-      }, [])
-      .join(' ') + '...'
-  );
+      return acc.concat(word);
+    }, [])
+    .join(' ')}...`;
 }
 
 function loadCollection(): DugCollection {
@@ -100,9 +98,9 @@ export default function DugSearchApp() {
   const [totalItems, setTotalItems] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedResult, setSelectedResult] = useState<DugConcept | null>(null);
-  const [activeDetailTab, setActiveDetailTab] = useState<'studies' | 'explanation'>(
-    'studies',
-  );
+  const [activeDetailTab, setActiveDetailTab] = useState<
+    'studies' | 'explanation'
+  >('studies');
   const [studies, setStudies] = useState<DugStudy[]>([]);
   const [studiesLoading, setStudiesLoading] = useState(false);
   const [studiesError, setStudiesError] = useState<string | null>(null);
@@ -158,7 +156,9 @@ export default function DugSearchApp() {
       .then((data) => {
         setResults(data.hits);
         setTotalItems(data.totalItems);
-        setConceptTypes([...data.conceptTypes].sort((a, b) => a.localeCompare(b)));
+        setConceptTypes(
+          [...data.conceptTypes].sort((a, b) => a.localeCompare(b)),
+        );
       })
       .catch((nextError: unknown) => {
         if ((nextError as Error).name === 'AbortError') {
@@ -219,19 +219,20 @@ export default function DugSearchApp() {
 
   useEffect(() => {
     const handleSearchShortcut = (event: KeyboardEvent) => {
-      if (!(event.ctrlKey || event.metaKey) || event.key.toLowerCase() !== 'k') {
+      if (
+        !(event.ctrlKey || event.metaKey) ||
+        event.key.toLowerCase() !== 'k'
+      ) {
         return;
       }
 
       const target = event.target;
       if (
-        target instanceof HTMLElement
-        && (
-          target.tagName === 'INPUT'
-          || target.tagName === 'TEXTAREA'
-          || target.tagName === 'SELECT'
-          || target.isContentEditable
-        )
+        target instanceof HTMLElement &&
+        (target.tagName === 'INPUT' ||
+          target.tagName === 'TEXTAREA' ||
+          target.tagName === 'SELECT' ||
+          target.isContentEditable)
       ) {
         return;
       }
@@ -326,7 +327,10 @@ export default function DugSearchApp() {
     return results.filter((result) => activeFilters.includes(result.type));
   }, [activeFilters, results]);
 
-  const pageCount = useMemo(() => Math.ceil(totalItems / PER_PAGE), [totalItems]);
+  const pageCount = useMemo(
+    () => Math.ceil(totalItems / PER_PAGE),
+    [totalItems],
+  );
 
   const hasMore = useMemo(
     () => Boolean(query) && currentPage < pageCount,
@@ -359,7 +363,13 @@ export default function DugSearchApp() {
     return filteredResults.length < totalItems
       ? `Showing ${filteredResults.length.toLocaleString()} of ${totalItems.toLocaleString()} matching concept results`
       : `${filteredResults.length.toLocaleString()} matching concept results`;
-  }, [activeFilters.length, filteredResults.length, isLoading, query, totalItems]);
+  }, [
+    activeFilters.length,
+    filteredResults.length,
+    isLoading,
+    query,
+    totalItems,
+  ]);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -444,7 +454,9 @@ export default function DugSearchApp() {
       if (previous.variables.some((item) => item.id === variable.id)) {
         return {
           ...previous,
-          variables: previous.variables.filter((item) => item.id !== variable.id),
+          variables: previous.variables.filter(
+            (item) => item.id !== variable.id,
+          ),
         };
       }
 
@@ -460,10 +472,7 @@ export default function DugSearchApp() {
     });
   };
 
-  const removeCollectionItem = (
-    type: keyof DugCollection,
-    id: string,
-  ) => {
+  const removeCollectionItem = (type: keyof DugCollection, id: string) => {
     setCollection((previous) => ({
       ...previous,
       [type]: previous[type].filter((item) => item.id !== id),
@@ -523,6 +532,7 @@ export default function DugSearchApp() {
             placeholder="Search disease, phenotype, process, or anatomy"
             submitLabel="Search"
             value={inputValue}
+            shortcutLabel={shortcutLabel}
             onChange={setInputValue}
             onSubmit={handleSubmit}
             onClear={() => {
@@ -542,9 +552,7 @@ export default function DugSearchApp() {
                 aria-controls="dug-filters-panel"
               >
                 {filtersOpen ? 'Hide filters' : 'Show filters'}
-                {activeFilters.length > 0
-                  ? ` (${activeFilters.length})`
-                  : ''}
+                {activeFilters.length > 0 ? ` (${activeFilters.length})` : ''}
               </button>
             )}
           </div>
@@ -557,40 +565,42 @@ export default function DugSearchApp() {
                 aria-label="Close filters"
                 onClick={() => setFiltersOpen(false)}
               />
-              <div
+              <section
                 id="dug-filters-panel"
                 className={`${styles.filtersPanel} border border-base-lighter radius-sm bg-base-lightest padding-2 margin-top-1`}
                 aria-labelledby="dug-filter-heading"
               >
-            <div className="display-flex flex-justify flex-align-center margin-bottom-1">
-                <p id="dug-filter-heading" className="text-bold margin-y-0">Result types</p>
-                {activeFilters.length > 0 && (
-                  <button
-                    type="button"
-                    className="usa-button usa-button--unstyled font-body-xs"
-                    onClick={clearFilters}
-                  >
-                    Clear filters
-                  </button>
-                )}
-              </div>
-              <div className="grid-row grid-gap">
-                {conceptTypes.map((filter) => (
-                  <label
-                    key={filter}
-                    className="tablet:grid-col-4 display-flex flex-align-center margin-bottom-1"
-                  >
-                    <input
-                      type="checkbox"
-                      className="margin-right-1"
-                      checked={activeFilters.includes(filter)}
-                      onChange={() => toggleFilter(filter)}
-                    />
-                    <span>{filter}</span>
-                  </label>
-                ))}
-              </div>
-              </div>
+                <div className="display-flex flex-justify flex-align-center margin-bottom-1">
+                  <p id="dug-filter-heading" className="text-bold margin-y-0">
+                    Result types
+                  </p>
+                  {activeFilters.length > 0 && (
+                    <button
+                      type="button"
+                      className="usa-button usa-button--unstyled font-body-xs"
+                      onClick={clearFilters}
+                    >
+                      Clear filters
+                    </button>
+                  )}
+                </div>
+                <div className="grid-row grid-gap">
+                  {conceptTypes.map((filter) => (
+                    <label
+                      key={filter}
+                      className="tablet:grid-col-4 display-flex flex-align-center margin-bottom-1"
+                    >
+                      <input
+                        type="checkbox"
+                        className="margin-right-1"
+                        checked={activeFilters.includes(filter)}
+                        onChange={() => toggleFilter(filter)}
+                      />
+                      <span>{filter}</span>
+                    </label>
+                  ))}
+                </div>
+              </section>
             </>
           )}
 
@@ -612,7 +622,10 @@ export default function DugSearchApp() {
           )}
 
           {error && (
-            <div className="usa-alert usa-alert--error margin-top-2" role="alert">
+            <div
+              className="usa-alert usa-alert--error margin-top-2"
+              role="alert"
+            >
               <div className="usa-alert__body">
                 <p className="usa-alert__text">{error}</p>
               </div>
@@ -621,7 +634,8 @@ export default function DugSearchApp() {
 
           {!error && !query && (
             <p className="font-ui-md text-italic margin-top-1">
-              Try terms like: asthma, pulmonary fibrosis, anemia, or sleep apnea.
+              Try terms like: asthma, pulmonary fibrosis, anemia, or sleep
+              apnea.
             </p>
           )}
 
@@ -631,11 +645,15 @@ export default function DugSearchApp() {
             </p>
           )}
 
-          {!error && query && !isLoading && results.length > 0 && filteredResults.length === 0 && (
-            <p className="font-ui-md text-italic margin-top-1">
-              No results match the selected filters.
-            </p>
-          )}
+          {!error &&
+            query &&
+            !isLoading &&
+            results.length > 0 &&
+            filteredResults.length === 0 && (
+              <p className="font-ui-md text-italic margin-top-1">
+                No results match the selected filters.
+              </p>
+            )}
 
           {!error && filteredResults.length > 0 && (
             <div className="grid-row grid-gap-2 margin-top-1">
@@ -670,16 +688,21 @@ export default function DugSearchApp() {
                     </div>
 
                     <p className="margin-y-1 line-height-sans-4 font-body-sm desktop:font-body-md">
-                      {snipText(result.description || 'No description available.', 170)}
+                      {snipText(
+                        result.description || 'No description available.',
+                        170,
+                      )}
                     </p>
 
                     <div className="font-body-2xs desktop:font-body-xs text-base-dark display-flex flex-align-end flex-wrap gap-1 tablet:flex-justify margin-top-auto">
                       <span className="display-flex flex-align-center">
                         <Icon.Identification aria-hidden />
-                        <code className="font-mono-2xs margin-left-05">{result.id}</code>
+                        <code className="font-mono-2xs margin-left-05">
+                          {result.id}
+                        </code>
                       </span>
                       <span className="display-flex flex-align-center">
-                        <TagPill
+                        <Tag
                           label={result.type || 'UNKNOWN'}
                           tone="cool"
                           className="margin-left-05"
@@ -705,11 +728,15 @@ export default function DugSearchApp() {
             </div>
           )}
 
-          {!error && !isLoading && query && !hasMore && filteredResults.length > 0 && (
-            <p className="text-center text-base margin-top-2">
-              You have reached the end of the available results.
-            </p>
-          )}
+          {!error &&
+            !isLoading &&
+            query &&
+            !hasMore &&
+            filteredResults.length > 0 && (
+              <p className="text-center text-base margin-top-2">
+                You have reached the end of the available results.
+              </p>
+            )}
 
           {isLoading && (
             <div className="display-flex flex-align-center flex-justify-center padding-y-6">
@@ -729,7 +756,9 @@ export default function DugSearchApp() {
           <div className="display-flex flex-justify flex-align-start gap-1 margin-bottom-1">
             <div>
               <h2 className="font-heading-md margin-0">Collection</h2>
-              <p className="margin-y-0 text-base-dark font-body-sm">Save for next steps</p>
+              <p className="margin-y-0 text-base-dark font-body-sm">
+                Save for next steps
+              </p>
             </div>
             <div className="display-flex flex-align-center">
               <button
@@ -742,15 +771,23 @@ export default function DugSearchApp() {
               >
                 <Icon.FileDownload aria-hidden />
               </button>
-              <TagPill label={`${collectionCount} items`} tone="neutral" />
+              <Tag label={`${collectionCount} items`} tone="neutral" />
             </div>
           </div>
 
-          <details open className="border border-base-lighter radius-md bg-base-lightest padding-x-1 padding-y-105 margin-bottom-1">
-            <summary className="text-bold cursor-pointer radius-sm padding-x-05">Concepts ({collection.concepts.length})</summary>
+          <details
+            open
+            className="border border-base-lighter radius-md bg-base-lightest padding-x-1 padding-y-105 margin-bottom-1"
+          >
+            <summary className="text-bold cursor-pointer radius-sm padding-x-05">
+              Concepts ({collection.concepts.length})
+            </summary>
             <ul className="usa-list padding-left-05 margin-y-05 margin-x-05">
               {collection.concepts.map((item) => (
-                <li key={`concept-${item.id}`} className="display-flex flex-justify flex-align-center padding-left-0 margin-y-05">
+                <li
+                  key={`concept-${item.id}`}
+                  className="display-flex flex-justify flex-align-center padding-left-0 margin-y-05"
+                >
                   <span className="flex-1">{item.name}</span>
                   <button
                     type="button"
@@ -762,15 +799,22 @@ export default function DugSearchApp() {
                   </button>
                 </li>
               ))}
-              {collection.concepts.length === 0 && <li className="usa-list--unstyled text-base">None selected.</li>}
+              {collection.concepts.length === 0 && (
+                <li className="usa-list--unstyled text-base">None selected.</li>
+              )}
             </ul>
           </details>
 
           <details className="border border-base-lighter radius-md bg-base-lightest padding-x-1 padding-y-105 margin-bottom-1">
-            <summary className="text-bold cursor-pointer radius-sm padding-x-05">Studies ({collection.studies.length})</summary>
+            <summary className="text-bold cursor-pointer radius-sm padding-x-05">
+              Studies ({collection.studies.length})
+            </summary>
             <ul className="usa-list padding-left-05 margin-y-05 margin-x-05">
               {collection.studies.map((item) => (
-                <li key={`study-${item.id}`} className="display-flex flex-justify flex-align-center padding-left-0 margin-y-05">
+                <li
+                  key={`study-${item.id}`}
+                  className="display-flex flex-justify flex-align-center padding-left-0 margin-y-05"
+                >
                   <span className="flex-1">{item.name}</span>
                   <button
                     type="button"
@@ -782,15 +826,22 @@ export default function DugSearchApp() {
                   </button>
                 </li>
               ))}
-              {collection.studies.length === 0 && <li className="usa-list--unstyled text-base">None selected.</li>}
+              {collection.studies.length === 0 && (
+                <li className="usa-list--unstyled text-base">None selected.</li>
+              )}
             </ul>
           </details>
 
           <details className="border border-base-lighter radius-md bg-base-lightest padding-x-1 padding-y-105">
-            <summary className="text-bold cursor-pointer radius-sm padding-x-05">Variables ({collection.variables.length})</summary>
+            <summary className="text-bold cursor-pointer radius-sm padding-x-05">
+              Variables ({collection.variables.length})
+            </summary>
             <ul className="usa-list padding-left-05 margin-y-05 margin-x-05">
               {collection.variables.map((item) => (
-                <li key={`var-${item.id}`} className="display-flex flex-justify flex-align-center padding-left-0 margin-y-05">
+                <li
+                  key={`var-${item.id}`}
+                  className="display-flex flex-justify flex-align-center padding-left-0 margin-y-05"
+                >
                   <span className="flex-1">{item.name}</span>
                   <button
                     type="button"
@@ -802,7 +853,9 @@ export default function DugSearchApp() {
                   </button>
                 </li>
               ))}
-              {collection.variables.length === 0 && <li className="usa-list--unstyled text-base">None selected.</li>}
+              {collection.variables.length === 0 && (
+                <li className="usa-list--unstyled text-base">None selected.</li>
+              )}
             </ul>
           </details>
 
@@ -836,9 +889,11 @@ export default function DugSearchApp() {
           aria-modal="true"
           aria-labelledby="dug-modal-title"
         >
-          <div
+          <button
+            type="button"
             className="position-absolute top-0 right-0 bottom-0 left-0 bg-black opacity-70"
             onClick={closeDetailModal}
+            aria-label="Close detail dialog"
           />
           <div
             className={`${styles.modalPanel} position-relative bg-white radius-md shadow-5 minh-tablet-lg`}
@@ -848,25 +903,28 @@ export default function DugSearchApp() {
           >
             <div className="position-sticky top-0 display-flex flex-justify flex-align-start padding-2 margin-bottom-2 bg-base-lightest">
               <div className="flex-1">
-                <h2 id="dug-modal-title" className="margin-top-0 margin-bottom-05">
+                <h2
+                  id="dug-modal-title"
+                  className="margin-top-0 margin-bottom-05"
+                >
                   {selectedResult.name}
                 </h2>
                 <p className="margin-y-0 text-base-dark">{selectedResult.id}</p>
               </div>
-                <button
-                  type="button"
-                  className="usa-button usa-button--unstyled text-bold"
-                  onClick={closeDetailModal}
-                  ref={closeButtonRef}
-                >
-                  Close
-                </button>
+              <button
+                type="button"
+                className="usa-button usa-button--unstyled text-bold"
+                onClick={closeDetailModal}
+                ref={closeButtonRef}
+              >
+                Close
+              </button>
             </div>
 
             <div className="padding-2">
-              <p className="margin-top-0">{
-                selectedResult.description || 'No description available.'
-              }</p>
+              <p className="margin-top-0">
+                {selectedResult.description || 'No description available.'}
+              </p>
             </div>
 
             <div className="padding-2 display-flex gap-1 margin-bottom-2">
@@ -876,7 +934,7 @@ export default function DugSearchApp() {
                   activeDetailTab === 'studies' ? '' : 'usa-button--outline'
                 }`}
                 onClick={() => setActiveDetailTab('studies')}
-                aria-selected={activeDetailTab === 'studies'}
+                aria-pressed={activeDetailTab === 'studies'}
               >
                 Studies ({studiesLoading ? '...' : studies.length})
               </button>
@@ -886,7 +944,7 @@ export default function DugSearchApp() {
                   activeDetailTab === 'explanation' ? '' : 'usa-button--outline'
                 }`}
                 onClick={() => setActiveDetailTab('explanation')}
-                aria-selected={activeDetailTab === 'explanation'}
+                aria-pressed={activeDetailTab === 'explanation'}
               >
                 Explanation
               </button>
@@ -894,23 +952,40 @@ export default function DugSearchApp() {
 
             {activeDetailTab === 'studies' && (
               <div className="padding-2">
-                {studiesLoading && <p className="margin-y-0">Loading related studies...</p>}
-                {studiesError && <p className="text-secondary-dark margin-y-0">{studiesError}</p>}
+                {studiesLoading && (
+                  <p className="margin-y-0">Loading related studies...</p>
+                )}
+                {studiesError && (
+                  <p className="text-secondary-dark margin-y-0">
+                    {studiesError}
+                  </p>
+                )}
                 {!studiesLoading && !studiesError && studies.length === 0 && (
-                  <p className="margin-y-0">No associated studies were found for this concept.</p>
+                  <p className="margin-y-0">
+                    No associated studies were found for this concept.
+                  </p>
                 )}
                 {!studiesLoading && !studiesError && studies.length > 0 && (
                   <div className="display-flex flex-column gap-1">
                     {studies.map((study) => (
-                      <details key={`${study.source}-${study.c_id}`} className="border border-base-lighter radius-sm padding-1 cursor-pointer">
+                      <details
+                        key={`${study.source}-${study.c_id}`}
+                        className="border border-base-lighter radius-sm padding-1 cursor-pointer"
+                      >
                         <summary className="text-bold">{study.c_name}</summary>
                         <div className="display-flex flex-justify flex-align-center margin-top-1 margin-bottom-1 gap-1">
                           <p className="margin-y-0">
                             Study ID:{' '}
-                            <a href={study.c_link} target="_blank" rel="noreferrer noopener">
+                            <a
+                              href={study.c_link}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
                               {study.c_id}
                             </a>{' '}
-                            <span className="text-base-dark">- {study.source}</span>
+                            <span className="text-base-dark">
+                              - {study.source}
+                            </span>
                           </p>
                           <button
                             type="button"
@@ -926,8 +1001,13 @@ export default function DugSearchApp() {
                         <ul className="usa-list margin-top-0 margin-bottom-0">
                           {study.elements.map((variable) => (
                             <li key={`${study.c_id}-${variable.id}`}>
-                              <span className="text-bold">{variable.name || variable.id}</span>
-                              <span className="text-base-dark"> ({variable.id})</span>
+                              <span className="text-bold">
+                                {variable.name || variable.id}
+                              </span>
+                              <span className="text-base-dark">
+                                {' '}
+                                ({variable.id})
+                              </span>
                               <button
                                 type="button"
                                 className="usa-button usa-button--unstyled font-body-xs margin-left-1"
@@ -962,7 +1042,6 @@ export default function DugSearchApp() {
           </div>
         </div>
       )}
-
     </div>
   );
 }

@@ -38,7 +38,9 @@ describe('DugSearchBar', () => {
 
   it('submits through onSubmit handler', async () => {
     const user = userEvent.setup();
-    const onSubmit = vi.fn((event: FormEvent<HTMLFormElement>) => event.preventDefault());
+    const onSubmit = vi.fn((event: FormEvent<HTMLFormElement>) =>
+      event.preventDefault(),
+    );
 
     render(
       <DugSearchBar
