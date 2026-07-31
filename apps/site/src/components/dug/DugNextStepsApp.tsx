@@ -105,7 +105,9 @@ export default function DugNextStepsApp() {
           </p>
 
           <details open>
-            <summary className="text-bold">Concepts ({collection.concepts.length})</summary>
+            <summary className="text-bold">
+              Concepts ({collection.concepts.length})
+            </summary>
             <ul className="usa-list margin-top-1 margin-bottom-1">
               {collection.concepts.map((item) => (
                 <li key={`concept-${item.id}`}>{item.name}</li>
@@ -115,7 +117,9 @@ export default function DugNextStepsApp() {
           </details>
 
           <details>
-            <summary className="text-bold">Studies ({collection.studies.length})</summary>
+            <summary className="text-bold">
+              Studies ({collection.studies.length})
+            </summary>
             <ul className="usa-list margin-top-1 margin-bottom-1">
               {collection.studies.map((item) => (
                 <li key={`study-${item.id}`}>{item.name}</li>
@@ -125,7 +129,9 @@ export default function DugNextStepsApp() {
           </details>
 
           <details>
-            <summary className="text-bold">Variables ({collection.variables.length})</summary>
+            <summary className="text-bold">
+              Variables ({collection.variables.length})
+            </summary>
             <ul className="usa-list margin-top-1 margin-bottom-1">
               {collection.variables.map((item) => (
                 <li key={`var-${item.id}`}>{item.name}</li>
@@ -142,7 +148,10 @@ export default function DugNextStepsApp() {
           >
             Download list
           </button>
-          <a href="/data/explore/dug" className="usa-button width-full margin-top-1">
+          <a
+            href="/data/explore/dug"
+            className="usa-button width-full margin-top-1"
+          >
             Return to search
           </a>
         </div>
@@ -171,11 +180,15 @@ export default function DugNextStepsApp() {
           </div>
 
           <div className="border border-base-lighter radius-sm padding-2 bg-base-lightest">
-            <h3 className="font-heading-sm margin-top-0">{selectedStep.title}</h3>
+            <h3 className="font-heading-sm margin-top-0">
+              {selectedStep.title}
+            </h3>
             <p>{selectedStep.description}</p>
             <p className="text-bold margin-bottom-05">Relevant IDs</p>
             {selectedData.length === 0 ? (
-              <p className="margin-y-0 text-italic">No saved IDs for this step yet.</p>
+              <p className="margin-y-0 text-italic">
+                No saved IDs for this step yet.
+              </p>
             ) : (
               <ul className="usa-list margin-top-1 margin-bottom-0">
                 {selectedData.map((id) => (

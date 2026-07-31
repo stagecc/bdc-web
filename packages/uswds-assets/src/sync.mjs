@@ -1,8 +1,8 @@
-import { cp, mkdir, rm } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
+import { cp, mkdir, rm } from 'node:fs/promises';
+import { createRequire } from 'node:module';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { createRequire } from 'node:module';
 import { sitePreset } from './presets/site.mjs';
 
 const PRESETS = {
@@ -58,7 +58,9 @@ export async function syncUswdsAssets({ projectRoot, presetName = 'site' }) {
   const preset = PRESETS[presetName];
 
   if (!preset) {
-    throw new Error(`Unknown preset \"${presetName}\". Available presets: ${Object.keys(PRESETS).join(', ')}`);
+    throw new Error(
+      `Unknown preset "${presetName}". Available presets: ${Object.keys(PRESETS).join(', ')}`,
+    );
   }
 
   const resolvedProjectRoot = resolve(projectRoot);
@@ -67,7 +69,10 @@ export async function syncUswdsAssets({ projectRoot, presetName = 'site' }) {
   const targetPublicDir = join(resolvedProjectRoot, 'public');
 
   for (const prunePath of preset.prunePaths ?? []) {
-    await rm(join(targetPublicDir, prunePath), { recursive: true, force: true });
+    await rm(join(targetPublicDir, prunePath), {
+      recursive: true,
+      force: true,
+    });
   }
 
   for (const directory of preset.managedDirectories ?? []) {

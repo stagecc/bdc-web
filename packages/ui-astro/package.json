@@ -25,8 +25,8 @@
     "./layout/PageSection.astro": "./src/layout/PageSection.astro",
     "./layout/TwoColumnSection.astro": "./src/layout/TwoColumnSection.astro",
     "./link/Link.astro": "./src/link/Link.astro",
-    "./tag/TagCapsule.astro": "./src/tag/TagCapsule.astro",
-    "./tag/TagPill.astro": "./src/tag/TagPill.astro",
+    "./tag/Badge.astro": "./src/tag/Badge.astro",
+    "./tag/Tag.astro": "./src/tag/Tag.astro",
     "./tooltip/InfoTooltip.astro": "./src/tooltip/InfoTooltip.astro",
     "./tooltip/Tooltip.astro": "./src/tooltip/Tooltip.astro"
   }

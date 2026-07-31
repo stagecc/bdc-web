@@ -1,6 +1,6 @@
 ---
 import Card from '@bdc/ui-astro/card/Card.astro';
-import TagPill from '@bdc/ui-astro/tag/TagPill.astro';
+import Tag from '@bdc/ui-astro/tag/Tag.astro';
 import Link from '@components/link/Link.astro';
 
 const { items } = Astro.props;
@@ -9,7 +9,7 @@ const { items } = Astro.props;
   {items.map((post) => (
     <li>
       <Card class="display-flex flex-column flex-align-start height-full margin-bottom-2">
-        <TagPill label={post.data.updateType} tone="neutral" />
+        <Tag label={post.data.updateType} tone="neutral" />
         <h3 class="margin-y-1 font-heading-md">
           <Link to={`/news/latest-updates/${post.id}/`}>
             {post.data.title}
@@ -31,7 +31,7 @@ const { items } = Astro.props;
             <span class="margin-right-05 font-sans-2xs text-base-dark">Topics:</span>
             {post.data.tags.map((tag) => (
               <Link to={`/tagged/${tag}`} class="margin-right-05 margin-bottom-05 text-no-underline">
-                <TagPill label={tag} tone="warm" />
+                <Tag label={tag} tone="warm" />
               </Link>
             ))}
           </div>

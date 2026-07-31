@@ -1,17 +1,17 @@
 import type { ComponentProps } from 'react';
 import Button from '../button/Button';
-import TagPill from './TagPill';
+import Tag from './Tag';
 
 type Props = {
   label: string;
   onRemove: () => void;
   ariaLabel?: string;
   className?: string;
-  tone?: ComponentProps<typeof TagPill>['tone'];
+  tone?: ComponentProps<typeof Tag>['tone'];
 };
 
 const hoverToneClasses: Record<
-  NonNullable<ComponentProps<typeof TagPill>['tone']>,
+  NonNullable<ComponentProps<typeof Tag>['tone']>,
   string
 > = {
   secondary: 'hover:bg-secondary-light',
@@ -40,7 +40,7 @@ export default function RemovableTagPill({
         .join(' ')}
       aria-label={ariaLabel ?? `Remove filter: ${label}`}
     >
-      <TagPill
+      <Tag
         tone={tone}
         className={`display-inline-flex flex-align-center ${hoverToneClasses[tone]}`}
         label={

@@ -2,7 +2,7 @@ import type { CollectionEntry } from 'astro:content';
 import Card from '@bdc/ui-react/card/Card';
 import Icon from '@bdc/ui-react/icon/Icon';
 import Link from '@bdc/ui-react/link/Link';
-import TagPill from '@bdc/ui-react/tag/TagPill';
+import Tag from '@bdc/ui-react/tag/Tag';
 import type { ComponentProps } from 'react';
 import { publicationTagGroups } from './publicationTagGroups';
 
@@ -10,7 +10,7 @@ type Props = {
   pub: CollectionEntry<'publications'>['data'] & { date: string };
 };
 
-type TagTone = NonNullable<ComponentProps<typeof TagPill>['tone']>;
+type TagTone = NonNullable<ComponentProps<typeof Tag>['tone']>;
 
 type TagGroup = {
   label: string;
@@ -74,7 +74,7 @@ export default function PublicationCard({ pub }: Props) {
           {tagGroups.map((group) => (
             <span key={group.label}>
               {group.values.map((value) => (
-                <TagPill
+                <Tag
                   key={`${group.label},${value}`}
                   label={value}
                   tone={group.tone}
