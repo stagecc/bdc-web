@@ -1,3 +1,4 @@
+export * from './buildContactPayload.ts';
 export * from './buildCustomObjectPayload.ts';
 export * from './buildPayload';
 export * from './getCustomObjectRecords';
