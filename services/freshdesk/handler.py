@@ -37,6 +37,7 @@ def cors_headers(event):
         'https://biodatacatalyst.nhlbi.nih.gov',
         'https://staging.biodatacatalyst.nhlbi.nih.gov',
         'http://localhost:8000',
+        'http://localhost:4321',
     ]
 
     headers = {
@@ -49,6 +50,78 @@ def cors_headers(event):
         headers['Access-Control-Allow-Origin'] = origin
 
     return headers
+
+def _upsert_contact(payload, auth, base_url, headers):
+    """
+    Create or update a Freshdesk contact based on email address.
+
+    Why upsert?
+    Submitting any form (tickets, custom objects) automatically creates a
+    Freshdesk contact for the submitter's email. If a user later tries to
+    join and their email already exists as a contact, a straight POST would
+    fail with a 409 conflict. The upsert pattern handles both cases cleanly:
+    new users get created, returning users get updated without error.
+
+    Flow:
+        1. Search for an existing contact by email
+        2. If found — update the existing contact with PUT
+        3. If not found — create a new contact with POST
+
+    Args:
+        payload (dict): Contact data from the form. Must include `email`.
+        auth (str): base64-encoded Basic Auth header value.
+        base_url (str): Freshdesk API base URL (e.g. https://org.freshdesk.com/api/v2).
+        headers (dict): Response headers to return to the caller.
+
+    Returns:
+        dict: Lambda proxy integration response.
+    """
+    email = payload.get('email')
+    if not email:
+        return _error(400, 'Missing email in contact payload', headers)
+
+    print(f'Upserting contact for email: {email}')
+
+    # Step 1 — Search for existing contact by email.
+    # Freshdesk returns a list — we take the first match if any exist.
+    search_url = f'{base_url}/contacts?email={urllib.parse.quote(email)}'
+    search_req = urllib.request.Request(search_url, method='GET')
+    search_req.add_header('Authorization', f'Basic {auth}')
+    search_req.add_header('Content-Type', 'application/json')
+
+    try:
+        with urllib.request.urlopen(search_req) as res:
+            contacts = json.loads(res.read().decode())
+    except urllib.error.HTTPError as e:
+        error = e.read().decode()
+        print(f'Error searching for contact: {error}')
+        return {
+            'statusCode': e.code,
+            'headers': headers,
+            'body': json.dumps({'error': e.reason})
+        }
+    except Exception as e:
+        print(f'Unexpected error searching for contact: {e}')
+        return {
+            'statusCode': 500,
+            'headers': headers,
+            'body': json.dumps({'error': str(e)})
+        }
+
+    body = json.dumps(payload).encode('utf-8')
+
+    if contacts:
+        # Step 2 — Contact exists. Update with PUT.
+        contact_id = contacts[0].get('id')
+        print(f'Contact found (id: {contact_id}), updating...')
+        update_url = f'{base_url}/contacts/{contact_id}'
+        return _proxy_request(update_url, 'PUT', body, auth, headers)
+    else:
+        # Step 3 — Contact does not exist. Create with POST.
+        print('No existing contact found, creating new contact...')
+        create_url = f'{base_url}/contacts'
+        return _proxy_request(create_url, 'POST', body, auth, headers)
+
 
 def lambda_handler(event, context):
     """
@@ -105,15 +178,6 @@ def lambda_handler(event, context):
     
     # POST routes (/cloud-credits, /join)
     if method == 'POST':
-        route_map = {
-            'join': 'contacts',
-            'cloud-credits': 'tickets'
-        }
-        # ensure target resource exists
-        resource = route_map.get(path)
-        if not resource:
-            return _error(404, f'Unknown POST route: /{path}', headers)
-
         # ensure body exists
         body = event.get('body')
         if not body:
@@ -137,23 +201,48 @@ def lambda_handler(event, context):
         
         # remove token before forwarding
         payload.pop('recaptcha_token', None)
-        body = json.dumps(payload)
-        
-        url = f'{base_url}/{resource}'
-        return _proxy_request(url, 'POST', body, auth, headers)
 
+        # honeypot check — silently discard bot submissions.
+        # real users never see or fill this field.
+        # the bot sees a success response and doesn't know it was caught.
+        if payload.pop('website', ''):
+            print('Honeypot field populated — discarding submission silently')
+            return {
+                'statusCode': 200,
+                'headers': headers,
+                'body': json.dumps({'message': 'ok'})
+            }
+
+        # /join — upsert contact (check by email, update or create)
+        # handled separately from the generic route_map because it requires
+        # a search-then-write flow rather than a direct POST.
+        if path == 'join':
+            return _upsert_contact(payload, auth, base_url, headers)
+
+        # generic POST routes — direct proxy to Freshdesk
+        route_map = {
+            'cloud-credits': 'tickets',
+            'published-research': 'tickets',
+        }
+
+        resource = route_map.get(path)
+        if not resource:
+            return _error(404, f'Unknown POST route: /{path}', headers)
+
+        url = f'{base_url}/{resource}'
+        return _proxy_request(url, 'POST', json.dumps(payload).encode('utf-8'), auth, headers)
 
     return _error(405, f'Method {method} not allowed for /{path}', headers)
 
 def _proxy_request(url, method, body, auth, headers):
     """
-    send proxied HTTP request to Freshdesk with
-    the given method, URL, and payload.
+    Send a proxied HTTP request to Freshdesk with the given method, URL,
+    and payload.
 
     Args:
         url (str): Freshdesk API URL
-        method (str): HTTP method (GET, POST)
-        body (str): request body (JSON string)
+        method (str): HTTP method (GET, POST, PUT)
+        body (bytes): request body (encoded JSON bytes) or None for GET
         auth (str): base64-encoded Basic Auth header
         headers (dict): response headers to return to the caller
 
@@ -166,8 +255,6 @@ def _proxy_request(url, method, body, auth, headers):
     req.add_header('Content-Type', 'application/json')
 
     try:
-        if body:
-            body = body.encode('utf-8')
         with urllib.request.urlopen(req, data=body) as res:
             response_body = res.read().decode()
             return {
@@ -178,12 +265,21 @@ def _proxy_request(url, method, body, auth, headers):
     except urllib.error.HTTPError as e:
         error = e.read().decode()
         print('Freshdesk error response:', error)
+        print('Freshdesk error code:', e.code)
+
+        if e.code == 409:
+            return {
+                'statusCode': 409,
+                'headers': headers,
+                'body': json.dumps({'error': 'already_exists'})
+            }
 
         return {
             'statusCode': e.code,
             'headers': headers,
             'body': json.dumps({ 'error': e.reason })
         }
+
     except Exception as e:
         return {
             'statusCode': 500,
