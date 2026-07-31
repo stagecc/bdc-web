@@ -188,7 +188,6 @@ const programContent = defineCollection({
   schema: z.object({
     excerpt: z.string().optional(),
     title: z.string().optional(),
-    studyId: z.string().optional(),
     priority: z.number().optional(),
     dataAvailable: z.boolean().default(true),
   }),
