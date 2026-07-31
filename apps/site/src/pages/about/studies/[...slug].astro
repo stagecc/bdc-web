@@ -8,9 +8,7 @@ export async function getStaticPaths() {
   const localEntries = await getCollection('programContent');
 
   // cross-referencing local content against the API's program list, by id
-  const localMap = new Map(
-    localEntries.map((entry) => [entry.id, entry]),
-  );
+  const localMap = new Map(localEntries.map((entry) => [entry.id, entry]));
 
   return programs.map((program) => {
     const local = localMap.get(program.id);

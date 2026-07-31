@@ -12,9 +12,8 @@ const apiById = new Map(apiPrograms.map((p) => [p.id, p]));
 
 const sections = await Promise.all(
   localEntries.map(async (entry) => {
-    const apiEntry = entry.data.dataAvailable !== false
-      ? apiById.get(entry.id)
-      : undefined;
+    const apiEntry =
+      entry.data.dataAvailable !== false ? apiById.get(entry.id) : undefined;
     const { Content } = await render(entry);
     return {
       id: entry.id,
