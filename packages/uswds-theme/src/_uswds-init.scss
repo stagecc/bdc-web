@@ -56,6 +56,14 @@
   $theme-h1-font-size: $theme-h1-font-size,
   $theme-h2-font-size: $theme-h2-font-size,
   $theme-h3-font-size: $theme-h3-font-size,
+  $theme-banner-background-color: $theme-banner-background-color,
+  $theme-banner-font-family: $theme-banner-font-family,
+  $theme-banner-link-color: $theme-banner-link-color,
+  $theme-banner-max-width: $theme-banner-max-width,
+  $theme-header-font-family: $theme-header-font-family,
+  $theme-header-logo-text-width: $theme-header-logo-text-width,
+  $theme-header-max-width: $theme-header-max-width,
+  $theme-header-min-width: $theme-header-min-width,
   $theme-image-path: "/img",
   $theme-in-page-nav-background-color: $theme-in-page-nav-background-color,
   $theme-in-page-nav-background-padding: $theme-in-page-nav-background-padding,
@@ -75,7 +83,11 @@
   $theme-link-reverse-color: $theme-link-reverse-color,
   $theme-link-reverse-hover-color: $theme-link-reverse-hover-color,
   $theme-link-reverse-active-color: $theme-link-reverse-active-color,
+  $theme-navigation-font-family: $theme-navigation-font-family,
+  $theme-megamenu-columns: $theme-megamenu-columns,
   $theme-modal-border-radius: $theme-modal-border-radius,
+  $theme-search-font-family: $theme-search-font-family,
+  $theme-search-min-width: $theme-search-min-width,
   $theme-show-notifications: false
 );
 

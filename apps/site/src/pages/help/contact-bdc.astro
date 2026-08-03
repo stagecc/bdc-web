@@ -8,16 +8,25 @@ import type { CustomObjectField } from '../../util/freshdesk/typesCustomObjects'
 
 let fields: CustomObjectField[] = [];
 let formError = false;
+const hasFreshdeskAuth =
+  Boolean(import.meta.env.FRESHDESK_DOMAIN) &&
+  Boolean(import.meta.env.FRESHDESK_API_KEY);
+const schemaIdRaw = import.meta.env.FRESHDESK_CUSTOM_OBJECT_CONTACT_BDC_SCHEMA_ID;
 
-const schemaId = Number(
-  import.meta.env.FRESHDESK_CUSTOM_OBJECT_CONTACT_BDC_SCHEMA_ID,
-);
+const schemaId = Number(schemaIdRaw);
 
-try {
-  fields = await getCustomObjectSchema(schemaId);
-} catch (e) {
-  console.error('Failed to fetch publication submission form config:', e);
+if (!hasFreshdeskAuth || !schemaIdRaw || Number.isNaN(schemaId)) {
+  console.warn(
+    'Skipping Contact BDC schema fetch: missing Freshdesk credentials or schema ID.',
+  );
   formError = true;
+} else {
+  try {
+    fields = await getCustomObjectSchema(schemaId);
+  } catch (e) {
+    console.error('Failed to fetch Contact BDC form config:', e);
+    formError = true;
+  }
 }
 ---
 

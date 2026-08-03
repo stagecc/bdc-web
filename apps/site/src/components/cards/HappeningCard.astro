@@ -1,7 +1,7 @@
 ---
 import Card from '@bdc/ui-astro/card/Card.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
 import Badge from '@bdc/ui-astro/tag/Badge.astro';
-import Link from '@components/link/Link.astro';
 
 interface Props {
   kind: 'latest' | 'news' | 'event';
@@ -61,7 +61,7 @@ const toneByKind = {
 
   {summary && <p class="margin-0 margin-bottom-2 text-base-dark">{summary}</p>}
 
-  <Link class="happening-card__link text-bold" to={href}>{linkLabel}</Link>
+  <Link class="text-bold" to={href}>{linkLabel}</Link>
 </Card>
 
 <style lang="scss">
