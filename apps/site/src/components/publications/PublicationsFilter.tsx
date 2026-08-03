@@ -161,7 +161,7 @@ export default function PublicationsFilter({ publications }: Props) {
       <div className="grid-row grid-gap">
         {/* Left sidebar — search + filters */}
         <aside className="tablet:grid-col-4">
-          <div className="usa-card__container overflow-hidden">
+          <div className="usa-card__container">
             {/* Search header */}
             <div className="margin-bottom-2">
               <div className="bg-base-lightest padding-x-3 padding-y-105">
