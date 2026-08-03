@@ -10,7 +10,8 @@ This package provides a single source of truth for colors, typography, and compo
 |---|---|
 | `src/_colors.scss` | Color token overrides (primary, secondary, accent, base) |
 | `src/_typography.scss` | Font families, roles, sizes, and weights |
-| `src/_in-page-nav-bar.scss` | In-page navigation component settings |
+| `src/components/_header-nav.scss` | Banner, header, navigation, and search component settings |
+| `src/components/_in-page-nav-bar.scss` | In-page navigation component settings |
 | `src/_css-vars.scss` | Optional runtime CSS variables (kept minimal; prefer USWDS tokens/utilities) |
 | `src/_settings.scss` | Aggregates all settings partials |
 | `src/_uswds-init.scss` | Configures and forwards `uswds-core` with all BDC settings |
