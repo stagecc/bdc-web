@@ -21,6 +21,8 @@
 -->
 
 ---
+import Button from '@bdc/ui-astro/button/Button.astro';
+
 interface Props {
   title?: string;
 }
@@ -30,14 +32,20 @@ const { title = 'On this page' } = Astro.props;
 
 <div class="usa-in-page-nav-container">
   <aside
-    class="usa-in-page-nav"
+    class="usa-in-page-nav display-flex flex-column"
     data-title-text={title}
     data-heading-elements="h2 h3"
     data-main-content-selector=".usa-in-page-nav-container .usa-prose"
     data-root-margin="-100px 0px -60% 0px"
     data-threshold="1"
     data-scroll-offset="110"
-  />
+  >
+    <Button
+      href="#main-content"
+      variant="outline"
+      class="in-page-nav__back-to-top order-2 margin-top-8 margin-bottom-0 margin-x-auto"
+    >↑ Back to top</Button>
+  </aside>
   <div class="usa-prose">
     <slot />
   </div>
@@ -46,6 +54,10 @@ const { title = 'On this page' } = Astro.props;
 <style>
   .usa-in-page-nav {
     min-width: 240px;
+  }
+
+  .usa-in-page-nav > :global(:not(.in-page-nav__back-to-top)) {
+    order: 1;
   }
 
   .usa-prose :global(:is(h2, h3)) {
@@ -57,10 +69,36 @@ const { title = 'On this page' } = Astro.props;
   import inPageNavigation from '@uswds/uswds/js/usa-in-page-navigation';
 
   const initInPageNavController = (root = document.body) => {
+    const onBackToTopClick = (event) => {
+      const trigger = event.target.closest('a.in-page-nav__back-to-top');
+      if (!trigger) {
+        return;
+      }
+
+      const href = trigger.getAttribute('href');
+      if (!href?.startsWith('#')) {
+        return;
+      }
+
+      const target = document.querySelector(href);
+      if (!target) {
+        return;
+      }
+
+      event.preventDefault();
+      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        ? 'auto'
+        : 'smooth';
+      target.scrollIntoView({ behavior, block: 'start' });
+      history.replaceState(null, '', href);
+    };
+
+    root.addEventListener('click', onBackToTopClick);
     inPageNavigation.off(root);
     inPageNavigation.on(root);
 
     return () => {
+      root.removeEventListener('click', onBackToTopClick);
       inPageNavigation.off(root);
     };
   };

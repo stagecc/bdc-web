@@ -6,12 +6,23 @@ import type { FreshdeskField } from '../../util/freshdesk/types';
 
 let fields: FreshdeskField[] = [];
 let formError = false;
+const hasFreshdeskAuth =
+  Boolean(import.meta.env.FRESHDESK_DOMAIN) &&
+  Boolean(import.meta.env.FRESHDESK_API_KEY);
+const formId = import.meta.env.FRESHDESK_FORM_GET_HELP;
 
-try {
-  fields = await getFormFields(import.meta.env.FRESHDESK_FORM_GET_HELP);
-} catch (e) {
-  console.error('Failed to fetch get help form fields:', e);
+if (!hasFreshdeskAuth || !formId) {
+  console.warn(
+    'Skipping get help form field fetch: missing Freshdesk credentials or form ID.',
+  );
   formError = true;
+} else {
+  try {
+    fields = await getFormFields(formId);
+  } catch (e) {
+    console.error('Failed to fetch get help form fields:', e);
+    formError = true;
+  }
 }
 ---
 

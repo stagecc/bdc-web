@@ -67,9 +67,10 @@ describe('DugSearchBar', () => {
       />,
     );
 
-    const form = screen.getByRole('search');
     const input = screen.getByRole('searchbox');
+    const form = input.closest('form');
 
+    expect(form).not.toBeNull();
     expect(form).toHaveAttribute('method', 'get');
     expect((form as HTMLFormElement).action).toContain('/data/explore/dug');
     expect(input).toHaveAttribute('name', 'q');
