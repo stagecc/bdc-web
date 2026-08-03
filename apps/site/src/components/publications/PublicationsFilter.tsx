@@ -23,7 +23,7 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 // If these option strings change in the data, tooltips will silently stop appearing.
 // Content manager is aware — see publications filtering decision log.
 const RESEARCH_COMMUNITY_TOOLTIPS: Record<string, string> = {
-  'Not Applicable': 'This work was not part of a Research Community effort.',
+  'Not Applicable': 'This work is not part of a research community effort.',
   Other: 'This work is part of a research community not listed on the website.',
 };
 
