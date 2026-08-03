@@ -23,7 +23,7 @@ const SORT_OPTIONS: { value: SortOption; label: string }[] = [
 // If these option strings change in the data, tooltips will silently stop appearing.
 // Content manager is aware — see publications filtering decision log.
 const RESEARCH_COMMUNITY_TOOLTIPS: Record<string, string> = {
-  'Not Applicable': 'This work was not part of a Research Community effort.',
+  'Not Applicable': 'This work is not part of a research community effort.',
   Other: 'This work is part of a research community not listed on the website.',
 };
 
@@ -161,7 +161,7 @@ export default function PublicationsFilter({ publications }: Props) {
       <div className="grid-row grid-gap">
         {/* Left sidebar — search + filters */}
         <aside className="tablet:grid-col-4">
-          <div className="usa-card__container overflow-hidden">
+          <div className="usa-card__container">
             {/* Search header */}
             <div className="margin-bottom-2">
               <div className="bg-base-lightest padding-x-3 padding-y-105">
