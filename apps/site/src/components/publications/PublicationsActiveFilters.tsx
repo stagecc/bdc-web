@@ -32,7 +32,7 @@ export default function PublicationsActiveFilters({
           disabled={!hasAnyActive}
           onClick={clearAll}
           className={`usa-button usa-button--unstyled font-body-xs text-no-underline margin-left-auto ${
-            hasAnyActive ? 'text-base-dark' : 'text-base-light'
+            hasAnyActive ? 'text-base-dark' : 'text-base'
           }`}
         >
           Clear all
@@ -40,9 +40,7 @@ export default function PublicationsActiveFilters({
       </div>
       <div className="display-flex flex-wrap flex-align-center">
         {!hasAnyActive && (
-          <span className="font-body-xs text-base-light">
-            No active filters
-          </span>
+          <span className="font-body-xs text-base-dark">No active filters</span>
         )}
         {search && (
           <RemovableTagPill

@@ -800,7 +800,9 @@ export default function DugSearchApp() {
                 </li>
               ))}
               {collection.concepts.length === 0 && (
-                <li className="usa-list--unstyled text-base">None selected.</li>
+                <li className="usa-list--unstyled text-base-dark">
+                  None selected.
+                </li>
               )}
             </ul>
           </details>
@@ -827,7 +829,9 @@ export default function DugSearchApp() {
                 </li>
               ))}
               {collection.studies.length === 0 && (
-                <li className="usa-list--unstyled text-base">None selected.</li>
+                <li className="usa-list--unstyled text-base-dark">
+                  None selected.
+                </li>
               )}
             </ul>
           </details>
@@ -854,7 +858,9 @@ export default function DugSearchApp() {
                 </li>
               ))}
               {collection.variables.length === 0 && (
-                <li className="usa-list--unstyled text-base">None selected.</li>
+                <li className="usa-list--unstyled text-base-dark">
+                  None selected.
+                </li>
               )}
             </ul>
           </details>

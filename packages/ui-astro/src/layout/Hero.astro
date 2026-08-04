@@ -83,7 +83,7 @@ const hasTitleLines = Array.isArray(titleLines) && titleLines.length > 0;
 
     {
       (hasCustomVisual || !image) && (
-        <div class="layout-hero__visual" aria-hidden="true">
+        <div class="layout-hero__visual" aria-hidden={!hasCustomVisual ? 'true' : undefined}>
           {
             hasCustomVisual ? (
               <slot name="visual" />

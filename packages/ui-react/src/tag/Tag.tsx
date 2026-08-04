@@ -11,7 +11,7 @@ type Props = {
 const toneClasses: Record<Tone, string> = {
   secondary: 'bg-secondary-lighter text-secondary-darker',
   warm: 'bg-accent-warm-lighter text-accent-warm-darker',
-  cool: 'bg-accent-cool-lighter text-accent-cool-darker',
+  cool: 'bg-accent-cool-lighter text-base-darkest',
   neutral: 'bg-base-lightest text-base-dark',
 };
 
