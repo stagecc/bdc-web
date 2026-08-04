@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
+import Link from '@bdc/ui-astro/link/Link.astro';
 import FaqList from '@components/faqs/FaqList';
-import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 
 const faqs = await getCollection('faqs');

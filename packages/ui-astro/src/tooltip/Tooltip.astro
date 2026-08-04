@@ -8,4 +8,12 @@ interface Props {
 const { text, position = 'top', class: className } = Astro.props;
 ---
 
-<span class={className} title={text} data-position={position} aria-label={text} tabindex="0"><slot /></span>
+<button
+  type="button"
+  class={className}
+  title={text}
+  data-position={position}
+  aria-label={text}
+>
+  <slot />
+</button>

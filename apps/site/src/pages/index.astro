@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import Button from '@bdc/ui-astro/button/Button.astro';
 import CardCopy from '@bdc/ui-astro/card/CardCopy.astro';
 import CardCta from '@bdc/ui-astro/card/CardCta.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
@@ -7,16 +8,16 @@ import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
 import TwoColumnSection from '@bdc/ui-astro/layout/TwoColumnSection.astro';
-import Button from '@components/Button.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
 import HappeningCard from '@components/cards/HappeningCard.astro';
 import QuoteCard from '@components/cards/QuoteCard.astro';
 import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
 import DugSearchBar from '@components/dug/DugSearchBar';
 import ProcessSteps from '@components/home/ProcessSteps.astro';
-import Link from '@components/link/Link.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
 import Base from '@layouts/Base.astro';
+import homeCoursesImage from '../assets/home-courses.png';
 import { slugify } from '../util/slugify';
 
 const news = (await getCollection('news'))
@@ -157,7 +158,6 @@ const nextEvent = events[0];
       description="BDC brings together NHLBI studies, cloud-based analysis tools, and secure collaborative workspaces to accelerate heart, lung, blood, and sleep research."
       primaryCta={{ label: 'Learn About BDC', href: '/about/bdc', variant: 'accent-warm' }}
       tone="dark"
-      image="/img/hero.jpg"
     />
 
     <PageSection
@@ -282,6 +282,8 @@ const nextEvent = events[0];
       description="Use real or synthetic biomedical datasets and cloud-based analysis tools to support courses, workshops, trainee programs, and early-career research development."
       ctaLabel="Explore BDC for Course and Training"
       ctaHref="/about/courses-and-training"
+      mediaImage={homeCoursesImage}
+      mediaAlt=""
     >
       <div class="display-flex flex-justify-center flex-align-center margin-top-2 margin-bottom-0">
         <IconBadge icon="attach_money" tone="cool" class="margin-right-1" />

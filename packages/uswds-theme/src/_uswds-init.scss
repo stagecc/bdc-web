@@ -61,10 +61,13 @@
   $theme-banner-font-family: $theme-banner-font-family,
   $theme-banner-link-color: $theme-banner-link-color,
   $theme-banner-max-width: $theme-banner-max-width,
+  $theme-footer-max-width: $theme-footer-max-width,
+  $theme-grid-container-max-width: $theme-grid-container-max-width,
   $theme-header-font-family: $theme-header-font-family,
   $theme-header-logo-text-width: $theme-header-logo-text-width,
   $theme-header-max-width: $theme-header-max-width,
   $theme-header-min-width: $theme-header-min-width,
+  $theme-identifier-max-width: $theme-identifier-max-width,
   $theme-image-path: "/img",
   $theme-in-page-nav-background-color: $theme-in-page-nav-background-color,
   $theme-in-page-nav-background-padding: $theme-in-page-nav-background-padding,
@@ -89,6 +92,7 @@
   $theme-modal-border-radius: $theme-modal-border-radius,
   $theme-search-font-family: $theme-search-font-family,
   $theme-search-min-width: $theme-search-min-width,
+  $theme-site-alert-max-width: $theme-site-alert-max-width,
   $theme-show-notifications: false
 );
 
