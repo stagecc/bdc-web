@@ -193,6 +193,16 @@ const programs = defineCollection({
   }),
 });
 
+const programContent = defineCollection({
+  loader: glob({ pattern: '*.{md,mdx}', base: './src/content/programs' }),
+  schema: z.object({
+    excerpt: z.string().optional(),
+    title: z.string().optional(),
+    priority: z.number().optional(),
+    dataAvailable: z.boolean().default(true),
+  }),
+});
+
 const banners = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/banners' }),
   schema: z.object({
@@ -244,4 +254,5 @@ export const collections = {
   eep,
   banners,
   fellows,
+  programContent,
 };
