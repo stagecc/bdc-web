@@ -22,6 +22,7 @@ export const navConfig: NavItem[] = [
       { label: 'Impute', href: '/data/impute' },
       { label: 'Analyze', href: '/data/analyze' },
       { label: 'Bring Your Own Tools', href: '/data/bring-your-own-tools' },
+      { label: 'BDC for Learning and Training', href: '/data/learning-and-training' },
     ],
   },
   {
