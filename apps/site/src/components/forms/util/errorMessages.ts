@@ -147,6 +147,11 @@ export const formStatus = {
     'Try again later, or contact us by email at biodatacatalyst@nhlbi.nih.gov if you need help right away.',
   unavailableHeading: "This form isn't available right now.",
 
+  // Shown when a contact with this email already exists in Freshdesk.
+  // Used by FreshdeskContactForm to acknowledge returning users.
+  alreadySubscribed:
+    'Your previous join request is still in process; email biodatacatalyst@nhlbi.nih.gov to have an activation email resent.',
+
   // Default success heading — per-form follow-up copy is defined per form
   successHeading: 'Submission Received',
   successText:
