@@ -1,6 +1,8 @@
 ---
+import Icon from '../icon/Icon.astro';
+
 interface Props {
-  variant?: 'info' | 'warning' | 'error' | 'success' | 'emergency';
+  variant?: 'info' | 'emergency';
   slim?: boolean;
   title?: string;
   headingLevel?: 'h2' | 'h3' | 'h4';
@@ -22,8 +24,9 @@ const alertId = `site-alert-${storageKey}`;
 const containerClasses = [
   'usa-site-alert',
   'bdc-site-alert',
-  `bdc-site-alert--${variant}`,
+  `usa-site-alert--${variant}`,
   slim && 'usa-site-alert--slim',
+  !title && 'usa-site-alert--no-heading',
 ]
   .filter(Boolean)
   .join(' ');
@@ -33,27 +36,27 @@ const containerClasses = [
   class={containerClasses}
   aria-label={ariaLabel}
   id={alertId}
-  data-bdc-site-alert-id={alertId}
+  data-site-alert-id={alertId}
 >
-  <div class="display-flex flex-row flex-align-start flex-justify-center gap-2 margin-x-auto padding-x-2 padding-y-105">
-    <div class="flex-1 text-center font-body-sm line-height-body-5">
+  <div class="usa-alert">
+    <div class="usa-alert__body position-relative">
       {title && (
-        <HeadingTag class="margin-0 margin-bottom-05 font-body-md">
+        <HeadingTag class="usa-alert__heading padding-right-2">
           {title}
         </HeadingTag>
       )}
-      <div>
+      <div class="usa-alert__text">
         <slot />
       </div>
+      <button
+        class="bdc-site-alert__close usa-button usa-button--unstyled padding-05 position-absolute top-1 right-1"
+        aria-label="Dismiss alert"
+        type="button"
+        data-site-alert-close
+      >
+        <Icon name="close" aria-hidden="true" />
+      </button>
     </div>
-    <button
-      class="bdc-site-alert__close flex-shrink-0 bg-transparent border-0 cursor-pointer font-body-md padding-05 line-height-body-1 text-inherit opacity-70"
-      aria-label="Dismiss alert"
-      type="button"
-      data-bdc-site-alert-close
-    >
-      x
-    </button>
   </div>
 </section>
 
@@ -62,8 +65,8 @@ const containerClasses = [
     const INIT_FLAG = '__bdcSiteAlertInit';
 
     const syncDismissedAlerts = () => {
-      document.querySelectorAll('[data-bdc-site-alert-id]').forEach((alertEl) => {
-        const alertId = alertEl.getAttribute('data-bdc-site-alert-id');
+      document.querySelectorAll('[data-site-alert-id]').forEach((alertEl) => {
+        const alertId = alertEl.getAttribute('data-site-alert-id');
         if (!alertId) {
           return;
         }
@@ -79,13 +82,13 @@ const containerClasses = [
         return;
       }
 
-      const closeButton = event.target.closest('[data-bdc-site-alert-close]');
+      const closeButton = event.target.closest('[data-site-alert-close]');
       if (!closeButton) {
         return;
       }
 
-      const alertEl = closeButton.closest('[data-bdc-site-alert-id]');
-      const alertId = alertEl?.getAttribute('data-bdc-site-alert-id');
+      const alertEl = closeButton.closest('[data-site-alert-id]');
+      const alertId = alertEl?.getAttribute('data-site-alert-id');
       if (!alertId) {
         return;
       }
@@ -115,73 +118,3 @@ const containerClasses = [
     }
   })();
 </script>
-
-<style lang="scss">
-  @use '@bdc/uswds-theme/src/uswds-init' as core;
-
-  .bdc-site-alert--info {
-    background: linear-gradient(
-      90deg,
-      core.core-color(core.$theme-color-primary-lighter),
-      core.core-color(core.$theme-color-primary-light)
-    );
-    border-bottom: 6px solid core.core-color(core.$theme-color-primary);
-  }
-
-  .bdc-site-alert--info a {
-    color: core.core-color(core.$theme-color-primary-darker);
-    text-decoration-color: core.core-color(core.$theme-color-primary-darker);
-  }
-
-  .bdc-site-alert--warning {
-    background: linear-gradient(
-      90deg,
-      core.core-color('yellow-5'),
-      core.core-color('yellow-20v')
-    );
-    border-bottom: 6px solid core.core-color('yellow-30v');
-  }
-
-  .bdc-site-alert--warning a {
-    color: core.core-color('yellow-70v');
-    text-decoration-color: core.core-color('yellow-70v');
-  }
-
-  .bdc-site-alert--error {
-    background: linear-gradient(
-      90deg,
-      core.core-color(core.$theme-color-secondary-lighter),
-      core.core-color(core.$theme-color-secondary-light)
-    );
-    border-bottom: 6px solid core.core-color(core.$theme-color-secondary);
-  }
-
-  .bdc-site-alert--error a {
-    color: core.core-color(core.$theme-color-secondary-dark);
-    text-decoration-color: core.core-color(core.$theme-color-secondary-dark);
-  }
-
-  .bdc-site-alert--success {
-    background: linear-gradient(
-      90deg,
-      core.core-color('green-cool-5'),
-      core.core-color('green-cool-20v')
-    );
-    border-bottom: 6px solid core.core-color('green-cool-40v');
-  }
-
-  .bdc-site-alert--success a {
-    color: core.core-color('green-cool-60v');
-    text-decoration-color: core.core-color('green-cool-60v');
-  }
-
-  .bdc-site-alert--emergency {
-    background: linear-gradient(90deg, core.core-color('red-warm-10'), core.core-color('red-warm-20v'));
-    border-bottom: 6px solid core.core-color('red-warm-50v');
-  }
-
-  .bdc-site-alert--emergency a {
-    color: core.core-color('red-warm-70v');
-    text-decoration-color: core.core-color('red-warm-70v');
-  }
-</style>
