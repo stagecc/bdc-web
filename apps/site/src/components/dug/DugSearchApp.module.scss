@@ -1,4 +1,4 @@
-@use 'uswds-core' as *;
+@use '@bdc/uswds-theme/src/uswds-init' as core;
 
 .filtersBackdrop {
   display: none;
@@ -16,29 +16,29 @@
 }
 
 .collectionSticky {
-  top: calc(#{units(15)} - #{units(1)});
+  top: calc(#{core.core-units(15)} - #{core.core-units(1)});
 }
 
-@include at-media-max('desktop') {
+@include core.core-at-media-max('desktop') {
   .filtersBackdrop {
     display: block;
     position: fixed;
     inset: 0;
     z-index: 40;
-    background: rgba(color($theme-color-base-darkest), 0.55);
+    background: rgba(core.core-color(core.$theme-color-base-darkest), 0.55);
     border: 0;
     padding: 0;
   }
 
   .filtersPanel {
     position: fixed;
-    left: units(1);
-    right: units(1);
-    bottom: units(1);
+    left: core.core-units(1);
+    right: core.core-units(1);
+    bottom: core.core-units(1);
     z-index: 41;
     max-height: 65vh;
     overflow: auto;
-    box-shadow: 0 units(2) units(4) rgba(color($theme-color-base-darkest), 0.35);
+    box-shadow: 0 core.core-units(2) core.core-units(4) rgba(core.core-color(core.$theme-color-base-darkest), 0.35);
   }
 
   .modalPanel {
