@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import Button from '../button/Button.astro';
 
 interface Props {
@@ -7,17 +9,41 @@ interface Props {
   description: string;
   ctaLabel?: string;
   ctaHref?: string;
+  mediaImage?: ImageMetadata | string;
+  mediaAlt?: string;
 }
 
-const { eyebrow, title, description, ctaLabel, ctaHref } = Astro.props;
+const {
+  eyebrow,
+  title,
+  description,
+  ctaLabel,
+  ctaHref,
+  mediaImage,
+  mediaAlt = '',
+} = Astro.props;
 const showButton = ctaLabel && ctaHref && ctaHref !== 'TBD';
+const mediaIsDecorative = Boolean(mediaImage) && !mediaAlt;
 ---
 
 <section class="two-column-feature home-section padding-y-10 border-top border-base-lighter">
   <div class="grid-container">
     <div class="two-column-feature__grid">
-      <div class="two-column-feature__media display-flex flex-align-center flex-justify-center" aria-hidden="true">
-        <div class="two-column-feature__media-plate"></div>
+      <div
+        class="two-column-feature__media display-flex flex-align-center flex-justify-center"
+        aria-hidden={mediaIsDecorative ? 'true' : undefined}
+      >
+        {
+          mediaImage ? (
+            <Image
+              src={mediaImage}
+              alt={mediaAlt}
+              class="two-column-feature__media-image"
+            />
+          ) : (
+            <div class="two-column-feature__media-plate"></div>
+          )
+        }
       </div>
 
       <div class="margin-y-auto">
@@ -62,6 +88,15 @@ const showButton = ctaLabel && ctaHref && ctaHref !== 'TBD';
     border-radius: 16px;
     min-height: 220px;
     padding: 1rem;
+  }
+
+  .two-column-feature__media-image {
+    border-radius: 10px;
+    display: block;
+    height: 100%;
+    min-height: 190px;
+    object-fit: cover;
+    width: 100%;
   }
 
   .two-column-feature__media-plate {

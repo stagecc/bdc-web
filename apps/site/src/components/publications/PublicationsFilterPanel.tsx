@@ -86,6 +86,14 @@ export default function PublicationsFilterPanel({
 
       <div className="">
         <PublicationsFilterGroup
+          legend="Research Area"
+          options={filterOptions.researchAreas}
+          selected={filters.researchArea}
+          collapsible={collapsibleGroups}
+          idNamespace={idNamespace}
+          onToggle={(v) => toggleFilter('researchArea', v)}
+        />
+        <PublicationsFilterGroup
           legend="Year"
           options={filterOptions.years}
           selected={filters.year}
@@ -101,14 +109,6 @@ export default function PublicationsFilterPanel({
           idNamespace={idNamespace}
           onToggle={(v) => toggleFilter('researchCommunity', v)}
           tooltips={RESEARCH_COMMUNITY_TOOLTIPS}
-        />
-        <PublicationsFilterGroup
-          legend="Research Area"
-          options={filterOptions.researchAreas}
-          selected={filters.researchArea}
-          collapsible={collapsibleGroups}
-          idNamespace={idNamespace}
-          onToggle={(v) => toggleFilter('researchArea', v)}
         />
         <PublicationsFilterGroup
           legend="BDC Contribution"
