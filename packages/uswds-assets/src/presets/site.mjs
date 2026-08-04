@@ -48,6 +48,10 @@ export const sitePreset = {
   ],
   managedLocalFiles: [
     {
+      source: 'assets/hero.jpg',
+      target: 'img/hero.jpg',
+    },
+    {
       source: 'assets/favicon.svg',
       target: 'favicon.svg',
     },
@@ -61,7 +65,5 @@ export const sitePreset = {
     'img/material-icons',
     'img/material-icons-deprecated',
     'img/uswds-icons',
-    'img/hero.jpg',
-    'img/hero.webp',
   ],
 };

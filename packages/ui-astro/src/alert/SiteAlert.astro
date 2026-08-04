@@ -117,71 +117,71 @@ const containerClasses = [
 </script>
 
 <style lang="scss">
-  @use 'uswds-core' as *;
+  @use '@bdc/uswds-theme/src/uswds-init' as core;
 
   .bdc-site-alert--info {
     background: linear-gradient(
       90deg,
-      color($theme-color-primary-lighter),
-      color($theme-color-primary-light)
+      core.core-color(core.$theme-color-primary-lighter),
+      core.core-color(core.$theme-color-primary-light)
     );
-    border-bottom: 6px solid color($theme-color-primary);
+    border-bottom: 6px solid core.core-color(core.$theme-color-primary);
   }
 
   .bdc-site-alert--info a {
-    color: color($theme-color-primary-darker);
-    text-decoration-color: color($theme-color-primary-darker);
+    color: core.core-color(core.$theme-color-primary-darker);
+    text-decoration-color: core.core-color(core.$theme-color-primary-darker);
   }
 
   .bdc-site-alert--warning {
     background: linear-gradient(
       90deg,
-      color($theme-color-warning-lighter),
-      color($theme-color-warning-light)
+      core.core-color('yellow-5'),
+      core.core-color('yellow-20v')
     );
-    border-bottom: 6px solid color($theme-color-warning);
+    border-bottom: 6px solid core.core-color('yellow-30v');
   }
 
   .bdc-site-alert--warning a {
-    color: color($theme-color-warning-darker);
-    text-decoration-color: color($theme-color-warning-darker);
+    color: core.core-color('yellow-70v');
+    text-decoration-color: core.core-color('yellow-70v');
   }
 
   .bdc-site-alert--error {
     background: linear-gradient(
       90deg,
-      color($theme-color-secondary-lighter),
-      color($theme-color-secondary-light)
+      core.core-color(core.$theme-color-secondary-lighter),
+      core.core-color(core.$theme-color-secondary-light)
     );
-    border-bottom: 6px solid color($theme-color-secondary);
+    border-bottom: 6px solid core.core-color(core.$theme-color-secondary);
   }
 
   .bdc-site-alert--error a {
-    color: color($theme-color-secondary-dark);
-    text-decoration-color: color($theme-color-secondary-dark);
+    color: core.core-color(core.$theme-color-secondary-dark);
+    text-decoration-color: core.core-color(core.$theme-color-secondary-dark);
   }
 
   .bdc-site-alert--success {
     background: linear-gradient(
       90deg,
-      color($theme-color-success-lighter),
-      color($theme-color-success-light)
+      core.core-color('green-cool-5'),
+      core.core-color('green-cool-20v')
     );
-    border-bottom: 6px solid color($theme-color-success);
+    border-bottom: 6px solid core.core-color('green-cool-40v');
   }
 
   .bdc-site-alert--success a {
-    color: color($theme-color-success-darker);
-    text-decoration-color: color($theme-color-success-darker);
+    color: core.core-color('green-cool-60v');
+    text-decoration-color: core.core-color('green-cool-60v');
   }
 
   .bdc-site-alert--emergency {
-    background: linear-gradient(90deg, color('red-warm-10'), color('red-warm-20v'));
-    border-bottom: 6px solid color($theme-color-emergency);
+    background: linear-gradient(90deg, core.core-color('red-warm-10'), core.core-color('red-warm-20v'));
+    border-bottom: 6px solid core.core-color('red-warm-50v');
   }
 
   .bdc-site-alert--emergency a {
-    color: color($theme-color-emergency-dark);
-    text-decoration-color: color($theme-color-emergency-dark);
+    color: core.core-color('red-warm-70v');
+    text-decoration-color: core.core-color('red-warm-70v');
   }
 </style>

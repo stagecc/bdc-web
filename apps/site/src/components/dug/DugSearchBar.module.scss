@@ -1,19 +1,19 @@
-@use 'uswds-core' as *;
+@use '@bdc/uswds-theme/src/uswds-init' as core;
 
 .searchShell {
   transition: border-color 150ms, box-shadow 150ms, background-color 150ms;
 }
 
 .searchShell:focus-within {
-  background: color($theme-color-primary-lighter);
-  border-color: color($theme-color-primary-dark);
-  box-shadow: 0 0 0 units('05') color($theme-color-primary-light);
+  background: core.core-color(core.$theme-color-primary-lighter);
+  border-color: core.core-color(core.$theme-color-primary-dark);
+  box-shadow: 0 0 0 core.core-units('05') core.core-color(core.$theme-color-primary-light);
 }
 
 .searchInput.usa-input,
 .searchInput.usa-search__input {
-  padding-right: calc(#{units(15)} + #{units(1)});
-  min-height: units(6);
+  padding-right: calc(#{core.core-units(15)} + #{core.core-units(1)});
+  min-height: core.core-units(6);
 }
 
 .searchInput.usa-input:focus,
@@ -43,7 +43,7 @@
 
 .searchAffordance {
   position: absolute;
-  right: units('105');
+  right: core.core-units('105');
   top: 50%;
   transform: translateY(-50%);
 }

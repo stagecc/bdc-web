@@ -11,7 +11,8 @@ let formError = false;
 const hasFreshdeskAuth =
   Boolean(import.meta.env.FRESHDESK_DOMAIN) &&
   Boolean(import.meta.env.FRESHDESK_API_KEY);
-const schemaIdRaw = import.meta.env.FRESHDESK_CUSTOM_OBJECT_CONTACT_BDC_SCHEMA_ID;
+const schemaIdRaw = import.meta.env
+  .FRESHDESK_CUSTOM_OBJECT_CONTACT_BDC_SCHEMA_ID;
 
 const schemaId = Number(schemaIdRaw);
 
