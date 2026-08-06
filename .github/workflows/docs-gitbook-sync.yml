@@ -1,0 +1,111 @@
+name: Docs GitBook Sync
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-gitbook-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Read latest GitBook SHA
+        id: gitbook
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const { data } = await github.rest.repos.getCommit({
+              owner: 'stagecc',
+              repo: 'bdc-gitbook',
+              ref: 'main',
+            });
+            core.setOutput('sha', data.sha);
+
+      - name: Read current locked SHA
+        id: lock
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const path = 'apps/docs/gitbook.lock.json';
+          let ref = '';
+
+          if (fs.existsSync(path)) {
+            try {
+              const parsed = JSON.parse(fs.readFileSync(path, 'utf8'));
+              if (parsed && typeof parsed.ref === 'string') ref = parsed.ref;
+            } catch {
+              ref = '';
+            }
+          }
+
+          fs.appendFileSync(process.env.GITHUB_OUTPUT, `ref=${ref}\n`);
+          NODE
+
+      - name: Update lock file
+        if: steps.gitbook.outputs.sha != steps.lock.outputs.ref
+        run: |
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const path = 'apps/docs/gitbook.lock.json';
+          const sha = process.env.GITBOOK_SHA;
+
+          const lock = {
+            repo: 'https://github.com/stagecc/bdc-gitbook.git',
+            ref: sha,
+          };
+
+          fs.writeFileSync(path, `${JSON.stringify(lock, null, 2)}\n`);
+          NODE
+        env:
+          GITBOOK_SHA: ${{ steps.gitbook.outputs.sha }}
+
+      - name: Setup Node
+        if: steps.gitbook.outputs.sha != steps.lock.outputs.ref
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        if: steps.gitbook.outputs.sha != steps.lock.outputs.ref
+        run: npm ci
+
+      - name: Validate docs build
+        if: steps.gitbook.outputs.sha != steps.lock.outputs.ref
+        run: npm run build --workspace=@bdc/docs
+        env:
+          GITBOOK_REF: ${{ steps.gitbook.outputs.sha }}
+
+      - name: Commit updated lock
+        if: steps.gitbook.outputs.sha != steps.lock.outputs.ref
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add "apps/docs/gitbook.lock.json"
+
+          if git diff --cached --quiet; then
+            echo "No lock changes to commit."
+            exit 0
+          fi
+
+          short_sha="${GITBOOK_SHA:0:12}"
+          git commit -m "chore(docs): sync GitBook lock to ${short_sha}"
+          git push
+        env:
+          GITBOOK_SHA: ${{ steps.gitbook.outputs.sha }}
+
+      - name: No content changes detected
+        if: steps.gitbook.outputs.sha == steps.lock.outputs.ref
+        run: echo "GitBook is already in sync at ${{ steps.lock.outputs.ref }}"

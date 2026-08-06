@@ -1,7 +1,22 @@
-import { describe, expect, it } from 'vitest';
-import { sidebar } from './sidebar';
+import { existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
+import type { StarlightUserConfig } from '@astrojs/starlight/types';
+import { beforeAll, describe, expect, it } from 'vitest';
 
-type SidebarItem = (typeof sidebar)[number];
+type Sidebar = NonNullable<StarlightUserConfig['sidebar']>;
+type SidebarItem = Sidebar[number];
+
+const configDir = dirname(fileURLToPath(import.meta.url));
+const generatedSidebarPath = join(configDir, 'sidebar.generated.ts');
+const describeGeneratedSidebar = existsSync(generatedSidebarPath)
+  ? describe
+  : describe.skip;
+
+async function loadSidebar(): Promise<Sidebar> {
+  const generated = await import('./sidebar.generated');
+  return generated.sidebar;
+}
 
 function collectSlugs(items: SidebarItem[]): string[] {
   const slugs: string[] = [];
@@ -25,7 +40,13 @@ function collectLabels(items: SidebarItem[]): string[] {
   return labels;
 }
 
-describe('sidebar', () => {
+describeGeneratedSidebar('sidebar.generated', () => {
+  let sidebar: Sidebar = [];
+
+  beforeAll(async () => {
+    sidebar = await loadSidebar();
+  });
+
   it('every item has a label', () => {
     const labels = collectLabels(sidebar);
     for (const label of labels) {
