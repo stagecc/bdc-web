@@ -40,8 +40,8 @@ const past = (await getCollection('events'))
         <BdcHostedIndicator decorative size={20} class="text-baseline" />
         were hosted by BDC.
       </p>
-      <InlineAlert variant="info">
-        Don't see the event you're looking for? Check back soon as more materials are added.
+      <InlineAlert variant="info" heading="Don't see what you're looking for?">
+        Check back soon as more materials are added.
       </InlineAlert>
       <section>
         {past.length > 0
