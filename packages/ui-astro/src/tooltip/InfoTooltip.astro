@@ -9,14 +9,19 @@ interface Props {
   class?: string;
 }
 
-const { text, position = 'top', icon = 'info', class: className } = Astro.props;
+const {
+  text,
+  position = 'top',
+  icon = 'info_outline',
+  class: className,
+} = Astro.props;
 ---
 
 <Tooltip
   text={text}
   position={position}
   class={[
-    'bg-transparent padding-0 cursor-pointer text-primary-dark margin-left-05',
+    'bg-transparent border-0 padding-0 cursor-pointer text-primary-dark display-inline-flex flex-align-center',
     className,
   ]
     .filter(Boolean)

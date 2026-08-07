@@ -4,7 +4,7 @@ lastReviewed: July 2026
 layout: ../../layouts/Page.astro
 ---
 import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
-import Tooltip from '@bdc/ui-astro/tooltip/Tooltip.astro';
+import InfoTooltip from '@bdc/ui-astro/tooltip/InfoTooltip.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro'
 
 <InlineAlert variant="info">
@@ -36,7 +36,7 @@ BDC notifies users of download restrictions at multiple points, including when u
 
 ## Controlled Data Access Approval and Use
 
-Access to controlled data hosted in BDC is managed through the [Database of Genotypes and Phenotypes](https://dbgap.ncbi.nlm.nih.gov/home/) (dbGaP) <Tooltip text="NIH system used to manage access to controlled-access datasets" /> system and authorized by the appropriate Data Access Committee (DAC)<Tooltip text="Responsible for reviewing and approving requests to controlled-access datasets" />. DACs are established based on programmatic areas of interest as well as technical and ethical expertise. All DACs operate through common principles and under similar mechanisms to ensure the consistency and transparency of the controlled data access process. 
+Access to controlled data hosted in BDC is managed through the [Database of Genotypes and Phenotypes](https://dbgap.ncbi.nlm.nih.gov/home/) (dbGaP) <InfoTooltip text="NIH system used to manage access to controlled-access datasets" /> system and authorized by the appropriate Data Access Committee (DAC)<InfoTooltip text="Responsible for reviewing and approving requests to controlled-access datasets" />. DACs are established based on programmatic areas of interest as well as technical and ethical expertise. All DACs operate through common principles and under similar mechanisms to ensure the consistency and transparency of the controlled data access process. 
 
 Approval through dbGaP allows authorized users to access approved data within BDC; it does not permit downloading individual-level data from BDC. Authorized users are responsible for following all applicable Data Use Agreements, Institutional Review Board policies and guidelines, Data Use Limitations, and NIH data protection requirements when working with BDC-hosted data.
 

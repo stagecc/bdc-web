@@ -6,14 +6,30 @@ interface Props {
 }
 
 const { text, position = 'top', class: className } = Astro.props;
+const triggerClass = ['usa-tooltip', className].filter(Boolean).join(' ');
 ---
 
 <button
   type="button"
-  class={className}
+  class={triggerClass}
   title={text}
   data-position={position}
   aria-label={text}
 >
   <slot />
 </button>
+
+<script>
+  import tooltip from '@uswds/uswds/js/usa-tooltip';
+
+  const initTooltips = (root = document.body) => {
+    tooltip.off(root);
+    tooltip.on(root);
+  };
+
+  initTooltips();
+
+  document.addEventListener('astro:after-swap', () => {
+    initTooltips();
+  });
+</script>
