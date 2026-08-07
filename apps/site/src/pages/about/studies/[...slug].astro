@@ -1,74 +1,107 @@
 ---
-import { getCollection } from 'astro:content';
-import Link from '@bdc/ui-astro/link/Link.astro';
+import { render } from 'astro:content';
+import StatCard from '@bdc/ui-astro/card/StatCard.astro';
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
+import {
+  getProgramsWithContent,
+  type ProgramWithContent,
+} from '../../../util/programs';
 
-export async function getStaticPaths() {
-  const programs = await getCollection('programs');
-  const localEntries = await getCollection('programContent');
-
-  // cross-referencing local content against the API's program list, by id
-  const localMap = new Map(localEntries.map((entry) => [entry.id, entry]));
-
-  return programs.map((program) => {
-    const local = localMap.get(program.id);
-    const slug = local?.id ?? program.id;
-
-    return {
-      params: { slug },
-      props: { program, local, slug },
-    };
-  });
+interface Props {
+  entry: ProgramWithContent;
 }
 
-const { program, local } = Astro.props;
-const { name, description, studies } = program.data;
+export async function getStaticPaths() {
+  const programs = await getProgramsWithContent();
 
-const excerpt = local?.data.excerpt;
-const title = local?.data.title ?? name;
+  return programs
+    .filter((entry) => entry.dataAvailable)
+    .map((entry) => {
+      const slug = entry.local?.id ?? entry.program.id;
+
+      return {
+        params: { slug },
+        props: { entry },
+      };
+    });
+}
+
+const { entry }: Props = Astro.props;
+const { program, local, title, excerpt } = entry;
+const { description, studies } = program.data;
+const { Content } = local ? await render(local) : { Content: undefined };
+
+const datasetLabel = `${studies.length} hosted dataset${studies.length === 1 ? '' : 's'} in BDC`;
+const heroDescription = excerpt ?? description;
 ---
 
 <Base title={title}>
-  <section class="usa-section">
-    <div class="grid-container">
-      <div class="margin-top-4">
-        <Link to="/about/studies">← View Program Table</Link>
-      </div>
-      <h1>{title}</h1>
-      <span class="usa-tag">{description}</span><span class="margin-left-1">· {studies.length} hosted datasets in BDC</span>
-      {excerpt && <p class="usa-intro">{excerpt}</p>}
-      { local?.data ? (
-        <p class="usa-prose">
-          You can view {title} data available in BDC below, or learn more about {title} and the other programs BDC supports on the 
-          <Link to={`/about/research-communities#${program.id}`}>Research Communities</Link> page. 
-        </p>
-      ) : (
-        <p class="usa-prose">
-          View {title} data available in BDC below.
-        </p>
-      )}
+  <Hero
+    eyebrow="Research Community"
+    title={title}
+    description={heroDescription}
+    primaryCta={{ label: 'Jump to datasets', href: '#community-datasets' }}
+    secondaryCta={{ label: 'Back to Research Community Data', href: '/about/studies' }}
+  >
+    <div slot="visual" class="width-full maxw-mobile-lg">
+      <StatCard
+        icon="database"
+        number={studies.length}
+        qualifier="Hosted datasets"
+        meta={datasetLabel}
+        description="eRA Commons credentials and approved dbGaP access are required."
+        float="right"
+        tone="cool"
+        width="100%"
+      />
+    </div>
+  </Hero>
 
-      <table class="usa-table usa-table--borderless usa-table--striped width-full margin-top-4">
-        <thead>
-          <tr>
-            <th scope="col">Study Name</th>
-            <th scope="col">dbGaP Accession</th>
-          </tr>
-        </thead>
-        <tbody>
-          {studies.map(study => (
+  <section class="usa-section padding-top-4">
+    <div class="grid-container">
+      <div class="usa-prose" style="columns: 2;">
+        {Content && (
+          <>
+            <h3>Description</h3>
+            <Content />
+          </>
+        )}
+        <p>
+          View {title} data available in BDC below, or learn more about this and
+          other supported collaborations on the{' '}
+          <Link to={`/about/research-communities#${program.id}`}>
+            Research Communities
+          </Link>{' '}
+          page.
+        </p>
+      </div>
+
+      <hr />
+
+
+      <div id="community-datasets" class="overflow-auto margin-top-4">
+        <table class="usa-table usa-table--borderless usa-table--striped width-full margin-top-0">
+          <caption class="usa-sr-only">Hosted datasets in BDC for {title}</caption>
+          <thead>
             <tr>
-              <td>{study.name}</td>
-              <td>
-                {study.url
-                  ? <Link to={study.url}>{study.id}</Link>
-                  : study.id
-                }
-              </td>
+              <th scope="col">Study Name</th>
+              <th scope="col">dbGaP Accession</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {studies.map((study) => (
+              <tr>
+                <td>{study.name}</td>
+                <td>
+                  {study.url ? <Link to={study.url}>{study.id}</Link> : study.id}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
     </div>
   </section>
