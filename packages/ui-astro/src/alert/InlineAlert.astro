@@ -35,7 +35,9 @@ const headingId = heading
   <section class={classes} aria-labelledby={headingId}>
     <div class="usa-alert__body">
       <Heading id={headingId} class="usa-alert__heading">{heading}</Heading>
-      <slot />
+      <div class="usa-alert__text">
+        <slot />
+      </div>
     </div>
   </section>
 ) : (
