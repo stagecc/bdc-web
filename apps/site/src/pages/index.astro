@@ -309,7 +309,7 @@ const nextEvent = events[0];
                 lead
                 meta={`Published · ${dateFormat.format(leadNews.data.date)}`}
                 title={leadNews.data.title}
-                summary={leadNews.data.subtitle ?? 'Lorem ipsum non eiusmod magna dolore irure laborum ad id voluptate do occaecat deserunt dolor duis officia mollit ex fugiat. Labore duis id commodo pariatur labore ut sint duis in excepteur consectetur in.'}
+                summary={leadNews.data.excerpt ?? 'Excerpt not found'}
                 href={`/news/latest-updates/${leadNews.id}/`}
                 linkLabel="View full update"
               />
