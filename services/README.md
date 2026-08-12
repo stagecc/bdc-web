@@ -20,7 +20,7 @@ RECAPTCHA_SECRET_KEY=
 
 Both service runners load `services/.env` automatically. You can add optional service-specific overrides in:
 
-- `services/freshdesk/.env`
+- `services/freshdesk-proxy/.env`
 - `services/freshdesk-join/.env`
 
 ## Start Services
@@ -30,7 +30,7 @@ Run each service in its own terminal.
 ### Freshdesk proxy (ticket forms, FAQs, custom object forms)
 
 ```bash
-cd services/freshdesk
+cd services/freshdesk-proxy
 pipenv install
 pipenv run python server.py
 ```

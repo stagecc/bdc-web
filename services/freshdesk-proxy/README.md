@@ -24,7 +24,7 @@ FRESHDESK_DOMAIN=
 RECAPTCHA_SECRET_KEY=
 ```
 
-Optional: create `services/freshdesk/.env` only if you need service-specific overrides.
+Optional: create `services/freshdesk-proxy/.env` only if you need service-specific overrides.
 
 ### Run
 

@@ -2,7 +2,7 @@
 
 This service is the source of truth for the dedicated Join Lambda used by `apps/site/src/pages/join.astro`.
 
-Unlike `services/freshdesk/handler.py`, this handler includes join-specific business logic:
+Unlike `services/freshdesk-proxy/handler.py`, this handler includes join-specific business logic:
 
 - verifies reCAPTCHA
 - rejects bot submissions via honeypot

@@ -18,8 +18,8 @@ type FormStatus =
   | 'error';
 
 interface FreshdeskContactFormProps {
-  // The Lambda proxy endpoint URL.
-  // Set via FRESHDESK_PROXY_URL in apps/site/.env.
+  // The Join Lambda endpoint URL.
+  // Set via FRESHDESK_JOIN_URL in apps/site/.env.
   submitUrl: string;
   // The reCAPTCHA v3 site key for the current environment.
   // Passed from the Astro page via import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY.
@@ -65,7 +65,7 @@ export default function FreshdeskContactForm({
         recaptcha_token: recaptchaToken,
       };
 
-      const response = await fetch(`${submitUrl}/join`, {
+      const response = await fetch(submitUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
