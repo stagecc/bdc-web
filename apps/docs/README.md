@@ -49,6 +49,8 @@ From repo root:
   - `npm run sync:gitbook --workspace=@bdc/docs`
 - Sync external source content only:
   - `npm run sync:external --workspace=@bdc/docs`
+- Refresh external source change-detection lock only:
+  - `npm run check:external-updates --workspace=@bdc/docs`
 
 Notes:
 
@@ -80,4 +82,14 @@ Amplify listens to this repository and deploys `apps/docs` from resulting commit
 - Initial source config: `apps/docs/sync-sources/readme-sevenbridges.yaml`.
 - Schema: `apps/docs/sync-sources/source.schema.json`.
 - Adapter flow and link rewrite rules: `apps/docs/sync-sources/README.md`.
+- External lock file (committed): `apps/docs/external.lock.json`.
 - Generated external sidebar: `apps/docs/src/generated/external-sidebar.json`.
+
+Workflow: `.github/workflows/docs-external-sync.yml`
+
+- Runs on schedule and manual dispatch.
+- Rebuilds `apps/docs/external.lock.json` from configured external sources.
+- Compares to committed lock file and exits when unchanged.
+- If changed:
+  - validates docs build
+  - commits lock update

@@ -1,0 +1,67 @@
+name: Docs External Source Sync
+
+on:
+  schedule:
+    - cron: '17,47 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: docs-external-sync
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Refresh external lock
+        run: npm run check:external-updates --workspace=@bdc/docs
+
+      - name: Detect external lock change
+        id: external_lock
+        run: |
+          if git diff --quiet -- "apps/docs/external.lock.json"; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Validate docs build
+        if: steps.external_lock.outputs.changed == 'true'
+        run: npm run build --workspace=@bdc/docs
+
+      - name: Commit external lock update
+        if: steps.external_lock.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add "apps/docs/external.lock.json"
+
+          if git diff --cached --quiet; then
+            echo "No external lock changes to commit."
+            exit 0
+          fi
+
+          short_sha="$(git rev-parse --short=12 HEAD)"
+          git commit -m "chore(docs): sync external source lock ${short_sha}"
+          git push
+
+      - name: No external source changes detected
+        if: steps.external_lock.outputs.changed == 'false'
+        run: echo "External docs are already in sync."
