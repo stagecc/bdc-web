@@ -1,6 +1,6 @@
 applications:
-  - appRoot: apps/site
-    customHeaders:
+  - appRoot: apps/docs
+    customHeaders: &defaultSecurityHeaders
       - pattern: '**'
         headers:
           - key: Content-Security-Policy-Report-Only
@@ -28,3 +28,9 @@ applications:
             value: SAMEORIGIN
           - key: Permissions-Policy
             value: accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
+
+  - appRoot: apps/site
+    customHeaders: *defaultSecurityHeaders
+
+  - appRoot: apps/consortium
+    customHeaders: *defaultSecurityHeaders
