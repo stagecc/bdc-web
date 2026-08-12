@@ -1,0 +1,92 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://bdcatalyst.org/schemas/docs-sync-source.schema.json",
+  "title": "External docs sync source",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "type",
+    "base_url",
+    "output_dir",
+    "sidebar_section",
+    "strict_missing",
+    "link_policy",
+    "pages"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Unique source id used in manifests and logs."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["readme"],
+      "description": "Adapter type used to fetch and transform content."
+    },
+    "base_url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Public base URL for the source docs site."
+    },
+    "output_dir": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Directory under src/content/docs where synced pages are written."
+    },
+    "sidebar_section": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Top-level sidebar label for this source."
+    },
+    "strict_missing": {
+      "type": "boolean",
+      "description": "Fail sync if any configured page cannot be fetched."
+    },
+    "link_policy": {
+      "type": "string",
+      "enum": ["externalize_non_mirrored", "fail_non_mirrored"],
+      "description": "How to handle in-content links that target unmirrored pages from the same source."
+    },
+    "badge": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["target_path"],
+        "properties": {
+          "title": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Optional override title for frontmatter/sidebar."
+          },
+          "target_path": {
+            "type": "string",
+            "pattern": "^/",
+            "description": "Source-relative page path to fetch."
+          },
+          "result_path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Optional output slug under output_dir. If omitted, derived from target_path."
+          }
+        }
+      }
+    }
+  }
+}

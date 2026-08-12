@@ -45,6 +45,10 @@ From repo root:
   - `npm run dev:sync --workspace=@bdc/docs`
 - Sync content only (supporting local dev):
   - `npm run sync:content --workspace=@bdc/docs`
+- Sync GitBook content only:
+  - `npm run sync:gitbook --workspace=@bdc/docs`
+- Sync external source content only:
+  - `npm run sync:external --workspace=@bdc/docs`
 
 Notes:
 
@@ -69,3 +73,11 @@ Amplify listens to this repository and deploys `apps/docs` from resulting commit
 
 - To pin docs to a specific GitBook commit manually, update `apps/docs/gitbook.lock.json` and commit.
 - To test against a different ref temporarily, set `GITBOOK_REF` when running `sync-gitbook.mjs`.
+
+## External source sync (draft)
+
+- Config files for external sources live in `apps/docs/sync-sources/`.
+- Initial source config: `apps/docs/sync-sources/readme-sevenbridges.yaml`.
+- Schema: `apps/docs/sync-sources/source.schema.json`.
+- Adapter flow and link rewrite rules: `apps/docs/sync-sources/README.md`.
+- Generated external sidebar: `apps/docs/src/generated/external-sidebar.json`.

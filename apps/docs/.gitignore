@@ -3,3 +3,5 @@ src/content/docs/
 public/gitbook-assets/
 src/config/sidebar.generated.ts
 src/generated/gitbook-manifest.json
+src/generated/external-sources-manifest.json
+src/generated/external-sidebar.json
