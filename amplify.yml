@@ -1,16 +1,53 @@
 version: 1
 applications:
-  - appRoot: apps/site
+  - appRoot: apps/docs
     frontend:
+      buildPath: /
       phases:
         preBuild:
           commands:
             - npm ci
         build:
           commands:
-            - npm run build -w @bdc/site
+            - npm run build --workspace=@bdc/docs
       artifacts:
-        baseDirectory: dist
+        baseDirectory: apps/docs/dist
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+
+  - appRoot: apps/site
+    frontend:
+      buildPath: /
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - npm run build --workspace=@bdc/site
+      artifacts:
+        baseDirectory: apps/site/dist
+        files:
+          - '**/*'
+      cache:
+        paths:
+          - node_modules/**/*
+
+  - appRoot: apps/consortium
+    frontend:
+      buildPath: /
+      phases:
+        preBuild:
+          commands:
+            - npm ci
+        build:
+          commands:
+            - npm run build --workspace=@bdc/consortium
+      artifacts:
+        baseDirectory: apps/consortium/dist
         files:
           - '**/*'
       cache:
