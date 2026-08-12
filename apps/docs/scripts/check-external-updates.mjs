@@ -119,7 +119,9 @@ function normalizeSource(raw, fileName) {
 
   const id = asString(raw.id, 'id', fileName);
   const type = asString(raw.type, 'type', fileName);
-  const baseUrl = normalizeBaseUrl(asString(raw.base_url, 'base_url', fileName));
+  const baseUrl = normalizeBaseUrl(
+    asString(raw.base_url, 'base_url', fileName),
+  );
 
   if (!Array.isArray(raw.pages) || raw.pages.length === 0) {
     throw new Error(`pages must be a non-empty array in ${fileName}`);
