@@ -1,10 +1,8 @@
 """
-Local development server that wraps the Lambda handler
-with a standard HTTP server.
+Local development server for the join Lambda handler.
 
 Usage:
   pip install -r requirements.txt
-  # fill in .env with your credentials
   python server.py
 """
 
@@ -20,7 +18,8 @@ load_dotenv(service_dir.parent / '.env', override=False)
 # Optional service-specific overrides.
 load_dotenv(service_dir / '.env', override=True)
 
-PORT = 8787
+PORT = 8788
+
 
 class Handler(BaseHTTPRequestHandler):
     def _handle(self, method):
@@ -42,15 +41,13 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(result.get('body', '').encode())
 
-    def do_GET(self):
-        self._handle('GET')
-
     def do_POST(self):
         self._handle('POST')
 
     def do_OPTIONS(self):
         self._handle('OPTIONS')
 
+
 if __name__ == '__main__':
-    print(f'Freshdesk proxy listening on http://localhost:{PORT}')
+    print(f'Freshdesk join proxy listening on http://localhost:{PORT}')
     HTTPServer(('', PORT), Handler).serve_forever()

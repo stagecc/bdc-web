@@ -5,8 +5,6 @@ import urllib.request
 import urllib.error
 import urllib.parse
 
-from join_handler import handle_join
-
 def verify_recaptcha(token):
     print("---- reCAPTCHA verification started ----")
 
@@ -36,7 +34,6 @@ def cors_headers(event):
     allowed_origins = [
         'https://biodatacatalyst.nhlbi.nih.gov',
         'https://staging.biodatacatalyst.nhlbi.nih.gov',
-        'http://localhost:8000',
         'http://localhost:4321',
     ]
 
@@ -140,12 +137,6 @@ def lambda_handler(event, context):
                 'headers': headers,
                 'body': json.dumps({'message': 'ok'})
             }
-
-        # /join — upsert contact (check by email, update or create)
-        # handled separately from the generic route_map because it requires
-        # a search-then-write flow rather than a direct POST.
-        if path == 'join':
-            return handle_join(payload, auth, base_url, headers, _proxy_request)
 
         # generic POST routes — direct proxy to Freshdesk
         route_map = {
