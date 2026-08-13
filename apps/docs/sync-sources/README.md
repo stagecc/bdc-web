@@ -5,7 +5,7 @@ This directory contains config files for external documentation sources that are
 ## Files
 
 - `source.schema.json`: schema for each source YAML file.
-- `readme-sevenbridges.yaml`: initial ReadMe source configuration.
+- `readme-sevenbridges.yaml`: initial readme.io source configuration.
 
 ## Source file shape
 
@@ -31,7 +31,7 @@ If `result_path` is omitted, it is derived from `target_path`.
 2. For each source, create a deterministic mapping table:
    - `source_url` = `base_url` + `target_path`
    - `local_slug` = `output_dir` + (`result_path` or derived path)
-3. Fetch page content via source adapter (ReadMe first).
+3. Fetch page content via source adapter (`readme`, `zendesk`).
 4. Fail the build if any configured page cannot be fetched when `strict_missing: true`.
 5. Transform fetched content into Starlight-compatible markdown:
    - normalize frontmatter/title

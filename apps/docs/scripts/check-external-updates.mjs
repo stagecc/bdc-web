@@ -1,42 +1,36 @@
 import { createHash } from 'node:crypto';
-import { readdir, readFile, writeFile } from 'node:fs/promises';
-import { dirname, extname, join, resolve } from 'node:path';
+import { writeFile } from 'node:fs/promises';
+import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { load as loadYaml } from 'js-yaml';
+import {
+  extractReadmeBodyHtml,
+  fetchHtmlPage,
+  fetchJsonPage,
+  parseZendeskArticleRef,
+  stripCloudflareEmailProtection,
+} from './lib/external-source-adapters.mjs';
+import { readSourceConfigsForLock } from './lib/external-source-config.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const docsRoot = resolve(scriptDir, '..');
 const sourcesDir = resolve(docsRoot, 'sync-sources');
 const lockFilePath = resolve(docsRoot, 'external.lock.json');
 
-const sources = await readSourceConfigs(sourcesDir);
+const sources = await readSourceConfigsForLock(sourcesDir);
 
 const lock = {
   sources: [],
 };
 
 for (const source of sources) {
-  if (source.type !== 'readme') {
+  if (source.type !== 'readme' && source.type !== 'zendesk') {
     throw new Error(`Unsupported source type: ${source.type}`);
   }
 
   const pages = [];
   for (const page of source.pages) {
     const sourceUrl = new URL(page.targetPath, source.baseUrl).toString();
-    const response = await fetch(sourceUrl, {
-      headers: {
-        'user-agent': 'bdc-docs-external-check/1.0',
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch ${source.id} ${page.targetPath}: HTTP ${response.status}`,
-      );
-    }
-
-    const html = await response.text();
-    const body = extractReadmeBodyHtml(html);
+    const body = await fetchBodyForSource(source, page, sourceUrl);
     const normalized = normalizeContentForHash(body);
 
     pages.push({
@@ -103,92 +97,55 @@ function decodeCloudflareEmail(encoded) {
   return decoded;
 }
 
-function extractReadmeBodyHtml(html) {
-  const match = html.match(
-    /data-testid="RDMD"[^>]*>([\s\S]*?)<\/div><\/div><div class="UpdatedAt"/,
-  );
-  if (!match?.[1]) {
-    throw new Error('Unable to locate ReadMe page body for hashing');
+async function fetchBodyForSource(source, page, sourceUrl) {
+  if (source.type === 'zendesk') {
+    return fetchZendeskBodyFromApi(source.baseUrl, page.targetPath);
   }
 
-  return match[1].trim();
-}
-
-async function readSourceConfigs(dirPath) {
-  const entries = await readdir(dirPath, { withFileTypes: true });
-  const files = entries
-    .filter((entry) => entry.isFile())
-    .map((entry) => entry.name)
-    .filter((name) => {
-      const ext = extname(name).toLowerCase();
-      return ext === '.yaml' || ext === '.yml';
-    })
-    .sort();
-
-  const configs = [];
-  for (const fileName of files) {
-    const filePath = join(dirPath, fileName);
-    const raw = await readFile(filePath, 'utf8');
-    const parsed = loadYaml(raw);
-    configs.push(normalizeSource(parsed, fileName));
-  }
-
-  return configs;
-}
-
-function normalizeSource(raw, fileName) {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
-    throw new Error(`Invalid source config in ${fileName}: expected object`);
-  }
-
-  const id = asString(raw.id, 'id', fileName);
-  const type = asString(raw.type, 'type', fileName);
-  const baseUrl = normalizeBaseUrl(
-    asString(raw.base_url, 'base_url', fileName),
-  );
-
-  if (!Array.isArray(raw.pages) || raw.pages.length === 0) {
-    throw new Error(`pages must be a non-empty array in ${fileName}`);
-  }
-
-  const pages = raw.pages.map((page, index) => {
-    if (!page || typeof page !== 'object' || Array.isArray(page)) {
-      throw new Error(`Invalid page at index ${index} in ${fileName}`);
-    }
-
-    const targetPath = asString(
-      page.target_path,
-      `pages[${index}].target_path`,
-      fileName,
+  const response = await fetchHtmlPage(sourceUrl);
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch ${source.id} ${page.targetPath}: HTTP ${response.status}`,
     );
-    if (!targetPath.startsWith('/')) {
-      throw new Error(
-        `target_path must start with / in ${fileName}: ${targetPath}`,
-      );
-    }
-
-    return {
-      targetPath: targetPath.replace(/\/+$/, ''),
-    };
-  });
-
-  return {
-    id,
-    type,
-    baseUrl,
-    pages,
-  };
-}
-
-function asString(value, fieldName, fileName) {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`Expected string for ${fieldName} in ${fileName}`);
   }
 
-  return value.trim();
+  const html = await response.text();
+  try {
+    return extractReadmeBodyHtml(html);
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      error.message === 'Unable to locate readme.io page body'
+    ) {
+      throw new Error('Unable to locate readme.io page body for hashing');
+    }
+    throw error;
+  }
 }
 
-function normalizeBaseUrl(value) {
-  const url = new URL(value);
-  return url.toString().replace(/\/+$/, '');
+async function fetchZendeskBodyFromApi(baseUrl, targetPath) {
+  const articleRef = parseZendeskArticleRef(targetPath);
+  const apiUrl = new URL(
+    `/api/v2/help_center/${articleRef.locale}/articles/${articleRef.articleId}.json`,
+    baseUrl,
+  );
+
+  const response = await fetchJsonPage(apiUrl.toString());
+  if (!response.ok) {
+    throw new Error(
+      `Failed to fetch Zendesk article ${targetPath}: HTTP ${response.status}`,
+    );
+  }
+
+  const payload = await response.json();
+  const article = payload?.article;
+  if (
+    !article ||
+    typeof article !== 'object' ||
+    typeof article.body !== 'string'
+  ) {
+    throw new Error(`Invalid Zendesk article payload for ${targetPath}`);
+  }
+
+  return stripCloudflareEmailProtection(article.body);
 }

@@ -1,13 +1,13 @@
 id: readme-sevenbridges
 type: readme
 base_url: https://sb-biodatacatalyst.readme.io
-output_dir: external/readme-sevenbridges
-sidebar_section: Partner Docs
+output_dir: external/sevenbridges
+sidebar_section: Seven Bridges
 strict_missing: true
 link_policy: externalize_non_mirrored
 badge:
   enabled: true
-  label: Synced from ReadMe
+  label: Synced from readme.io
 
 pages:
   - title: Before you start

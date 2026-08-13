@@ -62,6 +62,54 @@
           "content_hash": "763bffb8134eaf38de0cfc4ee639b15960a2f5abd7e57b85856484ad58de0729"
         }
       ]
+    },
+    {
+      "id": "zendesk-terra",
+      "type": "zendesk",
+      "base_url": "https://support.terra.bio",
+      "source_hash": "5ea4094a40ac5ccdad2d6bc40abd4ce4e85694ccf417516a3315e94f2cb7664e",
+      "pages": [
+        {
+          "target_path": "/hc/en-us/articles/16110566204443-Resources-for-RECOVER",
+          "source_url": "https://support.terra.bio/hc/en-us/articles/16110566204443-Resources-for-RECOVER",
+          "content_hash": "f96f786a84e947e74d492c2ff24a70d36792c1d9bde218d4ec6db439f6666173"
+        },
+        {
+          "target_path": "/hc/en-us/articles/19131496047771-How-to-update-GA4GH-DRS-URIs",
+          "source_url": "https://support.terra.bio/hc/en-us/articles/19131496047771-How-to-update-GA4GH-DRS-URIs",
+          "content_hash": "3dc219fb5dbc20a649ec6bffca032fb65a72a38d5d44947aedd6795a0a31576f"
+        },
+        {
+          "target_path": "/hc/en-us/articles/31787224295579-Create-a-BioData-Catalyst-cohort-with-PIC-SURE-to-analyze-in-Terra",
+          "source_url": "https://support.terra.bio/hc/en-us/articles/31787224295579-Create-a-BioData-Catalyst-cohort-with-PIC-SURE-to-analyze-in-Terra",
+          "content_hash": "35f5ccfd9878edc2e27f31c03300e1deb9dbd9c59126d496c423f02edf13b154"
+        },
+        {
+          "target_path": "/hc/en-us/articles/360038087312-Understanding-and-using-Gen3-data-in-Terra",
+          "source_url": "https://support.terra.bio/hc/en-us/articles/360038087312-Understanding-and-using-Gen3-data-in-Terra",
+          "content_hash": "d75423cbe350686a15b607630848dce2fff29fa085ed9392350db38240d618d5"
+        },
+        {
+          "target_path": "/hc/en-us/articles/360039016532-NHLBI-BioData-Catalyst%E2%93%87-BDC-Billing-overview-for-BDC-users",
+          "source_url": "https://support.terra.bio/hc/en-us/articles/360039016532-NHLBI-BioData-Catalyst%E2%93%87-BDC-Billing-overview-for-BDC-users",
+          "content_hash": "701964520ba3646c50125268d0305e38c3feea1fadf5f8aacb9a2728facbe126"
+        },
+        {
+          "target_path": "/hc/en-us/articles/360039415171-NHLBI-BioData-Catalyst%E2%93%87-BDC-Authorization-Domain-overview-for-BDC-users",
+          "source_url": "https://support.terra.bio/hc/en-us/articles/360039415171-NHLBI-BioData-Catalyst%E2%93%87-BDC-Authorization-Domain-overview-for-BDC-users",
+          "content_hash": "c039ac7e031edc7d3f6043346cabf9e28ffd2a0f38bfca3a8d10c6a45e701130"
+        },
+        {
+          "target_path": "/hc/en-us/articles/360042425932-BioData-Catalyst-Fellows-How-to-access-STRIDES-billing-on-Terra",
+          "source_url": "https://support.terra.bio/hc/en-us/articles/360042425932-BioData-Catalyst-Fellows-How-to-access-STRIDES-billing-on-Terra",
+          "content_hash": "e1d03df55807deac940b30e5076e32fb19641bc578419c95999ae1a7bf1887d4"
+        },
+        {
+          "target_path": "/hc/en-us/articles/360050390451-Linking-Gen3-data-and-Terra",
+          "source_url": "https://support.terra.bio/hc/en-us/articles/360050390451-Linking-Gen3-data-and-Terra",
+          "content_hash": "17b255f401a35e5d232deb7c613b44961c6409625c5d0e660cef65cacc08d859"
+        }
+      ]
     }
   ]
 }

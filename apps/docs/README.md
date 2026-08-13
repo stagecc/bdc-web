@@ -80,6 +80,7 @@ Amplify listens to this repository and deploys `apps/docs` from resulting commit
 
 - Config files for external sources live in `apps/docs/sync-sources/`.
 - Initial source config: `apps/docs/sync-sources/readme-sevenbridges.yaml`.
+- Zendesk source config: `apps/docs/sync-sources/zendesk-terra.yaml`.
 - Schema: `apps/docs/sync-sources/source.schema.json`.
 - Adapter flow and link rewrite rules: `apps/docs/sync-sources/README.md`.
 - External lock file (committed): `apps/docs/external.lock.json`.

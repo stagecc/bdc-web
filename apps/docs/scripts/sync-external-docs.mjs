@@ -1,7 +1,14 @@
-import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises';
-import { dirname, extname, join, resolve } from 'node:path';
+import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { load as loadYaml } from 'js-yaml';
+import {
+  extractReadmeBodyHtml,
+  fetchHtmlPage,
+  fetchJsonPage,
+  parseZendeskArticleRef,
+  stripCloudflareEmailProtection,
+} from './lib/external-source-adapters.mjs';
+import { readSourceConfigsForSync } from './lib/external-source-config.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const docsRoot = resolve(scriptDir, '..');
@@ -16,7 +23,7 @@ const outputSidebarFile = resolve(
   'src/generated/external-sidebar.json',
 );
 
-const sources = await readSourceConfigs(sourcesDir);
+const sources = await readSourceConfigsForSync(sourcesDir);
 if (sources.length === 0) {
   console.log('No external sync sources found.');
   process.exit(0);
@@ -49,7 +56,7 @@ for (const source of sources) {
   for (const page of source.pages) {
     try {
       const sourceUrl = new URL(page.targetPath, source.baseUrl).toString();
-      const fetched = await fetchReadmePage(sourceUrl);
+      const fetched = await fetchSourcePage(source, page, sourceUrl);
       const pageTitle = page.title ?? fetched.title;
       const rewriteResult = rewriteHtmlLinks({
         html: fetched.bodyHtml,
@@ -57,6 +64,7 @@ for (const source of sources) {
         currentPath: page.targetPath,
         mirroredPathToSlug: pageMap,
         linkPolicy: source.linkPolicy,
+        internalPathPrefixes: source.internalPathPrefixes,
       });
 
       const markdown = renderMarkdownDocument({
@@ -142,6 +150,7 @@ function rewriteHtmlLinks({
   currentPath,
   mirroredPathToSlug,
   linkPolicy,
+  internalPathPrefixes,
 }) {
   const base = new URL(baseUrl);
   const currentUrl = new URL(currentPath, base);
@@ -172,7 +181,7 @@ function rewriteHtmlLinks({
             nextValue = `/${mappedSlug}${url.hash}`;
           } else if (
             linkPolicy === 'fail_non_mirrored' &&
-            url.pathname.startsWith('/docs/')
+            shouldTreatAsInternalPath(url.pathname, internalPathPrefixes)
           ) {
             throw new Error(`Unmirrored internal link: ${url.pathname}`);
           } else {
@@ -205,158 +214,8 @@ function renderMarkdownDocument({ title, badgeLabel, sourceUrl, bodyHtml }) {
   return lines.join('\n');
 }
 
-async function readSourceConfigs(dirPath) {
-  const entries = await readdir(dirPath, { withFileTypes: true });
-  const files = entries
-    .filter((entry) => entry.isFile())
-    .map((entry) => entry.name)
-    .filter((name) => {
-      const ext = extname(name).toLowerCase();
-      return ext === '.yaml' || ext === '.yml';
-    })
-    .sort();
-
-  const configs = [];
-  for (const fileName of files) {
-    const filePath = join(dirPath, fileName);
-    const raw = await readFile(filePath, 'utf8');
-    const parsed = loadYaml(raw);
-    configs.push(normalizeAndValidateSource(parsed, fileName));
-  }
-
-  return configs;
-}
-
-function normalizeAndValidateSource(raw, fileName) {
-  if (!raw || typeof raw !== 'object' || Array.isArray(raw)) {
-    throw new Error(`Invalid source config in ${fileName}: expected object`);
-  }
-
-  const id = asString(raw.id, 'id', fileName);
-  const type = asString(raw.type, 'type', fileName);
-  if (type !== 'readme') {
-    throw new Error(`Unsupported source type in ${fileName}: ${type}`);
-  }
-
-  const baseUrl = normalizeBaseUrl(
-    asString(raw.base_url, 'base_url', fileName),
-  );
-  const outputDir = normalizePath(
-    asString(raw.output_dir, 'output_dir', fileName),
-  );
-  const sidebarSection = asString(
-    raw.sidebar_section,
-    'sidebar_section',
-    fileName,
-  );
-  const strictMissing = asBoolean(
-    raw.strict_missing,
-    'strict_missing',
-    fileName,
-  );
-  const linkPolicy = asString(raw.link_policy, 'link_policy', fileName);
-
-  if (
-    linkPolicy !== 'externalize_non_mirrored' &&
-    linkPolicy !== 'fail_non_mirrored'
-  ) {
-    throw new Error(`Invalid link_policy in ${fileName}: ${linkPolicy}`);
-  }
-
-  const badge = normalizeBadge(raw.badge, fileName);
-
-  if (!Array.isArray(raw.pages) || raw.pages.length === 0) {
-    throw new Error(`pages must be a non-empty array in ${fileName}`);
-  }
-
-  const pages = raw.pages.map((page, index) =>
-    normalizePage(page, index, fileName),
-  );
-
-  return {
-    id,
-    type,
-    baseUrl,
-    outputDir,
-    sidebarSection,
-    strictMissing,
-    linkPolicy,
-    badge,
-    pages,
-  };
-}
-
-function normalizeBadge(rawBadge, fileName) {
-  if (rawBadge === undefined || rawBadge === null) return null;
-  if (typeof rawBadge !== 'object' || Array.isArray(rawBadge)) {
-    throw new Error(`badge must be an object in ${fileName}`);
-  }
-
-  const enabled =
-    rawBadge.enabled === undefined
-      ? true
-      : asBoolean(rawBadge.enabled, 'badge.enabled', fileName);
-  if (!enabled) return null;
-
-  const label =
-    rawBadge.label === undefined
-      ? 'Synced from external docs'
-      : asString(rawBadge.label, 'badge.label', fileName);
-  return { label };
-}
-
-function normalizePage(rawPage, index, fileName) {
-  if (!rawPage || typeof rawPage !== 'object' || Array.isArray(rawPage)) {
-    throw new Error(`Invalid page at index ${index} in ${fileName}`);
-  }
-
-  const targetPath = normalizeTargetPath(
-    asString(rawPage.target_path, `pages[${index}].target_path`, fileName),
-    fileName,
-  );
-
-  const resultPath = rawPage.result_path
-    ? normalizePath(
-        asString(rawPage.result_path, `pages[${index}].result_path`, fileName),
-      )
-    : deriveResultPath(targetPath);
-
-  const title =
-    rawPage.title === undefined
-      ? null
-      : asString(rawPage.title, `pages[${index}].title`, fileName);
-
-  return {
-    title,
-    targetPath,
-    resultPath,
-  };
-}
-
-function normalizeTargetPath(value, fileName) {
-  if (!value.startsWith('/')) {
-    throw new Error(`target_path must start with / in ${fileName}: ${value}`);
-  }
-
-  return normalizePath(value.startsWith('/docs') ? value : value).startsWith(
-    'docs/',
-  )
-    ? `/${normalizePath(value).replace(/^docs\//, 'docs/')}`
-    : `/${normalizePath(value)}`;
-}
-
-function deriveResultPath(targetPath) {
-  const withoutPrefix = targetPath
-    .replace(/^\/docs\/?/i, '')
-    .replace(/^\/+/, '')
-    .replace(/\/+$/, '');
-
-  return withoutPrefix || 'index';
-}
-
-function normalizeBaseUrl(value) {
-  const url = new URL(value);
-  return url.toString().replace(/\/+$/, '');
+function shouldTreatAsInternalPath(pathname, internalPathPrefixes) {
+  return internalPathPrefixes.some((prefix) => pathname.startsWith(prefix));
 }
 
 function normalizePath(value) {
@@ -372,28 +231,15 @@ function escapeHtmlAttribute(value) {
   return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 }
 
-function asString(value, fieldName, fileName) {
-  if (typeof value !== 'string' || value.trim() === '') {
-    throw new Error(`Expected string for ${fieldName} in ${fileName}`);
+async function fetchSourcePage(source, page, url) {
+  if (source.type === 'zendesk') {
+    return fetchZendeskPage(source.baseUrl, page.targetPath);
   }
-
-  return value.trim();
-}
-
-function asBoolean(value, fieldName, fileName) {
-  if (typeof value !== 'boolean') {
-    throw new Error(`Expected boolean for ${fieldName} in ${fileName}`);
-  }
-
-  return value;
+  return fetchReadmePage(url);
 }
 
 async function fetchReadmePage(url) {
-  const response = await fetch(url, {
-    headers: {
-      'user-agent': 'bdc-docs-sync/1.0',
-    },
-  });
+  const response = await fetchHtmlPage(url);
 
   if (!response.ok) {
     throw new Error(`HTTP ${response.status} at ${url}`);
@@ -405,21 +251,45 @@ async function fetchReadmePage(url) {
   return { title, bodyHtml };
 }
 
+async function fetchZendeskPage(baseUrl, targetPath) {
+  const articleRef = parseZendeskArticleRef(targetPath);
+  const apiUrl = new URL(
+    `/api/v2/help_center/${articleRef.locale}/articles/${articleRef.articleId}.json`,
+    baseUrl,
+  );
+
+  const response = await fetchJsonPage(apiUrl.toString());
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status} at ${apiUrl}`);
+  }
+
+  const payload = await response.json();
+  const article = payload?.article;
+  if (!article || typeof article !== 'object') {
+    throw new Error(`Invalid Zendesk API payload at ${apiUrl}`);
+  }
+
+  const title =
+    typeof article.title === 'string' && article.title.trim() !== ''
+      ? article.title.trim()
+      : typeof article.name === 'string' && article.name.trim() !== ''
+        ? article.name.trim()
+        : `Zendesk article ${articleRef.articleId}`;
+  const bodyHtml =
+    typeof article.body === 'string'
+      ? stripCloudflareEmailProtection(article.body)
+      : '';
+  if (!bodyHtml) {
+    throw new Error(`Missing Zendesk article body for ${articleRef.articleId}`);
+  }
+
+  return { title, bodyHtml };
+}
+
 function extractTitle(html) {
   const match = html.match(/<title>([^<]+)<\/title>/i);
   if (!match?.[1]) return 'Untitled';
   return decodeHtmlEntities(match[1].trim());
-}
-
-function extractReadmeBodyHtml(html) {
-  const match = html.match(
-    /data-testid="RDMD"[^>]*>([\s\S]*?)<\/div><\/div><div class="UpdatedAt"/,
-  );
-  if (!match?.[1]) {
-    throw new Error('Unable to locate ReadMe page body');
-  }
-
-  return match[1].trim();
 }
 
 function decodeHtmlEntities(input) {

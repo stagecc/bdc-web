@@ -1,0 +1,35 @@
+id: zendesk-terra
+type: zendesk
+base_url: https://support.terra.bio
+output_dir: external/terra
+sidebar_section: Terra
+strict_missing: true
+link_policy: externalize_non_mirrored
+badge:
+  enabled: true
+  label: Synced from Terra Support
+
+pages:
+  - target_path: /hc/en-us/articles/360039016532-NHLBI-BioData-Catalyst%E2%93%87-BDC-Billing-overview-for-BDC-users
+    result_path: bdc-billing-overview
+
+  - target_path: /hc/en-us/articles/360042425932-BioData-Catalyst-Fellows-How-to-access-STRIDES-billing-on-Terra
+    result_path: bdc-fellows-strides-billing
+
+  - target_path: /hc/en-us/articles/360038087312-Understanding-and-using-Gen3-data-in-Terra
+    result_path: understanding-gen3-data-in-terra
+
+  - target_path: /hc/en-us/articles/360050390451-Linking-Gen3-data-and-Terra
+    result_path: linking-gen3-data-and-terra
+
+  - target_path: /hc/en-us/articles/360039415171-NHLBI-BioData-Catalyst%E2%93%87-BDC-Authorization-Domain-overview-for-BDC-users
+    result_path: bdc-authorization-domain-overview
+
+  - target_path: /hc/en-us/articles/31787224295579-Create-a-BioData-Catalyst-cohort-with-PIC-SURE-to-analyze-in-Terra
+    result_path: create-bdc-cohort-with-pic-sure
+
+  - target_path: /hc/en-us/articles/19131496047771-How-to-update-GA4GH-DRS-URIs
+    result_path: how-to-update-ga4gh-drs-uris
+
+  - target_path: /hc/en-us/articles/16110566204443-Resources-for-RECOVER
+    result_path: resources-for-recover

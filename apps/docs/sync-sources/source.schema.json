@@ -22,7 +22,7 @@
     },
     "type": {
       "type": "string",
-      "enum": ["readme"],
+      "enum": ["readme", "zendesk"],
       "description": "Adapter type used to fetch and transform content."
     },
     "base_url": {
