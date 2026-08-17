@@ -61,7 +61,7 @@ const updateTypeCardText = {
         )
       }
 
-        <div class="article__content clearfix">
+        <div class="article__content clearfix line-height-sans-5">
           <slot />
         </div>
 
@@ -98,38 +98,6 @@ const updateTypeCardText = {
 </Base>
 
 <style>
-  .article__content {
-    line-height: 1.5;
-    blockquote {
-      font-size: 1.25rem;
-      font-style: italic;
-      position: relative;
-      margin: 4rem 0 4rem 4rem;
-      z-index: 1;
-      span.attribution {
-        display: block;
-        margin-top: 1rem;
-        color: #565c65; /* .text-base-dark */
-        text-align: right;
-        font-size: 75%;
-        &::before {
-          content: "- ";
-        }
-      }
-      &::before {
-        z-index: -1;
-        content: "\201C";
-        position: absolute;
-        top: -3rem;
-        left: -2.5rem;
-        font-size: 10rem;
-        color: #bbcae499;
-        font-family: Merriweather;
-        line-height: 1;
-      }
-    }
-  }
-
   .article__hero {
     width: 100%;
     height: auto;

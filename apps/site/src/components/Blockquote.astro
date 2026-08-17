@@ -1,0 +1,38 @@
+---
+interface Props {
+  attribution?: string;
+  class?: string;
+}
+
+const { attribution, class: className } = Astro.props;
+---
+
+<figure class:list={['blockquote position-relative z-1 margin-y-8 margin-left-4', className]}>
+  <div class="blockquote__mark text-primary-lighter font-heading-md" aria-hidden="true">&ldquo;</div>
+
+  <blockquote class="font-heading-lg margin-0 padding-left-4 border-left-05 border-base-lighter text-italic font-sans-md line-height-sans-5">
+    <slot />
+  </blockquote>
+
+  {attribution && (
+    <figcaption class="margin-top-2 text-right font-sans-2xs text-base-dark">
+      - {attribution}
+    </figcaption>
+  )}
+</figure>
+
+<style>
+  .blockquote {
+    z-index: 0;
+  }
+  .blockquote__mark {
+    position: absolute;
+    top: -3rem;
+    left: 0;
+    z-index: -1;
+    font-size: 12rem;
+    line-height: 1;
+    pointer-events: none;
+    filter: opacity(0.33);
+  }
+</style>

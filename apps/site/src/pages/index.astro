@@ -9,8 +9,8 @@ import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
 import TwoColumnSection from '@bdc/ui-astro/layout/TwoColumnSection.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
+import Blockquote from '@components/Blockquote.astro';
 import HappeningCard from '@components/cards/HappeningCard.astro';
-import QuoteCard from '@components/cards/QuoteCard.astro';
 import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
 import DugSearchBar from '@components/dug/DugSearchBar';
 import ProcessSteps from '@components/home/ProcessSteps.astro';
@@ -65,32 +65,18 @@ const featuredCommunities = programs
     };
   });
 
-const testimonials = [
-  {
-    quote:
-      'DESeq2 helped us identify expression changes quickly while keeping our workflow reproducible across teams.',
-    person: 'John K.',
-    affiliation: 'University of Michigan',
-  },
-  {
-    quote:
-      'The STAAR pipeline made variant analyses faster and gave our team confidence in each iteration.',
-    person: 'Casey G.',
-    affiliation: 'Stanford University',
-  },
-  {
-    quote:
-      'BDC workspaces reduced setup time dramatically, so we could focus on interpreting results instead of tooling.',
-    person: 'Sam R.',
-    affiliation: 'Harvard University',
-  },
-];
-
-const testimonialTones: Array<'secondary' | 'cool' | 'warm'> = [
-  'secondary',
-  'cool',
-  'warm',
-];
+const testimonials = await getCollection('testimonials');
+const featuredTestimonial =
+  testimonials[Math.floor(Math.random() * testimonials.length)]?.data;
+const featuredTestimonialAttribution = featuredTestimonial
+  ? [
+      featuredTestimonial.name,
+      featuredTestimonial.title,
+      featuredTestimonial.organization,
+    ]
+      .filter(Boolean)
+      .join(', ')
+  : undefined;
 
 const lifecycleSteps = [
   {
@@ -354,18 +340,15 @@ const nextEvent = events[0];
       class="border-top border-bottom border-base-lighter"
       tone="muted"
     >
-      <div class="grid-row grid-gap-2">
-        {testimonials.map((testimonial, index) => (
-          <div class="tablet:grid-col-6 desktop:grid-col-4 margin-bottom-2 desktop:margin-bottom-0">
-            <QuoteCard
-              quote={testimonial.quote}
-              person={testimonial.person}
-              affiliation={testimonial.affiliation}
-              tone={testimonialTones[index % testimonialTones.length]}
-            />
+      {featuredTestimonial && (
+        <div class="grid-row grid-gap-2">
+          <div class="grid-col-12">
+            <Blockquote attribution={featuredTestimonialAttribution} class="margin-x-auto maxw-tablet-lg">
+              {featuredTestimonial.quote}
+            </Blockquote>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </PageSection>
 
     <section class="cta-band padding-y-10">
@@ -373,15 +356,12 @@ const nextEvent = events[0];
         <div>
           <h2 class="margin-0 text-base-lightest">Ready to Work in BDC?</h2>
           <p class="cta-band__description margin-top-1 margin-bottom-0">
-            Find data for your research or begin analyzing in a secure cloud workspace.
+            Get help finding data for your research or analyzing in a secure cloud workspace.
           </p>
         </div>
-        <div class="usa-button-group margin-y-6">
-          <Button to="/data/explore" variant="accent-warm">Explore BDC Data</Button>
-          <Button to="/data/analyze" variant="outline-inverse">Start Analyzing</Button>
-        </div>
-        <div>
-          <Link class="text-bold text-base-lightest" inheritColor to="/help/contact-and-support">Get help choosing your next step</Link>
+        <div class="usa-button-group margin-top-6">
+          <Button to="/data/explore" variant="accent-warm">Get Help</Button>
+          <Button to="https://bdcatalyst.gitbook.io/biodata-catalyst-documentation" variant="outline-inverse">Documentation</Button>
         </div>
       </div>
     </section>

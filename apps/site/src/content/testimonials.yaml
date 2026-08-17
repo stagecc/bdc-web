@@ -1,0 +1,17 @@
+- quote: >
+    DESeq2 helped us identify expression changes quickly while keeping our workflow reproducible across teams.
+  name: John K.
+  title: Researcher
+  organization: University of Michigan
+
+- quote: >
+    The STAAR pipeline made variant analyses faster and gave our team confidence in each iteration.
+  name: Casey G.
+  title: Researcher
+  organization: Stanford University
+
+- quote: >
+    BDC workspaces reduced setup time dramatically, so we could focus on interpreting results instead of tooling.
+  name: Sam R.
+  title: Researcher
+  organization: Harvard University
