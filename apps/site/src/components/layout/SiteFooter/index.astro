@@ -159,3 +159,52 @@ const year = __BUILD_YEAR__;
     </div>
   </div>
 </footer>
+<script>
+  import {
+    trackFooterPrimaryLinkClick,
+    trackFooterIdentifierLinkClick,
+  } from './analytics';
+
+  const initFooterAnalytics = (root = document.body) => {
+    const onFooterClick = (event: MouseEvent) => {
+      const anchor = (event.target as HTMLElement)?.closest('a');
+      if (!anchor) return;
+
+      const primarySection = anchor.closest('.usa-footer__primary-content');
+      if (primarySection) {
+        const sectionLabel =
+          primarySection.querySelector('h3')?.textContent?.trim() ??
+          'unknown';
+        trackFooterPrimaryLinkClick(
+          sectionLabel,
+          anchor.textContent?.trim() ?? '',
+          anchor.getAttribute('href') ?? '',
+        );
+        return;
+      }
+
+      const identifierSection = anchor.closest(
+        '.usa-identifier__section--required-links',
+      );
+      if (identifierSection) {
+        trackFooterIdentifierLinkClick(
+          anchor.textContent?.trim() ?? '',
+          anchor.getAttribute('href') ?? '',
+        );
+      }
+    };
+
+    root.addEventListener('click', onFooterClick);
+
+    return () => {
+      root.removeEventListener('click', onFooterClick);
+    };
+  };
+
+  let cleanup = initFooterAnalytics();
+
+  document.addEventListener('astro:after-swap', () => {
+    cleanup();
+    cleanup = initFooterAnalytics();
+  });
+</script>
