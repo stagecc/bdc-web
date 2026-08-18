@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "astro dev",
     "dev:sync": "npm run sync:content && astro dev",
-    "sync:content": "GITBOOK_ALLOW_OVERWRITE=1 node ./scripts/sync-gitbook.mjs",
+    "sync:gitbook": "GITBOOK_ALLOW_OVERWRITE=1 node ./scripts/sync-gitbook.mjs",
+    "sync:external": "node ./scripts/sync-external-docs.mjs",
+    "check:external-updates": "node ./scripts/check-external-updates.mjs",
+    "sync:content": "npm run sync:gitbook && npm run sync:external",
     "build": "npm run sync:content && astro build",
     "preview": "astro preview"
   },
@@ -15,6 +18,7 @@
     "@bdc/uswds-theme": "*",
     "@uswds/uswds": "^3.13.0",
     "astro": "^6.2.2",
+    "js-yaml": "^4.1.0",
     "sass-embedded": "^1.83.0",
     "sharp": "^0.33.5"
   }

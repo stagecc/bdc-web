@@ -1,0 +1,67 @@
+{
+  "sources": [
+    {
+      "id": "readme-sevenbridges",
+      "type": "readme",
+      "base_url": "https://sb-biodatacatalyst.readme.io",
+      "source_hash": "7ba686eda8933bfacd18510da8ff316d68dcb6bd442f696a9a25b1e6e8ff9bfc",
+      "pages": [
+        {
+          "target_path": "/docs/about-pricing",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/about-pricing",
+          "content_hash": "cb9be2ea14ad425279fc02ca7c194aa4b164b6bf23382b5af2e6ec7b18754c99"
+        },
+        {
+          "target_path": "/docs/account-settings",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/account-settings",
+          "content_hash": "e257d3988b36a61a6d1cdb624478c6a8e57433275423ec62e48bc0559902df23"
+        },
+        {
+          "target_path": "/docs/before-you-start",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/before-you-start",
+          "content_hash": "8a40dd688c89bfdb8bd405ce08547b49aaa07dc638e9e8bb82d194e3ae85e4b1"
+        },
+        {
+          "target_path": "/docs/comprehensive-user-guide",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/comprehensive-user-guide",
+          "content_hash": "cee2c72da2984ea656d02f45182a383b1b89f3c67e22f97679b215aecb1f9720"
+        },
+        {
+          "target_path": "/docs/compute-costs",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/compute-costs",
+          "content_hash": "539dd29b2e199835203f435832829044cbe8e4d7782ffb24699b4efdfba8e4d6"
+        },
+        {
+          "target_path": "/docs/data-transfer-costs",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/data-transfer-costs",
+          "content_hash": "5e9702c7a2e45b757d9842a83719fe332d3d1b87fd84dc63884c6ced7b799954"
+        },
+        {
+          "target_path": "/docs/getting-started",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/getting-started",
+          "content_hash": "2ba665398720ba061b5b70be8ab86218a15f1c79451401f1fc771dbad7e6848a"
+        },
+        {
+          "target_path": "/docs/manage-billing-group-members",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/manage-billing-group-members",
+          "content_hash": "5c0a724dec26680d7dd5bd102fd0fbb4a26ed9852948742b1026aa0ca2d68cd3"
+        },
+        {
+          "target_path": "/docs/payments",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/payments",
+          "content_hash": "cb403db237354bb4a470e2cf085b172233d80007d09c6633c5ca9e0b74a6c979"
+        },
+        {
+          "target_path": "/docs/sign-up-for-biodata-catalyst-powered-by-seven-bridges",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/sign-up-for-biodata-catalyst-powered-by-seven-bridges",
+          "content_hash": "34fa8244ec456fd7d72035e58b7d8c986e8dc23a0ce167483ebf41457de796d1"
+        },
+        {
+          "target_path": "/docs/storage-costs",
+          "source_url": "https://sb-biodatacatalyst.readme.io/docs/storage-costs",
+          "content_hash": "763bffb8134eaf38de0cfc4ee639b15960a2f5abd7e57b85856484ad58de0729"
+        }
+      ]
+    }
+  ]
+}

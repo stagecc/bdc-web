@@ -45,6 +45,12 @@ From repo root:
   - `npm run dev:sync --workspace=@bdc/docs`
 - Sync content only (supporting local dev):
   - `npm run sync:content --workspace=@bdc/docs`
+- Sync GitBook content only:
+  - `npm run sync:gitbook --workspace=@bdc/docs`
+- Sync external source content only:
+  - `npm run sync:external --workspace=@bdc/docs`
+- Refresh external source change-detection lock only:
+  - `npm run check:external-updates --workspace=@bdc/docs`
 
 Notes:
 
@@ -69,3 +75,34 @@ Amplify listens to this repository and deploys `apps/docs` from resulting commit
 
 - To pin docs to a specific GitBook commit manually, update `apps/docs/gitbook.lock.json` and commit.
 - To test against a different ref temporarily, set `GITBOOK_REF` when running `sync-gitbook.mjs`.
+
+## External source sync
+
+- Config files for external sources live in `apps/docs/sync-sources/`.
+- Initial source config: `apps/docs/sync-sources/readme-sevenbridges.yaml`.
+- Schema: `apps/docs/sync-sources/source.schema.json`.
+- Adapter flow and link rewrite rules: `apps/docs/sync-sources/README.md`.
+- External lock file (committed): `apps/docs/external.lock.json`.
+- Generated external sidebar: `apps/docs/src/generated/external-sidebar.json`.
+
+Generated external page content is written under `apps/docs/src/content/docs/external/` during sync and is ignored by git via `apps/docs/.gitignore`.
+
+Workflow: `.github/workflows/docs-external-sync.yml`
+
+- Runs on schedule and manual dispatch.
+- Rebuilds `apps/docs/external.lock.json` from configured external sources.
+- Compares to committed lock file and exits when unchanged.
+- If changed:
+  - validates docs build
+  - commits lock update
+
+## Updating external source content
+
+- Edit source page allowlists/config in `apps/docs/sync-sources/*.yaml`.
+- Run `npm run sync:external --workspace=@bdc/docs` to regenerate external docs output.
+- Run `npm run check:external-updates --workspace=@bdc/docs` to refresh `apps/docs/external.lock.json`.
+
+## Troubleshooting
+
+- If sidebar hover/navigation throws a missing slug error in dev, run `npm run sync:content --workspace=@bdc/docs` and restart with `npm run dev:sync --workspace=@bdc/docs`.
+- For Amplify monorepo deployments, ensure app root entries match in both `amplify.yml` and `customHttp.yml` (`apps/docs`, `apps/site`, `apps/consortium`).

@@ -1,37 +1,10 @@
-type AnalyticsParams = Record<
-  string,
-  string | number | boolean | Array<string> | null | undefined
->;
-
-type DataLayerEvent = AnalyticsParams & { event: string };
+import { pushAnalyticsEvent } from '../../util/google-analytics/pushAnalyticsEvent';
 
 type DugCollectionLike = {
   concepts: Array<{ id: string; name: string }>;
   studies: Array<{ id: string; name: string }>;
   variables: Array<{ id: string; name: string }>;
 };
-
-type AnalyticsWindow = Window & {
-  dataLayer?: Array<Record<string, unknown>>;
-  gtag?: (
-    command: 'event',
-    eventName: string,
-    params?: AnalyticsParams,
-  ) => void;
-};
-
-function pushAnalyticsEvent(event: DataLayerEvent) {
-  const analyticsWindow = window as AnalyticsWindow;
-  if (Array.isArray(analyticsWindow.dataLayer)) {
-    analyticsWindow.dataLayer.push(event);
-    return;
-  }
-
-  if (typeof analyticsWindow.gtag === 'function') {
-    const { event: eventName, ...params } = event;
-    analyticsWindow.gtag('event', eventName, params);
-  }
-}
 
 export function trackDugSearch(term: string, location: string) {
   pushAnalyticsEvent({
