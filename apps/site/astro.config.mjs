@@ -1,5 +1,6 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
@@ -86,15 +87,19 @@ function externalLinks() {
 export default defineConfig({
   site: siteUrl,
   integrations: [
-    mdx(),
+    mdx({
+      extendMarkdownConfig: false,
+      rehypePlugins: [externalLinks],
+    }),
     react(),
     sitemap(),
     favicons(),
     robotsTxt(robotsTxtConfig),
   ],
   markdown: {
-    remarkPlugins: [],
-    rehypePlugins: [externalLinks],
+    processor: unified({
+      rehypePlugins: [externalLinks],
+    }),
   },
   vite: {
     define: {
