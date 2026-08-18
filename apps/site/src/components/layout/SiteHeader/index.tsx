@@ -10,8 +10,14 @@ import {
   Title,
 } from '@trussworks/react-uswds';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import bdcLogo from '../../assets/bdc-logo.svg';
-import classes from './layout.module.css';
+import bdcLogo from '../../../assets/bdc-logo.svg';
+import classes from '../layout.module.css';
+import {
+  trackMobileNavToggle,
+  trackNavDropdownItemClick,
+  trackNavDropdownToggle,
+  trackNavLinkClick,
+} from './analytics';
 
 export function SiteHeader() {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -21,7 +27,13 @@ export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLDivElement>(null);
 
-  const toggleMobileNav = () => setMobileNavOpen((prev) => !prev);
+  const toggleMobileNav = () => {
+    setMobileNavOpen((prev) => {
+      const next = !prev;
+      trackMobileNavToggle(next);
+      return next;
+    });
+  };
 
   const closeAll = useCallback(() => {
     setMobileNavOpen(false);
@@ -29,6 +41,8 @@ export function SiteHeader() {
   }, []);
 
   const toggleDropdown = (index: number) => {
+    const isOpen = openDropdownIndex === index;
+    trackNavDropdownToggle(navConfig[index].label, !isOpen);
     setOpenDropdownIndex((prev) => (prev === index ? null : index));
   };
 
@@ -90,6 +104,13 @@ export function SiteHeader() {
                 href={subItem.href}
                 key={subItem.label}
                 className={subItem.external ? 'usa-link--external' : ''}
+                onClick={() =>
+                  trackNavDropdownItemClick(
+                    item.label,
+                    subItem.label,
+                    subItem.href,
+                  )
+                }
                 {...(subItem.external
                   ? { rel: 'noopener noreferrer', target: '_blank' }
                   : {})}
@@ -104,7 +125,12 @@ export function SiteHeader() {
     }
 
     return (
-      <a href={item.href} key={item.label} className="usa-nav__link">
+      <a
+        href={item.href}
+        key={item.label}
+        className="usa-nav__link"
+        onClick={() => trackNavLinkClick(item.label, item.href)}
+      >
         <span>{item.label}</span>
       </a>
     );
