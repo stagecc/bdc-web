@@ -17,7 +17,8 @@ import ProcessSteps from '@components/home/ProcessSteps.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
 import Base from '@layouts/Base.astro';
-import homeCoursesImage from '../assets/home-courses.png';
+import homeCoursesImage from '../assets/bdc-course-photo.png';
+import homeHeroGraphic from '../assets/home-hero-sb-workflows.png';
 import { slugify } from '../util/slugify';
 
 const news = (await getCollection('news'))
@@ -144,7 +145,19 @@ const nextEvent = events[0];
       description="BDC brings together NHLBI studies, cloud-based analysis tools, and secure collaborative workspaces to accelerate heart, lung, blood, and sleep research."
       primaryCta={{ label: 'Learn About BDC', href: '/about/bdc', variant: 'accent-warm' }}
       tone="dark"
-    />
+    >
+      <img
+        slot="visual"
+        aria-hidden="true"
+        class="display-block width-full height-auto"
+        src={homeHeroGraphic.src}
+        width={homeHeroGraphic.width}
+        height={homeHeroGraphic.height}
+        alt=""
+        loading="eager"
+        decoding="async"
+      />
+    </Hero>
 
     <PageSection
       eyebrow="Search Hosted Data"
@@ -371,14 +384,6 @@ const nextEvent = events[0];
 <style lang="scss">
   .home-page {
     background: linear-gradient(180deg, #f7fbff 0%, #ffffff 30%, #f8fbff 100%);
-  }
-
-  .home-discover-search.usa-search,
-  .home-discover-search.usa-search--big,
-  .home-discover-search .usa-search__form,
-  .home-discover-search .usa-input.usa-search__input {
-    max-width: none !important;
-    width: 100% !important;
   }
 
   .cta-band {
