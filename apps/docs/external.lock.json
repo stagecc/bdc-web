@@ -4,7 +4,7 @@
       "id": "readme-sevenbridges",
       "type": "readme",
       "base_url": "https://sb-biodatacatalyst.readme.io",
-      "source_hash": "7ba686eda8933bfacd18510da8ff316d68dcb6bd442f696a9a25b1e6e8ff9bfc",
+      "source_hash": "4e871c2e0b50aecb08d40447c95a8185657b770b711634538c0920d8f5c1ab64",
       "pages": [
         {
           "target_path": "/docs/about-pricing",
@@ -19,12 +19,12 @@
         {
           "target_path": "/docs/before-you-start",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/before-you-start",
-          "content_hash": "8a40dd688c89bfdb8bd405ce08547b49aaa07dc638e9e8bb82d194e3ae85e4b1"
+          "content_hash": "376695f5844fa66f2e30ca0711b07beed11f11be0b43929b83389ce6547ae76e"
         },
         {
           "target_path": "/docs/comprehensive-user-guide",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/comprehensive-user-guide",
-          "content_hash": "cee2c72da2984ea656d02f45182a383b1b89f3c67e22f97679b215aecb1f9720"
+          "content_hash": "607044d49a39270fd15b083f682f081672f5b21bd94b284c727eda7495534521"
         },
         {
           "target_path": "/docs/compute-costs",
@@ -39,12 +39,12 @@
         {
           "target_path": "/docs/getting-started",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/getting-started",
-          "content_hash": "2ba665398720ba061b5b70be8ab86218a15f1c79451401f1fc771dbad7e6848a"
+          "content_hash": "20065b0eb0a0e99fd179c2ea8dea5993e8e3f4ef24739d1a7325cd828212a02e"
         },
         {
           "target_path": "/docs/manage-billing-group-members",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/manage-billing-group-members",
-          "content_hash": "5c0a724dec26680d7dd5bd102fd0fbb4a26ed9852948742b1026aa0ca2d68cd3"
+          "content_hash": "83751e7692339c3e0fa37e6925a8323327ef2feb6b04071a7d54357f6b49053b"
         },
         {
           "target_path": "/docs/payments",
