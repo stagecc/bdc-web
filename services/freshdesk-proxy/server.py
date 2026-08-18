@@ -13,7 +13,12 @@ from http.server import HTTPServer, BaseHTTPRequestHandler
 from dotenv import load_dotenv
 from handler import lambda_handler
 
-load_dotenv(Path(__file__).resolve().parent / '.env', override=True)
+service_dir = Path(__file__).resolve().parent
+
+# Shared local config for all services.
+load_dotenv(service_dir.parent / '.env', override=False)
+# Optional service-specific overrides.
+load_dotenv(service_dir / '.env', override=True)
 
 PORT = 8787
 
