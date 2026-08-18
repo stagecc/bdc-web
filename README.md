@@ -114,9 +114,9 @@ npm run preview -w @bdc/consortium
 
 ## Services
 
-### services/freshdesk
+### services/freshdesk-proxy
 
-Source of truth for the AWS Lambda that proxies requests to the Freshdesk API. Only needed locally when developing the Lambda itself. See [services/freshdesk/README.md](services/freshdesk/README.md) for setup and usage.
+Source of truth for the AWS Lambda that proxies requests to the Freshdesk API. Only needed locally when developing the Lambda itself. See [services/freshdesk-proxy/README.md](services/freshdesk-proxy/README.md) for setup and usage.
 
 ---
 

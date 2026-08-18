@@ -1,0 +1,28 @@
+---
+import FreshdeskContactForm from '@components/forms/FreshdeskContactForm.tsx';
+import Base from '@layouts/Base.astro';
+---
+
+<Base title="Join" enableRecaptcha>
+  <section class="usa-section">
+    <div class="grid-container">
+      <div class="grid-row">
+        <div class="grid-col-12">
+
+          <h1>Join the Community</h1>
+
+          <p class="usa-intro">
+            Sign up to receive updates and stay connected with the community.
+          </p>
+
+          <FreshdeskContactForm
+            submitUrl={import.meta.env.FRESHDESK_JOIN_URL}
+            recaptchaSiteKey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
+            client:idle
+          />
+
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

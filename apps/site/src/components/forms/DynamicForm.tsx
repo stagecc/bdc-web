@@ -191,7 +191,7 @@ export default function DynamicForm({
     try {
       // Get reCAPTCHA token before building payload.
       // The Lambda proxy verifies this token with Google before forwarding
-      // the ticket to Freshdesk. See services/freshdesk/handler.py.
+      // the ticket to Freshdesk. See services/freshdesk-proxy/handler.py.
       const recaptchaToken = await getRecaptchaToken(recaptchaSiteKey);
 
       const payload = {
