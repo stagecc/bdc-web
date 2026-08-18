@@ -1,6 +1,7 @@
 import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { unified } from '@astrojs/markdown-remark';
 import starlight from '@astrojs/starlight';
 import { defineConfig } from 'astro/config';
 import { sidebar } from './src/config/sidebar.generated.ts';
@@ -35,6 +36,9 @@ export default defineConfig({
       sidebar: [...sidebar, ...externalSidebar],
     }),
   ],
+  markdown: {
+    processor: unified(),
+  },
   vite: {
     css: {
       preprocessorOptions: {

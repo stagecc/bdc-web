@@ -1,5 +1,6 @@
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { unified } from '@astrojs/markdown-remark';
 import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
@@ -9,6 +10,9 @@ const uswdsPackages = join(rootDir, '../../node_modules/@uswds/uswds/packages');
 
 export default defineConfig({
   integrations: [mdx(), react()],
+  markdown: {
+    processor: unified(),
+  },
   vite: {
     optimizeDeps: {
       include: ['react', 'react-dom', '@trussworks/react-uswds'],
