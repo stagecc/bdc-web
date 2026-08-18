@@ -67,6 +67,10 @@ const { title = 'On this page' } = Astro.props;
 
 <script>
   import inPageNavigation from '@uswds/uswds/js/usa-in-page-navigation';
+  import {
+    trackInPageNavHeadingClick,
+    trackInPageNavBackToTopClick,
+  } from './analytics';
 
   const initInPageNavController = (root = document.body) => {
     const onBackToTopClick = (event) => {
@@ -85,6 +89,8 @@ const { title = 'On this page' } = Astro.props;
         return;
       }
 
+      trackInPageNavBackToTopClick(href);
+
       event.preventDefault();
       const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches
         ? 'auto'
@@ -93,12 +99,26 @@ const { title = 'On this page' } = Astro.props;
       history.replaceState(null, '', href);
     };
 
+    const onHeadingLinkClick = (event) => {
+      const trigger = event.target.closest('a.usa-in-page-nav__link');
+      if (!trigger) {
+        return;
+      }
+
+      trackInPageNavHeadingClick(
+        trigger.textContent?.trim() ?? '',
+        trigger.getAttribute('href') ?? '',
+      );
+    };
+
     root.addEventListener('click', onBackToTopClick);
+    root.addEventListener('click', onHeadingLinkClick);
     inPageNavigation.off(root);
     inPageNavigation.on(root);
 
     return () => {
       root.removeEventListener('click', onBackToTopClick);
+      root.removeEventListener('click', onHeadingLinkClick);
       inPageNavigation.off(root);
     };
   };
