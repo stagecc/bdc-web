@@ -1,0 +1,42 @@
+# Lychee config for checking links in built Astro output (apps/*/dist).
+# See: https://lychee.cli.rs/
+
+############################# Runtime #############################
+
+verbose = "warning"
+no_progress = true
+max_concurrency = 14
+max_redirects = 10
+max_retries = 2
+timeout = 20
+retry_wait_time = 2
+
+# Resolve directory links like /about/ to /about/index.html
+index_files = ["index.html"]
+
+############################# Requests ############################
+
+# Accept rate-limit responses so CI does not flake on busy hosts
+accept = ["200..=299", "429"]
+
+method = "get"
+
+# Skip mailto: (common in footers; not useful for link validation)
+include_mail = false
+
+############################# Cache ###############################
+
+# Enabled via --cache on scheduled/external runs
+max_cache_age = "2d"
+
+############################# Exclusions ##########################
+
+exclude = [
+  # Placeholder/CMS tokens left in migrated RFC content
+  '^http://\[sitetree_link',
+  # Fragment-only / empty hash navigation helpers
+  '^#$',
+]
+
+# Only scan HTML from the build output (inputs are passed on the CLI)
+extensions = ["html"]

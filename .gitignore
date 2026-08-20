@@ -10,3 +10,5 @@ test-results
 # apps/freshdesk
 Pipfile
 Pipfile.lock
+
+.lycheecache
