@@ -51,7 +51,7 @@ Components are hydrated in Astro pages with `client:load` or other hydration dir
 
 ## GA4 setup
 
-This app uses direct Google Analytics 4 with `gtag.js`, not Google Tag Manager. Analytics events may still pass through `window.dataLayer` as part of the standard GA4 setup.`
+This app uses direct Google Analytics 4 with `gtag.js`, not Google Tag Manager. Analytics events may still pass through `window.dataLayer` as part of the standard GA4 setup.
 
 Set:
 
