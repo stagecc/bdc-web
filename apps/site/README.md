@@ -49,18 +49,20 @@ Components are hydrated in Astro pages with `client:load` or other hydration dir
 - **Do not** create path aliases for USWDS packages.
 - **Do not** use the legacy `@import` syntax in any Sass file.
 
-## GTM setup
+## GA4 setup
 
-Dug search interactions push analytics events to `window.dataLayer`.
-To route those events to GA4, configure Google Tag Manager and set:
+This app uses direct Google Analytics 4 with `gtag.js`, not Google Tag Manager. Analytics events may still pass through `window.dataLayer` as part of the standard GA4 setup.`
 
-- `PUBLIC_GTM_ID=GTM-XXXXXXX`
+Set:
+
+- `PUBLIC_GA_ID=G-XXXXXXXXXX`
 
 in `apps/site/.env` (or your deployment environment variables).
 
-When `PUBLIC_GTM_ID` is present, the root layout (`src/layouts/Base.astro`) injects:
+When `PUBLIC_GA_ID` is present, the root layout (`src/layouts/Base.astro`) injects:
 
-- GTM bootstrap script in `<head>`
-- GTM `<noscript>` iframe in `<body>`
+- the GA4 `gtag.js` loader in `<head>`
+- an inline bootstrap script in `<head>` that initializes `window.dataLayer` and `window.gtag`
+- `gtag('config', gaId, { send_page_view: false })` so page views are tracked explicitly
 
-If `PUBLIC_GTM_ID` is missing, no GTM scripts are loaded.
+If `PUBLIC_GA_ID` is missing, no GA scripts are loaded.
