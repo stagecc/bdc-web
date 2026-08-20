@@ -74,7 +74,7 @@ const hasGa = typeof gaId === 'string' && gaId.length > 0;
     </style>
   </head>
   <body data-pagefind-ignore>
-    {hasGa && <AnalyticsController client:load />}
+    {hasGa && <AnalyticsController client:only="react" />}
     <a class="usa-skipnav" href="#main-content">Skip to main content</a>
     <SiteAlertList isHomePage={isHomePage} />
     <SiteHeader client:load transition:persist />
