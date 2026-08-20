@@ -21,8 +21,8 @@ const isHomePage = Astro.url.pathname === '/';
 const displayTitle = title.includes('BioData Catalyst')
   ? title
   : `${title} | BioData Catalyst`;
-const gtmId = import.meta.env.PUBLIC_GTM_ID;
-const hasGtm = typeof gtmId === 'string' && gtmId.length > 0;
+const gaId = import.meta.env.PUBLIC_GA_ID;
+const hasGa = typeof gaId === 'string' && gaId.length > 0;
 ---
 
 <!doctype html>
@@ -32,6 +32,28 @@ const hasGtm = typeof gtmId === 'string' && gtmId.length > 0;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{displayTitle}</title>
     <link rel="sitemap" href="/sitemap-index.xml" />
+    {hasGa && (
+      <script
+        async
+        src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+      />
+    )}
+    {hasGa && (
+      <script is:inline define:vars={{ gaId }}>
+        window.dataLayer = window.dataLayer ?? [];
+        window.gtag =
+          window.gtag ||
+          function gtag() {
+            window.dataLayer.push(arguments);
+          };
+
+        if (!window.__bdcGaInitialized) {
+          window.gtag('js', new Date());
+          window.gtag('config', gaId, { send_page_view: false });
+          window.__bdcGaInitialized = true;
+        }
+      </script>
+    )}
     <ClientRouter />
     {enableRecaptcha && (
       <script
@@ -52,18 +74,7 @@ const hasGtm = typeof gtmId === 'string' && gtmId.length > 0;
     </style>
   </head>
   <body data-pagefind-ignore>
-    {hasGtm && <AnalyticsController client:load gtmId={gtmId} />}
-    {hasGtm && (
-      <noscript>
-        <iframe
-          src={`https://www.googletagmanager.com/ns.html?id=${gtmId}`}
-          height="0"
-          width="0"
-          style="display:none;visibility:hidden"
-          title="Google Tag Manager"
-        />
-      </noscript>
-    )}
+    {hasGa && <AnalyticsController client:load />}
     <a class="usa-skipnav" href="#main-content">Skip to main content</a>
     <SiteAlertList isHomePage={isHomePage} />
     <SiteHeader client:load transition:persist />
