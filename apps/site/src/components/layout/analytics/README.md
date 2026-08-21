@@ -28,6 +28,10 @@ On click, `AnalyticsController` currently does the following:
 4. routes to a section-specific helper
 5. if no section helper applies, checks for an explicit `data-analytics-custom-event` and sends that directly
 
+Only `a` and `button` interactions are tracked in this layer right now. Clicks on non-interactive container space, such as footer whitespace, are intentionally ignored.
+
+`AnalyticsController` listens to document click events, but only tracks interactions that resolve to supported interactive elements, currently `a` and `button`.
+
 The current section buckets are:
 
 - `header`
@@ -98,9 +102,9 @@ Example:
 </button>
 ```
 
-In that case, `AnalyticsController` can push the explicit event payload directly.
+In that case, `AnalyticsController` can push the explicit event payload directly when no section-specific handler applies.
 
-At the moment, section-based handlers still run first for known sections like `header`, `footer`, and `in_page_nav`. The custom event path is currently the fallback when no section-specific handler applies.
+At the moment, section-based handlers still run first for known sections like `header`, `footer`, and `in_page_nav`. The custom event path is currently the fallback when no section-specific handler applies. That precedence is intentional in the current implementation.
 
 ## How Events Are Sent
 
@@ -133,3 +137,5 @@ Likely next additions include:
 - copy-to-clipboard tracking
 - form tracking
 - search-specific analytics
+
+Keyboard interactions, form submissions, and other non-click interactions are not implemented in this layer yet.
