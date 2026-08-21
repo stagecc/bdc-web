@@ -113,6 +113,7 @@ export function SiteHeader() {
   return (
     <div
       ref={headerRef}
+      data-analytics-section="header"
       className={`${classes.siteHeaderContainer} ${scrolled ? classes.scrolled : ''}`}
     >
       <GovBanner />
