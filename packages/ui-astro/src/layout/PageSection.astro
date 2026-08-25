@@ -9,7 +9,6 @@ interface SectionAction {
 interface Props extends astroHTML.JSX.HTMLAttributes<'section'> {
   eyebrow?: string;
   title: string;
-  description?: string;
   action?: SectionAction;
   centered?: boolean;
   tone?: 'default' | 'muted' | 'dark' | 'highlight';
@@ -20,12 +19,13 @@ const {
   class: className,
   eyebrow,
   title,
-  description,
   action,
   centered = false,
   tone = 'default',
   ...rest
 } = Astro.props;
+
+const hasDescription = Astro.slots.has('description');
 
 const classes = [
   'page-section',
@@ -51,7 +51,11 @@ const classes = [
     </div>
     <header class:list={['page-section__head-main', centered && 'margin-x-auto text-center']}>
       <h2 class="page-section__title margin-0 width-full">{title}</h2>
-      {description && <p class="page-section__description margin-0 margin-top-2 line-height-sans-5">{description}</p>}
+      {hasDescription && (
+        <div class="page-section__description margin-top-2 line-height-sans-5">
+          <slot name="description" />
+        </div>
+      )}
     </header>
     {action && centered && (
       <p class="page-section__action-centered margin-top-1 margin-bottom-3 text-center">
