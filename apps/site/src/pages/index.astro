@@ -162,9 +162,9 @@ const nextEvent = events[0];
     <PageSection
       eyebrow="Search Hosted Data"
       title="Discover Data in BDC"
-      description="Search by disease, phenotype, biological process, or anatomical entity."
       action={{ label: 'View all data search tools', href: '/data/explore' }}
     >
+      <p slot="description">Search by disease, phenotype, biological process, or anatomical entity.</p>
       <DugSearchBar
         id="home-discover-search"
         placeholder="Try “asthma,” “blood pressure,” or “atrial fibrillation”"
@@ -177,10 +177,15 @@ const nextEvent = events[0];
 
     <PageSection
       title="Start Your Research Journey"
-      description="BDC is a research community where investigators can find, access, store, share, and analyze heart, lung, blood, and sleep data in secure cloud workspaces. As one of NHLBI's data repositories, BDC helps researchers share scientific data, reproduce findings, and reuse trusted resources to accelerate biomedical discovery."
       centered
       tone="muted"
     >
+      <p slot="description">
+        BDC is a research community where investigators can find, access, store, share, and analyze
+        heart, lung, blood, and sleep data in secure cloud workspaces. As one of NHLBI's data
+        repositories, BDC helps researchers share scientific data, reproduce findings, and reuse
+        trusted resources to accelerate biomedical discovery.
+      </p>
       <div class="margin-top-5 margin-bottom-0 text-center display-flex text-primary-darker flex-align-center flex-justify-center">
         <IconBadge icon="support" tone="warm" size={4} class="margin-right-1" />
         <span class="margin-right-1">Need help with BDC?</span>{' '}
@@ -254,10 +259,13 @@ const nextEvent = events[0];
         <PageSection
           eyebrow="Research in Action"
           title="Latest Publications"
-          description="Explore the latest BDC-enabled publications and see how investigators are using BDC data and tools to advance heart, lung, blood, and sleep research"
           action={{ label: 'View all publications', href: '/news/bdc-enabled-research' }}
           tone="highlight"
         >
+          <p slot="description">
+            Explore the latest BDC-enabled publications and see how investigators are using BDC
+            data and tools to advance heart, lung, blood, and sleep research.
+          </p>
           <div class="display-flex flex-column">
             {featuredPublications.map((publication) => (
               <div class="margin-bottom-2">
