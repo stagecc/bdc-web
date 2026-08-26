@@ -96,7 +96,7 @@ const lifecycleSteps = [
     icon: 'lock_outline',
     title: 'Confirm or request access',
     description:
-      'Use your eRA Commons account to access approved datasets or submit a DAR through dbGaP.',
+      'Use your eRA Commons account to access approved datasets or submit a dbGaP request.',
     action: {
       label: 'Check Access',
       path: '/data/check-access',
@@ -117,10 +117,9 @@ const lifecycleSteps = [
     number: '04',
     icon: 'local_library',
     title: 'Advance and share research',
-    description:
-      'Collaborate, reproduce analyses, and publish research outputs.',
+    description: 'Collaborate, reproduce analyses, and share research outputs.',
     action: {
-      label: 'View Research',
+      label: 'View BDC-Enabled Research',
       path: '/news/bdc-enabled-research',
     },
   },
@@ -181,9 +180,9 @@ const nextEvent = events[0];
       tone="muted"
     >
       <p slot="description">
-        BDC is a research community where investigators can find, access, store, share, and analyze
-        heart, lung, blood, and sleep data in secure cloud workspaces. As one of NHLBI's data
-        repositories, BDC helps researchers share scientific data, reproduce findings, and reuse
+        BDC represents a research community where investigators can find, access, store, share, and analyze 
+        heart, lung, blood, and sleep data in secure cloud workspaces. As one of NHLBI's Controlled Access 
+        Data Repositories (CADRs), BDC helps researchers share scientific data, reproduce findings, and reuse 
         trusted resources to accelerate biomedical discovery.
       </p>
       <div class="margin-top-5 margin-bottom-0 text-center display-flex text-primary-darker flex-align-center flex-justify-center">
@@ -284,18 +283,18 @@ const nextEvent = events[0];
     }
 
     <TwoColumnSection
-      eyebrow="Courses & Training"
-      title="BDC for Academic Settings & Trainees"
+      eyebrow="Learning & Training"
+      title="Training Opportunities with BDC"
       description="Use real or synthetic biomedical datasets and cloud-based analysis tools to support courses, workshops, trainee programs, and early-career research development."
-      ctaLabel="Explore BDC for Course and Training"
-      ctaHref="/about/courses-and-training"
+      ctaLabel="Explore BDC for Learning and Training"
+      ctaHref="/data/learning-and-training"
       mediaImage={homeCoursesImage}
       mediaAlt=""
     >
       <div class="display-flex flex-justify-center flex-align-center margin-top-2 margin-bottom-0">
         <IconBadge icon="attach_money" tone="cool" class="margin-right-1" />
         <span>
-          Funding may be available for academic use.&nbsp;
+          Funding may be available for Funding may be available for courses and training.
           <Link to="/help/costs" class="text-bold">Learn more</Link>.
         </span>
       </div>
@@ -377,7 +376,7 @@ const nextEvent = events[0];
         <div>
           <h2 class="margin-0 text-base-lightest">Ready to Work in BDC?</h2>
           <p class="cta-band__description margin-top-1 margin-bottom-0">
-            Get help finding data for your research or analyzing in a secure cloud workspace.
+            Get help finding data or using our secure cloud workspace.
           </p>
         </div>
         <div class="usa-button-group margin-top-6">
