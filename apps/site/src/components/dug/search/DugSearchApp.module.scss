@@ -1,0 +1,123 @@
+@use '@bdc/uswds-theme/src/uswds-init' as core;
+
+@keyframes detail-overlay-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes detail-sheet-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes detail-overlay-fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes detail-sheet-slide-down {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(5rem);
+  }
+}
+
+@keyframes detail-panel-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes detail-panel-slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(10rem);
+  }
+}
+
+.modalPanel {
+  width: min(42rem, 100%);
+  max-height: 100vh;
+}
+
+.detailOverlayAnim {
+  animation: detail-overlay-fade-in 250ms ease-out;
+}
+
+.detailOverlayClosing {
+  animation: detail-overlay-fade-out 250ms ease-in forwards;
+}
+
+.detailPanelSurface {
+  border-top-left-radius: core.core-units(1);
+  border-top-right-radius: core.core-units(1);
+  width: 100%;
+  max-height: min(88vh, 58rem);
+  animation: detail-sheet-slide-up 250ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: bottom center;
+}
+
+.detailPanelClosing {
+  animation: detail-sheet-slide-down 250ms cubic-bezier(0.22, 1, 0.36, 1)
+    forwards;
+}
+
+.collectionSticky {
+  top: calc(#{core.core-units(15)} - #{core.core-units(1)});
+}
+
+@include core.core-at-media-max('desktop') {
+  .modalPanel {
+    max-height: 88vh;
+  }
+}
+
+@include core.core-at-media('desktop') {
+  .detailPanelSurface {
+    border-top-left-radius: core.core-units(1);
+    border-top-right-radius: 0;
+    border-bottom-left-radius: core.core-units(1);
+    border-bottom-right-radius: 0;
+    width: min(44rem, 100%);
+    max-height: none;
+    height: 100%;
+    animation: detail-panel-slide-in 250ms cubic-bezier(0.22, 1, 0.36, 1);
+    transform-origin: center right;
+  }
+
+  .detailPanelClosing {
+    animation: detail-panel-slide-out 250ms cubic-bezier(0.22, 1, 0.36, 1)
+      forwards;
+  }
+
+  .modalPanel {
+    max-height: 100%;
+  }
+}

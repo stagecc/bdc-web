@@ -1,4 +1,4 @@
-import { pushAnalyticsEvent } from '../../util/google-analytics/pushAnalyticsEvent';
+import { pushAnalyticsEvent } from '../../../util/google-analytics/pushAnalyticsEvent';
 
 type DugCollectionLike = {
   concepts: Array<{ id: string; name: string }>;
@@ -35,5 +35,24 @@ export function trackDugCheckoutCollection(collection: DugCollectionLike) {
     dugConceptIds: collection.concepts.map((item) => item.id),
     dugStudyIds: collection.studies.map((item) => item.id),
     dugVariableIds: collection.variables.map((item) => item.id),
+  });
+}
+
+export function trackDugNextStepsSelectStep(params: {
+  stepTitle: string;
+  stepIndex: number;
+  location: string;
+  conceptCount: number;
+  studyCount: number;
+  variableCount: number;
+}) {
+  pushAnalyticsEvent({
+    event: 'dug-next-steps-select-step',
+    dugNextStepTitle: params.stepTitle,
+    dugNextStepIndex: params.stepIndex,
+    dugSearchLocation: params.location,
+    dugConceptCount: params.conceptCount,
+    dugStudyCount: params.studyCount,
+    dugVariableCount: params.variableCount,
   });
 }

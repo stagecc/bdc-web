@@ -1,5 +1,5 @@
 ---
-import DugNextStepsApp from '@components/dug/DugNextStepsApp';
+import { DugNextStepsApp } from '@components/dug';
 import Base from '@layouts/Base.astro';
 ---
 
@@ -7,8 +7,9 @@ import Base from '@layouts/Base.astro';
   <section class="usa-section">
     <div class="grid-container usa-prose usa-prose--full-width">
       <h1>Dug Next Steps</h1>
-      <p>
-        Use your saved Dug collection to plan your next action in BDC.
+      <p class="margin-y-2">
+        Use your saved Dug concepts, studies, and variables to plan the right
+        next action in BDC.
       </p>
       <DugNextStepsApp client:load />
     </div>
