@@ -23,5 +23,6 @@ Shared Astro UI components for BDC apps.
 
 ## Notes
 
-- Components are presentational and receive all content via props.
+- Components are presentational and receive structured content through typed props.
+- Components can also receive markup through slots: the default slot for primary child content and named slots for content rendered in designated locations.
 - Components use USWDS utility classes and depend on the app's USWDS/theme setup.
