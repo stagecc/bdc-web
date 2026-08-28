@@ -221,7 +221,9 @@ describe('search result enhancements', () => {
       document.querySelector('#search-filter-latest-updates'),
     ).toBeInTheDocument();
     expect(document.querySelector('#search-filter-events')).toBeInTheDocument();
-    expect(document.querySelector('#search-filter-news')).not.toBeInTheDocument();
+    expect(
+      document.querySelector('#search-filter-news'),
+    ).not.toBeInTheDocument();
   });
 
   it('filters all loaded results before paginating', async () => {
@@ -259,7 +261,9 @@ describe('search result enhancements', () => {
         'Showing 11 of 12 matching results',
       );
       expect(
-        document.querySelectorAll('#search-results-list .pagefind-ui__result-link'),
+        document.querySelectorAll(
+          '#search-results-list .pagefind-ui__result-link',
+        ),
       ).toHaveLength(10);
       expect(document.body).toHaveTextContent('Page 1 of 2');
     });
@@ -272,7 +276,9 @@ describe('search result enhancements', () => {
 
     await vi.waitFor(() => {
       expect(
-        document.querySelectorAll('#search-results-list .pagefind-ui__result-link'),
+        document.querySelectorAll(
+          '#search-results-list .pagefind-ui__result-link',
+        ),
       ).toHaveLength(1);
       expect(document.body).toHaveTextContent('Page 2 of 2');
     });
@@ -307,10 +313,14 @@ describe('search result enhancements', () => {
 
     await vi.waitFor(() => {
       const titles = Array.from(
-        document.querySelectorAll('#search-results-list .pagefind-ui__result-link'),
+        document.querySelectorAll(
+          '#search-results-list .pagefind-ui__result-link',
+        ),
       ).map((link) => link.textContent);
       expect(titles).toEqual(['Community hours']);
-      expect(document.body).toHaveTextContent('Showing 1 of 3 matching results');
+      expect(document.body).toHaveTextContent(
+        'Showing 1 of 3 matching results',
+      );
     });
 
     expect(window.location.search).toContain('kind=event');
@@ -321,7 +331,9 @@ describe('search result enhancements', () => {
 
     await vi.waitFor(() => {
       expect(
-        document.querySelectorAll('#search-results-list .pagefind-ui__result-link'),
+        document.querySelectorAll(
+          '#search-results-list .pagefind-ui__result-link',
+        ),
       ).toHaveLength(3);
     });
 
@@ -351,7 +363,9 @@ describe('search result enhancements', () => {
 
     await vi.waitFor(() => {
       const titles = Array.from(
-        document.querySelectorAll('#search-results-list .pagefind-ui__result-link'),
+        document.querySelectorAll(
+          '#search-results-list .pagefind-ui__result-link',
+        ),
       ).map((link) => link.textContent);
       expect(titles).toEqual(['Alpha update', 'Beta update', 'Zebra guide']);
     });
