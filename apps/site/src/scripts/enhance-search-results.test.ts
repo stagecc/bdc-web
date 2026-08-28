@@ -29,6 +29,9 @@ function renderTemplates() {
         <p id="search-results-message" class="search-results-message"></p>
         <div id="search-results-toolbar" hidden></div>
         <ol id="search-results-list" class="search-results-list"></ol>
+        <aside id="search-filtered-empty" hidden>
+          <p class="usa-alert__text">No results match your current filters. Clear filters to see everything.</p>
+        </aside>
       </div>
       <nav id="search-results-pagination" hidden></nav>
     </div>
@@ -338,6 +341,64 @@ describe('search result enhancements', () => {
     });
 
     expect(window.location.search).not.toContain('kind=');
+  });
+
+  it('shows a filter-specific empty state when results exist but filters hide them', async () => {
+    const helper = renderNoResultsHelper();
+    mountSearchResults([createRecord('Explore data', '/data/explore', 0)]);
+
+    const latestUpdatesFilter = await vi.waitFor(() => {
+      const input = document.querySelector<HTMLInputElement>(
+        '#search-filter-latest-updates',
+      );
+      expect(input).toBeInTheDocument();
+      if (!input) {
+        throw new Error(
+          'Expected #search-filter-latest-updates to be in the document',
+        );
+      }
+      return input;
+    });
+
+    latestUpdatesFilter.checked = true;
+    latestUpdatesFilter.dispatchEvent(new Event('change', { bubbles: true }));
+
+    await vi.waitFor(() => {
+      expect(document.querySelector('#search-filtered-empty')).not.toHaveAttribute(
+        'hidden',
+      );
+    });
+
+    expect(document.querySelector('#search-filtered-empty')).toHaveTextContent(
+      'No results match your current filters. Clear filters to see everything.',
+    );
+    expect(document.querySelector('#search-results-message')).toHaveTextContent(
+      '',
+    );
+    expect(helper).toHaveAttribute('hidden');
+    expect(
+      document.querySelector('#search-results-filters'),
+    ).not.toHaveAttribute('hidden');
+    expect(document.body).toHaveTextContent('Showing 0 of 1 matching results');
+  });
+
+  it('shows the query empty state only when the unfiltered search has no results', () => {
+    const helper = renderNoResultsHelper();
+    const container = getSearchContainer();
+    initSearchResultsControls(container);
+    setSearchResultsState(container, [], 'orchid');
+    renderSearchResultsView(container);
+
+    expect(document.querySelector('#search-results-message')).toHaveTextContent(
+      'No results found for "orchid"',
+    );
+    expect(helper).not.toHaveAttribute('hidden');
+    expect(document.querySelector('#search-filtered-empty')).toHaveAttribute(
+      'hidden',
+    );
+    expect(document.querySelector('#search-results-filters')).toHaveAttribute(
+      'hidden',
+    );
   });
 
   it('sorts all loaded results before paginating', async () => {

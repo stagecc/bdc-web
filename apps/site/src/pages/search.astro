@@ -18,6 +18,11 @@ import Base from '@layouts/Base.astro';
           </div>
           <div id="search-results-toolbar" hidden></div>
           <ol id="search-results-list" class="search-results-list usa-list usa-list--unstyled margin-0"></ol>
+          <aside id="search-filtered-empty" class="usa-alert usa-alert--info margin-top-4" aria-live="polite" hidden>
+            <div class="usa-alert__body">
+              <p class="usa-alert__text">No results match your current filters. Clear filters to see everything.</p>
+            </div>
+          </aside>
         </div>
         <nav id="search-results-pagination" class="search-results-pagination margin-top-4" hidden aria-label="Search results pages"></nav>
         <aside id="search-no-results-suggestions" class="usa-alert usa-alert--info margin-top-4" aria-live="polite" hidden>

@@ -13,6 +13,7 @@ const SEARCH_RESULTS_MESSAGE_SELECTOR = '#search-results-message';
 const RESULT_SELECTOR = '.pf-result, .pagefind-ui__result';
 const LINK_SELECTOR = '.pf-result-link, .pagefind-ui__result-link';
 const SEARCH_NO_RESULTS_HELPER_SELECTOR = '#search-no-results-suggestions';
+const SEARCH_FILTERED_EMPTY_SELECTOR = '#search-filtered-empty';
 const SEARCH_KIND_PARAM = 'kind';
 const SEARCH_SORT_PARAM = 'sort';
 const SEARCH_PAGE_SIZE = 10;
@@ -103,6 +104,11 @@ function getPaginationElement(): HTMLElement | null {
 function getMessageElement(container: Element): HTMLElement | null {
   const message = container.querySelector(SEARCH_RESULTS_MESSAGE_SELECTOR);
   return message instanceof HTMLElement ? message : null;
+}
+
+function getFilteredEmptyElement(): HTMLElement | null {
+  const filteredEmpty = document.querySelector(SEARCH_FILTERED_EMPTY_SELECTOR);
+  return filteredEmpty instanceof HTMLElement ? filteredEmpty : null;
 }
 
 function parseSortOption(value: string | null): SortOption {
@@ -375,14 +381,21 @@ function renderResultsList(
 function renderSearchMessage(
   message: HTMLElement,
   query: string,
-  totalCount: number,
+  unfilteredCount: number,
 ): void {
-  if (query && totalCount === 0) {
+  if (query && unfilteredCount === 0) {
     message.textContent = `No results found for "${query}"`;
     return;
   }
 
   message.textContent = '';
+}
+
+function syncFilteredEmptyAlert(unfilteredCount: number, filteredCount: number): void {
+  const filteredEmpty = getFilteredEmptyElement();
+  if (!filteredEmpty) return;
+
+  filteredEmpty.hidden = !(unfilteredCount > 0 && filteredCount === 0);
 }
 
 function getSearchControlsState(container: HTMLElement) {
@@ -471,8 +484,9 @@ export function renderSearchResultsView(container: HTMLElement): void {
   }
 
   renderResultsList(list, pageResults);
-  renderSearchMessage(message, query, sortedResults.length);
-  syncSearchNoResultsSuggestions(container, query, sortedResults.length);
+  renderSearchMessage(message, query, allResults.length);
+  syncFilteredEmptyAlert(allResults.length, sortedResults.length);
+  syncSearchNoResultsSuggestions(container, query, allResults.length);
 
   if (allResults.length === 0) {
     filters.hidden = true;
@@ -618,15 +632,15 @@ export function syncSearchNoResultsSuggestions(
 
   const message = container.querySelector(SEARCH_RESULTS_MESSAGE_SELECTOR);
   const messageText = message?.textContent?.toLowerCase() ?? '';
-  const hasResults =
+  const hasUnfilteredResults =
     typeof resultCount === 'number'
       ? resultCount > 0
       : container.querySelector(RESULT_SELECTOR) !== null;
-  const hasNoResultsMessage =
-    messageText.includes('no results') ||
+  const hasQueryNoResultsMessage =
+    messageText.includes('no results found for') ||
     (typeof query === 'string' && query.length > 0 && resultCount === 0);
 
-  helper.hidden = !(hasNoResultsMessage && !hasResults);
+  helper.hidden = !(hasQueryNoResultsMessage && !hasUnfilteredResults);
 }
 
 export function observeSearchNoResultsSuggestions(
