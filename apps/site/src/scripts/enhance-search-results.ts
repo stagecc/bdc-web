@@ -391,7 +391,10 @@ function renderSearchMessage(
   message.textContent = '';
 }
 
-function syncFilteredEmptyAlert(unfilteredCount: number, filteredCount: number): void {
+function syncFilteredEmptyAlert(
+  unfilteredCount: number,
+  filteredCount: number,
+): void {
   const filteredEmpty = getFilteredEmptyElement();
   if (!filteredEmpty) return;
 

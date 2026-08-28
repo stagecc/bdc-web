@@ -364,9 +364,9 @@ describe('search result enhancements', () => {
     latestUpdatesFilter.dispatchEvent(new Event('change', { bubbles: true }));
 
     await vi.waitFor(() => {
-      expect(document.querySelector('#search-filtered-empty')).not.toHaveAttribute(
-        'hidden',
-      );
+      expect(
+        document.querySelector('#search-filtered-empty'),
+      ).not.toHaveAttribute('hidden');
     });
 
     expect(document.querySelector('#search-filtered-empty')).toHaveTextContent(
