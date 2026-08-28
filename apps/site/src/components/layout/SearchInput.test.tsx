@@ -1,40 +1,23 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { SearchInput } from './SearchInput';
 
 describe('SearchInput', () => {
-  it('renders a search input', () => {
+  it('renders an open search button', () => {
     render(<SearchInput />);
-    expect(screen.getByRole('searchbox')).toBeInTheDocument();
+    const trigger = screen.getByRole('button', { name: /open search/i });
+    expect(trigger).toBeInTheDocument();
+    expect(trigger).toHaveTextContent('Search Site');
   });
 
-  it('renders a submit button', () => {
+  it('requests the search modal when clicked', () => {
+    const listener = vi.fn();
+    window.addEventListener('bdc:open-search-modal', listener);
+
     render(<SearchInput />);
-    expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument();
-  });
+    fireEvent.click(screen.getByRole('button', { name: /open search/i }));
 
-  it('accepts user input', async () => {
-    const user = userEvent.setup();
-    render(<SearchInput />);
-
-    const input = screen.getByRole('searchbox');
-    await user.type(input, 'heart disease');
-    expect(input).toHaveValue('heart disease');
-  });
-
-  it('redirects to site search results on submit', async () => {
-    const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null);
-
-    const user = userEvent.setup();
-    render(<SearchInput />);
-
-    const input = screen.getByRole('searchbox');
-    await user.type(input, 'asthma');
-    await user.click(screen.getByRole('button', { name: /search/i }));
-
-    expect(openSpy).toHaveBeenCalledWith('/search?q=asthma', '_self');
-
-    openSpy.mockRestore();
+    expect(listener).toHaveBeenCalledOnce();
+    window.removeEventListener('bdc:open-search-modal', listener);
   });
 });

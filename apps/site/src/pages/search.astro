@@ -1,59 +1,181 @@
 ---
-import Base from '@layouts/Base.astro';
+import Base from "@layouts/Base.astro";
 ---
 
-<Base title="Search Results">
+<Base title="Search Results" indexForSearch={false}>
   <section class="usa-section">
     <div class="grid-container">
       <h1>Search Results</h1>
-      <div id="search-results" class="margin-top-4"></div>
+      <div id="search-results-layout" class="margin-top-4">
+        <div id="search-results">
+          <div class="search-results-header">
+            <form id="search-results-form" class="search-results-form margin-bottom-0" role="search">
+              <label class="usa-sr-only" for="search-results-query">Search site</label>
+              <input class="usa-input search-results-form__input" id="search-results-query" name="q" type="text" inputmode="search" enterkeyhint="search" placeholder="Search site..." autocomplete="off" />
+            </form>
+            <div id="search-results-filters" class="search-results-filters" hidden></div>
+            <p id="search-results-message" class="search-results-message" aria-live="polite"></p>
+          </div>
+          <div id="search-results-toolbar" hidden></div>
+          <ol id="search-results-list" class="search-results-list usa-list usa-list--unstyled margin-0"></ol>
+        </div>
+        <nav id="search-results-pagination" class="search-results-pagination margin-top-4" hidden aria-label="Search results pages"></nav>
+        <aside id="search-no-results-suggestions" class="usa-alert usa-alert--info margin-top-4" aria-live="polite" hidden>
+          <div class="usa-alert__body">
+            <h2 class="usa-alert__heading">Sorry, no results were found</h2>
+            <p class="usa-alert__text">Here are some links to help you find your way.</p>
+            <ul class="usa-list margin-bottom-0">
+              <li><a class="usa-link" href="/data/explore">Explore available data</a></li>
+              <li><a class="usa-link" href="/data/analyze">Analyze data</a></li>
+              <li><a class="usa-link" href="/data/learning-and-training">Learning and training</a></li>
+              <li><a class="usa-link" href="/help/contact-and-support">Contact and support</a></li>
+            </ul>
+          </div>
+        </aside>
+      </div>
     </div>
   </section>
+
+  <script src="../scripts/init-search-results.ts"></script>
 </Base>
-
-<link href="/pagefind/pagefind-ui.css" rel="stylesheet">
-<script src="/pagefind/pagefind-ui.js" is:inline></script>
-<script is:inline>
-  window.addEventListener('DOMContentLoaded', (event) => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const query = urlParams.get('q');
-
-    const pagefind = new PagefindUI({ 
-      element: "#search-results", 
-      showSubResults: true,
-      showImages: false,
-      translations: {
-        placeholder: "Search site..."
-      }
-    });
-
-    if (query) {
-      pagefind.triggerSearch(query);
-    }
-  });
-</script>
 
 <style lang="scss" is:global>
   @use "@bdc/uswds-theme/src/uswds-init" as core;
 
-  :root {
-    --pagefind-ui-primary: #{core.core-color(core.$theme-color-primary)};
-    --pagefind-ui-text: #1b1b1b;
-    --pagefind-ui-background: #{core.core-color("white")};
-    --pagefind-ui-border: #adadad;
-    --pagefind-ui-tag: #f0f0f0;
+  #search-results {
+    display: flex;
+    flex-direction: column;
   }
 
-  .pagefind-ui__message {
-    margin: 1rem 0;
-  }
-  
-  .pagefind-ui__result-link {
-    color: core.core-color(core.$theme-color-primary) !important;
-    text-decoration: underline !important;
-  }
-  
-  .pagefind-ui__search-input {
+  .search-results-header {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
   }
 
+  .search-results-form {
+    display: block;
+    width: 100%;
+    max-width: none;
+  }
+
+  .search-results-form .usa-input.search-results-form__input {
+    appearance: none;
+    -webkit-appearance: none;
+    display: block;
+    box-sizing: border-box;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 3rem;
+    margin-top: 0 !important;
+    padding: 0.75rem 1rem 0.75rem 3rem !important;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.25;
+    border: 1px solid #757575;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='18' viewBox='0 0 24 24' fill='none' stroke='%23565c65' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='m21 21-4.3-4.3'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: 1rem center;
+    background-size: 1.125rem 1.125rem;
+  }
+
+  .search-results-form .usa-input.search-results-form__input:focus {
+    outline: 0.25rem solid #2491ff;
+    outline-offset: 0;
+  }
+
+  .search-results-message:empty {
+    display: none;
+  }
+
+  .search-results-message {
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.5;
+    margin: 0.75rem 0 0;
+    width: 100%;
+  }
+
+  #search-results .pagefind-ui__result-title .pagefind-ui__result-link {
+    color: core.core-color(core.$theme-color-primary);
+  }
+
+  #search-results .search-result-breadcrumb {
+    font-size: 0.81rem;
+    font-weight: 300;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .search-results-list .pagefind-ui__result {
+    list-style-type: none;
+    display: flex;
+    align-items: flex-start;
+    padding: 1.5rem 0 2rem;
+    border-top: solid 2px #eee;
+  }
+
+  .search-results-list .pagefind-ui__result:last-of-type {
+    border-bottom: solid 2px #eee;
+  }
+
+  .search-results-list .pagefind-ui__result-inner {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 0.5rem;
+  }
+
+  .search-results-list .pagefind-ui__result-title {
+    display: inline-block;
+    font-weight: 700;
+    font-size: 1.05rem;
+    margin: 0;
+  }
+
+  .search-results-list .pagefind-ui__result-excerpt {
+    display: inline-block;
+    font-weight: 400;
+    font-size: 1rem;
+    margin: 0.25rem 0 0;
+  }
+
+  .search-results-list .pagefind-ui__result-excerpt mark {
+    background: #ff0;
+    color: inherit;
+  }
+
+  .search-results-filters {
+    margin-top: 0.75rem;
+  }
+
+  .search-results-filters__toggles {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 1.5rem;
+    row-gap: 0.5rem;
+  }
+
+  #search-results-filters .usa-checkbox,
+  #search-results-filters .usa-checkbox__label,
+  #search-results-toolbar .usa-label {
+    margin-top: 0;
+  }
+
+  #search-results-filters .usa-checkbox + .usa-checkbox {
+    margin-top: 0;
+  }
+
+  #search-results-filters [data-clear-search-filters]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  .search-results-pagination__status {
+    align-self: center;
+  }
 </style>

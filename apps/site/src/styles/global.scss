@@ -74,3 +74,14 @@ input[type="search"]::-webkit-search-cancel-button {
 .usa-form--large .usa-hint {
   color: #565c65;
 }
+
+pagefind-modal[instance="site-modal"] {
+  --pf-font: #{core.core-font-family('body')};
+}
+
+pagefind-modal[instance="site-modal"] .pf-result-title,
+pagefind-modal[instance="site-modal"] .pf-result-link,
+pagefind-modal[instance="site-modal"] .pf-searchbox-result-title,
+pagefind-modal[instance="site-modal"] .pf-heading-link {
+  font-weight: 700 !important;
+}

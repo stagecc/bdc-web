@@ -33,7 +33,7 @@ export async function getStaticPaths() {
 const { tag, news, events } = Astro.props;
 ---
 
-<Base title={`Tagged: ${tag}`}>
+<Base title={`Tagged: ${tag}`} indexForSearch={false}>
 
   <section class="usa-section">
     <div class="grid-container">
