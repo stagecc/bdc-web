@@ -17,6 +17,7 @@
     "./accordion/Accordion": "./src/accordion/Accordion.tsx",
     "./banner/GovBanner": "./src/banner/GovBanner.tsx",
     "./button/Button": "./src/button/Button.tsx",
+    "./button/IconButton": "./src/button/IconButton.tsx",
     "./card/Card": "./src/card/Card.tsx",
     "./icon/Icon": "./src/icon/Icon.tsx",
     "./link/Link": "./src/link/Link.tsx",
