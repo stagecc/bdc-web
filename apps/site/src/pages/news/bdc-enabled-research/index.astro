@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Card from '@bdc/ui-astro/card/Card.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Icon from '@components/Icon.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
 import PublicationsExplorer from '@components/publications/PublicationsExplorer.tsx';
 import Base from '@layouts/Base.astro';
 
@@ -34,7 +35,7 @@ const publications = (await getCollection('publications')).map((pub) => ({
   <section class="usa-section">
     <div class="grid-container usa-prose usa-prose--full-width padding-top-6 margin-top-neg-6" id="publications" data-scroll-offset="1200">
       <p>
-        Remember to include BDC's citation and acknowledgment in manuscripts submitted to journals.
+        When you're ready to submit your manuscript to a journal, please remember to cite or acknowledge BDC. Standard citation and acknowledgement language is available in <Link to="/help/terms#citing-and-acknowledging-bdc-2">here</Link>. 
       </p>
     </div>
     <div class="grid-container">
