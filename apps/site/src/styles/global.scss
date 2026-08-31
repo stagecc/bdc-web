@@ -22,9 +22,9 @@ h4 {
 }
 
 .usa-search__input--no-button {
-  border-right: 1px solid !important;
-  border-bottom-right-radius: 2px !important;
-  border-top-right-radius: 2px !important;
+  border-right: 1px solid;
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px;
 }
 
 .usa-prose--full-width p {
@@ -32,7 +32,7 @@ h4 {
 }
 
 .usa-modal--lg .usa-modal__main {
-  max-width: 1000px !important;
+  max-width: 1000px;
 }
 
 .usa-modal--lg .usa-modal__heading {
@@ -83,5 +83,5 @@ pagefind-modal[instance="site-modal"] .pf-result-title,
 pagefind-modal[instance="site-modal"] .pf-result-link,
 pagefind-modal[instance="site-modal"] .pf-searchbox-result-title,
 pagefind-modal[instance="site-modal"] .pf-heading-link {
-  font-weight: 700 !important;
+  font-weight: 700;
 }

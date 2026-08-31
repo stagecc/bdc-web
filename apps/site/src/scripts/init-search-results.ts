@@ -18,10 +18,12 @@ type PagefindSearchResult = {
   data: () => Promise<PagefindResultData>;
 };
 
-type PagefindModule = {
+export type PagefindModule = {
   search: (term: string) => Promise<{ results: PagefindSearchResult[] }>;
   preload: (term: string) => Promise<void>;
 };
+
+type PagefindLoader = () => Promise<PagefindModule>;
 
 let pagefindModule: PagefindModule | null = null;
 let activeSearchToken = 0;
@@ -67,9 +69,10 @@ function updateQueryInUrl(query: string): void {
   window.history.replaceState({}, '', url);
 }
 
-async function loadSearchResults(
+export async function loadSearchResults(
   container: HTMLElement,
   query: string,
+  loadPagefind: PagefindLoader = getPagefind,
 ): Promise<void> {
   const trimmedQuery = query.trim();
   const searchToken = ++activeSearchToken;
@@ -80,7 +83,7 @@ async function loadSearchResults(
     return;
   }
 
-  const pagefind = await getPagefind();
+  const pagefind = await loadPagefind();
   if (searchToken !== activeSearchToken) return;
 
   const search = await pagefind.search(trimmedQuery);
@@ -104,7 +107,9 @@ async function loadSearchResults(
   renderSearchResultsView(container);
 }
 
-function initSearchResults(): void {
+export function initSearchResults(
+  loadPagefind: PagefindLoader = getPagefind,
+): void {
   const elements = getSearchElements();
   if (!elements || elements.container.dataset.pagefindReady) return;
 
@@ -122,21 +127,25 @@ function initSearchResults(): void {
   const scheduleSearch = (query: string) => {
     window.clearTimeout(debounceTimer);
     debounceTimer = window.setTimeout(() => {
-      void loadSearchResults(elements.container, query);
+      void loadSearchResults(elements.container, query, loadPagefind);
     }, 200);
   };
 
   const preload = () => {
     const query = elements.input.value.trim();
     if (!query) return;
-    void getPagefind().then((pagefind) => pagefind.preload(query));
+    void loadPagefind().then((pagefind) => pagefind.preload(query));
   };
 
   elements.form.addEventListener('submit', (event) => {
     event.preventDefault();
     window.clearTimeout(debounceTimer);
     updateQueryInUrl(elements.input.value.trim());
-    void loadSearchResults(elements.container, elements.input.value);
+    void loadSearchResults(
+      elements.container,
+      elements.input.value,
+      loadPagefind,
+    );
   });
 
   elements.input.addEventListener('input', () => {
@@ -146,17 +155,19 @@ function initSearchResults(): void {
   });
 
   if (initialQuery) {
-    void loadSearchResults(elements.container, initialQuery);
+    void loadSearchResults(elements.container, initialQuery, loadPagefind);
   } else {
     setSearchResultsState(elements.container, [], '');
     renderSearchResultsView(elements.container);
   }
 }
 
+const initSearchResultsOnPageLoad = () => initSearchResults();
+
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initSearchResults);
+  document.addEventListener('DOMContentLoaded', initSearchResultsOnPageLoad);
 } else {
-  initSearchResults();
+  initSearchResultsOnPageLoad();
 }
 
-document.addEventListener('astro:page-load', initSearchResults);
+document.addEventListener('astro:page-load', initSearchResultsOnPageLoad);

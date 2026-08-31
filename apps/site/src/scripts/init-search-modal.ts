@@ -18,7 +18,16 @@ function openSearchModal(): void {
   modal.open();
 }
 
-function handleSearchModalEnter(event: KeyboardEvent): void {
+type Navigate = (url: string) => void;
+
+const navigate: Navigate = (url) => {
+  window.location.href = url;
+};
+
+export function handleSearchModalEnter(
+  event: KeyboardEvent,
+  navigateToResults: Navigate = navigate,
+): void {
   if (event.key !== 'Enter' || event.isComposing) return;
   const target = event.target;
   if (!(target instanceof HTMLInputElement)) return;
@@ -30,10 +39,10 @@ function handleSearchModalEnter(event: KeyboardEvent): void {
   if (!query) return;
 
   event.preventDefault();
-  window.location.href = `/search?q=${encodeURIComponent(query)}`;
+  navigateToResults(`/search?q=${encodeURIComponent(query)}`);
 }
 
-function initSearchModal(): void {
+export function initSearchModal(): void {
   const globalWindow = window as WindowWithSearchModalFlag;
   if (!globalWindow.bdcSearchModalListenersReady) {
     globalWindow.bdcSearchModalListenersReady = true;

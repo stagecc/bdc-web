@@ -222,7 +222,7 @@ function renderSearchFilters(
 ): void {
   const checkboxMarkup = SEARCH_KIND_FILTERS.map(({ kind, id, label }) => {
     return `
-      <div class="usa-checkbox">
+      <div class="usa-checkbox margin-top-0">
         <input
           class="usa-checkbox__input"
           id="${id}"
@@ -231,7 +231,7 @@ function renderSearchFilters(
           value="${kind}"
           ${selectedKinds.has(kind) ? 'checked' : ''}
         />
-        <label class="usa-checkbox__label font-ui-xs" for="${id}">
+        <label class="usa-checkbox__label font-ui-xs margin-top-0" for="${id}">
           ${label}
         </label>
       </div>
@@ -241,7 +241,7 @@ function renderSearchFilters(
   filters.innerHTML = `
     <fieldset class="usa-fieldset margin-0 padding-0 border-0">
       <legend class="usa-sr-only">Filter results</legend>
-      <div class="search-results-filters__toggles">
+      <div class="search-results-filters__toggles display-flex flex-wrap flex-align-center">
         ${checkboxMarkup}
         <button
           type="button"
@@ -327,7 +327,7 @@ function renderSearchPagination(
           Previous
         </button>
       </li>
-      <li class="usa-button-group__item search-results-pagination__status">
+      <li class="usa-button-group__item flex-align-self-center">
         <span class="text-base">Page ${page} of ${totalPages}</span>
       </li>
       <li class="usa-button-group__item">
@@ -347,15 +347,16 @@ function renderSearchPagination(
 
 function createResultElement(record: ProcessedSearchResult): HTMLElement {
   const result = document.createElement('li');
-  result.className = 'pagefind-ui__result';
+  result.className =
+    'pagefind-ui__result display-flex flex-align-start padding-top-3 padding-bottom-4';
 
   const excerptMarkup = record.excerpt
-    ? `<p class="pagefind-ui__result-excerpt">${record.excerpt}</p>`
+    ? `<p class="pagefind-ui__result-excerpt display-inline-block font-body-md text-normal margin-top-05 margin-x-0 margin-bottom-0">${record.excerpt}</p>`
     : '';
 
   result.innerHTML = `
-    <div class="pagefind-ui__result-inner">
-      <p class="pagefind-ui__result-title">
+    <div class="pagefind-ui__result-inner flex-fill display-flex flex-column flex-align-start margin-top-1">
+      <p class="pagefind-ui__result-title display-inline-block font-body-md text-bold margin-0">
         <a class="pagefind-ui__result-link usa-link text-primary" href="${escapeHtml(record.url)}">${escapeHtml(record.title)}</a>
       </p>
       <div data-search-result-breadcrumb-slot></div>
