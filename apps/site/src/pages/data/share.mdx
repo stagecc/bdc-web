@@ -1,12 +1,19 @@
 ---
 title: Share Data
-layout: ../../layouts/Page.astro
+layout: ../../layouts/MdxBase.astro
 ---
+import Hero from '@bdc/ui-astro/layout/Hero.astro'
 import Icon from '@components/Icon.astro'
+import InPageNav from '@components/layout/InPageNav.astro'
 
-<span class="usa-intro">
-  Sharing scientific data through BDC helps make research data available for access, reuse, and future biomedical discoveries.
-</span>
+<Hero
+  title="Share Data"
+  description="Sharing scientific data through BDC helps make research data available for access, reuse, and future biomedical discoveries."
+/>
+
+<section class="usa-section padding-top-4">
+  <div class="grid-container">
+    <InPageNav>
 
 Researchers can use BDC as a data repository when preparing to submit or share data in accordance with NIH and NHLBI data sharing expectations. This page is intended for researchers and study teams preparing to make data available through BDC.
 
@@ -72,3 +79,7 @@ Researchers who plan to use BDC as their data repository should include "NHLBI B
 
   [→ Contact Us about Data Submission](/help/contact-bdc/)
 </div>
+
+    </InPageNav>
+  </div>
+</section>
