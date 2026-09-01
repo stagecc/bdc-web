@@ -44,7 +44,7 @@ export default function DugCollectionContents({
                     type="button"
                     className="usa-button usa-button--unstyled font-body-2xs text-secondary-dark text-no-wrap"
                     onClick={() => onRemoveCollectionItem(section.key, item.id)}
-                    aria-label={`Remove ${item.name} from ${section.key.slice(0, -1)} collection`}
+                    aria-label={`Remove ${item.name} from ${section.key} collection`}
                   >
                     Remove
                   </button>
