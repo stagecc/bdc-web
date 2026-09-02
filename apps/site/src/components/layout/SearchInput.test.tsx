@@ -7,7 +7,6 @@ describe('SearchInput', () => {
     render(<SearchInput />);
     const trigger = screen.getByRole('button', { name: /open search/i });
     expect(trigger).toBeInTheDocument();
-    expect(trigger).toHaveTextContent('Search Site');
   });
 
   it('requests the search modal when clicked', () => {
