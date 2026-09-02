@@ -88,7 +88,7 @@ const lifecycleSteps = [
       'Learn where and how to search available studies. No sign-in required to explore.',
     action: {
       label: 'Explore data',
-      path: '/data/explor',
+      path: '/data/explore',
     },
   },
   {
@@ -141,7 +141,9 @@ const nextEvent = events[0];
     <Hero
       eyebrow="NHLBI BioData Catalyst (BDC)&#174;"
       titleLines={['Explore data.', 'Run analyses.', 'Advance science.']}
-      description="BDC brings together NHLBI studies, cloud-based analysis tools, and secure collaborative workspaces to accelerate heart, lung, blood, and sleep research."
+      description="BDC brings together NHLBI datasets, including longitudinal epidemiologic 
+      studies with rich phenotype data, alongside cloud-based analysis tools so researchers 
+      can generate new insights without managing complex infrastructure."
       primaryCta={{ label: 'Learn About BDC', href: '/about/bdc', variant: 'accent-warm' }}
       tone="dark"
     >
@@ -179,13 +181,21 @@ const nextEvent = events[0];
       centered
       tone="muted"
     >
-      <p slot="description">
-        BDC represents a research community where investigators can find, access, store, share, and analyze
-        heart, lung, blood, and sleep data in secure cloud workspaces. As one of NHLBI's 
-        <Link to="https://grants.nih.gov/policy-and-compliance/policy-topics/sharing-policies/accessing-data/requirements">Controlled 
-        Access Data Repositories</Link> (CADRs), BDC helps researchers share scientific data, reproduce
-        findings, and reuse trusted resources to accelerate biomedical discovery.
-      </p>
+      <Fragment slot="description">
+        <p>
+          BDC brings together longitudinal cohort studies, rich phenotype data, and secure 
+          cloud-based analysis tools to help researchers answer complex questions in heart, 
+          lung, blood, and sleep research. Researchers can discover and work with data at 
+          scale without downloading massive datasets or recreating complex computational 
+          infrastructure locally. 
+        </p>
+        <p>
+          BDC supports the research process from finding relevant data through secure 
+          analysis, collaboration, and publication. Explore what's available before signing 
+          in, request access when needed, and move directly into cloud-based analysis 
+          environments when you're ready.
+        </p>
+      </Fragment>
       <div class="margin-top-5 margin-bottom-0 text-center display-flex text-primary-darker flex-align-center flex-justify-center">
         <IconBadge icon="support" tone="warm" size={4} class="margin-right-1" />
         <span class="margin-right-1">Need help with BDC?</span>{' '}
@@ -263,8 +273,8 @@ const nextEvent = events[0];
           tone="highlight"
         >
           <p slot="description">
-            Explore the latest BDC-enabled publications and see how investigators are using BDC
-            data and tools to advance heart, lung, blood, and sleep research.
+            See what researchers are discovering with BDC. Explore recent publications that use
+            BDC data, computing resources, and analytical tools to answer scientific questions.
           </p>
           <div class="display-flex flex-column">
             {featuredPublications.map((publication) => (
@@ -286,7 +296,9 @@ const nextEvent = events[0];
     <TwoColumnSection
       eyebrow="Learning & Training"
       title="Training Opportunities with BDC"
-      description="Use real or synthetic biomedical datasets and cloud-based analysis tools to support courses, workshops, trainee programs, and early-career research development."
+      description="Give students and emerging researchers hands-on experience with real-world 
+      biomedical data science without requiring institutions to build specialized 
+      computational infrastructure."
       ctaLabel="Explore BDC for Learning and Training"
       ctaHref="/data/learning-and-training"
       mediaImage={homeCoursesImage}
@@ -381,7 +393,7 @@ const nextEvent = events[0];
           </p>
         </div>
         <div class="usa-button-group margin-top-6">
-          <Button to="/data/explore" variant="accent-warm">Get Help</Button>
+          <Button to="/help/get-help" variant="accent-warm">Get Help</Button>
           <Button to="https://bdcatalyst.gitbook.io/biodata-catalyst-documentation" variant="outline-inverse">Documentation</Button>
         </div>
       </div>
