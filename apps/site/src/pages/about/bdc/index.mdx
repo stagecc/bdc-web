@@ -3,10 +3,11 @@ title: "About BioData Catalyst® (BDC)"
 layout: ../../../layouts/Page.astro
 ---
 import Button from '@bdc/ui-astro/button/Button.astro'
+import Card from '@bdc/ui-astro/card/Card.astro'
 
 ## What is BDC?
 
-**NHLBI BioData Catalyst® (BDC) is a cloud-based ecosystem that offers researchers data, analytical tools, applications, and workflows in secure workspaces.**
+**NHLBI BioData Catalyst® (BDC) is a cloud-based ecosystem that offers researchers data, analytical tools, applications, and workflows in secure workspaces. BDC leverages the NIH Science and Technology Research Infrastructure for Discovery, Experimentation, and Sustainability ([STRIDES](https://datascience.nih.gov/strides)) Initiative to provide scalable cloud infrastructure for storing and analyzing biomedical data.**
 
 Researchers can use BDC to find, access, share, store, and analyze heart, lung, blood, and sleep data. As an NHLBI data repository where researchers share scientific data from NHLBI-funded research, so they and others can reproduce findings and reuse data to advance science.
 
@@ -16,7 +17,7 @@ By increasing access to NHLBI data and innovative analytic capabilities, BDC acc
 
 BDC supports researchers, clinicians, data scientists, and developers throughout the biomedical research lifecycle. Whether discovering datasets, analyzing data in secure cloud workspaces, or sharing data for reuse, BDC provides resources that support collaborative, reproducible science.
 
-Researchers using BDC must comply with [applicable policies and data protection requirements and appropriately cite or acknowledge BDC](https://biodatacatalyst.nhlbi.nih.gov/user-resources/terms-of-use/).
+Researchers using BDC must comply with [applicable policies and data protection requirements and appropriately cite or acknowledge BDC](/help/terms).
 
 <div class="grid-row grid-gap-2 flex-align-center">
   <div class="grid-col-12 tablet:grid-col-4">
@@ -30,27 +31,37 @@ Researchers using BDC must comply with [applicable policies and data protection 
   </div>
 </div>
 
-## How BDC Works
+## BDC Ecosystem
 
-### BDC Program Management
+### BDC Program Components
 
-The [National Heart, Lung, and Blood Institute (NHLBI)](https://www.nhlbi.nih.gov/), a part of the [National Institutes of Health (NIH)](https://www.nih.gov/), funds two core program components that support the BDC ecosystem:
+The [National Heart, Lung, and Blood Institute (NHLBI)](https://www.nhlbi.nih.gov/), a part of the [National Institutes of Health (NIH)](https://www.nih.gov/), provides strategic leadership, funding, and oversight for the BDC ecosystem, ensuring that it advances NHLBI’s mission to improve access to data and enable innovative, data-driven research. In partnership with the NHLBI Information Technology and Applications Center (ITAC), NHLBI coordinates ecosystem development, technology infrastructure, and ongoing operations while collaborating with consortium partners to support the broader research community.
 
-* The BioData Catalyst Coordinating Center ([Renaissance Computing Institute (RENCI)](https://renci.org/) at the University of North Carolina-Chapel Hill) manages operations within the BDC developer consortium and ensures the ecosystem grows in alignment with NHLBI’s strategic vision. Under the direction of NHLBI, the BioData Catalyst Coordinating Center oversees program facilitation and management, technical planning, communication, user experience, work plan coordination, and project monitoring and control. [RTI International](https://www.rti.org/) is a partner on the BioData Catalyst Coordinating Center and contributes to successful collaboration between BDC3, NHLBI, and the BDC consortium.  
-* The BDC Data Management Core (DMC) ([RTI International](https://www.rti.org/)) supports the ingestion of heart, lung, blood, and sleep data into BDC to facilitate its availability for reuse by the researcher community. It is responsible for streamlining processes for data ingestion into the ecosystem, aiming to facilitate efficient data integration through the development of procedures and tools related to standards and data harmonization.
+Two core program components  support the BDC ecosystem:
 
-### Research Platforms and Services
+- The BDC Coordinating Center ([Renaissance Computing Institute (RENCI)](https://renci.org/) at the University of North Carolina-Chapel Hill) (HL147154) manages operations within the BDC developer consortium and ensures the ecosystem grows in alignment with NHLBI’s strategic vision. Under the direction of NHLBI, the BioData Catalyst Coordinating Center oversees program facilitation and management, technical planning, communication, user experience, work plan coordination, and project monitoring and control. [RTI International](https://www.rti.org/) is a partner on the BioData Catalyst Coordinating Center and contributes to successful collaboration between BDC3, NHLBI, and the BDC consortium.
+- The BDC Data Management Core (DMC) ([RTI International](https://www.rti.org/)) (HL167310) supports the ingestion of heart, lung, blood, and sleep data into BDC to facilitate its availability for reuse by the researcher community. It is responsible for streamlining processes for data ingestion into the ecosystem, aiming to facilitate efficient data integration through the development of procedures and tools related to standards and data harmonization.
 
-The BDC ecosystem integrates services to facilitate researchers’ ability to find, access, share, store, and compute on datasets. BDC prioritizes interoperability, compatibility, portability, and usability of platforms and services to address the variety of research methods and a myriad of researcher needs.  
-The following is a list of BDC's current platforms:
+#### BDC Analytic Platforms and Services
 
-* [Gen3](https://gen3.org/) manages data and metadata for BDC-hosted data, authenticates and authorizes users, and provides lexical searches that return metadata (study name, description, DOIs etc.) related to studies hosted on BDC. Gen3 also allows the exploration of the schema and harmonized variables. For authorized users, Gen3 provides detailed information about data in BDC and the ability to build, save and manage cohorts in the data library and export cohort data to BDC analysis platforms.  
-* [Dug](https://github.com/helxplatform/dug) uses biomedical ontologies and controlled vocabularies to search over studies and discover connections between elements of studies’ datasets and allows users to identify biomedical concepts and study variables.  
-* [PIC-SURE](https://avillach-lab.hms.harvard.edu/pic-sure) enables researchers to search across all participant data variables in BDC, apply filters to phenotypic variables and genomic variants, and create cohorts of study participants to assess feasibility and retrieve data for analysis. PIC-SURE combines the phenotypic, clinical, and genomic data on individual participants from multiple sources into integrated data sets.   
-  * The open access interface on the “Discover” page is publicly available \- no login required \- and enables anyone to search clinical data to conduct feasibility queries returning aggregate counts.   
-  * The authorized access interface on the “Explore” page allows researchers to query patient level clinical and genomic data they are authorized to access and import results into BDC workspaces for analysis.  
-* [Seven Bridges](https://velsera.com/products/seven-bridges-platform/) provides secure, collaborative workspaces for analyzing data using over a thousand optimized Common Workflow Language analysis tools and workflows, as well as Jupyterlab, RStudio, and SAS for interactive analysis. The platform offers researchers the ability to perform common analyses of genomics, transcriptomics, metabolomics, and proteomics data, including association testing and single-cell analysis. The Annotation Explorer and GENESIS workflows support rare variant association testing. Recent updates now also allow for interactive analysis of imaging data using 3D Slicer, OHIF Viewer, and ImageJ for image visualization and annotation.  
-* [Terra](https://terra.biodatacatalyst.nhlbi.nih.gov/) provides a secure, centralized cloud-native workspace for managing data and analysis tools. Terra enables researchers to seamlessly access BDC-hosted data, organize files using built-in data tables, and run both bulk pipelining workflows and interactive analyses via integrated applications like Jupyter Notebooks, RStudio, and Galaxy. Additionally, Terra features robust, built-in security with customizable user permissions and authorization domains to facilitate safe collaboration on controlled or sensitive data.
+The BDC ecosystem integrates services to facilitate researchers’ ability to find, access, share, store, and compute on datasets. BDC prioritizes interoperability, compatibility, portability, and usability of platforms and services to address the variety of research methods and a myriad of researcher needs.
+  
+The following is a list of BDC's current analytic platforms:
+
+- [Seven Bridges](https://velsera.com/products/seven-bridges-platform/) provides secure, collaborative workspaces for analyzing data using over a thousand optimized Common Workflow Language analysis tools and workflows, as well as Jupyterlab, RStudio, and SAS for interactive analysis. The platform offers researchers the ability to perform common analyses of genomics, transcriptomics, metabolomics, and proteomics data, including association testing and single-cell analysis. The Annotation Explorer and GENESIS workflows support rare variant association testing. Recent updates now also allow for interactive analysis of imaging data using 3D Slicer, OHIF Viewer, and ImageJ for image visualization and annotation.
+- [Terra](https://terra.biodatacatalyst.nhlbi.nih.gov/) provides a secure, centralized cloud-native workspace for managing data and analysis tools. Terra enables researchers to seamlessly access BDC-hosted data, organize files using built-in data tables, and run both bulk pipelining workflows and interactive analyses via integrated applications like Jupyter Notebooks, RStudio, and Galaxy. Additionally, Terra features robust, built-in security with customizable user permissions and authorization domains to facilitate safe collaboration on controlled or sensitive data.
+
+The following is a list of BDC's current services
+
+- [Gen3](https://gen3.org/) manages data and metadata for BDC-hosted data, authenticates and authorizes users, and provides lexical searches that return metadata (study name, description, DOIs etc.) related to studies hosted on BDC. Gen3 also allows the exploration of the schema and harmonized variables. For authorized users, Gen3 provides detailed information about data in BDC and the ability to build, save and manage cohorts in the data library and export cohort data to BDC analysis platforms.
+- [Dug](https://github.com/helxplatform/dug) uses biomedical ontologies and controlled vocabularies to search over studies and discover connections between elements of studies’ datasets and allows users to identify biomedical concepts and study variables.
+- [PIC-SURE](https://avillach-lab.hms.harvard.edu/pic-sure) enables researchers to search across all participant data variables in BDC, apply filters to phenotypic variables and genomic variants, and create cohorts of study participants to assess feasibility and retrieve data for analysis. PIC-SURE combines the phenotypic, clinical, and genomic data on individual participants from multiple sources into integrated data sets.
+  - The open access interface on the “Discover” page is publicly available \- no login required \- and enables anyone to search clinical data to conduct feasibility queries returning aggregate counts.
+  - The authorized access interface on the “Explore” page allows researchers to query patient level clinical and genomic data they are authorized to access and import results into BDC workspaces for analysis.
+
+#### Secure Access with RAS
+
+Secure access to controlled data is managed through the [NIH Researcher Auth Service (RAS)](https://datascience.nih.gov/researcher-auth-service-initiative). RAS links a researcher’s [NIH electronic Research Administration (eRA)](https://www.era.nih.gov/) identity with approved data permissions, helping ensure users can access only the datasets for which they are authorized. It also provides a single set of credentials that can be used across multiple NIH-supported data platforms.
 
 ## BDC History
 
@@ -64,3 +75,7 @@ The following is a list of BDC's current platforms:
 * 2024: Researching COVID to Enhance Recovery (RECOVER) Initiative data is made available to the public and research community through BDC; first imaging data ingested, including ECG and ECHOs (ACCORD, FHS, and MESA) along with TOPMed multi-omic datasets  
 * 2025: BDC becomes the first NIH multi-platform ecosystem to support [RAS](https://datascience.nih.gov/researcher-auth-service-initiative) authentication and authorization; BDC released more than 26 data types, which include clinical data (from clinical trials, longitudinal, and observational studies), imaging (ECG, Echo, CT, MRI), sleep signals (polysomnography and multi-omics (WGS, CNV, WES, Array Genotyping, RNA-Sequencing, structural variation, DNA Methylation, Metabolome, GWAS summary statistics, Proteome, and ATAC-seq)  
 * 2026: BDC released data including over 2 million subjects from 496 datasets
+
+<Card variant="overview">
+  Have a question or suggestion? We welcome feedback from current and prospective BDC users. Visit the [Contact Us](/help/contact-bdc) page and select Provide Feedback to share ideas, ask questions, or suggest improvements.
+</Card>
