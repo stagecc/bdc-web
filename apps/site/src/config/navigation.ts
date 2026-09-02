@@ -9,7 +9,7 @@ export const navConfig: NavItem[] = [
     label: 'About',
     items: [
       { label: 'BDC', href: '/about/bdc' },
-      { label: 'Key Collaborations', href: '/about/key-collaborations' },
+      { label: 'Interoperability', href: '/about/interoperability' },
       { label: 'Research Communities', href: '/about/research-communities' },
       { label: 'Studies', href: '/about/studies' },
     ],
