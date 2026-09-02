@@ -103,3 +103,26 @@ npm run a11y:full -w @bdc/site
 ```
 
 See [apps/site/a11y/README.md](../apps/site/a11y/README.md) for configuration details, compliance targets, and how to add exceptions.
+
+---
+
+## Browser Markup Contract Tests
+
+The site also uses [Playwright](https://playwright.dev/) for a small set of browser-level markup contract checks that are not accessibility tests.
+
+These tests verify rendered HTML attributes that the analytics layer depends on, such as `data-analytics-section` on shared layout roots. They live under `apps/site/e2e/` and use plain `@playwright/test` rather than the axe-based fixtures in `apps/site/a11y/`.
+
+The current analytics-root coverage checks:
+
+- the homepage renders exactly one header analytics root
+- the homepage renders exactly one footer analytics root
+- multiple real pages that currently use `InPageNav` render the expected `in_page_nav` analytics root
+
+Because the Playwright config for `apps/site` uses `astro preview`, these checks run against built output.
+
+```bash
+# build & run the focused analytics markup contract check
+npm run test:analytics-sections -w @bdc/site
+```
+
+Keep these tests focused on browser-observable markup contracts. Logic-heavy analytics behavior should stay in the existing Vitest coverage.
