@@ -1,14 +1,20 @@
 ---
 title: Bring Your Own Tools
-layout: ../../layouts/Page.astro
+layout: ../../layouts/MdxBase.astro
 ---
 import Card from '@bdc/ui-astro/card/Card.astro'
 import CardCta from '@bdc/ui-astro/card/CardCta.astro'
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro'
+import InPageNav from '@components/layout/InPageNav.astro';
 
-<span class="usa-intro">
-  Bring your scripts, tools, and workflows into BDC for scalable, reproducible analysis in a secure cloud environment.
-</span>
+<Hero
+  title="Bring Your Own Tools"
+  description="Bring your scripts, tools, and workflows into BDC for scalable, reproducible analysis in a secure cloud environment."
+/>
+<section class="usa-section padding-top-4">
+<div class="grid-container">
+<InPageNav>
 
 <Card variant="panel">
   <h3 class="font-heading-md text-primary-dark margin-top-0">Supported tools</h3>
@@ -142,3 +148,7 @@ At a high level, bringing a tool into BDC-Seven Bridges typically involves:
   href="/help/contact-bdc/"
   cta="Contact us and select Tool or Workflow Integration"
 />
+
+</InPageNav>
+</div>
+</section>
