@@ -1,17 +1,17 @@
 - quote: >
-    DESeq2 helped us identify expression changes quickly while keeping our workflow reproducible across teams.
-  name: John K.
+    There’s no comparison; BDC's computation speed is much faster than local resources.
+  name: Laura Raffield
   title: Researcher
-  organization: University of Michigan
+  organization: University of North Carolina at Chapel Hill
 
 - quote: >
-    The STAAR pipeline made variant analyses faster and gave our team confidence in each iteration.
-  name: Casey G.
+    BDC allows you to do analyses effortlessly and has the infrastructure set up for you.
+  name: Brandon Lê
   title: Researcher
-  organization: Stanford University
+  organization: Duke University
 
 - quote: >
-    BDC workspaces reduced setup time dramatically, so we could focus on interpreting results instead of tooling.
-  name: Sam R.
+    BDC offers me easier access to data and larger-scale analysis capabilities than I might otherwise have.
+  name: Kenneth Westerman
   title: Researcher
-  organization: Harvard University
+  organization: Massachusetts General Hospital
