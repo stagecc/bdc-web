@@ -243,6 +243,9 @@ const nextEvent = events[0];
       action={{ label: 'View all communities', href: '/about/research-communities' }}
       tone="default"
     >
+      <p slot="description">
+        Discover richly characterized datasets from NHLBI-supported studies and programs, including resources that can be used together to investigate questions across populations, phenotypes, and molecular data.
+      </p>
       <div class="grid-row grid-gap-3 margin-bottom-neg-3">
         {featuredCommunities.map((program, index) => (
           <div class="tablet:grid-col-6 desktop:grid-col-6 flex-align-stretch margin-bottom-3">
@@ -266,8 +269,8 @@ const nextEvent = events[0];
     {
       featuredPublications.length > 0 && (
         <PageSection
-          eyebrow="Research in Action"
-          title="Latest Publications"
+          eyebrow="Latest Publications"
+          title="Research in Action"
           action={{ label: 'View all publications', href: '/news/bdc-enabled-research' }}
           tone="highlight"
         >
