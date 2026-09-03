@@ -1,8 +1,8 @@
 import Card from '@bdc/ui-react/card/Card';
 import { useMemo } from 'react';
 import {
-  summarizeDugExplanation,
   type ExplanationSummaryItem,
+  summarizeDugExplanation,
 } from './explanation';
 
 type Props = {
@@ -44,9 +44,9 @@ export default function DugExplanationPanel({ explanation }: Props) {
   return (
     <div className="padding-x-2 padding-bottom-2 margin-top-1">
       <p className="margin-top-0">
-        Dug ranks concept results using matches in concept names,
-        descriptions, and related search terms. The breakdown below shows
-        which signal groups contributed most to this result.
+        Dug ranks concept results using matches in concept names, descriptions,
+        and related search terms. The breakdown below shows which signal groups
+        contributed most to this result.
       </p>
       <ul className="usa-list usa-list--unstyled margin-top-2 margin-bottom-0 display-flex flex-column gap-2">
         {summary.items.map((item) => (

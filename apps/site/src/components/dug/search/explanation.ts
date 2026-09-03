@@ -119,7 +119,9 @@ function collectKnownLeaves(node: ExplanationNode): ScoreLeaf[] {
   return nested.flatMap((child) => collectKnownLeaves(child));
 }
 
-export function summarizeDugExplanation(explanation: unknown): ExplanationSummary {
+export function summarizeDugExplanation(
+  explanation: unknown,
+): ExplanationSummary {
   const root = asObject(explanation);
   if (!root) {
     return { totalScore: 0, items: [] };
@@ -188,7 +190,10 @@ export function summarizeDugExplanation(explanation: unknown): ExplanationSummar
 
       const percentage =
         totalScore > 0
-          ? Math.max(0, Math.min(100, Math.round((group.score / totalScore) * 100)))
+          ? Math.max(
+              0,
+              Math.min(100, Math.round((group.score / totalScore) * 100)),
+            )
           : 0;
 
       return {

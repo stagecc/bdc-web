@@ -95,12 +95,12 @@ describe('summarizeDugExplanation', () => {
       'Synonymous terms',
       'Description',
     ]);
-    expect(summary.items.find((item) => item.id === 'name')?.matchedTerms).toEqual([
-      'brain',
-    ]);
-    expect(summary.items.find((item) => item.id === 'name')?.hasParseWarning).toBe(
-      false,
-    );
+    expect(
+      summary.items.find((item) => item.id === 'name')?.matchedTerms,
+    ).toEqual(['brain']);
+    expect(
+      summary.items.find((item) => item.id === 'name')?.hasParseWarning,
+    ).toBe(false);
     expect(summary.items.some((item) => item.id === 'unknown')).toBe(false);
   });
 
