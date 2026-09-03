@@ -266,13 +266,15 @@ const nextEvent = events[0];
     </PageSection>
 
     <PageSection
-      eyebrow="Featured Communities"
+      eyebrow="Featured Datasets"
       title="Explore NHLBI Data for Analysis"
-      action={{ label: 'View all communities', href: '/about/research-communities' }}
+      action={{ label: 'View all datasets', href: '/about/research-communities' }}
       tone="default"
     >
       <p slot="description">
-        Discover datasets from NHLBI-supported studies and programs, including resources that can be used together to investigate questions across populations, phenotypes, and molecular data.
+        Discover data from NHLBI-supported studies and programs,
+        including resources that can be used together
+        to investigate questions across populations, phenotypes, and molecular data.
       </p>
       <div class="grid-row grid-gap-3 margin-bottom-neg-3">
         {featuredCommunities.map((program, index) => (
@@ -289,8 +291,8 @@ const nextEvent = events[0];
         ))}
       </div>
 
-      <p class="margin-y-2 display-flex flex-justify-center">
-        <Link class="text-bold" to="/about/studies">Explore data from all Research Communities</Link>
+      <p class="margin-top-4 margin-bottom-2 display-flex flex-justify-center">
+        <Link class="text-bold" to="/about/studies">Explore all BDC data</Link>
       </p>
     </PageSection>
 
