@@ -1,11 +1,10 @@
 ---
 title: Terms of Use & Policies
-lastReviewed: July 2026
+lastReviewed: August 2026
 layout: ../../layouts/Page.astro
 ---
 import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import InfoTooltip from '@bdc/ui-astro/tooltip/InfoTooltip.astro';
-import Icon from '@bdc/ui-astro/icon/Icon.astro'
 
 <InlineAlert variant="info">
 These **Terms of Use** describe the conditions governing use of BDC and related resources. By accessing or using this website, users agree to comply with these terms.
@@ -14,10 +13,12 @@ Additional terms may apply to specific tools, platforms, or datasets.
 </InlineAlert>
 
 ## Data Use Policy Statement
+BDC follows NIH policies and requirements for data access, use, and protection, including applicable requirements for controlled-access data. Data on the BDC ecosystem are subject to general and dataset-specific data use policies, and access to controlled data is restricted to authorized users.
 
-BDC adheres to internationally recognized policies for data access and release developed to enable broad access to data on the BDC ecosystem. Data on the BDC ecosystem are subject to general and dataset-specific data use policies, and access to controlled data is restricted to authorized users. Each BDC user is solely responsible for adhering to Data Use Agreement(s), Institutional Review Board policies and guidelines, and other Data Use Limitations when uploading or importing data or downloading analysis results on the BDC ecosystem.
+Each BDC user is responsible for complying with applicable Data Use Agreement(s), Institutional Review Board (IRB) requirements, and other Data Use Limitations when uploading or importing data or downloading analysis results from the BDC ecosystem.
 
-Whether working with hosted or their own data, BDC users are obligated to protect participant privacy and follow NIH data protection policies. User institutions are accountable and may be subject to sanctions if policies are violated.
+Whether working with BDC-hosted data or their own data, users must protect participant privacy and comply with applicable NIH data protection requirements. User institutions are accountable for their users' compliance and may be subject to sanctions when these requirements are violated.
+
 <br/>
 <hr/>
 
@@ -27,7 +28,7 @@ Whether working with hosted or their own data, BDC users are obligated to protec
 **Important**: Individual-level data may not be downloaded from BDC.
 </InlineAlert>
 
-Download capabilities are limited to metadata and analysis results, and the latter must comply with restrictions defined by NIH for [Summary Results](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-19-023.html). **Downloading sequences, variants, images, phenotypes, and other individual data is prohibited.** 
+Download capabilities are limited to metadata and analysis results, including figures generated from analysis for use in publications, and the latter must comply with restrictions defined by NIH for [Summary Results](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-19-023.html). **Downloading sequences, variants, images, phenotypes, and other individual data is prohibited.** 
 
 BDC notifies users of download restrictions at multiple points, including when users receive cloud credits, log in, and request downloads. Data egress is actively monitored and violations to the download policy will be subject to disciplinary actions on behalf of the NIH.
 
@@ -46,46 +47,6 @@ Individual-level data currently hosted within BDC is de-identified. De-identifie
 
 ## Citing and Acknowledging BDC
 
-Researchers who use BDC resources, services, tools, funding, or cloud credits are expected to appropriately acknowledge BDC’s contribution to their work. Acknowledgement and citation should be included in publications, preprints, posters, presentations, and other scholarly outputs resulting from the use of BDC.  
+Researchers who use BDC resources, services, tools, funding, or cloud credits are expected to appropriately acknowledge BDC’s contribution to their work. 
 
-Recipients of support through programs such as NHLBI BDC Pilot Funding Program or Cloud Credit Support Program are also expected to acknowledge that support in any resulting scholarly outputs. 
-
-Standard [citation and acknowledgement language](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement) is available in BDC documentation or can be copied from below.
-
-<div class="display-flex flex-align-center">
-  <p class="text-bold margin-0">For citation of BDC:</p>
-  <button
-    class="usa-button usa-button--outline margin-left-2"
-    aria-label="Copy to clipboard"
-    onclick="navigator.clipboard.writeText(document.getElementById('copy-target-citation').textContent.trim()).then(() => { const msg = this.nextElementSibling; msg.hidden = false; setTimeout(() => msg.hidden = true, 2000); })"
-  >
-    <span>Copy text below</span> <Icon name="content_copy" size={3} />
-  </button>
-  <span hidden class="font-sans-xs text-green margin-left-1">Copied!</span>
-</div>
-<div id="copy-target-citation" class="margin-top-05">
-  National Heart, Lung, and Blood Institute, National Institutes of Health, U.S. Department of Health and Human Services (2020). The NHLBI BioData Catalyst. Zenodo. [https://doi.org/10.5281/zenodo.3822858](https://doi.org/10.5281/zenodo.3822858)
-</div>
-
-<div class="display-flex flex-align-center">
-  <p class="text-bold margin-0">To acknowledge BDC, use:</p>
-  <button
-    class="usa-button usa-button--outline margin-left-2"
-    aria-label="Copy to clipboard"
-    onclick="navigator.clipboard.writeText(document.getElementById('copy-target-acknowledgement').textContent.trim()).then(() => { const msg = this.nextElementSibling; msg.hidden = false; setTimeout(() => msg.hidden = true, 2000); })"
-  >
-    <span>Copy text below</span> <Icon name="content_copy" size={3} />
-  </button>
-  <span hidden class="font-sans-xs text-green margin-left-1">Copied!</span>
-</div>
-<div id="copy-target-acknowledgement">
-  The authors wish to acknowledge the contributions of the consortium working on the development of the NHLBI BioData Catalyst® (BDC) ecosystem.
-</div>
-
-<InlineAlert heading="Citing BDC" variant="info" noIcon>
-  [View BDC Citation and Acknowledgement Guidance →](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/community/citation-and-acknowledgement)
-
-  [Explore BDC-Enabled Research →](/news/bdc-enabled-research) 
-
-  [Submit Your Publication →](/news/bdc-enabled-research/submit-publication)
-</InlineAlert>
+For specific guidelines and citation language, see the [Citing and Acknowledging BDC](/cite-bdc) page.

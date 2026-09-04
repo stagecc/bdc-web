@@ -1,6 +1,5 @@
 ---
 import { getCollection, render } from 'astro:content';
-import Card from '@bdc/ui-astro/card/Card.astro';
 import StatCard from '@bdc/ui-astro/card/StatCard.astro';
 import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
 import EepMember from '@components/eep/EepMember.astro';
@@ -43,40 +42,20 @@ const rendered = await Promise.all(
         />
         <p>
           The BDC External Expert Panel (EEP) is an independent body of experts that 
-          provides feedback and input that helps NHLBI make strategic decisions on the 
-          BDC program. Members of the EEP volunteer their time and insights over a 
-          multi-year period.
+          provides feedback and input that helps NHLBI make strategic decisions about 
+          the BDC program.
         </p>
         <p>
-          EEP members represent diverse expertise across biomedical informatics, artificial 
+          The expertise of EEP members spans biomedical informatics, artificial 
           intelligence, genomics, data science, cyberinfrastructure, education, and 
           clinical research. Members volunteer their time and insights over multi-year 
           terms to help ensure BDC continues to meet the needs of the research community.
-        </p>
-        <p>
-          The individuals listed below are current members of the BDC EEP.
         </p>
       </div>
     </div>
   </section>
 
-  <PageSection eyebrow="Panel Directory" title="Current Members">
-    <section class="margin-bottom-6" aria-labelledby="eep-directory-nav-heading">
-      <Card>
-        <h3 id="eep-directory-nav-heading" class="font-heading-sm margin-top-0 margin-bottom-2">Jump to a member</h3>
-        <nav aria-label="Jump to EEP member">
-          <ul class="usa-list usa-list--unstyled grid-row grid-gap-2 margin-0">
-            {sorted.map((member) => (
-              <li class="tablet:grid-col-6 desktop:grid-col-4 margin-bottom-05">
-                <a href={`#${member.data.slug}`} class="usa-link font-sans">
-                  {member.data.adhoc && 'Ad-hoc Member: '}{member.data.name}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </Card>
-    </section>
+  <PageSection title="Current Members">
 
     {rendered.map(({ member, Content }) => (
       <EepMember
@@ -84,7 +63,6 @@ const rendered = await Promise.all(
         slug={member.data.slug}
         signifier={member.data.signifier}
         roles={member.data.roles}
-        term_start={member.data.term_start}
         photo={member.data.photo}
         adhoc={member.data.adhoc}
       >

@@ -1,30 +1,57 @@
 ---
 title: Bring Your Own Tools
-layout: ../../layouts/Page.astro
+layout: ../../layouts/MdxBase.astro
 ---
-import Icon from '@components/Icon.astro'
+import Card from '@bdc/ui-astro/card/Card.astro'
+import CardCta from '@bdc/ui-astro/card/CardCta.astro'
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro'
+import InPageNav from '@components/layout/InPageNav.astro';
 
-<span class="usa-intro">
-  Bring your scripts, tools, and workflows into BDC for scalable, reproducible analysis in a secure cloud environment.
-</span>
+<Hero
+  title="Bring Your Own Tools"
+  description="Bring your scripts, tools, and workflows into BDC for scalable, reproducible analysis in a secure cloud environment."
+/>
+<section class="usa-section padding-top-4">
+<div class="grid-container">
+<InPageNav>
+
+<Card variant="panel">
+  <h3 class="font-heading-md text-primary-dark margin-top-0">Supported tools</h3>
+
+  <p>
+    This page focuses on bringing tools and workflows into BDC-Seven Bridges. BDC-Seven Bridges supports
+    independent command-line scripts, Docker-packaged tools with their dependencies, and multi-step workflows
+    that connect multiple tools.
+  </p>
+
+  <p class="margin-bottom-0">
+    BDC-Terra also supports workflow-based analysis using WDL. Current BDC-Terra users can refer to
+    documentation for guidance on writing and running WDL workflows.
+  </p>
+</Card>
+
 
 BDC can support anything from a single R, Python, or Bash script to a containerized tool or multi-step workflow. Before investing in implementation, review the requirements below or contact the BDC team to determine whether your tool is a good fit.
 
-<div class="usa-card">
-  <div class="usa-card__container">
-    <div class="usa-card__header">
-      <Icon name="error_outline" size={4}/>
-      <div class="usa-card__heading">
-        Important Guidance for Regulated and AI-Based Tools
-      </div>
-    </div>
-    <div class="usa-card__body">
-      If you are developing tools for clinical or regulatory use (such as Software as a Medical Device), contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC requirements.
-
-      There are certain security, reproducibility, and transparency risks that are associated with AI-assisted tools. Tools brought into BDC must meet requirements for controlled-access data and reproducibility, and will need to be validated prior to use.
-    </div>
+<Card variant="panel">
+  <div class="display-flex flex-align-center margin-bottom-2">
+    <IconBadge icon="error_outline" tone="warm" size={5} class="margin-right-1" />
+    <h3 class="font-heading-md text-primary-dark margin-0">Important Guidance for Regulated and AI-Based Tools</h3>
   </div>
-</div>
+
+  <p>
+    If you are developing tools for clinical or regulatory use (such as Software as a Medical Device),
+    contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC
+    requirements.
+  </p>
+
+  <p class="margin-bottom-0">
+    There are certain security, reproducibility, and transparency risks that are associated with
+    AI-assisted tools. Tools brought into BDC must meet requirements for controlled-access data and
+    reproducibility, and will need to be validated prior to use.
+  </p>
+</Card>
 
 ## Is bringing your own tool right for your work?
 
@@ -38,17 +65,6 @@ You may benefit from bringing a tool to BDC if you:
 - Want application versioning
 
 Tools generally need clearly defined inputs, parameters, outputs, dependencies, and computing requirements. Bringing tools into BDC requires familiarity with command-line tools and an understanding of the software, packages, and runtime environment the tool requires.
-
-<div class="usa-card">
-  <div class="usa-card__container">
-    <div class="usa-card__body">
-      **Supported Tools:**
-
-      * BDC-Seven Bridges supports independent command-line scripts, Docker-packaged tools with their dependencies, and multi-step workflows that connect multiple tools.
-      * This page focuses on bringing tools and workflows into BDC-Seven Bridges. BDC-Terra also supports workflow-based analysis using WDL. Current BDC-Terra users can refer to [documentation](https://support.terra.bio/hc/en-us/sections/360007274612) for guidance on writing and running WDL workflows.
-    </div>
-  </div>
-</div>
 
 ### **Compatibility Considerations**
 
@@ -125,19 +141,14 @@ At a high level, bringing a tool into BDC-Seven Bridges typically involves:
   </li>
 </ol>
 
-<div class="usa-card">
-  <div class="usa-card__container">
-    <div class="usa-card__header">
-      <Icon name="construction" size={4}/>
-      <div class="usa-card__heading">
-        Thinking about bringing a tool to BDC?
-      </div>
-    </div>
-    <div class="usa-card__body">
-      The BDC team can help determine whether your tool is compatible with BDC, guide implementation, and recommend the best approach for integration. Early discussions often save time and prevent rework.
-    </div>
-    <div class="usa-card__footer">
-      [→ Contact us and select **Tool or Workflow Integration** to get started](/help/contact-bdc/)
-    </div>
-  </div>
+<CardCta
+  icon="construction"
+  title="Thinking about bringing a tool to BDC?"
+  text="The BDC team can help determine whether your tool is compatible with BDC, guide implementation, and recommend the best approach for integration. Early discussions often save time and prevent rework."
+  href="/help/contact-bdc/"
+  cta="Contact us and select Tool or Workflow Integration"
+/>
+
+</InPageNav>
 </div>
+</section>
