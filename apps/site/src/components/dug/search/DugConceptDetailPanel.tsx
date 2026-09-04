@@ -1,6 +1,7 @@
 import IconButton from '@bdc/ui-react/button/IconButton';
 import type { RefObject } from 'react';
 import type { DugConcept, DugStudy, DugVariable } from './api';
+import DugExplanationPanel from './DugExplanationPanel';
 import styles from './DugSearchApp.module.scss';
 
 type DetailTab = 'studies' | 'explanation';
@@ -222,15 +223,7 @@ export default function DugConceptDetailPanel({
         )}
 
         {activeDetailTab === 'explanation' && (
-          <div className="padding-x-2 padding-bottom-2 margin-top-1">
-            <p className="margin-top-0">
-              Dug ranks concepts based on relevance across concept name,
-              description, and related search terms.
-            </p>
-            <pre className="bg-base-darkest text-base-lightest radius-sm padding-2 overflow-auto font-mono-2xs margin-bottom-0">
-              {JSON.stringify(selectedResult.explanation ?? {}, null, 2)}
-            </pre>
-          </div>
+          <DugExplanationPanel explanation={selectedResult.explanation} />
         )}
       </div>
     </div>
