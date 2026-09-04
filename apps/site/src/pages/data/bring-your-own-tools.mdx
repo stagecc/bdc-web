@@ -41,15 +41,15 @@ BDC can support anything from a single R, Python, or Bash script to a containeri
   </div>
 
   <p>
-    If you are developing tools for clinical or regulatory use (such as Software as a Medical Device),
-    contact the BDC team early, particularly before pursuing FDA approval, to ensure alignment with BDC
-    requirements.
+    If you are developing software for clinical or regulatory use, contact the BDC team early to ensure 
+    alignment with BDC requirements. For example, if you are developing Software as a Medical Device 
+    (SAMD) contact BDC before pursuing FDA approval.
   </p>
 
-  <p class="margin-bottom-0">
-    There are certain security, reproducibility, and transparency risks that are associated with
-    AI-assisted tools. Tools brought into BDC must meet requirements for controlled-access data and
-    reproducibility, and will need to be validated prior to use.
+  <p>
+    There are certain security, reproducibility, and transparency risks that are associated with 
+    AI-assisted tools. Before AI-based software is brought into BDC, it must be vetted to ensure it meets 
+    requirements for controlled-access data and reproducibility requirements.
   </p>
 </Card>
 
@@ -64,18 +64,18 @@ You may benefit from bringing a tool to BDC if you:
 - Want to reuse or integrate an existing Dockerized tool
 - Want application versioning
 
-Tools generally need clearly defined inputs, parameters, outputs, dependencies, and computing requirements. Bringing tools into BDC requires familiarity with command-line tools and an understanding of the software, packages, and runtime environment the tool requires.
+Bringing tools into BDC requires familiarity with command-line tools and an understanding of the software, packages, and runtime environment requirements.
 
 ### **Compatibility Considerations**
 
 Not all tools are immediately compatible. Before getting started, consider:
 
-* **Data compliance and security**: Tools must meet requirements for controlled-access data and secure environments.
-* **Licensing**: Tools that depend on proprietary software (for example, MATLAB) or have licensing restrictions are not supported.
+* **Data compliance and security**: Software must meet requirements for controlled-access data and secure environments.
+* **Licensing**: Scripts and workflows that depend on proprietary software (for example, MATLAB) or have licensing restrictions are not supported.
 * **Interactive tools**: Tools or workflows that rely on interactive inputs or provide interactive visualizations are not typically supported through standard, self-service workflows. These use cases may be supported through dedicated, funded projects within BDC.
-* **Containerization**: Tools must be containerizable and describable in supported workflow languages. Thus tools requiring direct hardware access, always-on services, and tools with no defined input are not supported.
+* **Containerization**: Tools must be containerizable and describable in supported workflow languages. Thus, tools requiring direct hardware access, always-on services, and tools with no defined input are not supported.
 * **Nested containers**: Tools that require one Docker container to call or run another Docker container are not supported. Workflows may include multiple tools, with each tool using its own container.
-* **Dependencies**: Tools with unavailable or non-portable dependencies are not supported.
+* **Dependencies**: Software with unavailable or non-portable dependencies are not supported.
 
 ## How It Works on BDC-Seven Bridges
 
@@ -89,13 +89,13 @@ At a high level, bringing a tool into BDC-Seven Bridges typically involves:
     </p>
   </li>
   <li class="usa-process-list__item">
-    <h4 class="usa-process-list__heading">Define your tool’s specifications and container approach</h4>
+    <h4 class="usa-process-list__heading">Define your tool’s specifications</h4>
     <p>
       Clearly define:
     </p>
     <ul>
-      <li>Inputs (files required by your application)</li>
-      <li>Parameters (any variables required by your application)</li>
+      <li>Inputs (files required)</li>
+      <li>Parameters (any variables required)</li>
       <li>Expected outputs</li>
       <li>Dependencies (libraries, packages)</li>
       <li>Resource requirements (CPU, memory, runtime expectations)</li>
@@ -118,13 +118,13 @@ At a high level, bringing a tool into BDC-Seven Bridges typically involves:
     </ul>
   </li>
   <li class="usa-process-list__item">
-    <h4 class="usa-process-list__heading">Use the Tool Creator to create command line tools</h4>
+    <h4 class="usa-process-list__heading">Create and register your tool</h4>
     <p>
       Use the Tool Creator to create command line tools
     </p>
     <ul>
-      <li>Reference an open source Docker image or provide your own (for example, via DockerHub or another registry)</li>
-      <li>If the Docker image requires credentials/ is not publicly accessible, register the tool using the [BioData Catalyst Image Registry](https://sb-biodatacatalyst.readme.io/docs/the-image-registry)</li>
+      <li>Reference an open-source Docker image or provide your own (for example, via DockerHub or another registry)</li>
+      <li>If the Docker image requires credentials/ is not publicly accessible, register the tool using the [BDC Image Registry](https://sb-biodatacatalyst.readme.io/docs/the-image-registry)</li>
     </ul>
   </li>
   <li class="usa-process-list__item">
