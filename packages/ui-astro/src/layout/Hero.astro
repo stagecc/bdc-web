@@ -61,7 +61,12 @@ const hasTitleLines = Array.isArray(titleLines) && titleLines.length > 0;
       }
       <h1 class="margin-0">
         {hasTitleLines
-          ? titleLines.map((line) => <span class="display-block">{line}</span>)
+          ? titleLines.map((line, index) => (
+              <span class="display-block">
+                {line}
+                {index < titleLines.length - 1 ? ' ' : ''}
+              </span>
+            ))
           : title}
       </h1>
       <p class="layout-hero__lede line-height-sans-5">{description}</p>
