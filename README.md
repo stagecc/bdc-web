@@ -176,8 +176,45 @@ Pull requests are automatically validated by CI, which runs:
 - **Build**: the app is built to catch compilation errors
 - **Tests**: Vitest runs automated test suites to validate application behavior
 - **Accessibility**: Playwright + axe-core audits every page against WCAG 2.0/2.1 AA (Section 508)
+- **Link Check**: Lychee scans the built `site` and `consortium` HTML for broken internal links (weekly/manual runs also check external URLs)
 
 All checks must pass before a PR can be merged.
+
+#### Local link checks
+
+The `links:*` scripts require the Lychee CLI to be installed and available on your `PATH`:
+
+```bash
+# macOS (Homebrew)
+brew install lychee
+
+# Linux (Ubuntu/Snap)
+sudo snap install lychee
+
+# Verify the installation
+lychee --version
+```
+
+You can then check every app from the repository root:
+
+```bash
+npm run links:offline
+```
+
+To check an individual app, run the same script from its directory (for example, `apps/site`):
+
+```bash
+cd apps/site
+npm run links:offline
+```
+
+Hostnames listed in `DEFAULT_IGNORED_HOSTNAMES` in `scripts/link-exclusions.mjs` are skipped by default. The link checker also resolves Bitly URLs and skips only those that redirect to a listed hostname, so new shortened meeting links require no additional configuration and other Bitly destinations are still checked. Add `--verbose` to include every link in an online check:
+
+```bash
+npm run links:online -- --verbose
+```
+
+Manual CI runs provide the same behavior through the **Include normally ignored links in external checks** option. Scheduled checks continue to apply the default hostname list.
 
 ### Before opening a PR
 

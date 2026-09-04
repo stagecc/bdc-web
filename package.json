@@ -11,7 +11,10 @@
     "format": "biome format --write .",
     "test": "vitest run",
     "test:watch": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "links:offline": "node scripts/check-links.mjs offline",
+    "links:online": "node scripts/check-links.mjs online",
+    "links:unique": "node scripts/check-links.mjs unique"
   },
   "devDependencies": {
     "@biomejs/biome": "2.3.14",

@@ -15,6 +15,9 @@
     "a11y:page": "node a11y/page.js",
     "a11y:smoke": "astro build && playwright test a11y/smoke.test.ts",
     "a11y:full": "astro build && node a11y/full.js",
+    "links:offline": "node ../../scripts/check-links.mjs offline site",
+    "links:online": "node ../../scripts/check-links.mjs online site",
+    "links:unique": "node ../../scripts/check-links.mjs unique site",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui"
