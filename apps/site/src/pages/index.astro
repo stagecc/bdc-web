@@ -4,7 +4,6 @@ import Button from '@bdc/ui-astro/button/Button.astro';
 import CardCopy from '@bdc/ui-astro/card/CardCopy.astro';
 import CardCta from '@bdc/ui-astro/card/CardCta.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
-import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
 import TwoColumnSection from '@bdc/ui-astro/layout/TwoColumnSection.astro';
@@ -12,6 +11,7 @@ import Link from '@bdc/ui-astro/link/Link.astro';
 import Blockquote from '@components/Blockquote.astro';
 import HappeningCard from '@components/cards/HappeningCard.astro';
 import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
+import Notice from '@components/content/Notice.astro';
 import ProcessSteps from '@components/home/ProcessSteps.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
@@ -206,21 +206,21 @@ const nextEvent = events[0];
           through analysis, collaboration, reproducibility, and publication.
         </p>
       </Fragment>
-      <div class="display-flex flex-justify-center flex-align-center margin-top-2 margin-bottom-0">
-        <IconBadge icon="attach_money" tone="cool" class="margin-right-1" />
-        <span>
-          Funding may be available for you to get started.&nbsp;
-          <Link to="/help/costs" class="text-bold">Learn about usage costs and funding options</Link>.
-        </span>
-      </div>
+      <Notice icon="attach_money" tone="cool">
+        Funding may be available for you to get started.&nbsp;
+        <Link to="/help/costs" class="text-bold">Learn about usage costs and funding options</Link>.
+      </Notice>
       <ProcessSteps steps={lifecycleSteps} tone="muted" />
-      <div class="margin-top-5 margin-bottom-0 text-center display-flex text-primary-darker flex-align-center flex-justify-center">
-        <IconBadge icon="support" tone="warm" size={4} class="margin-right-1" />
+      <Notice
+        icon="support"
+        tone="warm"
+        class="margin-top-5 margin-bottom-0 text-center text-primary-darker"
+      >
         <span class="margin-right-1">Need help with BDC?</span>{' '}
         <Link to="/help/get-help" class="text-bold">
           Submit a request
         </Link>.
-      </div>
+      </Notice>
 
       <div
         class="usa-modal-wrapper is-hidden"
@@ -319,13 +319,10 @@ const nextEvent = events[0];
       mediaImage={homeCoursesImage}
       mediaAlt=""
     >
-      <div class="display-flex flex-justify-center flex-align-center margin-top-2 margin-bottom-0">
-        <IconBadge icon="attach_money" tone="cool" class="margin-right-1" />
-        <span>
-          Funding may be available for courses and training.
-          <Link to="/help/costs" class="text-bold">Learn more</Link>.
-        </span>
-      </div>
+      <Notice icon="attach_money" tone="cool">
+        Funding may be available for courses and training.<br />
+        <Link to="/help/costs" class="text-bold">Learn more</Link>.
+      </Notice>
     </TwoColumnSection>
 
     <PageSection
