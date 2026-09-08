@@ -1,0 +1,31 @@
+---
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
+
+interface Props {
+  icon: string;
+  tone?: 'secondary' | 'cool' | 'warm' | 'neutral';
+  size?: 3 | 4 | 5 | 6;
+  iconSize?: 3 | 4 | 5;
+  class?: string;
+}
+
+const {
+  icon,
+  tone = 'secondary',
+  size = 4,
+  iconSize = 3,
+  class: className,
+} = Astro.props;
+---
+
+<aside
+  class:list={[
+    'display-flex flex-justify-center flex-align-center text-base-darkest margin-top-2 margin-bottom-0',
+    className,
+  ]}
+>
+  <IconBadge icon={icon} tone={tone} size={size} iconSize={iconSize} class="margin-right-1" />
+  <span>
+    <slot />
+  </span>
+</aside>
