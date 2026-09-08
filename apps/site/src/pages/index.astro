@@ -12,7 +12,6 @@ import Link from '@bdc/ui-astro/link/Link.astro';
 import Blockquote from '@components/Blockquote.astro';
 import HappeningCard from '@components/cards/HappeningCard.astro';
 import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
-import { DugSearchBar } from '@components/dug';
 import ProcessSteps from '@components/home/ProcessSteps.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
@@ -189,22 +188,6 @@ const nextEvent = events[0];
     </PageSection>
 
     <PageSection
-      eyebrow="Search Hosted Data"
-      title="Discover Data in BDC"
-      action={{ label: 'View all data search tools', href: '/data/explore' }}
-    >
-      <p slot="description">Search by disease, phenotype, biological process, or anatomical entity.</p>
-      <DugSearchBar
-        id="home-discover-search"
-        placeholder="Try “asthma,” “blood pressure,” or “atrial fibrillation”"
-        submitLabel="Search"
-        action="/data/explore/dug"
-        method="get"
-        className="home-discover-search display-flex width-full shadow-2"
-      />
-    </PageSection>
-
-    <PageSection
       title="Start Your Research Journey"
       centered
       tone="muted"
@@ -223,20 +206,20 @@ const nextEvent = events[0];
           through analysis, collaboration, reproducibility, and publication.
         </p>
       </Fragment>
-      <div class="margin-top-5 margin-bottom-0 text-center display-flex text-primary-darker flex-align-center flex-justify-center">
-        <IconBadge icon="support" tone="warm" size={4} class="margin-right-1" />
-        <span class="margin-right-1">Need help with BDC?</span>{' '}
-        <Link to="/help/get-help" class="text-bold">
-          Submit a request
-        </Link>.
-      </div>
-      <ProcessSteps steps={lifecycleSteps} tone="muted" />
       <div class="display-flex flex-justify-center flex-align-center margin-top-2 margin-bottom-0">
         <IconBadge icon="attach_money" tone="cool" class="margin-right-1" />
         <span>
           Funding may be available for you to get started.&nbsp;
           <Link to="/help/costs" class="text-bold">Learn about usage costs and funding options</Link>.
         </span>
+      </div>
+      <ProcessSteps steps={lifecycleSteps} tone="muted" />
+      <div class="margin-top-5 margin-bottom-0 text-center display-flex text-primary-darker flex-align-center flex-justify-center">
+        <IconBadge icon="support" tone="warm" size={4} class="margin-right-1" />
+        <span class="margin-right-1">Need help with BDC?</span>{' '}
+        <Link to="/help/get-help" class="text-bold">
+          Submit a request
+        </Link>.
       </div>
 
       <div
