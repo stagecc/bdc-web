@@ -4,7 +4,7 @@
       "id": "readme-sevenbridges",
       "type": "readme",
       "base_url": "https://sb-biodatacatalyst.readme.io",
-      "source_hash": "220db350c80d52b8aca196cb3a5afdfee3162febecf742ec96a604f3354c3c9a",
+      "source_hash": "b932cb4d38eccd07464757f358e0fe648485b4d874e7ab32185f2ceb98102a00",
       "pages": [
         {
           "target_path": "/docs/about-pricing",
@@ -14,7 +14,7 @@
         {
           "target_path": "/docs/account-settings",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/account-settings",
-          "content_hash": "e257d3988b36a61a6d1cdb624478c6a8e57433275423ec62e48bc0559902df23"
+          "content_hash": "186c04070d76b1a7dbd2bc3c1545453617ca4046adb47e2e37dcac35c35f268a"
         },
         {
           "target_path": "/docs/before-you-start",
