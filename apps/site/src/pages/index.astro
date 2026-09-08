@@ -12,7 +12,6 @@ import Link from '@bdc/ui-astro/link/Link.astro';
 import Blockquote from '@components/Blockquote.astro';
 import HappeningCard from '@components/cards/HappeningCard.astro';
 import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
-import { DugSearchBar } from '@components/dug';
 import ProcessSteps from '@components/home/ProcessSteps.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
@@ -186,22 +185,6 @@ const nextEvent = events[0];
           </p>
         </div>
       </div>
-    </PageSection>
-
-    <PageSection
-      eyebrow="Search Hosted Data"
-      title="Discover Data in BDC"
-      action={{ label: 'View all data search tools', href: '/data/explore' }}
-    >
-      <p slot="description">Search by disease, phenotype, biological process, or anatomical entity.</p>
-      <DugSearchBar
-        id="home-discover-search"
-        placeholder="Try “asthma,” “blood pressure,” or “atrial fibrillation”"
-        submitLabel="Search"
-        action="/data/explore/dug"
-        method="get"
-        className="home-discover-search display-flex width-full shadow-2"
-      />
     </PageSection>
 
     <PageSection
