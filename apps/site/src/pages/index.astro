@@ -190,7 +190,7 @@ const nextEvent = events[0];
     <PageSection
       title="Start Your Research Journey"
       centered
-      tone="muted"
+      tone="default"
     >
       <Fragment slot="description">
         <p>
@@ -206,7 +206,7 @@ const nextEvent = events[0];
           through analysis, collaboration, reproducibility, and publication.
         </p>
       </Fragment>
-      <div class="margin-top-5 margin-bottom-0 text-center display-flex text-primary-darker flex-align-center flex-justify-center">
+      <div class="margin-top-5 margin-bottom-0 text-center display-flex flex-align-center flex-justify-center">
         <IconBadge icon="support" tone="warm" size={4} class="margin-right-1" />
         <span class="margin-right-1">Need help with BDC?</span>{' '}
         <Link to="/help/get-help" class="text-bold">
@@ -252,7 +252,7 @@ const nextEvent = events[0];
       eyebrow="Featured Datasets"
       title="Explore NHLBI Data for Analysis"
       action={{ label: 'View all datasets', href: '/about/research-communities' }}
-      tone="default"
+      tone="muted"
     >
       <p slot="description">
         Discover data from NHLBI-supported studies and programs,
@@ -386,7 +386,7 @@ const nextEvent = events[0];
       eyebrow="Researcher Perspectives"
       title="What BDC Researchers Are Saying"
       class="border-top border-bottom border-base-lighter"
-      tone="muted"
+      tone="highlight"
     >
       {featuredTestimonial && (
         <div class="grid-row grid-gap-2">
