@@ -2,7 +2,8 @@
 /**
  * Published Research Submission Form
  *
- * Uses DynamicCustomObjectForm to store publication submissions as Freshdesk
+ * Renders the PublishedResearchForm wrapper, which uses
+ * DynamicCustomObjectForm to store publication submissions as Freshdesk
  * custom object records rather than ticket custom fields.
  *
  * Why custom objects?
@@ -12,7 +13,7 @@
  *   better data modeling.
  *
  * Build-time fetches:
- *   Publication schema fields — getCustomObjectSchema
+ *   Publication schema fields are loaded inside the form wrapper.
  *
  * Environment variables required:
  *   FRESHDESK_CUSTOM_OBJECT_PUBLICATIONS_SCHEMA_ID
@@ -22,34 +23,8 @@
 
 import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
-import DynamicCustomObjectForm from '@components/forms/DynamicCustomObjectForm.tsx';
+import PublishedResearchForm from '@forms/custom-objects/PublishedResearchForm.astro';
 import Base from '@layouts/Base.astro';
-import { getCustomObjectSchema } from '../../../util/freshdesk/getCustomObjectSchema';
-import type { CustomObjectField } from '../../../util/freshdesk/typesCustomObjects';
-
-let fields: CustomObjectField[] = [];
-let formError = false;
-const hasFreshdeskAuth =
-  Boolean(import.meta.env.FRESHDESK_DOMAIN) &&
-  Boolean(import.meta.env.FRESHDESK_API_KEY);
-const schemaIdRaw = import.meta.env
-  .FRESHDESK_CUSTOM_OBJECT_PUBLICATIONS_SCHEMA_ID;
-
-const schemaId = Number(schemaIdRaw);
-
-if (!hasFreshdeskAuth || !schemaIdRaw || Number.isNaN(schemaId)) {
-  console.warn(
-    'Skipping publication submission schema fetch: missing Freshdesk credentials or schema ID.',
-  );
-  formError = true;
-} else {
-  try {
-    fields = await getCustomObjectSchema(schemaId);
-  } catch (e) {
-    console.error('Failed to fetch publication submission form config:', e);
-    formError = true;
-  }
-}
 ---
 
 <Base title="Submit Published Research" enableRecaptcha>
@@ -73,15 +48,7 @@ if (!hasFreshdeskAuth || !schemaIdRaw || Number.isNaN(schemaId)) {
           </InlineAlert>
 
           <h2 class="margin-bottom-0">Published Research Form</h2>
-          <DynamicCustomObjectForm
-            fields={fields}
-            schemaId={schemaId}
-            idPrefix="PUB"
-            submitUrl={import.meta.env.FRESHDESK_PROXY_URL}
-            recaptchaSiteKey={import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY}
-            error={formError}
-            client:visible
-          />
+          <PublishedResearchForm />
 
         </div>
       </div>
