@@ -39,13 +39,13 @@
 import { useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
-import { buildCustomObjectPayload } from '../../util/freshdesk/buildCustomObjectPayload';
-import type { CustomObjectField } from '../../util/freshdesk/typesCustomObjects';
-import { getRecaptchaToken } from '../../util/recaptcha';
-import ConsentField, { CONSENT_FIELD_NAME } from './ConsentField';
-import HoneypotField from './HoneypotField';
-import { renderCustomObjectField } from './helpers/renderCustomObjectField';
-import { fieldErrors, formErrors, formStatus } from './util/errorMessages';
+import { buildCustomObjectPayload } from '../../../../util/freshdesk/buildCustomObjectPayload';
+import type { CustomObjectField } from '../../../../util/freshdesk/typesCustomObjects';
+import { getRecaptchaToken } from '../../../../util/recaptcha';
+import ConsentField, { CONSENT_FIELD_NAME } from '../../fields/ConsentField';
+import HoneypotField from '../../fields/HoneypotField';
+import { fieldErrors, formErrors, formStatus } from '../../util/errorMessages';
+import { renderCustomObjectField } from '../helpers/renderCustomObjectField';
 
 // ---------------------------------------------------------------------------
 // Types

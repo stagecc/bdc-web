@@ -29,14 +29,14 @@
  */
 
 import type { FieldError, useForm } from 'react-hook-form';
-import type { CustomObjectField } from '../../../util/freshdesk/typesCustomObjects';
-import CheckboxField from '../fields/CheckboxField';
-import DateField from '../fields/DateField';
-import MultiSelectCheckbox from '../fields/MultiSelectCheckbox';
-import SelectField from '../fields/SelectField';
-import TextareaField from '../fields/TextareaField';
-import TextField from '../fields/TextField';
-import { fieldErrors } from '../util/errorMessages';
+import type { CustomObjectField } from '../../../../util/freshdesk/typesCustomObjects';
+import CheckboxField from '../../fields/CheckboxField';
+import DateField from '../../fields/DateField';
+import MultiSelectCheckbox from '../../fields/MultiSelectCheckbox';
+import SelectField from '../../fields/SelectField';
+import TextareaField from '../../fields/TextareaField';
+import TextField from '../../fields/TextField';
+import { fieldErrors } from '../../util/errorMessages';
 
 // ---------------------------------------------------------------------------
 // Types

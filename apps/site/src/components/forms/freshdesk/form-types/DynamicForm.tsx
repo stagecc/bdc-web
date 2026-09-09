@@ -38,14 +38,14 @@
 import { useCallback, useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
-import { buildPayload } from '../../util/freshdesk/buildPayload';
-import { getSectionFieldIds } from '../../util/freshdesk/getFormFields';
-import type { FreshdeskField } from '../../util/freshdesk/types';
-import { getRecaptchaToken } from '../../util/recaptcha';
-import ConsentField, { CONSENT_FIELD_NAME } from './ConsentField';
-import HoneypotField from './HoneypotField';
-import { renderField } from './helpers/renderField';
-import { fieldErrors, formErrors, formStatus } from './util/errorMessages';
+import { buildPayload } from '../../../../util/freshdesk/buildPayload';
+import { getSectionFieldIds } from '../../../../util/freshdesk/getFormFields';
+import type { FreshdeskField } from '../../../../util/freshdesk/types';
+import { getRecaptchaToken } from '../../../../util/recaptcha';
+import ConsentField, { CONSENT_FIELD_NAME } from '../../fields/ConsentField';
+import HoneypotField from '../../fields/HoneypotField';
+import { fieldErrors, formErrors, formStatus } from '../../util/errorMessages';
+import { renderField } from '../helpers/renderField';
 
 // ---------------------------------------------------------------------------
 // Types
