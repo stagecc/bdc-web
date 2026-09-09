@@ -5,10 +5,22 @@ layout: ../../../layouts/MdxBase.astro
 import Button from '@bdc/ui-astro/button/Button.astro'
 import Hero from '@bdc/ui-astro/layout/Hero.astro'
 import InPageNav from '@components/layout/InPageNav.astro'
+import Card from '@bdc/ui-astro/card/Card.astro';
+import Icon from '@bdc/ui-astro/icon/Icon.astro';
 
 <Hero
-  title="Explore BDC Data"
-/>
+  eyebrow="Data"
+  title="Explore BDC-Hosted Data"
+  description="Find NHLBI-supported data across studies, populations, and data types to advance your research."
+ >
+  <Card slot="visual" class="padding-3">
+    <Icon name="grid_view" size={4} />
+    <p class="margin-y-2 font-heading-lg text-primary-dark">496 datasets</p>
+    <p class="margin-y-2 font-heading-lg text-primary-dark">26 distinct data types</p>
+    <p class="margin-y-2 font-heading-lg text-primary-dark">39% include multiple data types</p>
+    <p class="margin-top-05 margin-bottom-0 font-sans-sm text-base line-height-sans-5">Including clinical, genomic, molecular, imaging, sleep, activity, and other research data.</p>
+  </Card>
+ </Hero>
 
 <section class="usa-section padding-top-4">
   <div class="grid-container">
