@@ -13,11 +13,12 @@ import HappeningCard from '@components/cards/HappeningCard.astro';
 import ResearchCommunityCard from '@components/cards/ResearchCommunityCard.astro';
 import ProcessSteps from '@components/home/ProcessSteps.astro';
 import Notice from '@components/Notice.astro';
+import Screenshot from '@components/Screenshot.astro';
 import YouTubeEmbed from '@components/YouTubeEmbed.astro';
 import programs from '@content/programs.json';
 import Base from '@layouts/Base.astro';
 import homeCoursesImage from '../assets/bdc-course-photo.png';
-import homeHeroGraphic from '../assets/home-hero-sb-workflows.png';
+import homeHeroGraphic from '../assets/home-hero.png';
 import { slugify } from '../util/slugify';
 
 const news = (await getCollection('news'))
@@ -147,17 +148,18 @@ const nextEvent = events[0];
       primaryCta={{ label: 'Learn About BDC', href: '/about/bdc', variant: 'accent-warm' }}
       tone="dark"
     >
-      <img
-        slot="visual"
-        aria-hidden="true"
-        class="display-block width-full height-auto"
-        src={homeHeroGraphic.src}
-        width={homeHeroGraphic.width}
-        height={homeHeroGraphic.height}
-        alt=""
-        loading="eager"
-        decoding="async"
-      />
+      <div slot="visual" class="home-hero-visual position-relative width-full maxw-tablet-lg" aria-hidden="true">
+        <div class="home-hero-visual__halo home-hero-visual__halo--left"></div>
+        <div class="home-hero-visual__halo home-hero-visual__halo--right"></div>
+        <Screenshot
+          src={homeHeroGraphic.src}
+          width={homeHeroGraphic.width}
+          height={homeHeroGraphic.height}
+          alt=""
+          rotateX={15}
+          rotateY={29}
+        />
+      </div>
     </Hero>
 
     <PageSection
@@ -414,6 +416,11 @@ const nextEvent = events[0];
 </Base>
 
 <style lang="scss">
+  @use "@bdc/uswds-theme/src/uswds-init" as core;
+
+  $cta-band-start: core.core-color(core.$theme-color-primary-darker);
+  $cta-band-end: core.core-color(core.$theme-color-primary);
+
   .home-page {
     background: linear-gradient(180deg, #f7fbff 0%, #ffffff 30%, #f8fbff 100%);
   }
@@ -422,8 +429,8 @@ const nextEvent = events[0];
     background:
       radial-gradient(circle at 10% 20%, rgb(63 122 212 / 42%) 0%, transparent 28%),
       radial-gradient(circle at 86% 26%, rgb(239 158 70 / 30%) 0%, transparent 26%),
-      linear-gradient(130deg, #0b3168 0%, #0d4695 100%);
-    color: #fff;
+      linear-gradient(130deg, $cta-band-start 0%, $cta-band-end 100%);
+    color: core.core-color('white');
   }
 
   .cta-band__inner {
@@ -432,6 +439,35 @@ const nextEvent = events[0];
 
   .cta-band__description {
     max-width: 58ch;
+  }
+
+  .home-hero-visual {
+    isolation: isolate;
+  }
+
+  .home-hero-visual__halo {
+    border-radius: 999px;
+    filter: blur(24px);
+    opacity: 0.8;
+    pointer-events: none;
+    position: absolute;
+    z-index: 1;
+  }
+
+  .home-hero-visual__halo--left {
+    background: radial-gradient(circle, rgb(93 173 255 / 42%) 0%, transparent 68%);
+    height: 240px;
+    left: -74px;
+    top: -30px;
+    width: 240px;
+  }
+
+  .home-hero-visual__halo--right {
+    background: radial-gradient(circle, rgb(245 164 91 / 38%) 0%, transparent 70%);
+    bottom: -64px;
+    height: 210px;
+    right: -66px;
+    width: 210px;
   }
 
   @media (min-width: 64em) {

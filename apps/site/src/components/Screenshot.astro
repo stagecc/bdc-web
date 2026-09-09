@@ -1,0 +1,104 @@
+---
+interface Props {
+  src: string;
+  width?: number;
+  height?: number;
+  alt?: string;
+  tilt?: 'none' | 'left' | 'right';
+  rotateX?: number;
+  rotateY?: number;
+  perspective?: number;
+  loading?: 'eager' | 'lazy';
+  decoding?: 'async' | 'auto' | 'sync';
+  class?: string;
+}
+
+const {
+  src,
+  width,
+  height,
+  alt = '',
+  tilt = 'left',
+  rotateX,
+  rotateY,
+  perspective = 1300,
+  loading = 'eager',
+  decoding = 'async',
+  class: className,
+} = Astro.props;
+
+const tiltPresets = {
+  none: { rotateX: 0, rotateY: 0 },
+  left: { rotateX: 3, rotateY: -8 },
+  right: { rotateX: 3, rotateY: 8 },
+};
+
+const preset = tiltPresets[tilt];
+const finalRotateX = rotateX ?? preset.rotateX;
+const finalRotateY = rotateY ?? preset.rotateY;
+---
+
+<figure
+  class:list={['screenshot margin-0 position-relative overflow-hidden z-1 border-1px padding-1 radius-lg', className]}
+  style={`--screenshot-perspective: ${perspective}px; --screenshot-rotate-x: ${finalRotateX}deg; --screenshot-rotate-y: ${finalRotateY}deg;`}
+>
+  <img
+    class="display-block width-full height-auto radius-md"
+    src={src}
+    width={width}
+    height={height}
+    alt={alt}
+    loading={loading}
+    decoding={decoding}
+  />
+</figure>
+
+<style lang="scss">
+  @use "sass:color";
+  @use "@bdc/uswds-theme/src/uswds-init" as core;
+
+  $white: core.core-color("white");
+  $primary-lighter: core.core-color("primary-lighter");
+  $primary-light: core.core-color("primary-light");
+  $primary-dark: core.core-color("primary-dark");
+
+  .screenshot {
+    backdrop-filter: blur(4px);
+    background: linear-gradient(
+      160deg,
+      color.change($white, $alpha: 0.18) 0%,
+      color.change($primary-lighter, $alpha: 0.12) 100%
+    );
+    border-color: color.change($primary-light, $alpha: 0.38);
+    box-shadow: 0 34px 72px -42px color.change($primary-dark, $alpha: 0.95);
+    transform: perspective(var(--screenshot-perspective)) rotateY(var(--screenshot-rotate-y)) rotateX(var(--screenshot-rotate-x));
+    transform-origin: center;
+  }
+
+  .screenshot::before {
+    background: linear-gradient(90deg, color.change($primary-lighter, $alpha: 0.42) 0%, transparent 75%);
+    content: '';
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+  }
+
+  @include core.core-at-media-max('desktop') {
+    .screenshot {
+      transform:
+        perspective(var(--screenshot-perspective))
+        rotateY(calc(var(--screenshot-rotate-y) * 0.5)) // reducing rotation when less space
+        rotateX(calc(var(--screenshot-rotate-x) * 0.5)) // reducing rotation when less space
+        scale(0.75); // reducing size when less space
+      transform-origin: center center;
+    }
+  }
+
+  @include core.core-at-media-max('tablet') {
+    .screenshot {
+      transform: none; // removing rotation when little space
+    }
+  }
+</style>
