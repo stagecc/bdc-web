@@ -5,22 +5,47 @@ interface Props {
   label: string;
   icon?: string;
   tone?: 'secondary' | 'warm' | 'cool';
+  size?: '3xs' | '2xs';
+  weight?: 'light' | 'normal' | 'bold';
+  compact?: boolean;
   class?: string;
 }
 
-const { label, icon, tone = 'secondary', class: className } = Astro.props;
+const {
+  label,
+  icon,
+  tone = 'secondary',
+  size = '2xs',
+  weight = 'bold',
+  compact = false,
+  class: className,
+} = Astro.props;
 
 const toneClasses = {
   secondary: 'bg-secondary-lighter text-secondary-dark border-secondary-light',
   warm: 'bg-accent-warm-lighter text-accent-warm-darker border-accent-warm-light',
   cool: 'bg-accent-cool-lighter text-ink border-accent-cool-light',
 } as const;
+
+const sizeClasses = {
+  '3xs': 'font-sans-3xs',
+  '2xs': 'font-sans-2xs',
+} as const;
+
+const weightClasses = {
+  light: 'text-light',
+  normal: 'text-normal',
+  bold: 'text-bold',
+} as const;
 ---
 
 <span
   class:list={[
-    'display-inline-flex flex-align-center border radius-pill font-sans-2xs text-bold text-uppercase padding-y-05 padding-x-1',
+    'display-inline-flex flex-align-center border radius-pill text-uppercase',
     toneClasses[tone],
+    sizeClasses[size],
+    weightClasses[weight],
+    compact ? 'padding-y-0 padding-x-05' : 'padding-y-05 padding-x-1',
     className,
   ]}
 >

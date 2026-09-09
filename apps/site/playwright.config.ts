@@ -1,7 +1,8 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './a11y',
+  testDir: '.',
+  testMatch: ['a11y/**/*.test.ts', 'e2e/**/*.test.ts'],
   timeout: 30_000,
   reporter: process.env.CI ? 'github' : 'list',
   use: {

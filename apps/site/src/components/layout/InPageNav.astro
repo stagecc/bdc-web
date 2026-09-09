@@ -64,12 +64,56 @@ const { title = 'On this page' } = Astro.props;
   .usa-prose :global(:is(h2, h3)) {
     scroll-margin-top: 120px;
   }
+
+  .in-page-nav__back-to-top {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateY(0.5rem);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      visibility 0s linear 180ms;
+  }
+
+  .in-page-nav__back-to-top.in-page-nav__back-to-top--visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: translateY(0);
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      visibility 0s linear 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .in-page-nav__back-to-top,
+    .in-page-nav__back-to-top.in-page-nav__back-to-top--visible {
+      transition: none;
+    }
+  }
 </style>
 
 <script>
   import inPageNavigation from '@uswds/uswds/js/usa-in-page-navigation';
 
+  const BACK_TO_TOP_VISIBLE_CLASS = 'in-page-nav__back-to-top--visible';
+  const getBackToTopRevealOffset = () => Math.max(320, Math.round(window.innerHeight * 0.6));
+
   const initInPageNavController = (root = document.body) => {
+    const backToTopButtons = Array.from(
+      root.querySelectorAll('a.in-page-nav__back-to-top')
+    );
+
+    const updateBackToTopVisibility = () => {
+      const shouldShow = window.scrollY >= getBackToTopRevealOffset();
+
+      for (const button of backToTopButtons) {
+        button.classList.toggle(BACK_TO_TOP_VISIBLE_CLASS, shouldShow);
+      }
+    };
+
     const onBackToTopClick = (event) => {
       const trigger = event.target.closest('a.in-page-nav__back-to-top');
       if (!trigger) {
@@ -95,11 +139,18 @@ const { title = 'On this page' } = Astro.props;
     };
 
     root.addEventListener('click', onBackToTopClick);
+    window.addEventListener('scroll', updateBackToTopVisibility, { passive: true });
+    window.addEventListener('resize', updateBackToTopVisibility);
+
+    updateBackToTopVisibility();
+
     inPageNavigation.off(root);
     inPageNavigation.on(root);
 
     return () => {
       root.removeEventListener('click', onBackToTopClick);
+      window.removeEventListener('scroll', updateBackToTopVisibility);
+      window.removeEventListener('resize', updateBackToTopVisibility);
       inPageNavigation.off(root);
     };
   };

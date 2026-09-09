@@ -1,0 +1,63 @@
+---
+title: Citing and Acknowledging BDC
+lastReviewed: August 2026
+layout: ../layouts/Page.astro
+in_page_nav: false
+---
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
+import Card from '@bdc/ui-astro/card/Card.astro';
+import Icon from '@bdc/ui-astro/icon/Icon.astro'
+
+Researchers who use BDC resources, services, tools, funding, or cloud credits are expected to appropriately acknowledge BDC’s contribution to their work. Acknowledgement and citation should be included in publications, preprints, posters, presentations, and other scholarly outputs resulting from the use of BDC.  
+
+Recipients of support through programs such as NHLBI BDC Pilot Funding Program or Cloud Credit Support Program are also expected to acknowledge that support in any resulting scholarly outputs. 
+
+Standard citation and acknowledgement language can be copied from below.
+
+<Card variant="panel" class="height-full overflow-hidden">
+  <div class="bg-base-lightest radius-top-lg margin-top-neg-2 margin-x-neg-2 margin-bottom-2 padding-105 display-flex flex-align-center flex-justify">
+    <span class="text-bold">For citation of BDC:</span>
+    <div class="display-flex flex-align-center">
+      <span hidden class="font-sans-xs text-green margin-right-1 copy-confirm" aria-live="polite">Copied!</span>
+      <button
+        type="button"
+        class="usa-button usa-button--unstyled text-primary display-inline-flex flex-align-center padding-1 radius-md bg-white"
+        aria-label="Copy citation to clipboard"
+        onclick="navigator.clipboard.writeText(document.getElementById('copy-target-citation').textContent.trim()).then(() => { const msg = this.parentElement.querySelector('.copy-confirm'); msg.hidden = false; setTimeout(() => msg.hidden = true, 2000); }).catch(() => {})"
+      >
+        <Icon name="content_copy" size={3} />
+      </button>
+    </div>
+  </div>
+
+  <div id="copy-target-citation" class="copy-card__content">
+    National Heart, Lung, and Blood Institute, National Institutes of Health, U.S. Department of Health and Human Services (2020). The NHLBI BioData Catalyst. Zenodo. [https://doi.org/10.5281/zenodo.3822858](https://doi.org/10.5281/zenodo.3822858)
+  </div>
+</Card>
+
+<Card variant="panel" class="height-full overflow-hidden">
+  <div class="bg-base-lightest radius-top-lg margin-top-neg-2 margin-x-neg-2 margin-bottom-2 padding-105 display-flex flex-align-center flex-justify">
+    <span class="text-bold">To acknowledge BDC, use:</span>
+    <div class="display-flex flex-align-center">
+      <span hidden class="font-sans-xs text-green margin-right-1 copy-confirm" aria-live="polite">Copied!</span>
+      <button
+        type="button"
+        class="usa-button usa-button--unstyled text-primary display-inline-flex flex-align-center padding-1 radius-md bg-white"
+        aria-label="Copy acknowledgement to clipboard"
+        onclick="navigator.clipboard.writeText(document.getElementById('copy-target-acknowledgement').textContent.trim()).then(() => { const msg = this.parentElement.querySelector('.copy-confirm'); msg.hidden = false; setTimeout(() => msg.hidden = true, 2000); }).catch(() => {})"
+      >
+        <Icon name="content_copy" size={3} />
+      </button>
+    </div>
+  </div>
+
+  <div id="copy-target-acknowledgement" class="copy-card__content">
+    The authors wish to acknowledge the contributions of the consortium working on the development of the NHLBI BioData Catalyst® (BDC) ecosystem.
+  </div>
+</Card>
+
+<InlineAlert heading="Citing BDC" variant="info" noIcon>
+  [Explore BDC-Enabled Research →](/news/bdc-enabled-research) 
+
+  [Submit Your Publication →](/news/bdc-enabled-research/publication-submission)
+</InlineAlert>

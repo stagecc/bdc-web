@@ -1,40 +1,37 @@
-import { render, screen } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import { SearchInput } from './SearchInput';
 
 describe('SearchInput', () => {
-  it('renders a search input', () => {
+  it('renders a search bar trigger', () => {
     render(<SearchInput />);
-    expect(screen.getByRole('searchbox')).toBeInTheDocument();
+    expect(
+      screen.getByRole('searchbox', { name: /search site/i }),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByRole('button', { name: /open search/i }),
+    ).toBeInTheDocument();
   });
 
-  it('renders a submit button', () => {
+  it('requests the search modal when the input is focused', () => {
+    const listener = vi.fn();
+    window.addEventListener('bdc:open-search-modal', listener);
+
     render(<SearchInput />);
-    expect(screen.getByRole('button', { name: /search/i })).toBeInTheDocument();
+    fireEvent.focus(screen.getByRole('searchbox', { name: /search site/i }));
+
+    expect(listener).toHaveBeenCalledOnce();
+    window.removeEventListener('bdc:open-search-modal', listener);
   });
 
-  it('accepts user input', async () => {
-    const user = userEvent.setup();
+  it('requests the search modal when the search button is clicked', () => {
+    const listener = vi.fn();
+    window.addEventListener('bdc:open-search-modal', listener);
+
     render(<SearchInput />);
+    fireEvent.click(screen.getByRole('button', { name: /open search/i }));
 
-    const input = screen.getByRole('searchbox');
-    await user.type(input, 'heart disease');
-    expect(input).toHaveValue('heart disease');
-  });
-
-  it('redirects to site search results on submit', async () => {
-    const openSpy = vi.spyOn(window, 'open').mockImplementation(() => null);
-
-    const user = userEvent.setup();
-    render(<SearchInput />);
-
-    const input = screen.getByRole('searchbox');
-    await user.type(input, 'asthma');
-    await user.click(screen.getByRole('button', { name: /search/i }));
-
-    expect(openSpy).toHaveBeenCalledWith('/search?q=asthma', '_self');
-
-    openSpy.mockRestore();
+    expect(listener).toHaveBeenCalledOnce();
+    window.removeEventListener('bdc:open-search-modal', listener);
   });
 });

@@ -1,0 +1,14 @@
+---
+interface Props {
+  label?: string;
+}
+
+const { label = '' } = Astro.props;
+---
+
+<p
+  class="search-result-breadcrumb text-base-dark font-body-2xs text-light margin-top-05 margin-bottom-1"
+  data-search-result-breadcrumb
+>
+  {label}
+</p>

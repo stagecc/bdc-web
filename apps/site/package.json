@@ -16,6 +16,7 @@
     "a11y:smoke": "astro build && playwright test a11y/smoke.test.ts",
     "a11y:full": "astro build && node a11y/full.js",
     "test": "vitest run",
+    "test:analytics-sections": "astro build && playwright test e2e/analytics-sections.test.ts",
     "test:watch": "vitest",
     "test:ui": "vitest --ui"
   },

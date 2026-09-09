@@ -1,0 +1,28 @@
+---
+const resultTemplate = `<li class="pf-result">
+  <div class="pf-result-card">
+    <div class="pf-result-content">
+      <p class="pf-result-title">
+        <a class="pf-result-link" href="{{ meta.url | default(url) | safeUrl }}">{{ meta.title | default('Untitled') }}</a>
+      </p>
+      <div data-search-result-breadcrumb-slot></div>
+      <p class="margin-0" data-search-result-badge-slot></p>
+      {{#if excerpt}}
+      <p class="pf-result-excerpt">{{+ excerpt +}}</p>
+      {{/if}}
+    </div>
+  </div>
+  {{#if sub_results}}
+  <ul class="pf-heading-chips">
+    {{#each sub_results as sub}}
+    <li class="pf-heading-chip">
+      <a class="pf-heading-link" href="{{ sub.url | safeUrl }}">{{ sub.title }}</a>
+      <p class="pf-heading-excerpt">{{+ sub.excerpt +}}</p>
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+</li>`;
+---
+
+<script type="text/pagefind-template" data-template="result" set:html={resultTemplate} />

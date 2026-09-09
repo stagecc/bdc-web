@@ -1,7 +1,7 @@
 ---
 /**
  *
- * Renders a single EEP member with headshot, name, roles, term start, and bio.
+ * Renders a single EEP member with headshot, name, roles, and bio.
  * Always renders a left column — shows headshot if provided, empty spacer if not.
  * Adhoc members are labeled inline with their name.
  * Stacks vertically on mobile, side by side on tablet and above.
@@ -12,7 +12,6 @@
  *   signifier  — Optional credentials (e.g. "Ph.D., M.D.")
  *   slug       — Used as the section's anchor id
  *   roles      — Array of freeform role/org strings
- *   term_start — Date object for term start date
  *   photo      — Optional resolved ImageMetadata. If omitted, a spacer maintains layout.
  *   adhoc      — If true, prepends "Ad-hoc Member:" to the name. Defaults to false.
  */
@@ -25,25 +24,11 @@ interface Props {
   signifier?: string;
   slug?: string;
   roles: string[];
-  term_start: Date;
   photo?: ImageMetadata;
   adhoc?: boolean;
 }
 
-const {
-  name,
-  signifier,
-  slug,
-  roles,
-  term_start,
-  photo,
-  adhoc = false,
-} = Astro.props;
-
-const formattedDate = term_start.toLocaleDateString('en-US', {
-  month: 'long',
-  year: 'numeric',
-});
+const { name, signifier, slug, roles, photo, adhoc = false } = Astro.props;
 
 const bioId = `eep-member-bio-${slug ?? name.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 ---
@@ -57,10 +42,6 @@ const bioId = `eep-member-bio-${slug ?? name.toLowerCase().replace(/[^a-z0-9]+/g
         )}
       </div>
 
-      <div class="padding-y-1 text-center font-sans-2xs">
-        <p class="text-base-dark margin-0">Term Start</p>
-        <p class="text-bold margin-top-05 margin-bottom-0">{formattedDate}</p>
-      </div>
     </div>
 
     <div class="grid-col-12 tablet:grid-col-8 desktop:grid-col-9">

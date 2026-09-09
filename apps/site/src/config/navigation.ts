@@ -9,9 +9,10 @@ export const navConfig: NavItem[] = [
     label: 'About',
     items: [
       { label: 'BDC', href: '/about/bdc' },
-      { label: 'Key Collaborations', href: '/about/key-collaborations' },
+      { label: 'Interoperability', href: '/about/interoperability' },
       { label: 'Research Communities', href: '/about/research-communities' },
       { label: 'Studies', href: '/about/studies' },
+      { label: 'Learning and Training', href: '/about/learning-and-training' },
     ],
   },
   {
@@ -19,13 +20,8 @@ export const navConfig: NavItem[] = [
     items: [
       { label: 'Explore', href: '/data/explore' },
       { label: 'Share', href: '/data/share' },
-      { label: 'Impute', href: '/data/impute' },
       { label: 'Analyze', href: '/data/analyze' },
       { label: 'Bring Your Own Tools', href: '/data/bring-your-own-tools' },
-      {
-        label: 'Learning and Training',
-        href: '/data/learning-and-training',
-      },
     ],
   },
   {
