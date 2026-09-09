@@ -20,6 +20,8 @@ import Base from '@layouts/Base.astro';
 import homeCoursesImage from '../assets/bdc-course-photo.png';
 import homeHeroGraphic from '../assets/home-hero.png';
 import { slugify } from '../util/slugify';
+import Card from '@bdc/ui-astro/card/Card.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 
 const news = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -167,7 +169,7 @@ const nextEvent = events[0];
       title="Ask Bigger Questions with NHLBI Data"
       tone="highlight"
     >
-      <div class="grid-row grid-gap-4">
+      <div class="grid-row grid-gap-4 margin-bottom-4">
         <div class="tablet:grid-col-4 border-top-1px border-accent-cool padding-top-4">
           <h3 class="font-heading-lg margin-top-0">Build on decades of NHLBI research</h3>
           <p class="margin-bottom-0 line-height-sans-4">
@@ -186,6 +188,116 @@ const nextEvent = events[0];
             Use secure, scalable cloud environments and reusable analytical resources alongside the data.
           </p>
         </div>
+      </div>
+    </PageSection>
+
+    <PageSection
+      eyebrow="The Data in BDC"
+      title="Build on Decades of NHLBI Research"
+      tone="muted"
+    >
+      <div class="grid-container padding-x-0">
+        <div class="grid-row grid-gap-md">
+          <div class="grid-col-8 padding-top-2">
+            <div class="grid-container padding-left-0 padding-right-2">
+              <div class="grid-row grid-gap-md margin-bottom-2">
+                <div class="grid-col-6 display-flex flex-align-stretch">
+                  <Card>
+                    <h3 class="font-heading-lg margin-top-1">Longitudinal &<br /> Epidemiologic Data</h3>
+                    <p class="usa-prose">
+                      Long-running cohort and observational studies with repeated measures over time
+                    </p>
+                  </Card>
+                </div>
+                <div class="grid-col-6 display-flex flex-align-stretch">
+                  <Card>
+                    <h3 class="font-heading-lg margin-top-1">Phenotypic &<br /> Clinical Data</h3>
+                    <p class="usa-prose">
+                      Detailed health, behavioral, environmental, and clinical characterization
+                    </p>
+                  </Card>
+                </div>
+              </div>
+              <div class="grid-row grid-gap-md margin-bottom-2">
+                <div class="grid-col-6 display-flex flex-align-stretch">
+                  <Card>
+                    <h3 class="font-heading-lg margin-top-1">Genomic &<br /> Omics Data</h3>
+                    <p class="usa-prose">
+                      Whole-genome sequencing and complementary molecular data
+                    </p>
+                  </Card>
+                </div>
+                <div class="grid-col-6 display-flex flex-align-stretch">
+                  <Card>
+                    <h3 class="font-heading-lg margin-top-1">Specialized HLBS Data</h3>
+                    <p class="usa-prose">
+                      Imaging, sleep, physiological, and disease-specific research data
+                    </p>
+                  </Card>
+                </div>
+              </div>
+            </div>
+            <div class="maxw-mobile-lg margin-x-auto padding-top-4">
+              <Card variant="feature" class="bg-primary-lightest" border={false}>
+                <h3 class="text-center margin-y-1">Analyze together in BDC</h3>
+                <p class="usa-prose text-center">
+                  Connect data across studies and data types to ask questions that extend beyond a single dataset.
+                </p>
+              </Card>
+            </div>
+          </div>
+          <div class="grid-col-4">
+            <div class="grid-container padding-left-4 padding-right-0 border-left border-base-lighter">
+              <div class="grid-row">
+                <div class="text-uppercase text-bold text-ls-2 font-sans-2xs margin-top-3 text-primary-darker">A data snapshot</div>
+                <p class="text-primary-dark">
+                  A growing resource with broad coverage and deep scientific value.
+                </p>
+              </div>
+              <div class="grid-row">
+                <div class="width-full border-bottom border-base-lighter display-flex padding-2">
+                  <IconBadge icon="share" tone="neutral" class="margin-right-2" />
+                  <div>
+                    <div class="font-heading-2xl text-bold margin-bottom-1">123</div>
+                    <div class="text-uppercase text-ls-2 font-sans-2xs margin-bottom-1">things</div>
+                    <div class="text-base-light font-sans-2xs">with extra details</div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid-row">
+                <div class="width-full border-bottom border-base-lighter display-flex padding-2">
+                  <IconBadge icon="layers" tone="neutral" class="margin-right-2" />
+                  <div>
+                    <div class="font-heading-2xl text-bold margin-bottom-1">123</div>
+                    <div class="text-uppercase text-ls-2 font-sans-2xs margin-bottom-1">things</div>
+                    <div class="text-base-light font-sans-2xs">with extra details</div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid-row">
+                <div class="width-full border-bottom border-base-lighter display-flex padding-2">
+                  <IconBadge icon="network" tone="neutral" class="margin-right-2" />
+                  <div>
+                    <div class="font-heading-2xl text-bold margin-bottom-1">123</div>
+                    <div class="text-uppercase text-ls-2 font-sans-2xs margin-bottom-1">things</div>
+                    <div class="text-base-light font-sans-2xs">with extra details</div>
+                  </div>
+                </div>
+              </div>
+              <div class="grid-row">
+                <div class="display-flex padding-2">
+                  <IconBadge icon="cloud-outline" tone="warm" class="margin-right-2" />
+                  <div>
+                    <div class="font-heading-2xl text-bold">123</div>
+                    <div class="text-uppercase text-ls-2 font-sans-2xs">things</div>
+                    <div class="text-base-light font-sans-3xs">with extra details</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </PageSection>
 
