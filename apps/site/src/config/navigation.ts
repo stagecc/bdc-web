@@ -22,7 +22,7 @@ export const navConfig: NavItem[] = [
       { label: 'Share', href: '/data/share' },
       { label: 'Analyze', href: '/data/analyze' },
       {
-        label: 'Customize Your Analysis Environment',
+        label: 'Customize Your Environment',
         href: '/data/customize-your-analysis-environment',
       },
     ],
