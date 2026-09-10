@@ -1,11 +1,11 @@
 import { GovBanner } from '@bdc/ui-react/banner/GovBanner';
+import IconButton from '@bdc/ui-react/button/IconButton';
 import { SearchInput } from '@components/layout/SearchInput';
 import { navConfig } from '@config/navigation';
 import {
   Header,
   Menu,
   NavDropDownButton,
-  NavMenuButton,
   PrimaryNav,
   Title,
 } from '@trussworks/react-uswds';
@@ -124,7 +124,14 @@ export function SiteHeader() {
             <a href="/" className="display-flex">
               <img src={bdcLogo.src} height="50" alt="BioData Catalyst home" />
             </a>
-            <NavMenuButton onClick={toggleMobileNav} label="Menu" />
+            <IconButton
+              icon="Menu"
+              label={mobileNavOpen ? 'Close site navigation menu' : 'Open site navigation menu'}
+              srText="Menu"
+              onClick={toggleMobileNav}
+              aria-expanded={mobileNavOpen}
+              className="usa-menu-btn margin-right-2 desktop:display-none"
+            />
           </div>
           <PrimaryNav
             items={primaryNavItems}
