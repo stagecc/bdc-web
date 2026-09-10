@@ -5,6 +5,7 @@ layout: ../../layouts/MdxBase.astro
 
 import Button from '@bdc/ui-astro/button/Button.astro';
 import Card from '@bdc/ui-astro/card/Card.astro';
+import NextStepsAlert from '@components/NextStepsAlert.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import TestonomialCard from '@components/cards/TestonomialCard.astro';
@@ -180,14 +181,14 @@ names BDC as a "dataset option" early-career researcher applicants from under-re
 can use to actively participate in biomedical research that involves the use of artificial
 intelligence/machine learning methodologies.
 
-<Card variant="feature" class="margin-top-4 border-left-05 border-accent-cool padding-2 padding-bottom-6 bg-base-lightest">
-  ### Ready to bring BDC into your program?
-
+<NextStepsAlert
+  heading="Ready to bring BDC into your program?"
+>
   Tell us about the researchers you are training, the skills you want them to build, and the
   experience you are planning.
 
-  <Button to="/help/contact-bdc" variant="accent-cool">Discuss a Learning or Training Collaboration</Button>
-</Card>
+  [Discuss a Learning or Training Collaboration](/help/contact-bdc)
+</NextStepsAlert>
 
 </InPageNav>
 </div>
