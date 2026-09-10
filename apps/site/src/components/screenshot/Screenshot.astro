@@ -1,4 +1,9 @@
 ---
+import {
+  hasReducedMotionFallback,
+  inferScreenshotMediaType,
+} from './Screenshot.util';
+
 interface Props {
   src: string;
   media?: 'image' | 'video';
@@ -55,13 +60,13 @@ const preset = tiltPresets[tilt];
 const finalRotateX = rotateX ?? preset.rotateX;
 const finalRotateY = rotateY ?? preset.rotateY;
 const sourcePath = typeof src === 'string' ? src : '';
-const inferredMediaType =
-  mediaType ??
-  (sourcePath.endsWith('.webm')
-    ? 'video/webm'
-    : sourcePath.endsWith('.mp4')
-      ? 'video/mp4'
-      : undefined);
+const inferredMediaType = inferScreenshotMediaType(sourcePath, mediaType);
+const hasReducedMotionImage = hasReducedMotionFallback({
+  media,
+  src: sourcePath,
+  mediaType,
+  reducedMotionSrc,
+});
 ---
 
 <figure
@@ -72,7 +77,7 @@ const inferredMediaType =
     media === 'video' ? (
       <>
         {
-          reducedMotionSrc && (
+          hasReducedMotionImage && (
             <img
               class="screenshot__reduced-motion display-block width-full height-auto radius-md"
               src={reducedMotionSrc}
@@ -87,7 +92,7 @@ const inferredMediaType =
         <video
           class:list={[
             'screenshot__video display-block width-full radius-md',
-            reducedMotionSrc && 'screenshot__video--with-reduced-motion',
+            hasReducedMotionImage && 'screenshot__video--with-reduced-motion',
           ]}
           width={width}
           height={height}
