@@ -1,0 +1,74 @@
+---
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
+
+export interface StatStackItem {
+  icon: string;
+  number: string | number;
+  qualifier: string;
+  description?: string;
+  tone?: 'secondary' | 'cool' | 'warm' | 'neutral';
+}
+
+interface Props {
+  items: StatStackItem[];
+  direction?: 'row' | 'column';
+  class?: string;
+}
+
+const { items, direction = 'row', class: className } = Astro.props;
+---
+
+<div class={className}>
+  {direction === 'row' ? (
+    <div class="grid-row grid-gap-2">
+      {items.map((item, index) => {
+        const isLast = index === items.length - 1;
+        return (
+          <div class="grid-col-12 tablet:grid-col">
+          <div
+            class:list={[
+              'display-flex flex-column flex-align-center text-center padding-y-2',
+              'tablet:padding-y-0',
+              !isLast && 'border-bottom border-base-lighter tablet:border-0',
+            ]}
+          >
+              <IconBadge icon={item.icon} tone={item.tone} size={6} iconSize={3} class="margin-bottom-105" />
+              <div>
+                <div class="font-heading-lg text-bold line-height-heading-2">
+                  {item.number}
+                </div>
+                <div class="font-sans-sm text-bold text-base-dark margin-top-05">{item.qualifier}</div>
+                {item.description && (
+                  <p class="margin-top-05 margin-bottom-0 font-sans-xs text-base line-height-sans-4">{item.description}</p>
+                )}
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  ) : (
+    items.map((item, index) => {
+      const isLast = index === items.length - 1;
+      return (
+        <div
+          class:list={[
+            'display-flex flex-align-center padding-y-2',
+            !isLast && 'border-bottom border-base-lighter',
+          ]}
+        >
+          <IconBadge icon={item.icon} tone={item.tone} size={5} iconSize={3} class="flex-shrink-0" />
+          <div class="margin-left-2">
+            <div class="font-heading-md text-bold line-height-heading-2">
+              {item.number}
+            </div>
+            <div class="font-sans-sm text-bold text-base-dark margin-top-05">{item.qualifier}</div>
+            {item.description && (
+              <p class="margin-top-05 margin-bottom-0 font-sans-xs text-base line-height-sans-4">{item.description}</p>
+            )}
+          </div>
+        </div>
+      );
+    })
+  )}
+</div>
