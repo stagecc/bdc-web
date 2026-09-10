@@ -1,9 +1,11 @@
 ---
 import { getCollection } from 'astro:content';
 import Button from '@bdc/ui-astro/button/Button.astro';
+import Card from '@bdc/ui-astro/card/Card.astro';
 import CardCopy from '@bdc/ui-astro/card/CardCopy.astro';
 import CardCta from '@bdc/ui-astro/card/CardCta.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
 import TwoColumnSection from '@bdc/ui-astro/layout/TwoColumnSection.astro';
@@ -20,8 +22,6 @@ import Base from '@layouts/Base.astro';
 import homeCoursesImage from '../assets/bdc-course-photo.png';
 import homeHeroGraphic from '../assets/home-hero.png';
 import { slugify } from '../util/slugify';
-import Card from '@bdc/ui-astro/card/Card.astro';
-import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 
 const news = (await getCollection('news'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
