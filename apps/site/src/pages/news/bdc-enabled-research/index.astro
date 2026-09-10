@@ -18,8 +18,8 @@ const publications = (await getCollection('publications')).map((pub) => ({
     eyebrow="Research"
     title="BDC-Enabled Research"
     description="Discover publications that used BDC-hosted datasets, computational workspaces, tools, or other ecosystem resources."
-    primaryCta={{ label: 'Submit a Publication', href: '/news/bdc-enabled-research/publication-submission' }}
-    secondaryCta={{ label: 'Browse Publications', href: '#publications' }}
+    primaryCta={{ label: 'Cite BDC', href: '/cite-bdc' }}
+    secondaryCta={{ label: 'Submit a Publication', href: '/news/bdc-enabled-research/publication-submission' }}
   >
     <div slot="visual" class="width-full maxw-mobile">
       <Card variant="panel" class="padding-3">
@@ -33,11 +33,6 @@ const publications = (await getCollection('publications')).map((pub) => ({
   </Hero>
 
   <section class="usa-section">
-    <div class="grid-container usa-prose usa-prose--full-width padding-top-6 margin-top-neg-6" id="publications" data-scroll-offset="1200">
-      <p>
-        When you're ready to submit your manuscript to a journal, please remember to cite or acknowledge BDC. Standard citation and acknowledgement language is available in <Link to="/help/terms#citing-and-acknowledging-bdc-2">here</Link>. 
-      </p>
-    </div>
     <div class="grid-container">
       <PublicationsExplorer client:visible publications={publications} />
     </div>
