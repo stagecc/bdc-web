@@ -126,7 +126,11 @@ export function SiteHeader() {
             </a>
             <IconButton
               icon="Menu"
-              label={mobileNavOpen ? 'Close site navigation menu' : 'Open site navigation menu'}
+              label={
+                mobileNavOpen
+                  ? 'Close site navigation menu'
+                  : 'Open site navigation menu'
+              }
               srText="Menu"
               onClick={toggleMobileNav}
               aria-expanded={mobileNavOpen}
