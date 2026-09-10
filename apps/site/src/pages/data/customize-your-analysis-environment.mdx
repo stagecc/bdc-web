@@ -1,5 +1,5 @@
 ---
-title: Bring Your Own Tools
+title: Customize Your Analysis Environment
 layout: ../../layouts/MdxBase.astro
 ---
 import Card from '@bdc/ui-astro/card/Card.astro'
@@ -9,7 +9,7 @@ import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro'
 import InPageNav from '@components/layout/InPageNav.astro';
 
 <Hero
-  title="Bring Your Own Tools"
+  title="Customize Your Analysis Environment"
   description="Bring your scripts, tools, and workflows into BDC for scalable, reproducible analysis in a secure cloud environment."
 />
 <section class="usa-section padding-top-4">
@@ -17,43 +17,26 @@ import InPageNav from '@components/layout/InPageNav.astro';
 <InPageNav>
 
 <Card variant="panel">
-  <h3 class="font-heading-md text-primary-dark margin-top-0">Supported tools</h3>
+  ### Before You Get Started
+  <IconBadge icon="error_outline" tone="warm" size={4} />
+  
+  **Important Guidance for Regulated and AI-Based Tools**
+  
+  If you are developing software for clinical or regulatory use, contact the BDC team early to ensure alignment with BDC requirements. For example, if you are developing Software as a Medical Device (SAMD) contact BDC before pursuing FDA approval.
 
-  <p>
-    This page focuses on bringing tools and workflows into BDC-Seven Bridges. BDC-Seven Bridges supports
-    independent command-line scripts, Docker-packaged tools with their dependencies, and multi-step workflows
-    that connect multiple tools.
-  </p>
+  There are certain security, reproducibility, and transparency risks that are associated with AI-assisted tools. Before AI-based software is brought into BDC, it must be vetted to ensure it meets  requirements for controlled-access data and reproducibility requirements.
 
-  <p class="margin-bottom-0">
-    BDC-Terra also supports workflow-based analysis using WDL. Current BDC-Terra users can refer to
-    documentation for guidance on writing and running WDL workflows.
-  </p>
+  <IconBadge icon="info" tone="cool" size={4} />
+    **Supported tools**
+
+    This page focuses on bringing tools and workflows into BDC-Seven Bridges. BDC-Seven Bridges supports independent command-line scripts, Docker-packaged tools with their dependencies, and multi-step workflows that connect multiple tools.
+    
+    BDC-Terra also supports workflow-based analysis using WDL. Current BDC-Terra users can refer to documentation for guidance on writing and running WDL workflows.
 </Card>
 
+## Is customizing your analysis environment right for your work?
 
 BDC can support anything from a single R, Python, or Bash script to a containerized tool or multi-step workflow. Before investing in implementation, review the requirements below or contact the BDC team to determine whether your tool is a good fit.
-
-<Card variant="panel">
-  <div class="display-flex flex-align-center margin-bottom-2">
-    <IconBadge icon="error_outline" tone="warm" size={5} class="margin-right-1" />
-    <h3 class="font-heading-md text-primary-dark margin-0">Important Guidance for Regulated and AI-Based Tools</h3>
-  </div>
-
-  <p>
-    If you are developing software for clinical or regulatory use, contact the BDC team early to ensure 
-    alignment with BDC requirements. For example, if you are developing Software as a Medical Device 
-    (SAMD) contact BDC before pursuing FDA approval.
-  </p>
-
-  <p>
-    There are certain security, reproducibility, and transparency risks that are associated with 
-    AI-assisted tools. Before AI-based software is brought into BDC, it must be vetted to ensure it meets 
-    requirements for controlled-access data and reproducibility requirements.
-  </p>
-</Card>
-
-## Is bringing your own tool right for your work?
 
 You may benefit from bringing a tool to BDC if you:
 
@@ -143,7 +126,7 @@ At a high level, bringing a tool into BDC-Seven Bridges typically involves:
 
 <CardCta
   icon="construction"
-  title="Thinking about bringing a tool to BDC?"
+  title="Thinking about customizing your analysis environment on BDC?"
   text="The BDC team can help determine whether your tool is compatible with BDC, guide implementation, and recommend the best approach for integration. Early discussions often save time and prevent rework."
   href="/help/contact-bdc/"
   cta="Contact us and select Tool or Workflow Integration"

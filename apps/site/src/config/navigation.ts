@@ -21,7 +21,10 @@ export const navConfig: NavItem[] = [
       { label: 'Explore', href: '/data/explore' },
       { label: 'Share', href: '/data/share' },
       { label: 'Analyze', href: '/data/analyze' },
-      { label: 'Bring Your Own Tools', href: '/data/bring-your-own-tools' },
+      {
+        label: 'Customize Your Analysis Environment',
+        href: '/data/customize-your-analysis-environment',
+      },
     ],
   },
   {
