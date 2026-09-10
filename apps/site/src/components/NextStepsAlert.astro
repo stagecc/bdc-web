@@ -1,0 +1,20 @@
+---
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
+
+interface Props {
+  heading: string;
+  headingLevel?: 2 | 3 | 4;
+  noIcon?: boolean;
+}
+
+const { heading, headingLevel = 3, noIcon = false } = Astro.props;
+---
+
+<InlineAlert
+  variant="info"
+  heading={heading}
+  headingLevel={headingLevel}
+  noIcon={noIcon}
+>
+  <slot />
+</InlineAlert>
