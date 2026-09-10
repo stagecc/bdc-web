@@ -7,20 +7,33 @@ import Hero from '@bdc/ui-astro/layout/Hero.astro'
 import InPageNav from '@components/layout/InPageNav.astro'
 import Card from '@bdc/ui-astro/card/Card.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 
 <Hero
   eyebrow="Data"
   title="Explore BDC-Hosted Data"
   description="Find NHLBI-supported data across studies, populations, and data types to advance your research."
  >
-  <Card slot="visual" class="padding-3">
-    <Icon name="grid_view" size={4} />
-    <p class="margin-y-2 font-heading-lg text-primary-dark">496 datasets</p>
-    <p class="margin-y-2 font-heading-lg text-primary-dark">26 distinct data types</p>
-    <p class="margin-y-2 font-heading-lg text-primary-dark">39% include multiple data types</p>
-    <p class="margin-top-05 margin-bottom-0 font-sans-sm text-base line-height-sans-5">Including clinical, genomic, molecular, imaging, sleep, activity, and other research data.</p>
-  </Card>
- </Hero>
+  <div slot="visual" class="grid-container padding-x-0">
+    <div class="grid-row grid-gap-md">
+      <div class="grid-col-4">
+        <IconBadge icon="share" tone="secondary" size={8} iconSize={5} class="margin-bottom-2" />
+        <div class="text-primary-dark font-heading-2xl text-bold margin-bottom-1">500+</div>
+        <div class="text-primary-dark text-uppercase text-bold text-ls-2 font-sans-2xs margin-bottom-1">Hosted Datasets</div>
+      </div>
+      <div class="grid-col-4">
+        <IconBadge icon="layers" tone="secondary" size={8} iconSize={5} class="margin-bottom-2" />
+        <div class="text-primary-dark font-heading-2xl text-bold margin-bottom-1">39%</div>
+        <div class="text-primary-dark text-uppercase text-bold text-ls-2 font-sans-2xs margin-bottom-1">Multi-modal datasets</div>
+      </div>
+      <div class="grid-col-4">
+        <IconBadge icon="network" tone="secondary" size={8} iconSize={5} class="margin-bottom-2" />
+        <div class="text-primary-dark font-heading-2xl text-bold margin-bottom-1">26</div>
+        <div class="text-primary-dark text-uppercase text-bold text-ls-2 font-sans-2xs margin-bottom-1">Distinct data types</div>
+      </div>
+    </div>
+  </div>
+</Hero>
 
 <section class="usa-section padding-top-4">
   <div class="grid-container">
