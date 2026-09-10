@@ -58,7 +58,7 @@ const defaultCommunityDescription =
 
 const featuredCommunities = programs
   .sort(() => 0.5 - Math.random())
-  .slice(0, 4)
+  .slice(0, 2)
   .map((program) => {
     const slug = slugify(program.key);
     return {
@@ -381,7 +381,7 @@ const nextEvent = events[0];
       </div>
 
       <p class="margin-top-4 margin-bottom-2 display-flex flex-justify-center">
-        <Link class="text-bold" to="/about/studies">View all Researcher-Focused Initiatives</Link>
+        <Link class="text-bold" to="/about/research-communities">View all Researcher-Focused Initiatives</Link>
       </p>
     </PageSection>
 
