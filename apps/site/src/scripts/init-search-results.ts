@@ -18,6 +18,7 @@ type PagefindSearchResult = {
   data: () => Promise<PagefindResultData>;
 };
 
+/** Minimal Pagefind runtime surface used by the search page. */
 export type PagefindModule = {
   search: (term: string) => Promise<{ results: PagefindSearchResult[] }>;
   preload: (term: string) => Promise<void>;
@@ -28,11 +29,13 @@ type PagefindLoader = () => Promise<PagefindModule>;
 let pagefindModule: PagefindModule | null = null;
 let activeSearchToken = 0;
 
+/** Runtime `import()` so Vite does not try to bundle the Pagefind script. */
 const importExternalModule = new Function(
   'specifier',
   'return import(specifier)',
 ) as (specifier: string) => Promise<PagefindModule>;
 
+/** Loads and caches the Pagefind runtime from /pagefind/pagefind.js. */
 async function getPagefind(): Promise<PagefindModule> {
   if (!pagefindModule) {
     pagefindModule = await importExternalModule('/pagefind/pagefind.js');
@@ -41,6 +44,7 @@ async function getPagefind(): Promise<PagefindModule> {
   return pagefindModule;
 }
 
+/** Returns the search form, input, and results container, or null if any are missing. */
 function getSearchElements() {
   const container = document.querySelector('#search-results');
   const form = document.querySelector('#search-results-form');
@@ -57,6 +61,7 @@ function getSearchElements() {
   return { container, form, input };
 }
 
+/** Writes the `q` query param without adding a history entry. */
 function updateQueryInUrl(query: string): void {
   const url = new URL(window.location.href);
 
@@ -69,6 +74,10 @@ function updateQueryInUrl(query: string): void {
   window.history.replaceState({}, '', url);
 }
 
+/**
+ * Runs a Pagefind search and renders the results. Empty queries clear the
+ * list. Overlapping searches are ignored via a token so only the latest wins.
+ */
 export async function loadSearchResults(
   container: HTMLElement,
   query: string,
@@ -107,6 +116,10 @@ export async function loadSearchResults(
   renderSearchResultsView(container);
 }
 
+/**
+ * Wires the search page: form submit, debounced input, URL query sync,
+ * and an initial search when `?q=` is present.
+ */
 export function initSearchResults(
   loadPagefind: PagefindLoader = getPagefind,
 ): void {
