@@ -1,8 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Button from '@bdc/ui-astro/button/Button.astro';
-import StatCard from '@bdc/ui-astro/card/StatCard.astro';
+import Card from '@bdc/ui-astro/card/Card.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import InPageNav from '@components/layout/InPageNav.astro';
@@ -47,24 +48,21 @@ sections.sort((a, b) => {
 });
 ---
 
-<Base title="Research Communities">
+<Base title="Researcher-Focused Initiatives">
   <Hero
     eyebrow="About BDC"
-    titleLines={['Research', 'Communities']}
-    description="Discover the NHLBI collaborations BDC supports with shared data, tools, and secure analysis workflows."
-    primaryCta={{ label: 'Explore Community Data', href: '/about/studies' }}
-    secondaryCta={{ label: 'Browse Communities', href: '#community-list' }}
+    titleLines={['Researcher-Focused', 'Initiatives']}
+    description="See how BDC works with select research initiatives to bring valuable data and resources into the ecosystem and expand how researchers can use them."
+    primaryCta={{ label: 'Explore BDC-Hosted Data', href: '/about/studies' }}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
-      <StatCard
-        icon="people"
-        number={sections.length}
-        qualifier="Research communities"
-        meta={`${communitiesWithData} with hosted datasets`}
-        float="right"
-        tone="cool"
-        width="100%"
-      />
+      <Card>
+        <IconBadge icon="people" tone="secondary" size={6} iconSize={5} class="margin-bottom-2" />
+        <div class="text-primary-dark font-heading-lg text-bold margin-bottom-3">More than hosting data</div>
+        <div class="text-primary-darker text-bold font-sans-sm margin-bottom-1">
+          BDC works with research initiatives to make complex data more accessible, usable, and ready for analysis
+        </div>
+      </Card>
     </div>
   </Hero>
 
