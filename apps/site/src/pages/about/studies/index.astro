@@ -3,6 +3,7 @@ import Card from '@bdc/ui-astro/card/Card.astro';
 import StatCard from '@bdc/ui-astro/card/StatCard.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
+import Table from '@bdc/ui-astro/table/Table.astro';
 import Base from '@layouts/Base.astro';
 import {
   getProgramsWithContent,
@@ -57,7 +58,7 @@ const totalDatasets = programs.reduce(
       <div class="display-block tablet:display-none">
         <div class="grid-row grid-gap-2">
           {programs.map(({ program, title, excerpt }) => (
-            <div class="grid-col-12">
+            <div class="grid-col-12 margin-bottom-1">
               <Card variant="panel" class="height-full">
                 <h2 class="font-heading-sm margin-top-0 margin-bottom-1">
                   <Link to={`/about/studies/${program.id}`}>{title}</Link>
@@ -65,7 +66,7 @@ const totalDatasets = programs.reduce(
                 <p class="font-sans-xs text-base-dark margin-y-1">
                   {excerpt ?? program.data.description}
                 </p>
-                <p class="margin-top-2 margin-bottom-0 text-bold font-sans-xs text-primary-darker">
+                <p class="margin-top-2 margin-bottom-0 text-semibold text-right font-sans-xs text-primary-darker">
                   {program.data.numberOfStudies} hosted dataset{program.data.numberOfStudies === 1 ? '' : 's'}
                 </p>
               </Card>
@@ -74,14 +75,21 @@ const totalDatasets = programs.reduce(
         </div>
       </div>
 
-      <div class="overflow-auto display-none tablet:display-block">
-        <table class="usa-table usa-table--borderless usa-table--striped width-full">
-          <caption class="usa-sr-only">Research community datasets available in BDC</caption>
+      <div class="display-none tablet:display-block">
+        <Table
+          class="width-full"
+          caption="Research community datasets available in BDC"
+          captionSrOnly
+          borderless
+          striped
+          stickyHeader
+          sortable={['research-community', 'hosted-datasets']}
+        >
           <thead>
             <tr>
-              <th scope="col">Research Community</th>
-              <th scope="col">Overview</th>
-              <th scope="col">Hosted Datasets</th>
+              <th scope="col" id="research-community">Research Community</th>
+              <th scope="col" id="overview">Overview</th>
+              <th scope="col" id="hosted-datasets">Hosted Datasets</th>
             </tr>
           </thead>
           <tbody>
@@ -95,7 +103,7 @@ const totalDatasets = programs.reduce(
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
 
     </div>

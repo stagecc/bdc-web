@@ -15,6 +15,7 @@ Shared Astro UI components for BDC apps.
 - `@bdc/ui-astro/layout/PageSection.astro`
 - `@bdc/ui-astro/layout/TwoColumnSection.astro`
 - `@bdc/ui-astro/link/Link.astro`
+- `@bdc/ui-astro/table/Table.astro`
 - `@bdc/ui-astro/card/Card.astro`
 - `@bdc/ui-astro/card/CardCta.astro`
 - `@bdc/ui-astro/card/CardCopy.astro`

@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import StatCard from '@bdc/ui-astro/card/StatCard.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import Table from '@bdc/ui-astro/table/Table.astro';
 import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 import {
@@ -81,13 +82,24 @@ const heroDescription = excerpt ?? description;
       <hr />
 
 
-      <div id="community-datasets" class="overflow-auto margin-top-4">
-        <table class="usa-table usa-table--borderless usa-table--striped width-full margin-top-0">
-          <caption class="usa-sr-only">Hosted datasets in BDC for {title}</caption>
-          <thead>
+      <div id="community-datasets" class="margin-top-4">
+        <Table
+          class="width-full margin-top-0"
+          caption={`Hosted datasets in BDC for ${title}`}
+          captionSrOnly
+          borderless
+          striped
+          stickyHeader
+          sortable={['study-name', 'dbgap-accession']}
+        >
+          <!--
+            z-index here keeps the dbGaP Accession link's
+            external-link icon from rendering above the table header
+          -->
+          <thead class="height-8" style="z-index: 1;">
             <tr>
-              <th scope="col">Study Name</th>
-              <th scope="col">dbGaP Accession</th>
+              <th scope="col" id="study-name" class="text-center">Study Name</th>
+              <th scope="col" id="dbgap-accession" class="text-center">dbGaP Accession</th>
             </tr>
           </thead>
           <tbody>
@@ -100,7 +112,7 @@ const heroDescription = excerpt ?? description;
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </div>
 
     </div>

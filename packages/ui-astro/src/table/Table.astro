@@ -1,0 +1,71 @@
+---
+interface Props {
+  caption: string;
+  captionSrOnly?: boolean;
+  sortable?: boolean | string[];
+  borderless?: boolean;
+  striped?: boolean;
+  compact?: boolean;
+  stacked?: boolean;
+  stackedHeader?: boolean;
+  stickyHeader?: boolean;
+  scrollable?: boolean;
+  class?: string;
+}
+
+const {
+  caption,
+  captionSrOnly = false,
+  sortable = false,
+  borderless = false,
+  striped = false,
+  compact = false,
+  stacked = false,
+  stackedHeader = false,
+  stickyHeader = false,
+  scrollable = false,
+  class: className = '',
+} = Astro.props;
+
+const sortableColumns = Array.isArray(sortable) ? sortable.filter(Boolean) : [];
+const isSortable = sortable === true || sortableColumns.length > 0;
+
+const tableClass = [
+  'usa-table',
+  borderless && 'usa-table--borderless',
+  striped && 'usa-table--striped',
+  compact && 'usa-table--compact',
+  stacked && 'usa-table--stacked',
+  stackedHeader && 'usa-table--stacked-header',
+  stickyHeader && 'usa-table--sticky-header',
+  className,
+]
+  .filter(Boolean)
+  .join(' ');
+---
+
+{scrollable ? (
+  <div class="usa-table-container--scrollable" tabindex="0">
+    <table
+      class={tableClass}
+      data-bdc-sortable={isSortable || undefined}
+      data-bdc-sortable-columns={sortableColumns.length > 0 ? sortableColumns.join(' ') : undefined}
+    >
+      <caption class={captionSrOnly ? 'usa-sr-only' : undefined}>{caption}</caption>
+      <slot />
+    </table>
+    {isSortable && <div class="usa-sr-only usa-table__announcement-region" aria-live="polite"></div>}
+  </div>
+) : (
+  <>
+    <table
+      class={tableClass}
+      data-bdc-sortable={isSortable || undefined}
+      data-bdc-sortable-columns={sortableColumns.length > 0 ? sortableColumns.join(' ') : undefined}
+    >
+      <caption class={captionSrOnly ? 'usa-sr-only' : undefined}>{caption}</caption>
+      <slot />
+    </table>
+    {isSortable && <div class="usa-sr-only usa-table__announcement-region" aria-live="polite"></div>}
+  </>
+)}
