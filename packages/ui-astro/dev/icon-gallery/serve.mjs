@@ -1,5 +1,5 @@
-import { createServer } from 'node:http';
 import { existsSync, readFileSync } from 'node:fs';
+import { createServer } from 'node:http';
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -11,7 +11,9 @@ const packageRoot = resolve(__dirname, '../..');
 const port = Number(process.env.PORT ?? 4179);
 
 if (!existsSync(join(distDir, 'index.html'))) {
-  console.error('Icon gallery not built. Run `npm run icons:gallery:build -w @bdc/ui-astro` first.');
+  console.error(
+    'Icon gallery not built. Run `npm run icons:gallery:build -w @bdc/ui-astro` first.',
+  );
   process.exit(1);
 }
 

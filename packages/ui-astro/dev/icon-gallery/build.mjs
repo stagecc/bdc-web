@@ -35,19 +35,26 @@ function loadCustomIcons(filePath) {
 
 function loadUswdsIconNames(filePath) {
   const sprite = readFileSync(filePath, 'utf8');
-  return Array.from(sprite.matchAll(/<symbol\s+id="([^"]+)"/g), (match) => match[1]).sort();
+  return Array.from(
+    sprite.matchAll(/<symbol\s+id="([^"]+)"/g),
+    (match) => match[1],
+  ).sort();
 }
 
 function renderHtml({ customIcons, uswdsIcons }) {
   const customIconNames = Object.keys(customIcons).sort();
-  const allIconNames = Array.from(new Set([...uswdsIcons, ...customIconNames])).sort();
+  const allIconNames = Array.from(
+    new Set([...uswdsIcons, ...customIconNames]),
+  ).sort();
 
   const customCards = customIconNames
     .map((name) => {
       const icon = customIcons[name];
       const viewBox = icon.viewBox ?? '0 0 24 24';
       const paths = icon.paths
-        .map((path) => `<path d="${escapeHtml(path)}" fill="currentColor"></path>`)
+        .map(
+          (path) => `<path d="${escapeHtml(path)}" fill="currentColor"></path>`,
+        )
         .join('');
 
       return `
@@ -80,7 +87,10 @@ function renderHtml({ customIcons, uswdsIcons }) {
 
       const customSvg = hasCustom
         ? `<svg class="glyph glyph--small" viewBox="${customIcon.viewBox ?? '0 0 24 24'}" aria-hidden="true">${customIcon.paths
-            .map((path) => `<path d="${escapeHtml(path)}" fill="currentColor"></path>`)
+            .map(
+              (path) =>
+                `<path d="${escapeHtml(path)}" fill="currentColor"></path>`,
+            )
             .join('')}</svg>`
         : '<span class="missing">-</span>';
 
