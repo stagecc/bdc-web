@@ -5,9 +5,11 @@ layout: ../../../layouts/MdxBase.astro
 import Button from '@bdc/ui-astro/button/Button.astro'
 import Hero from '@bdc/ui-astro/layout/Hero.astro'
 import InPageNav from '@components/layout/InPageNav.astro'
+import Link from '@bdc/ui-astro/link/Link.astro'
 import Card from '@bdc/ui-astro/card/Card.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
+import Notice from '@components/Notice.astro';
 
 <Hero
   eyebrow="Data"
@@ -49,19 +51,29 @@ To see details about the hosted data in BDC, refer to the [Release Notes](https:
 
 The following links lead to search capabilities to discover the data available in   BDC. **Select your search based on the information you have:**
 
-<div class="grid-row grid-gap-2 flex-align-center">
-  <div class="grid-col-12 tablet:grid-col-4">
-    <Button variant="secondary" href="https://gen3.biodatacatalyst.nhlbi.nih.gov/discovery" class="width-full">Keywords in Study Names or Descriptions</Button>
-  </div>
-  <div class="grid-col-12 tablet:grid-col-4 margin-top-2 tablet:margin-top-0">
-    <Button variant="secondary" href="/data/explore/dug" class="width-full">Disease, Phenotype, Biological Process, or Anatomical Entity</Button>
-  </div>
-  <div class="grid-col-12 tablet:grid-col-4 margin-top-2 tablet:margin-top-0" >
-    <Button variant="secondary" href="https://picsure.biodatacatalyst.nhlbi.nih.gov/discover" class="width-full">Phenotypes</Button>
-  </div>
-</div>
+<Notice
+  icon="search"
+  tone="neutral"
+  class="flex-justify-start margin-left-2"
+>
+  <Link to="https://gen3.biodatacatalyst.nhlbi.nih.gov/discovery">Keywords in Study Names or Descriptions</Link>
+</Notice>
+<Notice
+  icon="search"
+  tone="neutral"
+  class="flex-justify-start margin-left-2"
+>
+  <Link to="/data/explore/dug">Disease, Phenotype, Biological Process, or Anatomical Entity</Link>
+</Notice>
+<Notice
+  icon="search"
+  tone="neutral"
+  class="flex-justify-start margin-left-2"
+>
+  <Link to="https://picsure.biodatacatalyst.nhlbi.nih.gov/discover">Phenotypes</Link>
+</Notice>
 
-All three of the above searches provide Study Accession IDs - unique, stable, and   versioned identifiers.
+ANotice three of the above searches provide Study Accession IDs - unique, stable, and   versioned identifiers.
 
 The search capabilities of "Keywords in Study Names or Descriptions" and "Disease, Phenotype, Biological Process, or Anatomical Entity" search across the data  dictionaries to explore variables in the studies.
 
@@ -75,7 +87,13 @@ Refer to the [Explore Available Data](https://bdcatalyst.gitbook.io/biodata-cata
   
 To determine whether BDC-hosted data is sufficient to address a specific scientific question - a process known as a feasibility assessment - researchers can search by various terms, including study names, variables, phenotypes, and even Study Accession IDs (if known). After selecting “Conduct a Feasibility Assessment” below, users can enter their search criteria and then apply filters to retrieve aggregated participant counts, helping them gauge whether the available data meets their research needs.
 
-<Button variant="secondary" centered href="https://picsure.biodatacatalyst.nhlbi.nih.gov/discover">Conduct Feasibility Assessment</Button>
+<Notice
+  icon="assessment"
+  tone="neutral"
+>
+  <Link to="https://picsure.biodatacatalyst.nhlbi.nih.gov/discover">Conduct Feasibility Assessment</Link>
+</Notice>
+
 
 ## Requirements for Accessing BDC Hosted Data
 
@@ -83,7 +101,12 @@ Researchers who want to use **controlled-access datasets** must have an approved
 
 Use the button below to sign in and verify your current data access approvals. 
 
-<Button variant="secondary" centered href="https://gen3.biodatacatalyst.nhlbi.nih.gov/user/oauth2/authorize?idp=ras&client_id=xMhuXjGdk9zpzdJjufEinh3nKzOUKOTFZcwzU5xT&response_type=id_token+token&scope=openid+user&nonce=2bfe151af238d21f48d8a8bf8bbec408838c8dc0ace6b4c5621ac9dfa157798b&redirect_uri=https://biodatacatalyst.nhlbi.nih.gov/use-bdc/explore-data/">Check My Access</Button>
+<Notice
+  icon="lock_open"
+  tone="neutral"
+>
+  <Link to="https://gen3.biodatacatalyst.nhlbi.nih.gov/user/oauth2/authorize?idp=ras&client_id=xMhuXjGdk9zpzdJjufEinh3nKzOUKOTFZcwzU5xT&response_type=id_token+token&scope=openid+user&nonce=2bfe151af238d21f48d8a8bf8bbec408838c8dc0ace6b4c5621ac9dfa157798b&redirect_uri=https://biodatacatalyst.nhlbi.nih.gov/use-bdc/explore-data/">Check My Access</Link>
+</Notice>
 
     </InPageNav>
   </div>
