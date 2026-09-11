@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Button from '@bdc/ui-astro/button/Button.astro';
 import StatCard from '@bdc/ui-astro/card/StatCard.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import InPageNav from '@components/layout/InPageNav.astro';
@@ -108,9 +109,10 @@ sections.sort((a, b) => {
               <h2>{name}</h2>
               <Content />
               {dataAvailable && (
-                <Button to={`/about/studies/${id}`} centered>
-                  See a list of the {name} data available in BDC
-                </Button>
+                <div class="display-flex flex-align-center flex-justify-center">
+                  <IconBadge icon="database" tone="cool" class="margin-x-1" />
+                  <Link to={`/about/studies/${id}`}>See a list of the {name} data available in BDC</Link>
+                </div>
               )}
             </section>
           ))}
