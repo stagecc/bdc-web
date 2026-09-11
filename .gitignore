@@ -6,6 +6,7 @@ dist
 **/.env.*
 test-results
 .lycheecache
+packages/ui-astro/dev/icon-gallery/dist
 
 # apps/freshdesk
 Pipfile
