@@ -1,8 +1,8 @@
 ---
 import Card from '@bdc/ui-astro/card/Card.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
-import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Base from '@layouts/Base.astro';
 ---
 
@@ -15,7 +15,7 @@ import Base from '@layouts/Base.astro';
     secondaryCta={{ label: 'Get Help', href: '/help/get-help' }}
   >
     <div slot="visual" aria-hidden="true">
-      <Card variant="feature" class="maxw-card-sm not-found-visual__card position-relative shadow-2" border>
+      <Card variant="feature">
         <div class="display-flex flex-align-center gap-1 margin-bottom-1">
           <IconBadge icon="priority_high" tone="warm" size={4} />
           <p class="margin-0 margin-left-1 text-bold text-accent-warm-dark">Route not found</p>
@@ -77,9 +77,3 @@ import Base from '@layouts/Base.astro';
     </div>
   </section>
 </Base>
-
-<style>
-  .not-found-visual__card {
-    transform: perspective(1100px) rotateX(5deg) rotateY(-10deg);
-  }
-</style>
