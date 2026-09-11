@@ -8,7 +8,10 @@ import Link from '@bdc/ui-astro/link/Link.astro';
 import InPageNav from '@components/layout/InPageNav.astro';
 import Base from '@layouts/Base.astro';
 
-const localEntries = await getCollection('programContent');
+const localEntries = await getCollection(
+  'programContent',
+  ({ data }) => data.showOnContentPage,
+);
 const apiPrograms = await getCollection('programs');
 const apiById = new Map(apiPrograms.map((p) => [p.id, p]));
 
