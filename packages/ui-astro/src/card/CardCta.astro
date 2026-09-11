@@ -1,5 +1,6 @@
 ---
 import IconBadge from '../icon/IconBadge.astro';
+import Link from '../link/Link.astro';
 import Card from './Card.astro';
 
 interface Props {
@@ -9,16 +10,28 @@ interface Props {
   href: string;
   cta: string;
   border?: boolean;
+  tone?: 'light' | 'dark';
 }
 
-const { icon, title, text, href, cta, border = true } = Astro.props;
+const {
+  icon,
+  title,
+  text,
+  href,
+  cta,
+  border = true,
+  tone = 'light',
+} = Astro.props;
+const isDarkTone = tone === 'dark';
+const surface = isDarkTone ? 'dark' : 'light';
+const iconBadgeTone = isDarkTone ? 'warm' : 'secondary';
 ---
 
-<Card variant="feature" class="height-full display-flex flex-column" border={border}>
+<Card variant="feature" class="height-full display-flex flex-column" border={border} surface={surface}>
   <div class="display-flex flex-align-center margin-top-1 margin-bottom-2">
-    {icon && <IconBadge icon={icon} class="text-primary margin-right-105" tone="secondary" size={6} />}
-    <h3 class="margin-0 flex-1 text-primary-dark font-heading-md">{title}</h3>    
+    {icon && <IconBadge icon={icon} class:list={['margin-right-105', !isDarkTone && 'text-primary']} tone={iconBadgeTone} size={6} />}
+    <h3 class:list={['margin-0 flex-1 font-heading-md', isDarkTone ? 'text-base-lightest' : 'text-primary-dark']}>{title}</h3>
   </div>
-  <p class="margin-y-2 text-base flex-1">{text}</p>
-  <a class="usa-link text-bold" href={href}>{cta} &raquo;</a>
+  <p class:list={['margin-y-2 flex-1', isDarkTone ? 'text-base-lighter' : 'text-base']}>{text}</p>
+  <Link inheritColor class="usa-link text-bold" to={href}>{cta} &raquo;</Link>
 </Card>

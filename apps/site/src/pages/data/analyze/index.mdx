@@ -7,6 +7,9 @@ import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import InPageNav from '@components/layout/InPageNav.astro';
+import Screenshot from '@components/screenshot/Screenshot.astro';
+import heroVisual from '../../../assets/analyze-hero.webm';
+import heroVisualPoster from '../../../assets/analyze-hero-poster.png';
 
 <Hero
   eyebrow="BDC Workspaces"
@@ -14,7 +17,21 @@ import InPageNav from '@components/layout/InPageNav.astro';
   description="BDC provides scalable computing, analysis tools, and collaborative environments for working with large biomedical datasets. You can analyze BDC-hosted data, data you bring to BDC, consortium data available to authorized members, or a combination of eligible resources in secure cloud environments."
   primaryCta={{ label: 'Start with BDC-Seven Bridges', href: '#start-with-bdc-seven-bridges' }}
   secondaryCta={{ label: 'Compare Analysis Platforms', href: '#compare-bdc-analysis-platforms' }}
-/>
+>
+  <div slot="visual" class="width-full maxw-tablet-lg" aria-hidden="true">
+    <Screenshot
+      media="video"
+      src={heroVisual}
+      poster={heroVisualPoster.src}
+      reducedMotionSrc={heroVisualPoster.src}
+      width={heroVisualPoster.width}
+      height={heroVisualPoster.height}
+      alt=""
+      rotateX={15}
+      rotateY={29}
+    />
+  </div>
+</Hero>
 
 <section class="usa-section padding-top-4">
 <div class="grid-container">
@@ -80,6 +97,7 @@ BDC-Seven Bridges is generally the best place to begin when you:
 
 BDC-Seven Bridges is the only BDC analysis platform where authorized researchers can access consortium data.
 
+<br />
 <Link to="https://accounts.sb.biodatacatalyst.nhlbi.nih.gov/auth/login?next=https%3A%2F%2Faccounts.sb.biodatacatalyst.nhlbi.nih.gov%2F">Access BDC-Seven Bridges</Link>
 
 ## When BDC-Terra May Be a Better Fit

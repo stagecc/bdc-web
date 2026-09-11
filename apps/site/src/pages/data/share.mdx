@@ -3,7 +3,7 @@ title: Share Data
 layout: ../../layouts/MdxBase.astro
 ---
 import Hero from '@bdc/ui-astro/layout/Hero.astro'
-import Icon from '@components/Icon.astro'
+import NextStepsAlert from '@components/NextStepsAlert.astro'
 import InPageNav from '@components/layout/InPageNav.astro'
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Card from '@bdc/ui-astro/card/Card.astro';
@@ -53,8 +53,8 @@ import Card from '@bdc/ui-astro/card/Card.astro';
 </Hero>
 
 <section class="usa-section padding-top-4">
-  <div class="grid-container">
-    <InPageNav>
+<div class="grid-container">
+<InPageNav>
 
 Researchers can use BDC as a data repository when preparing to submit or share data in accordance with NIH and NHLBI data sharing expectations. This page is intended for researchers and study teams preparing to make data available through BDC.
 
@@ -97,17 +97,17 @@ NIH has data-sharing policies that researchers must abide by, including the NIH 
 
 [→ Refer to NIH Data Management and Sharing](https://grants.nih.gov/policy-and-compliance/policy-topics/sharing-policies/dms) for more information
 
-<div class="usa-card usa-card__container padding-4 usa-prose">
-  <Icon name="grid_view" size={4}/>
-
-  ### Contact us about data submission
-  Researchers with BDC data sharing or data submission questions can use the Contact & Support page and select Data Submission from the form dropdown.
-
+<NextStepsAlert
+  heading="Contact us about data submission"
+>
+  Researchers with BDC data sharing or data submission questions can use the Contact and Support
+  page and select Data Submission from the form dropdown.
+  
   Special cases or questions about specific data types can be discussed during the submission process.
 
-  [→ Contact Us about Data Submission](/help/contact-bdc/)
-</div>
+  [Contact Us about Data Submission](/help/contact-bdc/)
+</NextStepsAlert>
 
-    </InPageNav>
-  </div>
+</InPageNav>
+</div>
 </section>

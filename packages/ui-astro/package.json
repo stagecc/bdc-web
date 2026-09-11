@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "description": "Shared Astro UI components for BDC apps",
+  "scripts": {
+    "icons:gallery": "node ./dev/icon-gallery/build.mjs && node ./dev/icon-gallery/serve.mjs",
+    "icons:gallery:build": "node ./dev/icon-gallery/build.mjs"
+  },
   "files": [
     "src"
   ],
