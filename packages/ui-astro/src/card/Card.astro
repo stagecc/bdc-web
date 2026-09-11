@@ -3,24 +3,30 @@ interface Props extends astroHTML.JSX.HTMLAttributes<'article'> {
   variant?: 'feature' | 'dataset' | 'panel' | 'testimonial' | 'overview';
   as?: 'article' | 'div';
   border?: boolean;
+  surface?: 'light' | 'dark';
 }
 
 const {
   variant = 'feature',
   as = 'article',
   border = true,
+  surface = 'light',
   class: className,
   className: classNameProp,
   ...rest
 } = Astro.props;
 
 const Tag = as;
+const surfaceClass = surface === 'light' ? 'bg-white' : 'bg-gray-90 text-base-lightest';
+const borderClass = border && (surface === 'light' ? 'border border-base-lighter' : 'border border-base-darkest');
+
 const classes = [
   'card',
   `card--${variant}`,
-  'bg-white radius-lg',
+  'radius-lg',
+  surfaceClass,
   'width-full',
-  border && 'border border-base-lighter',
+  borderClass,
   variant === 'dataset' && 'overflow-hidden',
   ['feature', 'panel', 'testimonial', 'overview'].includes(variant) &&
     'padding-2',
