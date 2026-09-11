@@ -1,7 +1,7 @@
 ---
 import IconBadge from '../icon/IconBadge.astro';
-import Card from './Card.astro';
 import Link from '../link/Link.astro';
+import Card from './Card.astro';
 
 interface Props {
   icon?: string;
@@ -13,7 +13,15 @@ interface Props {
   tone?: 'light' | 'dark';
 }
 
-const { icon, title, text, href, cta, border = true, tone = 'light' } = Astro.props;
+const {
+  icon,
+  title,
+  text,
+  href,
+  cta,
+  border = true,
+  tone = 'light',
+} = Astro.props;
 const isDarkTone = tone === 'dark';
 const surface = isDarkTone ? 'dark' : 'light';
 const iconBadgeTone = isDarkTone ? 'warm' : 'secondary';

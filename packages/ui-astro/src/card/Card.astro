@@ -17,8 +17,13 @@ const {
 } = Astro.props;
 
 const Tag = as;
-const surfaceClass = surface === 'light' ? 'bg-white' : 'bg-gray-90 text-base-lightest';
-const borderClass = border && (surface === 'light' ? 'border border-base-lighter' : 'border border-base-darkest');
+const surfaceClass =
+  surface === 'light' ? 'bg-white' : 'bg-gray-90 text-base-lightest';
+const borderClass =
+  border &&
+  (surface === 'light'
+    ? 'border border-base-lighter'
+    : 'border border-base-darkest');
 
 const classes = [
   'card',
