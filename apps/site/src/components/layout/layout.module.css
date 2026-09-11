@@ -5,9 +5,9 @@
   top: 0;
   background-color: #fff;
   z-index: 400;
-  transition: filter 250ms;
+  transition: box-shadow 250ms;
 }
 
 .siteHeaderContainer.scrolled {
-  filter: drop-shadow(0 0 4px rgba(0, 0, 0, 0.1));
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.1);
 }
