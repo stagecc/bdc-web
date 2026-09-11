@@ -39,15 +39,15 @@ const heroDescription = excerpt ?? description;
 
 <Base title={title}>
   <Hero
-    eyebrow="Research Community"
+    eyebrow="BDC Hosted Data"
     title={title}
     description={heroDescription}
     primaryCta={{ label: 'Jump to datasets', href: '#community-datasets' }}
-    secondaryCta={{ label: 'Back to Research Community Data', href: '/about/studies' }}
+    secondaryCta={{ label: 'Back to BDC-Hosted Data', href: '/about/studies' }}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
       <StatCard
-        icon="database"
+        icon="layers"
         number={studies.length}
         qualifier="Hosted datasets"
         meta={datasetLabel}
@@ -61,23 +61,16 @@ const heroDescription = excerpt ?? description;
 
   <section class="usa-section padding-top-4">
     <div class="grid-container">
-      <div class="usa-prose" style="columns: 2;">
-        {Content && (
+      {
+        Content && (
           <>
             <h3>Description</h3>
-            <Content />
+            <div class="study-description usa-prose margin-bottom-3" style="columns: 2; ">
+              <Content />
+            </div>
           </>
-        )}
-        <p>
-          View {title} data available in BDC below, or learn more about this and
-          other supported collaborations on the{' '}
-          <Link to={`/about/research-communities#${program.id}`}>
-            Research Communities
-          </Link>{' '}
-          page.
-        </p>
-      </div>
-
+        )
+      }
       <hr />
 
 
@@ -107,3 +100,9 @@ const heroDescription = excerpt ?? description;
   </section>
 
 </Base>
+
+<style>
+  .study-description :global(p:first-of-type) {
+    margin-top: 0;
+  }
+</style>
