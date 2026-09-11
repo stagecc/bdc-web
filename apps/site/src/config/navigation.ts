@@ -14,7 +14,6 @@ export const navConfig: NavItem[] = [
         label: 'Researcher-Focused Initiatives',
         href: '/about/researcher-focused-initiatives',
       },
-      { label: 'Studies', href: '/about/studies' },
       { label: 'Learning and Training', href: '/about/learning-and-training' },
     ],
   },
