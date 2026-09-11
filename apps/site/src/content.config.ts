@@ -214,6 +214,7 @@ const programContent = defineCollection({
     title: z.string().optional(),
     priority: z.number().optional(),
     dataAvailable: z.boolean().default(true),
+    showOnContentPage: z.boolean().default(true),
   }),
 });
 

@@ -1,14 +1,18 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Button from '@bdc/ui-astro/button/Button.astro';
-import StatCard from '@bdc/ui-astro/card/StatCard.astro';
+import Card from '@bdc/ui-astro/card/Card.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import InPageNav from '@components/layout/InPageNav.astro';
 import Base from '@layouts/Base.astro';
 
-const localEntries = await getCollection('programContent');
+const localEntries = await getCollection(
+  'programContent',
+  ({ data }) => data.showOnContentPage,
+);
 const apiPrograms = await getCollection('programs');
 const apiById = new Map(apiPrograms.map((p) => [p.id, p]));
 
@@ -44,24 +48,21 @@ sections.sort((a, b) => {
 });
 ---
 
-<Base title="Research Communities">
+<Base title="Researcher-Focused Initiatives">
   <Hero
     eyebrow="About BDC"
-    titleLines={['Research', 'Communities']}
-    description="Discover the NHLBI collaborations BDC supports with shared data, tools, and secure analysis workflows."
-    primaryCta={{ label: 'Explore Community Data', href: '/about/studies' }}
-    secondaryCta={{ label: 'Browse Communities', href: '#community-list' }}
+    titleLines={['Researcher-Focused', 'Initiatives']}
+    description="See how BDC works with select research initiatives to bring valuable data and resources into the ecosystem and expand how researchers can use them."
+    primaryCta={{ label: 'Explore BDC-Hosted Data', href: '/about/studies' }}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
-      <StatCard
-        icon="people"
-        number={sections.length}
-        qualifier="Research communities"
-        meta={`${communitiesWithData} with hosted datasets`}
-        float="right"
-        tone="cool"
-        width="100%"
-      />
+      <Card>
+        <IconBadge icon="people" tone="secondary" size={6} iconSize={5} class="margin-bottom-2" />
+        <div class="text-primary-dark font-heading-lg text-bold margin-bottom-3">More than hosting data</div>
+        <div class="text-primary-darker text-bold font-sans-sm margin-bottom-1">
+          BDC works with research initiatives to make complex data more accessible, usable, and ready for analysis
+        </div>
+      </Card>
     </div>
   </Hero>
 
@@ -81,26 +82,6 @@ sections.sort((a, b) => {
           community. Researchers within these communities may use BDC to analyze
           scientific data collected from research protocols.
         </p>
-        <p>
-          Not all data from the research communities are broadly available in the
-          BDC ecosystem; however, BDC regularly adds data from these communities
-          and other studies for broad research use.
-        </p>
-        <p class="text-bold">
-          BDC manages data access via{' '}
-          <Link to="https://www.ncbi.nlm.nih.gov/gap/">
-            NIH Database of Genotypes and Phenotypes (dbGaP)
-          </Link>
-          . Analysis of data in BDC from the research communities below requires{' '}
-          <Link to="https://public.era.nih.gov/commonsplus/public/login.era?TARGET=https%3A%2F%2Fpublic.era.nih.gov%3A443%2Fcommons">
-            eRA Commons credentials
-          </Link>{' '}
-          and approved{' '}
-          <Link to="https://dbgap.ncbi.nlm.nih.gov/aa/wga.cgi?page=login">
-            data access requests
-          </Link>{' '}
-          (DARs) for each dataset from dbGaP.
-        </p>
 
         <div class="margin-bottom-8">
           {sections.map(({ id, name, dataAvailable, Content }) => (
@@ -119,9 +100,9 @@ sections.sort((a, b) => {
 
       <div class="usa-card usa-card__container padding-4 usa-prose">
         <Icon name="add_circle_outline" size={4} />
-        <h3>Want to propose a new research community collaboration?</h3>
+        <h3>Want to propose a new initiative?</h3>
         <p>
-          Research programs interested in collaborating with BDC can express
+          Research initiatives interested in collaborating with BDC can express
           their interest with our Contact form.
         </p>
         <p>
