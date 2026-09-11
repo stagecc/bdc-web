@@ -7,6 +7,7 @@ import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import InPageNav from '@components/layout/InPageNav.astro';
+import NextStepsAlert from '@components/NextStepsAlert.astro';
 import Base from '@layouts/Base.astro';
 
 const localEntries = await getCollection('programContent');
@@ -117,21 +118,20 @@ sections.sort((a, b) => {
             </section>
           ))}
         </div>
-      </InPageNav>
 
-      <div class="usa-card usa-card__container padding-4 usa-prose">
-        <Icon name="add_circle_outline" size={4} />
-        <h3>Want to propose a new research community collaboration?</h3>
-        <p>
-          Research programs interested in collaborating with BDC can express
-          their interest with our Contact form.
-        </p>
-        <p>
+        <NextStepsAlert
+          heading="Want to propose a new research community collaboration?"
+        >
+          <p class="usa-prose">
+            Research programs interested in collaborating with BDC can express
+            their interest with our Contact form.
+          </p>
+
           <Link to="/help/contact-and-support">
-            → Propose New Research Community Collaboration
+            Propose New Research Community Collaboration
           </Link>
-        </p>
-      </div>
+        </NextStepsAlert>
+      </InPageNav>
     </div>
   </section>
 </Base>

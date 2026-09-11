@@ -3,7 +3,7 @@ title: Customize Your Analysis Environment
 layout: ../../layouts/MdxBase.astro
 ---
 import Card from '@bdc/ui-astro/card/Card.astro'
-import CardCta from '@bdc/ui-astro/card/CardCta.astro'
+import NextStepsAlert from '@components/NextStepsAlert.astro'
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro'
 import InPageNav from '@components/layout/InPageNav.astro';
@@ -136,13 +136,14 @@ At a high level, bringing a tool into BDC-Seven Bridges typically involves:
   </li>
 </ol>
 
-<CardCta
-  icon="construction"
-  title="Thinking about customizing your analysis environment on BDC?"
-  text="The BDC team can help determine whether your tool is compatible with BDC, guide implementation, and recommend the best approach for integration. Early discussions often save time and prevent rework."
-  href="/help/contact-bdc/"
-  cta="Contact us and select Tool or Workflow Integration"
-/>
+<NextStepsAlert
+  heading="Thinking about customizing your analysis environment on BDC?"
+>
+  The BDC team can help determine whether your tool is compatible with BDC, guide implementation,
+  and recommend the best approach for integration. Early discussions often save time and prevent rework.
+
+  [Contact us and select Tool or Workflow Integration](/help/contact-bdc/)
+</NextStepsAlert>
 
 </InPageNav>
 </div>

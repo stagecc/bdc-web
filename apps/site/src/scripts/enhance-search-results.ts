@@ -39,6 +39,7 @@ const SEARCH_KIND_FILTERS: ReadonlyArray<{
 
 type SortOption = 'relevance' | 'title-asc' | 'title-desc' | 'section-asc';
 
+/** Raw Pagefind hit before breadcrumb, section, and kind are derived. */
 export type SearchResultRecord = {
   url: string;
   title: string;
@@ -46,12 +47,14 @@ export type SearchResultRecord = {
   originalIndex: number;
 };
 
+/** Search hit plus derived breadcrumb, section, and kind used for display. */
 type ProcessedSearchResult = SearchResultRecord & {
   breadcrumb: string;
   section: string;
   kind: SearchResultKind;
 };
 
+/** Per-container Pagefind hits, active query, and current results page. */
 type SearchResultsState = {
   allResults: SearchResultRecord[];
   query: string;
@@ -67,6 +70,7 @@ const SORT_LABELS: Record<SortOption, string> = {
 
 const searchStateStore = new WeakMap<HTMLElement, SearchResultsState>();
 
+/** Escapes text before interpolating it into result HTML. */
 function escapeHtml(value: string): string {
   return value
     .replaceAll('&', '&amp;')
@@ -111,6 +115,7 @@ function getFilteredEmptyElement(): HTMLElement | null {
   return filteredEmpty instanceof HTMLElement ? filteredEmpty : null;
 }
 
+/** Accepts a sort query value, or falls back to relevance. */
 function parseSortOption(value: string | null): SortOption {
   if (
     value === 'relevance' ||
@@ -124,14 +129,17 @@ function parseSortOption(value: string | null): SortOption {
   return 'relevance';
 }
 
+/** True when the value is a filterable kind (news or event), not "page". */
 function isSearchKindFilter(value: string): value is SearchKindFilter {
   return value === 'news' || value === 'event';
 }
 
+/** Keeps only valid kind-filter values from the URL or checkbox state. */
 function parseSelectedKinds(values: Iterable<string>): Set<SearchKindFilter> {
   return new Set(Array.from(values).filter(isSearchKindFilter));
 }
 
+/** Reads kind filters and sort order from the current URL. */
 function getSearchStateFromUrl() {
   const params = new URLSearchParams(window.location.search);
   return {
@@ -140,6 +148,7 @@ function getSearchStateFromUrl() {
   };
 }
 
+/** Writes kind filters and sort order into the URL without adding history. */
 function updateSearchStateInUrl(
   selectedKinds: Set<SearchKindFilter>,
   sort: SortOption,
@@ -160,6 +169,7 @@ function updateSearchStateInUrl(
   window.history.replaceState({}, '', url);
 }
 
+/** Adds breadcrumb, top-level section, and kind to a raw search hit. */
 function processSearchResult(
   record: SearchResultRecord,
 ): ProcessedSearchResult {
@@ -174,6 +184,7 @@ function processSearchResult(
   };
 }
 
+/** Sorts hits by title, section, or original Pagefind rank. */
 function sortSearchResults(
   results: ProcessedSearchResult[],
   sort: SortOption,
@@ -208,6 +219,7 @@ function sortSearchResults(
   return sorted;
 }
 
+/** True when no kind filters are set, or the hit matches a selected kind. */
 function matchesKindFilter(
   result: ProcessedSearchResult,
   selectedKinds: Set<SearchKindFilter>,
@@ -216,6 +228,7 @@ function matchesKindFilter(
   return isSearchKindFilter(result.kind) && selectedKinds.has(result.kind);
 }
 
+/** Renders the news/events checkboxes and the clear-filter control. */
 function renderSearchFilters(
   filters: HTMLElement,
   selectedKinds: Set<SearchKindFilter>,
@@ -258,6 +271,7 @@ function renderSearchFilters(
   filters.hidden = false;
 }
 
+/** Renders the result count and sort dropdown. */
 function renderSearchToolbar(
   toolbar: HTMLElement,
   totalCount: number,
@@ -304,6 +318,7 @@ function renderSearchToolbar(
   toolbar.hidden = false;
 }
 
+/** Renders previous/next controls, or hides pagination when there is one page. */
 function renderSearchPagination(
   pagination: HTMLElement,
   page: number,
@@ -345,6 +360,7 @@ function renderSearchPagination(
   pagination.hidden = false;
 }
 
+/** Builds one result row and runs breadcrumb/badge enhancement on it. */
 function createResultElement(record: ProcessedSearchResult): HTMLElement {
   const result = document.createElement('li');
   result.className =
@@ -369,6 +385,7 @@ function createResultElement(record: ProcessedSearchResult): HTMLElement {
   return result;
 }
 
+/** Replaces the results list with the current page of hits. */
 function renderResultsList(
   list: HTMLOListElement,
   pageResults: ProcessedSearchResult[],
@@ -379,6 +396,7 @@ function renderResultsList(
   });
 }
 
+/** Shows a no-results message when a query returned zero hits. */
 function renderSearchMessage(
   message: HTMLElement,
   query: string,
@@ -392,6 +410,7 @@ function renderSearchMessage(
   message.textContent = '';
 }
 
+/** Shows the empty-filter alert when hits exist but none match the filters. */
 function syncFilteredEmptyAlert(
   unfilteredCount: number,
   filteredCount: number,
@@ -402,6 +421,7 @@ function syncFilteredEmptyAlert(
   filteredEmpty.hidden = !(unfilteredCount > 0 && filteredCount === 0);
 }
 
+/** Reads filter/sort UI state from the container, hydrating from the URL once. */
 function getSearchControlsState(container: HTMLElement) {
   if (!container.dataset.searchControlsStateReady) {
     const state = getSearchStateFromUrl();
@@ -422,6 +442,7 @@ function getSearchControlsState(container: HTMLElement) {
   };
 }
 
+/** Returns the stored result list, query, and current page for a container. */
 function getSearchResultsState(container: HTMLElement): SearchResultsState {
   return (
     searchStateStore.get(container) ?? {
@@ -432,6 +453,10 @@ function getSearchResultsState(container: HTMLElement): SearchResultsState {
   );
 }
 
+/**
+ * Stores the latest Pagefind hits and query on the results container,
+ * resetting pagination to the first page.
+ */
 export function setSearchResultsState(
   container: HTMLElement,
   allResults: SearchResultRecord[],
@@ -444,6 +469,7 @@ export function setSearchResultsState(
   });
 }
 
+/** Updates which page of results is shown without changing the hit list. */
 function setSearchResultsPage(container: HTMLElement, page: number): void {
   const state = getSearchResultsState(container);
   searchStateStore.set(container, {
@@ -452,6 +478,10 @@ function setSearchResultsPage(container: HTMLElement, page: number): void {
   });
 }
 
+/**
+ * Filters, sorts, paginates, and renders the current search results,
+ * including toolbar, filters, and empty states.
+ */
 export function renderSearchResultsView(container: HTMLElement): void {
   const filters = getFiltersElement();
   const toolbar = getToolbarElement();
@@ -506,6 +536,10 @@ export function renderSearchResultsView(container: HTMLElement): void {
   updateSearchStateInUrl(selectedKinds, sort);
 }
 
+/**
+ * Binds filter, sort, and pagination events on the search results layout.
+ * Safe to call more than once; extra calls are ignored.
+ */
 export function initSearchResultsControls(container: HTMLElement): void {
   const layout = getLayoutElement();
   if (!layout || layout.dataset.searchControlsBound) return;
@@ -570,6 +604,7 @@ export function initSearchResultsControls(container: HTMLElement): void {
   });
 }
 
+/** Clones the first child of a <template> by id, or returns null. */
 function cloneTemplateElement(templateId: string): HTMLElement | null {
   const template = document.querySelector(`#${templateId}`);
   if (!(template instanceof HTMLTemplateElement)) return null;
@@ -578,6 +613,9 @@ function cloneTemplateElement(templateId: string): HTMLElement | null {
   return element instanceof HTMLElement ? element : null;
 }
 
+/**
+ * Adds the breadcrumb, kind badge, and link styles to a single result row.
+ */
 export function enhanceSearchResult(result: Element): void {
   const link = result.querySelector(LINK_SELECTOR);
   if (!(link instanceof HTMLAnchorElement)) return;
@@ -622,10 +660,15 @@ export function enhanceSearchResult(result: Element): void {
   }
 }
 
+/** Enhances every Pagefind result currently in the container. */
 export function enhanceSearchResults(container: Element): void {
   container.querySelectorAll(RESULT_SELECTOR).forEach(enhanceSearchResult);
 }
 
+/**
+ * Shows or hides the "no results" helper based on the current query
+ * and unfiltered hit count.
+ */
 export function syncSearchNoResultsSuggestions(
   container: Element,
   query?: string,
@@ -647,6 +690,10 @@ export function syncSearchNoResultsSuggestions(
   helper.hidden = !(hasQueryNoResultsMessage && !hasUnfilteredResults);
 }
 
+/**
+ * Watches the results container and keeps the "no results" helper in sync.
+ * Safe to call more than once; extra calls are ignored.
+ */
 export function observeSearchNoResultsSuggestions(
   container: HTMLElement,
 ): void {
@@ -664,6 +711,10 @@ export function observeSearchNoResultsSuggestions(
   syncSearchNoResultsSuggestions(container);
 }
 
+/**
+ * Watches the container for newly rendered Pagefind rows and enhances them.
+ * Safe to call more than once; extra calls are ignored.
+ */
 export function observeSearchResults(container: HTMLElement): void {
   if (container.dataset.searchEnhancementsReady) return;
 
