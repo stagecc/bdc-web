@@ -1,0 +1,16 @@
+@use '@bdc/uswds-theme/src/uswds-init' as core;
+
+.searchShell {
+  transition: border-color 150ms, box-shadow 150ms, background-color 150ms;
+  cursor: pointer;
+}
+
+.searchShell:focus,
+.searchShell:focus-visible {
+  background: core.core-color(core.$theme-color-primary-lighter);
+  border-color: core.core-color(core.$theme-color-primary-dark);
+  box-shadow: 0 0 0 core.core-units('05') core.core-color(core.$theme-color-primary-light);
+  outline: 0;
+}
+
+.searchInput.usa-search__input {}
