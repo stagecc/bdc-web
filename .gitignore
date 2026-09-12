@@ -11,3 +11,5 @@ packages/ui-astro/dev/icon-gallery/dist
 # apps/freshdesk
 Pipfile
 Pipfile.lock
+
+.lycheecache
