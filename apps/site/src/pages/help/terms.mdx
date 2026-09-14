@@ -6,7 +6,10 @@ layout: ../../layouts/Page.astro
 import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import InfoTooltip from '@bdc/ui-astro/tooltip/InfoTooltip.astro';
 
-<InlineAlert variant="info">
+<InlineAlert 
+  variant="info"
+  heading="Use of BDC is Subject to These Terms"
+>
 These **Terms of Use** describe the conditions governing use of BDC and related resources. By accessing or using this website, users agree to comply with these terms.
 
 Additional terms may apply to specific tools, platforms, or datasets. 
@@ -24,8 +27,11 @@ Whether working with BDC-hosted data or their own data, users must protect parti
 
 ## Data Download Restrictions
 
-<InlineAlert variant="warning">
-**Important**: Individual-level data may not be downloaded from BDC.
+<InlineAlert 
+  variant="warning"
+  heading="Important Download Restriction"
+>
+  Individual-level data may not be downloaded from BDC.
 </InlineAlert>
 
 Download capabilities are limited to metadata and analysis results, including figures generated from analysis for use in publications, and the latter must comply with restrictions defined by NIH for [Summary Results](https://grants.nih.gov/grants/guide/notice-files/NOT-OD-19-023.html). **Downloading sequences, variants, images, phenotypes, and other individual data is prohibited.** 
