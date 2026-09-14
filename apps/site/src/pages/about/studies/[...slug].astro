@@ -4,6 +4,7 @@ import StatCard from '@bdc/ui-astro/card/StatCard.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
 import {
   getProgramsWithContent,
   type ProgramWithContent,
@@ -35,22 +36,24 @@ const { Content } = local ? await render(local) : { Content: undefined };
 
 const datasetLabel = `${studies.length} hosted dataset${studies.length === 1 ? '' : 's'} in BDC`;
 const heroDescription = excerpt ?? description;
+const crumbs = [
+  { label: 'BDC-Hosted Data', href: '/about/studies/' },
+  { label: title },
+];
+
 ---
 
 <Base title={title}>
   <Hero
-    eyebrow="BDC Hosted Data"
+    eyebrow="BDC-Hosted Data"
     title={title}
     description={heroDescription}
-    primaryCta={{ label: 'Jump to datasets', href: '#community-datasets' }}
-    secondaryCta={{ label: 'Back to BDC-Hosted Data', href: '/about/studies' }}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
       <StatCard
         icon="layers"
         number={studies.length}
         qualifier="Hosted datasets"
-        meta={datasetLabel}
         description="eRA Commons credentials and approved dbGaP access are required."
         float="right"
         tone="cool"
@@ -59,22 +62,11 @@ const heroDescription = excerpt ?? description;
     </div>
   </Hero>
 
-  <section class="usa-section padding-top-4">
+  <section class="usa-section padding-top-0">
     <div class="grid-container">
-      {
-        Content && (
-          <>
-            <h3>Description</h3>
-            <div class="study-description usa-prose margin-bottom-3" style="columns: 2; ">
-              <Content />
-            </div>
-          </>
-        )
-      }
-      <hr />
+      <Breadcrumbs items={crumbs} />
 
-
-      <div id="community-datasets" class="overflow-auto margin-top-4">
+      <div id="community-datasets" class="overflow-auto">
         <table class="usa-table usa-table--borderless usa-table--striped width-full margin-top-0">
           <caption class="usa-sr-only">Hosted datasets in BDC for {title}</caption>
           <thead>
@@ -100,9 +92,3 @@ const heroDescription = excerpt ?? description;
   </section>
 
 </Base>
-
-<style>
-  .study-description :global(p:first-of-type) {
-    margin-top: 0;
-  }
-</style>
