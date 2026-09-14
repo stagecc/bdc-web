@@ -2,9 +2,9 @@
 import { render } from 'astro:content';
 import StatCard from '@bdc/ui-astro/card/StatCard.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
 import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
-import Breadcrumbs from '@components/Breadcrumbs.astro';
 import {
   getProgramsWithContent,
   type ProgramWithContent,
@@ -40,7 +40,6 @@ const crumbs = [
   { label: 'BDC-Hosted Data', href: '/about/studies/' },
   { label: title },
 ];
-
 ---
 
 <Base title={title}>
