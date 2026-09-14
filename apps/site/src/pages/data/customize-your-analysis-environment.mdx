@@ -5,6 +5,7 @@ layout: ../../layouts/MdxBase.astro
 import Card from '@bdc/ui-astro/card/Card.astro'
 import NextStepsAlert from '@components/NextStepsAlert.astro'
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import Icon from '@bdc/ui-astro/icon/Icon.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro'
 import InPageNav from '@components/layout/InPageNav.astro';
 import Screenshot from '@components/screenshot/Screenshot.astro';
@@ -53,12 +54,44 @@ BDC can support anything from a single R, Python, or Bash script to a containeri
 
 You may benefit from bringing a tool to BDC if you:
 
-- Have a script you want to run or reuse across multiple files
-- Have a process or analysis that is expected to take several hours
-- Need to formalize and scale a multi-step workflow
-- Have dependencies that would benefit from containerization
-- Want to reuse or integrate an existing Dockerized tool
-- Want application versioning
+<ul class="usa-icon-list padding-top-2 ">
+  <li class="usa-icon-list__item">
+    <div class="usa-icon-list__icon">
+      <Icon name="check_circle" size={3} class="text-green" />
+    </div>
+    <div class="usa-icon-list__content">Have a script you want to run or reuse across multiple files</div>
+  </li>
+  <li class="usa-icon-list__item">
+    <div class="usa-icon-list__icon">
+      <Icon name="check_circle" size={3} class="text-green" />
+    </div>
+    <div class="usa-icon-list__content">Have a process or analysis that is expected to take several hours</div>
+  </li>
+  <li class="usa-icon-list__item">
+    <div class="usa-icon-list__icon">
+      <Icon name="check_circle" size={3} class="text-green" />
+    </div>
+    <div class="usa-icon-list__content">Need to formalize and scale a multi-step workflow</div>
+  </li>
+  <li class="usa-icon-list__item">
+    <div class="usa-icon-list__icon">
+      <Icon name="check_circle" size={3} class="text-green" />
+    </div>
+    <div class="usa-icon-list__content">Have dependencies that would benefit from containerization</div>
+  </li>
+  <li class="usa-icon-list__item">
+    <div class="usa-icon-list__icon">
+      <Icon name="check_circle" size={3} class="text-green" />
+    </div>
+    <div class="usa-icon-list__content">Want to reuse or integrate an existing Dockerized tool</div>
+  </li>
+  <li class="usa-icon-list__item">
+    <div class="usa-icon-list__icon">
+      <Icon name="check_circle" size={3} class="text-green" />
+    </div>
+    <div class="usa-icon-list__content">Want application versioning</div>
+  </li>
+</ul>
 
 Bringing tools into BDC requires familiarity with command-line tools and an understanding of the software, packages, and runtime environment requirements.
 
