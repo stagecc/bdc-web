@@ -20,20 +20,17 @@ const totalDatasets = programs.reduce(
 );
 ---
 
-<Base title="Research Community Data">
+<Base title="BDC-Hosted Data">
   <Hero
     eyebrow="Hosted Datasets"
-    titleLines={['Research', 'Community', 'Data']}
-    description="Explore datasets contributed through BDC collaborations with NHLBI research communities."
-    primaryCta={{ label: 'Explore Research Communities', href: '/about/research-communities' }}
-    secondaryCta={{ label: 'Jump to Data Table', href: '#community-data' }}
+    titleLines={['BDC-Hosted', 'Data']}
+    description="Explore the broad range of biomedical datasets available in BDC."
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
       <StatCard
-        icon="database"
+        icon="cloud"
         number={totalDatasets}
         qualifier="Hosted datasets"
-        meta={`${programs.length} research communities`}
         float="right"
         tone="cool"
         width="100%"
@@ -83,11 +80,11 @@ const totalDatasets = programs.reduce(
           borderless
           striped
           stickyHeader
-          sortable={['research-community', 'hosted-datasets']}
+          sortable={['data-in-bdc', 'hosted-datasets']}
         >
           <thead>
             <tr>
-              <th scope="col" id="research-community">Research Community</th>
+              <th scope="col" id="data-in-bdc">Data in BDC</th>
               <th scope="col" id="overview">Overview</th>
               <th scope="col" id="hosted-datasets">Hosted Datasets</th>
             </tr>

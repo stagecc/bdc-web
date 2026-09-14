@@ -5,6 +5,7 @@ layout: ../../../layouts/MdxBase.astro
 import Button from '@bdc/ui-astro/button/Button.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
+import Notice from '@components/Notice.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import InPageNav from '@components/layout/InPageNav.astro';
 import Screenshot from '@components/screenshot/Screenshot.astro';
@@ -51,10 +52,9 @@ Work in interactive environments, use existing applications and reusable workflo
 **Collaborate securely**  
 Organize data, tools, and results in a controlled environment where you can work with authorized collaborators.
 
-<div class="display-flex flex-justify-center flex-align-center margin-top-2 margin-bottom-0">
-  <IconBadge icon="attach_money" tone="cool" class="margin-right-1" />
-  <Link to="/help/costs" class="text-bold">Learn about usage costs</Link>.
-</div>
+<Notice icon="attach_money" tone="neutral">
+  <Link to="/help/costs">Learn about usage costs</Link>
+</Notice>
 
 
 # What Data Can You Analyze?
@@ -63,7 +63,9 @@ Organize data, tools, and results in a controlled environment where you can work
 
 Open-access and controlled-access BDC-hosted datasets can be found through BDC’s data exploration tools. Depending on the dataset and your access approvals, you will be able to select files, build a cohort, and connect data to an analysis environment.
 
-<Link to="/data/explore">Explore Data in BDC</Link>
+<Notice icon="search" tone="neutral">
+  <Link to="/data/explore">Explore Data in BDC</Link>
+</Notice>
 
 ## Data You Bring to BDC
 
@@ -71,7 +73,9 @@ Upload or connect data that you or your research team are authorized to use. You
 
 Data you bring to BDC is different from consortium data that has already been made available through a designated BDC-Seven Bridges project.
 
-<Link to="/data/share">Learn About Bringing Data to BDC in our documentation</Link>
+<Notice icon="backup" tone="neutral">
+  <Link to="/data/share">Learn About Bringing Data to BDC in our documentation</Link>
+</Notice>
 
 ## Consortium Data in BDC-Seven Bridges
 
@@ -97,8 +101,9 @@ BDC-Seven Bridges is generally the best place to begin when you:
 
 BDC-Seven Bridges is the only BDC analysis platform where authorized researchers can access consortium data.
 
-<br />
-<Link to="https://accounts.sb.biodatacatalyst.nhlbi.nih.gov/auth/login?next=https%3A%2F%2Faccounts.sb.biodatacatalyst.nhlbi.nih.gov%2F">Access BDC-Seven Bridges</Link>
+<Notice icon="analysis" tone="neutral">
+  <Link to="https://accounts.sb.biodatacatalyst.nhlbi.nih.gov/auth/login?next=https%3A%2F%2Faccounts.sb.biodatacatalyst.nhlbi.nih.gov%2F">Access BDC-Seven Bridges</Link>
+</Notice>
 
 ## When BDC-Terra May Be a Better Fit
 
@@ -110,7 +115,9 @@ Consider BDC-Terra when you:
 * Need to work with eligible BDC data alongside resources available through AnVIL or another Terra-based program  
 * Specifically need a Terra workspace for your research workflow
 
-<Link to="https://terra.biodatacatalyst.nhlbi.nih.gov/">Access BDC-Terra</Link>
+<Notice icon="analysis" tone="neutral">
+  <Link to="https://terra.biodatacatalyst.nhlbi.nih.gov/">Access BDC-Terra</Link>
+</Notice>
 
 ## Compare BDC Analysis Platforms
 

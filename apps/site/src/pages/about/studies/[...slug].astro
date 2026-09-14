@@ -3,6 +3,7 @@ import { render } from 'astro:content';
 import StatCard from '@bdc/ui-astro/card/StatCard.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Table from '@bdc/ui-astro/table/Table.astro';
+import Breadcrumbs from '@components/Breadcrumbs.astro';
 import Link from '@components/link/Link.astro';
 import Base from '@layouts/Base.astro';
 import {
@@ -36,22 +37,23 @@ const { Content } = local ? await render(local) : { Content: undefined };
 
 const datasetLabel = `${studies.length} hosted dataset${studies.length === 1 ? '' : 's'} in BDC`;
 const heroDescription = excerpt ?? description;
+const crumbs = [
+  { label: 'BDC-Hosted Data', href: '/about/studies/' },
+  { label: title },
+];
 ---
 
 <Base title={title}>
   <Hero
-    eyebrow="Research Community"
+    eyebrow="BDC-Hosted Data"
     title={title}
     description={heroDescription}
-    primaryCta={{ label: 'Jump to datasets', href: '#community-datasets' }}
-    secondaryCta={{ label: 'Back to Research Community Data', href: '/about/studies' }}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
       <StatCard
-        icon="database"
+        icon="layers"
         number={studies.length}
         qualifier="Hosted datasets"
-        meta={datasetLabel}
         description="eRA Commons credentials and approved dbGaP access are required."
         float="right"
         tone="cool"
@@ -60,28 +62,21 @@ const heroDescription = excerpt ?? description;
     </div>
   </Hero>
 
-  <section class="usa-section padding-top-4">
+  <section class="usa-section padding-top-0">
     <div class="grid-container">
-      <div class="usa-prose" style="columns: 2;">
-        {Content && (
+      <Breadcrumbs items={crumbs} />
+      
+      {
+        Content && (
           <>
             <h3>Description</h3>
-            <Content />
+            <div class="study-description usa-prose margin-bottom-3" style="columns: 2; ">
+              <Content />
+            </div>
           </>
-        )}
-        <p>
-          View {title} data available in BDC below, or learn more about this and
-          other supported collaborations on the{' '}
-          <Link to={`/about/research-communities#${program.id}`}>
-            Research Communities
-          </Link>{' '}
-          page.
-        </p>
-      </div>
-
+        )
+      }
       <hr />
-
-
       <div id="community-datasets" class="margin-top-4">
         <Table
           class="width-full margin-top-0"
@@ -119,3 +114,10 @@ const heroDescription = excerpt ?? description;
   </section>
 
 </Base>
+
+<style>
+  /* Removes the leading paragraph gap so content aligns cleanly under the Description heading. */
+  .study-description :global(p:first-of-type) {
+    margin-top: 0;
+  }
+</style>
