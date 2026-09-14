@@ -7,11 +7,19 @@ interface Props {
   headingLevel?: 2 | 3 | 4;
 }
 
+const DEFAULT_HEADINGS: Record<Props['variant'], string> = {
+  info: 'Information',
+  warning: 'Warning',
+  success: 'Success',
+  error: 'Error',
+  emergency: 'Emergency',
+};
+
 const {
   variant,
   slim = false,
   noIcon = false,
-  heading,
+  heading = DEFAULT_HEADINGS[variant],
   headingLevel = 3,
 } = Astro.props;
 
@@ -26,24 +34,14 @@ const classes = [
   .join(' ');
 
 const Heading = `h${headingLevel}` as 'h2' | 'h3' | 'h4';
-const headingId = heading
-  ? `inline-alert-heading-${crypto.randomUUID()}`
-  : undefined;
+const headingId = `inline-alert-heading-${crypto.randomUUID()}`;
 ---
 
-{heading ? (
-  <section class={classes} aria-labelledby={headingId}>
-    <div class="usa-alert__body">
-      <Heading id={headingId} class="usa-alert__heading">{heading}</Heading>
-      <div class="usa-alert__text">
-        <slot />
-      </div>
-    </div>
-  </section>
-) : (
-  <div class={classes} role="status">
-    <div class="usa-alert__body">
+<section class={classes} aria-labelledby={headingId}>
+  <div class="usa-alert__body">
+    <Heading id={headingId} class="usa-alert__heading">{heading}</Heading>
+    <div class="usa-alert__text">
       <slot />
     </div>
   </div>
-)}
+</section>
