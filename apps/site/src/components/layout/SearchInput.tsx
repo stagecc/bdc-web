@@ -15,7 +15,7 @@ export function SearchInput() {
         aria-haspopup="dialog"
       >
         <div
-          className={`flex-1 usa-search__input bg-transparent border-0 display-flex flex-align-center shadow-none padding-left-2 text-base text-no-wrap ${styles.searchInput}`}
+          className="flex-1 usa-search__input bg-transparent border-0 display-flex flex-align-center shadow-none padding-left-2 text-base-dark text-no-wrap"
         >
           Search site
         </div>
