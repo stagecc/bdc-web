@@ -25,7 +25,18 @@ const customIcon = customIcons[name];
 >
   {label && <title>{label}</title>}
   {customIcon ? (
-    customIcon.paths.map((path) => <path d={path} fill="currentColor" />)
+    [
+      ...customIcon.paths.map((path) => <path d={path} fill="currentColor" />),
+      ...(customIcon.strokedPaths ?? []).map((path) => (
+        <path
+          d={path}
+          fill="none"
+          stroke="currentColor"
+          stroke-width={customIcon.strokeWidth}
+          stroke-miterlimit={customIcon.strokeMiterlimit}
+        />
+      )),
+    ]
   ) : (
     <use href={`${spriteUrl}#${name}`} />
   )}
