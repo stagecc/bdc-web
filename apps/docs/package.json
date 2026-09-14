@@ -11,7 +11,10 @@
     "check:external-updates": "node ./scripts/check-external-updates.mjs",
     "sync:content": "npm run sync:gitbook && npm run sync:external",
     "build": "npm run sync:content && astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "links:offline": "node ../../scripts/check-links.mjs offline docs",
+    "links:online": "node ../../scripts/check-links.mjs online docs",
+    "links:unique": "node ../../scripts/check-links.mjs unique docs"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.3",

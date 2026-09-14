@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview"
+    "preview": "astro preview",
+    "links:offline": "node ../../scripts/check-links.mjs offline consortium",
+    "links:online": "node ../../scripts/check-links.mjs online consortium",
+    "links:unique": "node ../../scripts/check-links.mjs unique consortium"
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.3",
