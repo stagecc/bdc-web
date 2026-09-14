@@ -20,6 +20,8 @@ export const customIcons: Record<string, CustomIconDefinition> = {
       'M13.63 3.41L5.63 8.41 6.37 9.59 14.37 4.59Z',
       'M5.63 9.59L13.63 14.59 14.37 13.41 6.37 8.41Z',
       'M13.63 13.41L5.63 18.41 6.37 19.59 14.37 14.59Z',
+    ],
+  },
   database: {
     viewBox: '0 0 512 512',
     paths: [
