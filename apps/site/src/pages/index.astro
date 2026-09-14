@@ -64,6 +64,7 @@ const initiatives = new Set([
 ]);
 const featuredPrograms = programs
   .filter((program) => initiatives.has(program.key))
+  .sort((p, q) => programs.indexOf(q) - programs.indexOf(p))
   .map((program) => {
     const slug = slugify(program.key);
     return {
