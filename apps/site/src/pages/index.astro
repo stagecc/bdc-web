@@ -56,9 +56,11 @@ const featuredPublications = publications
 const defaultCommunityDescription =
   'Approved datasets and tools for this research community.';
 
-const featuredCommunities = programs
-  .sort(() => 0.5 - Math.random())
-  .slice(0, 2)
+const initiatives = new Set([
+  'TOPMed', 'RECOVER', 'Heartshare', 'National Sleep Research Resource (NSRR)',
+]);
+const featuredPrograms = programs
+  .filter((program) => initiatives.has(program.key))
   .map((program) => {
     const slug = slugify(program.key);
     return {
@@ -364,7 +366,7 @@ const nextEvent = events[0];
         and advance data-driven research.
       </p>
       <div class="grid-row grid-gap-3 margin-bottom-neg-3">
-        {featuredCommunities.map((program, index) => (
+        {featuredPrograms.map((program, index) => (
           <div class="tablet:grid-col-6 desktop:grid-col-6 flex-align-stretch margin-bottom-3">
             <ResearchCommunityCard
               mediaVariant={Math.min(index + 1, 4) as 1 | 2 | 3 | 4}
