@@ -12,7 +12,9 @@ const SORTABLE_HEADER_SELECTOR = 'thead th';
 const SORTABLE_COLUMNS_ATTR = 'data-bdc-sortable-columns';
 
 function getSortableHeaders(table: HTMLTableElement): HTMLTableCellElement[] {
-  const headers = Array.from(table.querySelectorAll<HTMLTableCellElement>(SORTABLE_HEADER_SELECTOR));
+  const headers = Array.from(
+    table.querySelectorAll<HTMLTableCellElement>(SORTABLE_HEADER_SELECTOR),
+  );
   const sortableColumnIds = table.getAttribute(SORTABLE_COLUMNS_ATTR)?.trim();
 
   if (!sortableColumnIds) {
@@ -22,7 +24,10 @@ function getSortableHeaders(table: HTMLTableElement): HTMLTableCellElement[] {
   const columnIdSet = new Set(sortableColumnIds.split(/\s+/));
 
   return headers.filter((header) => {
-    const columnId = header.id || header.getAttribute('data-column-id') || header.getAttribute('data-col-id');
+    const columnId =
+      header.id ||
+      header.getAttribute('data-column-id') ||
+      header.getAttribute('data-col-id');
     return Boolean(columnId && columnIdSet.has(columnId));
   });
 }
@@ -30,10 +35,14 @@ function getSortableHeaders(table: HTMLTableElement): HTMLTableCellElement[] {
 let tableModulePromise: Promise<UswdsTable> | null = null;
 
 function ensureSortableHeaderAttributes(root: ParentNode): void {
-  const sortableTables = root.querySelectorAll<HTMLTableElement>(SORTABLE_TABLE_SELECTOR);
+  const sortableTables = root.querySelectorAll<HTMLTableElement>(
+    SORTABLE_TABLE_SELECTOR,
+  );
 
   for (const table of sortableTables) {
-    const headers = table.querySelectorAll<HTMLTableCellElement>(SORTABLE_HEADER_SELECTOR);
+    const headers = table.querySelectorAll<HTMLTableCellElement>(
+      SORTABLE_HEADER_SELECTOR,
+    );
     const sortableHeaders = new Set(getSortableHeaders(table));
 
     for (const header of headers) {
@@ -49,7 +58,9 @@ function ensureSortableHeaderAttributes(root: ParentNode): void {
 
 async function getTableModule(): Promise<UswdsTable> {
   if (!tableModulePromise) {
-    tableModulePromise = import('@uswds/uswds/js/usa-table').then((module) => module.default as UswdsTable);
+    tableModulePromise = import('@uswds/uswds/js/usa-table').then(
+      (module) => module.default as UswdsTable,
+    );
   }
   return tableModulePromise;
 }
