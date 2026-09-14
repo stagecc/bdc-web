@@ -57,7 +57,10 @@ const defaultCommunityDescription =
   'Approved datasets and tools for this research community.';
 
 const initiatives = new Set([
-  'TOPMed', 'RECOVER', 'Heartshare', 'National Sleep Research Resource (NSRR)',
+  'TOPMed',
+  'RECOVER',
+  'Heartshare',
+  'National Sleep Research Resource (NSRR)',
 ]);
 const featuredPrograms = programs
   .filter((program) => initiatives.has(program.key))
