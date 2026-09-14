@@ -4,6 +4,8 @@ layout: ../../layouts/Page.astro
 ---
 import Button from '@bdc/ui-astro/button/Button.astro';
 import CloudCreditsForm from '@components/forms/freshdesk/composed/CloudCreditsForm.astro';
+import Notice from '@components/Notice.astro';
+import Link from '@bdc/ui-astro/link/Link.astro'
 
 There are no costs to BDC users for creating accounts or [exploring the data](/use-bdc/explore-data) BDC hosts.
 
@@ -64,7 +66,13 @@ NHLBI BDC Pilot Funding Program recipients agree to acknowledge the funding in a
 
 Prior to applying for Pilot Credits, applicants must [create an account(s) and project or workspace](/use-bdc/analyze-data) in the platform(s) aligned with their Pilot Credit request. For more information about the differences between BDC's standard workspaces and those provided by *BDC Powered by Terra*, [visit this webpage](/use-bdc/analyze-data/bdc-workspaces).
 
-<Button to="#cloud-credit-request-form">Fill out the form below to request $500 in pilot cloud credits</Button>
+<Notice
+  icon="attach_money"
+  tone="neutral"
+  class="flex-justify-start margin-left-2"
+>
+  <Link to="#cloud-credit-request-form">Fill out the form below to request $500 in pilot cloud credits</Link>
+</Notice>
 
 ### NHLBI BDC Cloud Credit Support Program
 
@@ -74,7 +82,13 @@ NHLBI BDC Cloud Credit Support Program recipients agree to acknowledge the fundi
 
 Applicants for the NHLBI BDC Cloud Credit Support Program must specify the BDC platform they will use: either *BDC-Seven Bridges* or *BDC-Terra*. Before applying for Cloud Credit Support, applicants must [create an account in the platform aligned with their Cloud Credit Support request](/use-bdc/analyze-data). For more information about the differences between BDC's standard workspaces and those provided by *BDC Powered by Terra*, [visit this webpage](/use-bdc/analyze-data/bdc-workspaces).
 
-[Fill out the form below to apply for the NHLBI BDC Cloud Credit Support Program](/resources/usage-costs/#cloud-credit-request-form)
+<Notice
+  icon="attach_money"
+  tone="neutral"
+  class="flex-justify-start margin-left-2"
+>
+  <Link to="#cloud-credit-request-form">Fill out the form below to apply for the NHLBI BDC Cloud Credit Support Program</Link>
+</Notice>
 
 ### Cloud Credit Requests for Academic Classes and Group Educational Sessions
 
