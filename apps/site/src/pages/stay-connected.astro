@@ -1,0 +1,53 @@
+---
+import Card from '@bdc/ui-astro/card/Card.astro';
+import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
+import EmailSignup from '@components/EmailSignup.astro';
+import Base from '@layouts/Base.astro';
+---
+<Base title="Stay Connected">
+  <Hero
+    eyebrow="Join BDC"
+    title="Stay Connected"
+    description="By joining the BDC Community, you'll receive updates and gain the ability to participate in discussions on the BDC Community Forum."
+    primaryCta={{ label: 'BDC Community Forum', href: 'https://bdcatalyst.freshdesk.com/support/discussions' }}
+  >
+    <div slot="visual" class="width-full maxw-mobile-lg">
+      <Card variant="panel">
+        <p class="font-sans-sm text-bold text-base-dark margin-top-1 ">Receive updates about:</p>
+        <ul class="usa-icon-list margin-top-2 margin-bottom-0 text-base line-height-sans-4">
+          <li class="usa-icon-list__item">
+            <div class="usa-icon-list__icon">
+              <Icon name="campaign" size={3} />
+            </div>
+            <div class="usa-icon-list__content">New features</div>
+          </li>
+          <li class="usa-icon-list__item">
+            <div class="usa-icon-list__icon">
+              <Icon name="campaign" size={3} />
+            </div>
+            <div class="usa-icon-list__content">Events</div>
+          </li>
+          <li class="usa-icon-list__item">
+            <div class="usa-icon-list__icon">
+              <Icon name="campaign" size={3} />
+            </div>
+            <div class="usa-icon-list__content">Publications</div>
+          </li>
+          <li class="usa-icon-list__item">
+            <div class="usa-icon-list__icon">
+              <Icon name="campaign" size={3} />
+            </div>
+            <div class="usa-icon-list__content">Opportunities</div>
+          </li>
+        </ul>
+      </Card>
+    </div>
+  </Hero>
+  <section class="usa-section margin-y-0">
+    <div class="grid-container">
+      <EmailSignup/>
+    </div>
+    </section>
+</Base>
