@@ -1,52 +1,11 @@
 ---
-import { getCollection, render } from 'astro:content';
-import Button from '@bdc/ui-astro/button/Button.astro';
 import Card from '@bdc/ui-astro/card/Card.astro';
-import Icon from '@bdc/ui-astro/icon/Icon.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import InPageNav from '@components/layout/InPageNav.astro';
 import NextStepsAlert from '@components/NextStepsAlert.astro';
 import Base from '@layouts/Base.astro';
-
-const localEntries = await getCollection(
-  'programContent',
-  ({ data }) => data.showOnContentPage,
-);
-const apiPrograms = await getCollection('programs');
-const apiById = new Map(apiPrograms.map((p) => [p.id, p]));
-
-const sections = await Promise.all(
-  localEntries.map(async (entry) => {
-    const apiEntry =
-      entry.data.dataAvailable !== false ? apiById.get(entry.id) : undefined;
-    const { Content } = await render(entry);
-    return {
-      id: entry.id,
-      name: entry.data.title ?? apiEntry?.data.name ?? entry.id,
-      priority: entry.data.priority,
-      dataAvailable: entry.data.dataAvailable,
-      Content,
-    };
-  }),
-);
-
-const communitiesWithData = sections.filter(
-  ({ dataAvailable }) => dataAvailable,
-).length;
-
-sections.sort((a, b) => {
-  const aPriority = a.priority;
-  const bPriority = b.priority;
-
-  if (aPriority !== undefined && bPriority !== undefined) {
-    return aPriority - bPriority;
-  }
-  if (aPriority !== undefined) return -1;
-  if (bPriority !== undefined) return 1;
-  return a.name.localeCompare(b.name);
-});
 ---
 
 <Base title="Researcher-Focused Initiatives">
@@ -86,18 +45,131 @@ sections.sort((a, b) => {
         </p>
 
         <div class="margin-bottom-8">
-          {sections.map(({ id, name, dataAvailable, Content }) => (
-            <section id={id} class="border-top-1px border-base-light margin-top-6">
-              <h2>{name}</h2>
-              <Content />
-              {dataAvailable && (
-                <div class="display-flex flex-align-center flex-justify-center">
-                  <IconBadge icon="database" tone="cool" size={5} class="margin-x-1" />
-                  <Link to={`/about/studies/${id}`}>See a list of the {name} data available in BDC</Link>
-                </div>
-              )}
-            </section>
-          ))}
+          <section id="topmed" class="border-top-1px border-base-light margin-top-6">
+            <h2>TOPMed</h2>
+            <p>
+              TOPMed data in BDC combines whole-genome sequencing and other omics data 
+              with rich clinical, behavioral, imaging, environmental, and molecular 
+              data from studies spanning heart, lung, blood, and sleep research. BDC 
+              provides secure access to these data alongside scalable analysis tools 
+              and workflows, and hosts TOPMed Exchange Area (EA) data for TOPMed 
+              investigators with approved access. <Link to="/help/contact-bdc">Contact 
+              BDC</Link> if you are interested in accessing EA data in BDC.
+            </p>
+            <p class="text-italic">
+              For genotype imputation using the TOPMed reference panel, refer to the 
+              <Link to="https://imputation.biodatacatalyst.nhlbi.nih.gov/">TOPMed Imputation Server</Link>.
+            </p>
+              <div class="display-flex flex-align-center flex-justify-center">
+                <IconBadge icon="database" tone="cool" size={5} class="margin-x-1" />
+                <Link to={`/about/studies/topmed`}>See a list of the TOPMed data available in BDC</Link>
+              </div>
+
+          </section>
+
+          <section id="recover" class="border-top-1px border-base-light margin-top-6">
+            <h2>RECOVER</h2>
+            <p>
+              <Link to="https://recovercovid.org/">Researching COVID to Enhance Recovery (RECOVER)</Link>
+              {' '}
+              is a first-of-its-kind, patient-centered research initiative to understand,
+              diagnose, and treat Long COVID. RECOVER research includes observational
+              cohort studies, electronic health records analyses, pathobiology studies,
+              tissue pathology studies, and clinical trials.
+            </p>
+            <p>
+              RECOVER studies involve thousands of people from all walks of life, hundreds of research investigators, and millions of electronic health records (EHRs). RECOVER aims to achieve the following:
+            </p>
+            <ul>
+              <li>
+                Understand the range of symptoms and impacts on quality of life for individuals experiencing Long COVID.  
+              </li>
+              <li>
+                Define risk factors and causes associated with Long COVID.  
+              </li>
+              <li>
+                Study how Long COVID changes over time and how those changes may relate to other illnesses.  
+              </li>
+              <li>
+                Identify possible treatments for Long COVID symptoms.
+              </li>
+            </ul>
+            <p>
+              The Data References and Access Information section on the RECOVER
+              {' '}
+              <Link to="https://recovercovid.org/data">Data</Link>
+              {' '}
+              page provides access to key resources for working with RECOVER data.
+              These resources include Data Dictionaries, Data Release Notes, and Data
+              Use Agreements for Adult/Pregnancy, Pediatric, and Tissue Pathology
+              datasets. There are also additional Data Access Resources that support
+              data access requests, data sharing compliance, and use of RECOVER datasets.
+            </p>
+            <div class="display-flex flex-align-center flex-justify-center">
+              <IconBadge icon="database" tone="cool" size={5} class="margin-x-1" />
+              <Link to={`/about/studies/recover`}>See a list of the RECOVER data available in BDC</Link>
+            </div>
+          </section>
+
+          <section id="heartshare" class="border-top-1px border-base-light margin-top-6">
+            <h2>HeartShare</h2>
+            <p>
+              <Link to="https://amphf.org/">HeartShare</Link>
+              {' '}
+              is an NHLBI-funded program to conduct large-scale analysis of phenotypic
+              data, images, and omics from patients with heart failure with preserved
+              ejection fraction (HFpEF) and controls to characterize disease mechanisms
+              and identify therapeutic targets.
+            </p>
+            <p>
+              HeartShare is comprised of retrospective and prospective components.
+              HeartShare aggregates and harmonizes data from previously completed cohort
+              studies and trials, including images and omics. Prospective data are
+              generated from the HeartShare registry of up to 10,000 participants and
+              deep phenotyping study cohorts involving up to 1,000 participants. Both
+              cohorts will have baseline and longitudinal data.
+            </p>
+            <div class="display-flex flex-align-center flex-justify-center">
+              <IconBadge icon="database" tone="cool" size={5} class="margin-x-1" />
+              <Link to={`/about/studies/heartshare`}>See a list of the HeartShare data available in BDC</Link>
+            </div>
+          </section>
+
+          <section id="nsrr" class="border-top-1px border-base-light margin-top-6">
+            <h2>National Sleep Research Resource (NSRR)</h2>
+            <p>
+              <Link to="https://sleepdata.org/">National Sleep Research Resource (NSRR)</Link>
+              {' '}
+              brings polysomnography, actigraphy, questionnaire, and other sleep data
+              from cohorts and clinical trials to BDC for secondary research in sleep
+              and circadian science. BDC is working with NSRR to expand support for
+              sleep data and analysis tools, improve sleep metadata and data models,
+              and develop AI-assisted approaches to data harmonization.
+            </p>
+            <p>
+              The NSRR encourages active engagement by the sleep and circadian
+              communities, aiming to expand the breadth and depth of the sleep-related
+              data and understand optimal methods of sleep data analysis.
+            </p>
+            <div class="display-flex flex-align-center flex-justify-center">
+              <IconBadge icon="database" tone="cool" size={5} class="margin-x-1" />
+              <Link to={`/about/studies/nsrr`}>See a list of the NSRR data available in BDC</Link>
+            </div>
+          </section>
+          <section id="rmip" class="border-top-1px border-base-light margin-top-6">
+            <h2>Regenerative Medicine Innovation Project (RMIP)</h2>
+            <p>
+              BDC is supporting the development of a centralized research resource for
+              {' '}
+              <Link to="https://www.nih.gov/regenerative-medicine-innovation-project-rmip">
+                Regenerative Medicine Innovation Project (RMIP)
+              </Link>
+              {' '}
+              data, with standardized data aggregation and processing across multiple
+              data-generation sites. BDC also supports study registration and data
+              ingest, helping make these data available for future research and reuse.
+            </p>
+          </section>
         </div>
 
         <NextStepsAlert
