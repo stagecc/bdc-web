@@ -1,7 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
-import CardCta from '@bdc/ui-astro/card/CardCta.astro';
+import StatCard from '@bdc/ui-astro/card/StatCard.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import BdcHostedIndicator from '@components/events/BdcHostedIndicator.astro';
@@ -24,12 +24,13 @@ const past = (await getCollection('events'))
     secondaryCta={{ label: 'View Latest Updates', href: '/news/latest-updates' }}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
-      <CardCta
+      <StatCard
         icon="event"
-        title="Explore the archive"
-        text={`${past.length} past event${past.length === 1 ? '' : 's'} available.`}
-        href="#past-events"
-        cta="Browse archive"
+        number={past.length}
+        qualifier="Past Events Available"
+        float="right"
+        tone="cool"
+        width="100%"
       />
     </div>
   </Hero>

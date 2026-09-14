@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import Card from '@bdc/ui-astro/card/Card.astro';
+import StatCard from '@bdc/ui-astro/card/StatCard.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Icon from '@components/Icon.astro';
 import PublicationsExplorer from '@components/publications/PublicationsExplorer.tsx';
@@ -21,17 +22,18 @@ const publications = (await getCollection('publications')).map((pub) => ({
     secondaryCta={{ label: 'Submit a Publication', href: '/news/bdc-enabled-research/publication-submission' }}
   >
     <div slot="visual" class="width-full maxw-mobile">
-      <Card variant="panel" class="padding-3">
-        <div class="display-flex flex-align-center margin-bottom-1">
-          <Icon name="local_library" size={4} class="margin-right-1 text-primary" />
-          <p class="margin-0 text-bold">Total Publications</p>
-        </div>
-        <p class="margin-y-0 font-heading-xl text-primary-dark">{publications.length}</p>
-      </Card>
+      <StatCard
+        icon="local_library"
+        number={publications.length}
+        qualifier="Total Publications"
+        float="right"
+        tone="cool"
+        width="100%"
+      />
     </div>
   </Hero>
 
-  <section class="usa-section">
+  <section id="publications-explorer" class="usa-section">
     <div class="grid-container">
       <PublicationsExplorer client:visible publications={publications} />
     </div>
