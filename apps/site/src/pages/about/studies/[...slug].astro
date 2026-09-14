@@ -64,7 +64,18 @@ const crumbs = [
   <section class="usa-section padding-top-0">
     <div class="grid-container">
       <Breadcrumbs items={crumbs} />
-
+      
+      {
+        Content && (
+          <>
+            <h3>Description</h3>
+            <div class="study-description usa-prose margin-bottom-3" style="columns: 2; ">
+              <Content />
+            </div>
+          </>
+        )
+      }
+      <hr />
       <div id="community-datasets" class="overflow-auto">
         <table class="usa-table usa-table--borderless usa-table--striped width-full margin-top-0">
           <caption class="usa-sr-only">Hosted datasets in BDC for {title}</caption>
@@ -91,3 +102,9 @@ const crumbs = [
   </section>
 
 </Base>
+
+<style>
+  .study-description :global(p:first-of-type) {
+    margin-top: 0;
+  }
+</style>
