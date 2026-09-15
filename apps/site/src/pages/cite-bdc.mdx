@@ -5,6 +5,7 @@ layout: ../layouts/Page.astro
 in_page_nav: false
 ---
 import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
+import Card from '@bdc/ui-astro/card/Card.astro';
 import CopyToClipboard from '@components/CopyToClipboard';
 
 Researchers who use BDC resources, services, tools, funding, or cloud credits are expected to appropriately acknowledge BDC’s contribution to their work. Acknowledgement and citation should be included in publications, preprints, posters, presentations, and other scholarly outputs resulting from the use of BDC.  
@@ -15,23 +16,31 @@ Standard citation and acknowledgement language can be copied from below.
 
 <div class="grid-row grid-gap-3 margin-y-3">
   <div class="tablet:grid-col-6">
-    <CopyToClipboard
-      client:idle
-      eyebrow="Citation"
-      title="For citation of BDC, use:"
-      copyLabel="Copy citation to clipboard"
-      copyText="National Heart, Lung, and Blood Institute, National Institutes of Health, U.S. Department of Health and Human Services (2020). The NHLBI BioData Catalyst. Zenodo. https://doi.org/10.5281/zenodo.3822858"
-    />
+    <Card as="div" variant="panel" class="height-full display-flex flex-column">
+      <div class="margin-0 font-heading-sm text-bold text-primary-dark">
+        For citation of BDC, use:
+      </div>
+      <CopyToClipboard
+        client:idle
+        className="margin-top-1 height-full"
+        copyLabel="Copy citation to clipboard"
+        copyText="National Heart, Lung, and Blood Institute, National Institutes of Health, U.S. Department of Health and Human Services (2020). The NHLBI BioData Catalyst. Zenodo. https://doi.org/10.5281/zenodo.3822858"
+      />
+    </Card>
   </div>
 
   <div class="tablet:grid-col-6">
-    <CopyToClipboard
-      client:idle
-      eyebrow="Acknowledgement"
-      title="To acknowledge BDC, use:"
-      copyLabel="Copy acknowledgement to clipboard"
-      copyText="The authors wish to acknowledge the contributions of the consortium working on the development of the NHLBI BioData Catalyst® (BDC) ecosystem."
-    />
+    <Card as="div" variant="panel" class="height-full display-flex flex-column">
+      <div class="margin-0 font-heading-sm text-bold text-primary-dark">
+        To acknowledge BDC, use:
+      </div>
+      <CopyToClipboard
+        client:idle
+        className="margin-top-1 height-full"
+        copyLabel="Copy acknowledgement to clipboard"
+        copyText="The authors wish to acknowledge the contributions of the consortium working on the development of the NHLBI BioData Catalyst® (BDC) ecosystem."
+      />
+    </Card>
   </div>
 </div>
 
