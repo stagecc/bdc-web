@@ -45,7 +45,9 @@ function getSearchQuery(target: Element, submitContainer: HTMLElement) {
 }
 
 export function trackSearchSubmitInteraction(target: Element) {
-  const submitContainer = target.closest<HTMLElement>(SEARCH_SUBMIT_EVENT_SELECTOR);
+  const submitContainer = target.closest<HTMLElement>(
+    SEARCH_SUBMIT_EVENT_SELECTOR,
+  );
   if (!submitContainer) return false;
 
   const eventName = getConfiguredSearchEvent(

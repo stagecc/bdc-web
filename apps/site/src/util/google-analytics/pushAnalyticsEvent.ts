@@ -26,6 +26,5 @@ export function pushAnalyticsEvent(event: DataLayerEvent) {
   if (typeof analyticsWindow.gtag === 'function') {
     console.log('Pushing analytics event:', eventName, params);
     analyticsWindow.gtag('event', eventName, params);
-
   }
 }
