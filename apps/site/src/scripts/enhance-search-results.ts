@@ -287,7 +287,7 @@ function renderSearchToolbar(
 
   toolbar.innerHTML = `
     <div class="search-results-toolbar__bar display-block tablet:display-flex tablet:flex-justify flex-align-center padding-x-3 padding-y-2 bg-base-lightest border border-base-lighter radius-sm margin-bottom-3">
-      <span class="text-base margin-bottom-1 tablet:margin-bottom-0">
+      <span class="display-block text-base margin-bottom-2 tablet:margin-bottom-0">
         ${countText}
       </span>
       <div class="display-flex flex-justify-center flex-align-end text-no-wrap">

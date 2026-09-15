@@ -1,16 +1,16 @@
 ---
-import Badge from '@bdc/ui-astro/tag/Badge.astro';
+import Tag from '@bdc/ui-astro/tag/Tag.astro';
 import SearchResultBreadcrumb from './SearchResultBreadcrumb.astro';
 ---
 
 <template id="search-result-badge-news-template">
-  <Badge label="News" icon="campaign" tone="warm" />
+  <Tag label="News" tone="warm" />
 </template>
 <template id="search-result-badge-event-template">
-  <Badge label="Event" icon="event" tone="cool" />
+  <Tag label="Event" tone="cool" />
 </template>
 <template id="search-result-badge-page-template">
-  <Badge label="Page" icon="topic" tone="secondary" />
+  <Tag label="Page" tone="secondary" />
 </template>
 <template id="search-result-breadcrumb-template">
   <SearchResultBreadcrumb />
