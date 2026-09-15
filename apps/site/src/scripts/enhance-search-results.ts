@@ -3,6 +3,7 @@ import {
   getSearchResultKind,
   type SearchResultKind,
 } from '../util/get-search-result-kind';
+import { applySearchResultAnalytics } from './search-analytics';
 
 const SEARCH_RESULTS_LAYOUT_SELECTOR = '#search-results-layout';
 const SEARCH_RESULTS_FILTERS_SELECTOR = '#search-results-filters';
@@ -361,7 +362,11 @@ function renderSearchPagination(
 }
 
 /** Builds one result row and runs breadcrumb/badge enhancement on it. */
-function createResultElement(record: ProcessedSearchResult): HTMLElement {
+function createResultElement(
+  record: ProcessedSearchResult,
+  query: string,
+  rank: number,
+): HTMLElement {
   const result = document.createElement('li');
   result.className =
     'pagefind-ui__result display-flex flex-align-start padding-top-3 padding-bottom-4';
@@ -382,6 +387,7 @@ function createResultElement(record: ProcessedSearchResult): HTMLElement {
   `;
 
   enhanceSearchResult(result);
+  applySearchResultAnalytics(result, query, rank);
   return result;
 }
 
@@ -389,10 +395,12 @@ function createResultElement(record: ProcessedSearchResult): HTMLElement {
 function renderResultsList(
   list: HTMLOListElement,
   pageResults: ProcessedSearchResult[],
+  query: string,
+  startRank: number,
 ): void {
   list.replaceChildren();
-  pageResults.forEach((record) => {
-    list.appendChild(createResultElement(record));
+  pageResults.forEach((record, index) => {
+    list.appendChild(createResultElement(record, query, startRank + index));
   });
 }
 
@@ -517,7 +525,7 @@ export function renderSearchResultsView(container: HTMLElement): void {
     setSearchResultsPage(container, currentPage);
   }
 
-  renderResultsList(list, pageResults);
+  renderResultsList(list, pageResults, query, pageStart + 1);
   renderSearchMessage(message, query, allResults.length);
   syncFilteredEmptyAlert(allResults.length, sortedResults.length);
   syncSearchNoResultsSuggestions(container, query, allResults.length);
@@ -721,7 +729,12 @@ export function observeSearchResults(container: HTMLElement): void {
   container.dataset.searchEnhancementsReady = 'true';
   const observer = new MutationObserver(() => {
     enhanceSearchResults(container);
+    const query =
+      container.querySelector<HTMLInputElement>('input')?.value ?? '';
+    applySearchResultAnalytics(container, query);
   });
   observer.observe(container, { childList: true, subtree: true });
   enhanceSearchResults(container);
+  const query = container.querySelector<HTMLInputElement>('input')?.value ?? '';
+  applySearchResultAnalytics(container, query);
 }

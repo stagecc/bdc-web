@@ -170,6 +170,18 @@ describe('search result enhancements', () => {
 
       expect(badges).toEqual(['News', 'Event', 'Page']);
     });
+
+    const resultLinks = Array.from(
+      document.querySelectorAll<HTMLAnchorElement>(
+        '#search-results-list .pagefind-ui__result-link',
+      ),
+    );
+    expect(resultLinks.map((link) => link.dataset.analyticsSearchRank)).toEqual(
+      ['1', '2', '3'],
+    );
+    expect(
+      resultLinks.map((link) => link.dataset.analyticsSearchQuery),
+    ).toEqual(['example', 'example', 'example']);
   });
 
   it('shows the search-page suggestions when there are no results', () => {

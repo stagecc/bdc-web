@@ -76,20 +76,27 @@ const hasGa = typeof gaId === 'string' && gaId.length > 0;
     <ExitNoticeController client:only="react" />
     <ModalController client:only="react" />
     <SearchResultEnhancementTemplates />
-    <pagefind-modal instance="site-modal" reset-on-close>
-      <pagefind-modal-header>
-        <pagefind-input instance="site-modal"></pagefind-input>
-      </pagefind-modal-header>
-      <pagefind-modal-body>
-        <pagefind-summary instance="site-modal"></pagefind-summary>
-        <pagefind-results instance="site-modal">
-          <SearchResultTemplates />
-        </pagefind-results>
-      </pagefind-modal-body>
-      <pagefind-modal-footer>
-        <pagefind-keyboard-hints instance="site-modal"></pagefind-keyboard-hints>
-      </pagefind-modal-footer>
-    </pagefind-modal>
+    <div
+      data-analytics-section="site_search"
+      data-analytics-search-location="modal"
+      data-analytics-search-submit-event="site_search_submit"
+      data-analytics-search-result-event="site_search_result_click"
+    >
+      <pagefind-modal instance="site-modal" reset-on-close>
+        <pagefind-modal-header>
+          <pagefind-input instance="site-modal"></pagefind-input>
+        </pagefind-modal-header>
+        <pagefind-modal-body>
+          <pagefind-summary instance="site-modal"></pagefind-summary>
+          <pagefind-results instance="site-modal">
+            <SearchResultTemplates />
+          </pagefind-results>
+        </pagefind-modal-body>
+        <pagefind-modal-footer>
+          <pagefind-keyboard-hints instance="site-modal"></pagefind-keyboard-hints>
+        </pagefind-modal-footer>
+      </pagefind-modal>
+    </div>
     <main id="main-content" data-pagefind-body={indexForSearch || undefined} class="flex-1">
       <slot />
     </main>

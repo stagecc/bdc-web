@@ -7,9 +7,9 @@ import Base from '@layouts/Base.astro';
     <div class="grid-container">
       <h1>Search Results</h1>
       <div id="search-results-layout" class="margin-top-4">
-        <div id="search-results" class="display-flex flex-column">
+        <div id="search-results" class="display-flex flex-column" data-analytics-section="site_search" data-analytics-search-location="results_page">
           <div class="display-flex flex-column margin-bottom-3">
-            <form id="search-results-form" class="search-results-form display-block width-full maxw-none margin-bottom-0" role="search">
+            <form id="search-results-form" class="search-results-form display-block width-full maxw-none margin-bottom-0" role="search" data-analytics-search-submit-event="site_search_submit">
               <label class="usa-sr-only" for="search-results-query">Search site</label>
               <input class="usa-input search-results-form__input display-block width-full maxw-none margin-top-0 padding-y-105 padding-right-2 padding-left-6 font-body-md text-normal radius-sm" id="search-results-query" name="q" type="text" inputmode="search" enterkeyhint="search" placeholder="Search site..." autocomplete="off" />
             </form>
@@ -17,7 +17,7 @@ import Base from '@layouts/Base.astro';
             <p id="search-results-message" class="search-results-message width-full font-body-xs text-bold line-height-body-3 margin-top-105 margin-x-0 margin-bottom-0" aria-live="polite"></p>
           </div>
           <div id="search-results-toolbar" hidden></div>
-          <ol id="search-results-list" class="search-results-list usa-list usa-list--unstyled margin-0"></ol>
+          <ol id="search-results-list" class="search-results-list usa-list usa-list--unstyled margin-0" data-analytics-search-result-event="site_search_result_click"></ol>
           <aside id="search-filtered-empty" class="usa-alert usa-alert--info margin-top-4" aria-live="polite" hidden>
             <div class="usa-alert__body">
               <p class="usa-alert__text">No results match your current filters. Clear filters to see everything.</p>
@@ -25,7 +25,7 @@ import Base from '@layouts/Base.astro';
           </aside>
         </div>
         <nav id="search-results-pagination" class="search-results-pagination margin-top-4" hidden aria-label="Search results pages"></nav>
-        <aside id="search-no-results-suggestions" class="usa-alert usa-alert--info margin-top-4" aria-live="polite" hidden>
+        <aside id="search-no-results-suggestions" class="usa-alert usa-alert--info margin-top-4" aria-live="polite" hidden data-analytics-section="site_search" data-analytics-custom-event="site_search_no_results_link_click">
           <div class="usa-alert__body">
             <h2 class="usa-alert__heading">Sorry, no results were found</h2>
             <p class="usa-alert__text">Here are some links to help you find your way.</p>
