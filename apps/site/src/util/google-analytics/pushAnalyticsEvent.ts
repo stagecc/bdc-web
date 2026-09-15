@@ -14,11 +14,18 @@ type AnalyticsWindow = Window & {
 };
 
 export function pushAnalyticsEvent(event: DataLayerEvent) {
+  const { event: eventName, ...params } = event;
+
+  if (import.meta.env.DEV) {
+    console.log('console logging analytics event:', eventName, params);
+    return;
+  }
+
   const analyticsWindow = window as AnalyticsWindow;
 
   if (typeof analyticsWindow.gtag === 'function') {
-    const { event: eventName, ...params } = event;
+    console.log('Pushing analytics event:', eventName, params);
     analyticsWindow.gtag('event', eventName, params);
-    return;
+
   }
 }
