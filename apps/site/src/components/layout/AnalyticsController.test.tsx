@@ -155,6 +155,81 @@ describe('AnalyticsController', () => {
     });
   });
 
+  it('tracks search form submissions through delegated analytics handling', () => {
+    renderController();
+    appendFixture(`
+      <div data-analytics-section="site_search" data-analytics-search-location="results_page">
+        <form id="search-form" data-analytics-search-submit-event="site_search_submit">
+          <input name="q" value="kidney disease" />
+        </form>
+      </div>
+    `);
+
+    fireEvent.submit(requireElement('search-form'));
+
+    expect(pushAnalyticsEventMock).toHaveBeenCalledTimes(1);
+    expect(pushAnalyticsEventMock).toHaveBeenCalledWith({
+      event: 'site_search_submit',
+      site_section: 'site_search',
+      search_location: 'results_page',
+      search_term: 'kidney disease',
+      page_path: '/',
+    });
+  });
+
+  it('tracks modal Enter submissions through delegated analytics handling', () => {
+    renderController();
+    appendFixture(`
+      <div data-analytics-section="site_search" data-analytics-search-location="modal" data-analytics-search-submit-event="site_search_submit">
+        <input id="search-input" value="heart disease" />
+      </div>
+    `);
+
+    fireEvent.keyDown(requireElement('search-input'), { key: 'Enter' });
+
+    expect(pushAnalyticsEventMock).toHaveBeenCalledTimes(1);
+    expect(pushAnalyticsEventMock).toHaveBeenCalledWith({
+      event: 'site_search_submit',
+      site_section: 'site_search',
+      search_location: 'modal',
+      search_term: 'heart disease',
+      page_path: '/',
+    });
+  });
+
+  it('tracks search result clicks through delegated analytics handling', () => {
+    renderController();
+    appendFixture(`
+      <div data-analytics-section="site_search" data-analytics-search-location="modal">
+        <div data-analytics-search-result-event="site_search_result_click">
+          <a
+            class="pagefind-ui__result-link"
+            href="/data/explore"
+            id="result-link"
+            data-analytics-search-query="asthma"
+            data-analytics-search-rank="1"
+          >
+            <span id="result-target">Explore data</span>
+          </a>
+        </div>
+      </div>
+    `);
+
+    fireEvent.click(requireElement('result-target'));
+
+    expect(pushAnalyticsEventMock).toHaveBeenCalledTimes(1);
+    expect(pushAnalyticsEventMock).toHaveBeenCalledWith({
+      event: 'site_search_result_click',
+      site_section: 'site_search',
+      search_location: 'modal',
+      search_term: 'asthma',
+      search_result_rank: 1,
+      search_result_title: 'Explore data',
+      search_result_url: absoluteUrl('/data/explore'),
+      page_path: '/',
+    });
+  });
+
   it('ignores clicks on non-interactive wrappers', () => {
     renderController();
     appendFixture(`

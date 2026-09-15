@@ -16,8 +16,19 @@ function getSearchModal(): SearchModalElement | null {
 /** Opens the Pagefind search modal when its custom element is available. */
 function openSearchModal(): void {
   const modal = getSearchModal();
-  if (!modal || typeof modal.open !== 'function') return;
-  modal.open();
+  if (!modal) return;
+
+  if (typeof modal.open === 'function') {
+    modal.open();
+    return;
+  }
+
+  void customElements.whenDefined('pagefind-modal').then(() => {
+    const upgradedModal = getSearchModal();
+    if (!upgradedModal || typeof upgradedModal.open !== 'function') return;
+
+    upgradedModal.open();
+  });
 }
 
 type Navigate = (url: string) => void;
@@ -61,7 +72,9 @@ export function initSearchModal(): void {
   }
 
   const modal = getSearchModal();
-  if (modal) observeSearchResults(modal);
+  if (!modal) return;
+
+  observeSearchResults(modal);
 }
 
 if (document.readyState === 'loading') {

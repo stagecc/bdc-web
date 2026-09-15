@@ -153,7 +153,8 @@ export function initSearchResults(
   elements.form.addEventListener('submit', (event) => {
     event.preventDefault();
     window.clearTimeout(debounceTimer);
-    updateQueryInUrl(elements.input.value.trim());
+    const query = elements.input.value.trim();
+    updateQueryInUrl(query);
     void loadSearchResults(
       elements.container,
       elements.input.value,

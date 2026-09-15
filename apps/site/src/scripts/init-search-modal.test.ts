@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+
 import { handleSearchModalEnter, initSearchModal } from './init-search-modal';
 
 type TestSearchModal = HTMLElement & {
@@ -20,6 +21,11 @@ describe('search modal initialization', () => {
 
   it('opens the site modal when the header dispatches its open event', () => {
     const modal = renderModal();
+    modal.setAttribute(
+      'data-analytics-search-submit-event',
+      'site_search_submit',
+    );
+    modal.setAttribute('data-analytics-search-location', 'modal');
     initSearchModal();
 
     window.dispatchEvent(new CustomEvent('bdc:open-search-modal'));
@@ -27,8 +33,41 @@ describe('search modal initialization', () => {
     expect(modal.open).toHaveBeenCalledOnce();
   });
 
+  it('waits for the modal custom element to upgrade before opening', async () => {
+    const modal = document.createElement('pagefind-modal') as TestSearchModal;
+    modal.setAttribute('instance', 'site-modal');
+    document.body.appendChild(modal);
+
+    const originalWhenDefined = customElements.whenDefined.bind(customElements);
+    const whenDefined = vi.fn(async (name: string) => {
+      await Promise.resolve();
+      if (name === 'pagefind-modal') {
+        modal.open = vi.fn();
+      }
+    });
+
+    customElements.whenDefined = whenDefined;
+
+    try {
+      initSearchModal();
+
+      window.dispatchEvent(new CustomEvent('bdc:open-search-modal'));
+      await Promise.resolve();
+      await vi.waitFor(() => expect(modal.open).toHaveBeenCalledOnce());
+
+      expect(whenDefined).toHaveBeenCalledWith('pagefind-modal');
+    } finally {
+      customElements.whenDefined = originalWhenDefined;
+    }
+  });
+
   it('navigates a modal query on Enter', () => {
     const modal = renderModal();
+    modal.setAttribute(
+      'data-analytics-search-submit-event',
+      'site_search_submit',
+    );
+    modal.setAttribute('data-analytics-search-location', 'modal');
     const input = document.createElement('input');
     input.value = ' kidney disease ';
     modal.appendChild(input);
