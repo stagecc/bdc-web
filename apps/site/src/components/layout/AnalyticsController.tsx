@@ -4,6 +4,10 @@ import { trackFooterInteraction } from './analytics/footer';
 import { trackInPageNavInteraction } from './analytics/inPageNav';
 import { trackNavInteraction } from './analytics/nav';
 import {
+  trackSearchResultInteraction,
+  trackSearchSubmitInteraction,
+} from './analytics/search';
+import {
   type AnalyticsElement,
   getAnalyticsEvent,
   getAnalyticsSection,
@@ -66,6 +70,8 @@ export function AnalyticsController() {
 
       if (!interactiveElement) return;
 
+      if (trackSearchResultInteraction(interactiveElement)) return;
+
       switch (getAnalyticsSection(interactiveElement)) {
         case 'header':
           trackNavInteraction(interactiveElement);
@@ -81,12 +87,32 @@ export function AnalyticsController() {
       }
     };
 
+    const handleSubmit = (event: Event) => {
+      const target = getEventElement(event.target);
+      if (!target) return;
+
+      trackSearchSubmitInteraction(target);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== 'Enter' || event.isComposing) return;
+
+      const target = getEventElement(event.target);
+      if (!target || target.closest('form')) return;
+
+      trackSearchSubmitInteraction(target);
+    };
+
     document.addEventListener('astro:after-swap', handleNavigation);
     document.addEventListener('click', handleClick);
+    document.addEventListener('submit', handleSubmit);
+    document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       document.removeEventListener('astro:after-swap', handleNavigation);
       document.removeEventListener('click', handleClick);
+      document.removeEventListener('submit', handleSubmit);
+      document.removeEventListener('keydown', handleKeyDown);
     };
   }, []);
 
