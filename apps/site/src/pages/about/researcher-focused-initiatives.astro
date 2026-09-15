@@ -32,27 +32,31 @@ import Base from '@layouts/Base.astro';
       <InPageNav>
         <p>
           BDC collaborates with many of NHLBI's largest research communities by
-          importing their data, integrating their resources (as appropriate), and
+          hosting their data, integrating their resources (as appropriate), and
           providing analytical tools, applications, workflows, and secure
           workspaces.
         </p>
         <p>
-          To support researchers from these communities when they start using the
+          To support researchers from these initiatives when they start using the
           ecosystem, BDC develops and deploys enhancements, tailors the user
           onboarding process, and encourages participation in the greater BDC
-          community. Researchers within these communities may use BDC to analyze
-          scientific data collected from research protocols.
+          community. Researchers may use BDC to analyze scientific data collected
+          from research protocols.
         </p>
 
         <div class="margin-bottom-8">
           <section id="topmed" class="border-top-1px border-base-light margin-top-6">
             <h2>TOPMed</h2>
             <p>
-              TOPMed data in BDC combines whole-genome sequencing and other omics data 
-              with rich clinical, behavioral, imaging, environmental, and molecular 
-              data from studies spanning heart, lung, blood, and sleep research. BDC 
-              provides secure access to these data alongside scalable analysis tools 
-              and workflows, and hosts TOPMed Exchange Area (EA) data for TOPMed 
+              TOPMed data in BDC includeswhole-genome sequencing and other omics data, 
+              including metabolic profiles, epigenomics, protein and RNA expression 
+              patterns which have been processed by the TOPMed program. These omic data 
+              is integration with rich clinical, behavioral, imaging, environmental, and 
+              molecular data from studies spanning heart, lung, blood, and sleep research. 
+              BDC is working with TOPMed to efficiently make both omic and phenotypic data 
+              available in BDC, and supporting the TOPMed research community conduct 
+              analyses. Furthermore, BDC hosts and provides secure access to the 
+              pre-release data within the TOPMed Exchange Area (EA) for TOPMed 
               investigators with approved access. <Link to="/help/contact-bdc">Contact 
               BDC</Link> if you are interested in accessing EA data in BDC.
             </p>
@@ -70,40 +74,20 @@ import Base from '@layouts/Base.astro';
           <section id="recover" class="border-top-1px border-base-light margin-top-6">
             <h2>RECOVER</h2>
             <p>
-              <Link to="https://recovercovid.org/">Researching COVID to Enhance Recovery (RECOVER)</Link>
-              {' '}
-              is a first-of-its-kind, patient-centered research initiative to understand,
-              diagnose, and treat Long COVID. RECOVER research includes observational
-              cohort studies, electronic health records analyses, pathobiology studies,
-              tissue pathology studies, and clinical trials.
+              RECOVER data in BDC includes observational cohort, electronic health record, 
+              pathobiology, tissue pathology, wearable, and clinical trial data supporting 
+              research into Long COVID. BDC provides a secure environment for accessing 
+              and analyzing these data and works with RECOVER to support data availability 
+              and use across the ecosystem. BDC works with RECOVER to confirm 
+              de-identification of data before release and ensure efficient search of this 
+              data throughout the BDC ecosystem.
             </p>
             <p>
-              RECOVER studies involve thousands of people from all walks of life, hundreds of research investigators, and millions of electronic health records (EHRs). RECOVER aims to achieve the following:
-            </p>
-            <ul>
-              <li>
-                Understand the range of symptoms and impacts on quality of life for individuals experiencing Long COVID.  
-              </li>
-              <li>
-                Define risk factors and causes associated with Long COVID.  
-              </li>
-              <li>
-                Study how Long COVID changes over time and how those changes may relate to other illnesses.  
-              </li>
-              <li>
-                Identify possible treatments for Long COVID symptoms.
-              </li>
-            </ul>
-            <p>
-              The Data References and Access Information section on the RECOVER
-              {' '}
-              <Link to="https://recovercovid.org/data">Data</Link>
-              {' '}
-              page provides access to key resources for working with RECOVER data.
-              These resources include Data Dictionaries, Data Release Notes, and Data
-              Use Agreements for Adult/Pregnancy, Pediatric, and Tissue Pathology
-              datasets. There are also additional Data Access Resources that support
-              data access requests, data sharing compliance, and use of RECOVER datasets.
+              Researchers can use RECOVER data in BDC to investigate Long COVID symptoms, 
+              risk factors, disease progression, and potential treatments. Data dictionaries, 
+              release notes, data use agreements, and other resources are available through 
+              <Link to="https://recovercovid.org/data">RECOVER</Link> to help researchers 
+              understand and work with these datasets.
             </p>
             <div class="display-flex flex-align-center flex-justify-center">
               <IconBadge icon="database" tone="cool" size={5} class="margin-x-1" />
@@ -114,20 +98,21 @@ import Base from '@layouts/Base.astro';
           <section id="heartshare" class="border-top-1px border-base-light margin-top-6">
             <h2>HeartShare</h2>
             <p>
-              <Link to="https://amphf.org/">HeartShare</Link>
-              {' '}
-              is an NHLBI-funded program to conduct large-scale analysis of phenotypic
-              data, images, and omics from patients with heart failure with preserved
-              ejection fraction (HFpEF) and controls to characterize disease mechanisms
-              and identify therapeutic targets.
+              HeartShare is a program designed to conduct large-scale analyses of 
+              phenotypic data, images, and omics from patients with heart failure with 
+              preserved ejection fraction (HFpEF) and controls. The program aims to 
+              characterize disease mechanisms and identify new therapeutic targets.
             </p>
             <p>
-              HeartShare is comprised of retrospective and prospective components.
-              HeartShare aggregates and harmonizes data from previously completed cohort
-              studies and trials, including images and omics. Prospective data are
-              generated from the HeartShare registry of up to 10,000 participants and
-              deep phenotyping study cohorts involving up to 1,000 participants. Both
-              cohorts will have baseline and longitudinal data.
+              The study is comprised of both retrospective and prospective components. 
+              Retrospectively, HeartShare aggregates and harmonizes data, including 
+              images and omics, from previously completed cohort studies and clinical 
+              trials. Prospectively, data is generated from a registry of up to 10,000 
+              participants and a deep phenotyping cohort of up to 2,000 participants. Both 
+              the retrospective and prospective cohorts capture baseline and longitudinal 
+              data. BDC is working with HeartShare to ensure their interested data is 
+              available in BDC, along with supporting investigators to ensure data meets 
+              needs for desired analyses.
             </p>
             <div class="display-flex flex-align-center flex-justify-center">
               <IconBadge icon="database" tone="cool" size={5} class="margin-x-1" />
@@ -173,15 +158,15 @@ import Base from '@layouts/Base.astro';
         </div>
 
         <NextStepsAlert
-          heading="Want to propose a new research community collaboration?"
+          heading="Want to propose a new initiative?"
         >
           <p class="usa-prose">
-            Research programs interested in collaborating with BDC can express
-            their interest with our Contact form.
+            Research initiatives interested in collaborating with BDC can express 
+            their interest with our Contact form. 
           </p>
 
-          <Link to="/help/contact-and-support">
-            Propose New Research Community Collaboration
+          <Link to="/help/contact-bdc">
+            → Contact Us
           </Link>
         </NextStepsAlert>
       </InPageNav>
