@@ -49,6 +49,25 @@ function pushCustomAnalyticsEvent(target: AnalyticsElement) {
   });
 }
 
+function getLinkType(target: HTMLAnchorElement) {
+  return new URL(target.href, window.location.href).origin ===
+    window.location.origin
+    ? 'internal'
+    : 'external';
+}
+
+function trackGenericLinkClick(target: HTMLAnchorElement) {
+  pushAnalyticsEvent({
+    event: 'link_click',
+    site_section: getAnalyticsSection(target) ?? undefined,
+    link_type: getLinkType(target),
+    element_type: 'a',
+    element_text: getElementText(target),
+    element_url: target.href,
+    page_path: window.location.pathname,
+  });
+}
+
 export function AnalyticsController() {
   useEffect(() => {
     trackPageView();
@@ -76,8 +95,15 @@ export function AnalyticsController() {
         case 'in_page_nav':
           trackInPageNavInteraction(interactiveElement);
           return;
-        default:
-          pushCustomAnalyticsEvent(interactiveElement);
+      }
+
+      if (getAnalyticsEvent(interactiveElement)) {
+        pushCustomAnalyticsEvent(interactiveElement);
+        return;
+      }
+
+      if (interactiveElement instanceof HTMLAnchorElement) {
+        trackGenericLinkClick(interactiveElement);
       }
     };
 

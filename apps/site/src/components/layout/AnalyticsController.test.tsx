@@ -155,6 +155,63 @@ describe('AnalyticsController', () => {
     });
   });
 
+  it('tracks generic links outside known sections without recounting section handlers', () => {
+    renderController();
+    appendFixture(`
+      <div data-analytics-section="home_hero">
+        <a href="/get-started" id="link"><span id="target">Get Started</span></a>
+      </div>
+    `);
+
+    fireEvent.click(requireElement('target'));
+
+    expect(pushAnalyticsEventMock).toHaveBeenCalledTimes(1);
+    expect(pushAnalyticsEventMock).toHaveBeenCalledWith({
+      event: 'link_click',
+      site_section: 'home_hero',
+      link_type: 'internal',
+      element_type: 'a',
+      element_text: 'Get Started',
+      element_url: absoluteUrl('/get-started'),
+      page_path: '/',
+    });
+  });
+
+  it('tracks external generic links with an external link_type', () => {
+    renderController();
+    appendFixture(`
+      <div data-analytics-section="home_hero">
+        <a href="https://example.com/resource" id="link"><span id="target">External Resource</span></a>
+      </div>
+    `);
+
+    fireEvent.click(requireElement('target'));
+
+    expect(pushAnalyticsEventMock).toHaveBeenCalledTimes(1);
+    expect(pushAnalyticsEventMock).toHaveBeenCalledWith({
+      event: 'link_click',
+      site_section: 'home_hero',
+      link_type: 'external',
+      element_type: 'a',
+      element_text: 'External Resource',
+      element_url: 'https://example.com/resource',
+      page_path: '/',
+    });
+  });
+
+  it('ignores generic buttons outside known sections without explicit custom events', () => {
+    renderController();
+    appendFixture(`
+      <div data-analytics-section="home_hero">
+        <button type="button" id="button"><span id="target">Get Started</span></button>
+      </div>
+    `);
+
+    fireEvent.click(requireElement('target'));
+
+    expect(pushAnalyticsEventMock).not.toHaveBeenCalled();
+  });
+
   it('ignores clicks on non-interactive wrappers', () => {
     renderController();
     appendFixture(`
