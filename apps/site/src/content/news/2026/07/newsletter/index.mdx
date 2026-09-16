@@ -9,7 +9,8 @@ excerpt: >
   training opportunities, and reminders for the BDC community.
   This newsletter opens in Mailchimp.
 ---
-import Button from '@bdc/ui-astro/button/Button.astro'
+import Notice from '@components/Notice.astro';
+import Link from '@bdc/ui-astro/link/Link.astro';
 
 In this newsletter:
 - BDC-Seven Bridges maintenance announcement
@@ -17,6 +18,6 @@ In this newsletter:
 - Connect your eRA Commons to id.me or login.gov
 - More!
 
-<Button href="https://mailchi.mp/9c7b3c1ad785/june2026-18115824" centered>
-  Read the July 2026 Newsletter
-</Button>
+<Notice icon="campaign" tone="cool" size={5}>
+  <Link to="https://mailchi.mp/9c7b3c1ad785/june2026-18115824">Read the July 2026 Newsletter</Link>
+</Notice>

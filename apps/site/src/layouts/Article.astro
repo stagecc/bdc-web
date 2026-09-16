@@ -1,5 +1,6 @@
 ---
 import { Image } from 'astro:assets';
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
 import EmailSignup from '@components/EmailSignup.astro';
@@ -49,15 +50,11 @@ const updateTypeCardText = {
 
       {
         (updateType === "Newsletter" || updateType === "Release Notes") && (
-          <div class="usa-card margin-top-4">
-            <div class="usa-card__container">
-              <div class="usa-card__body">
-                <p class="margin-0 font-sans-sm">
-                  {updateTypeCardText[updateType]}
-                </p>
-              </div>
-            </div>
-          </div>
+          <InlineAlert variant="info" heading={updateType} noIcon>
+            <p class="margin-0 font-sans-sm">
+              {updateTypeCardText[updateType]}
+            </p>
+          </InlineAlert>
         )
       }
 
@@ -67,7 +64,9 @@ const updateTypeCardText = {
 
         {
           (updateType === "Newsletter" || updateType === "Release Notes") && (
-            <EmailSignup/>
+            <div class="margin-top-4">
+              <EmailSignup/>
+            </div>
           )
         }
         
