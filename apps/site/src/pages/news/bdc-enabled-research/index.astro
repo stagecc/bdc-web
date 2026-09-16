@@ -21,7 +21,7 @@ const publications = (await getCollection('publications')).map((pub) => ({
     primaryCta={{ label: 'Cite BDC', href: '/cite-bdc' }}
     secondaryCta={{ label: 'Submit a Publication', href: '/news/bdc-enabled-research/publication-submission' }}
   >
-    <div slot="visual" class="width-full maxw-mobile">
+    <div slot="visual" class="width-full maxw-mobile-lg">
       <StatCard
         icon="local_library"
         number={publications.length}

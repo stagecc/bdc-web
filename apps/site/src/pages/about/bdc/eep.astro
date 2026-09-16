@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import StatCard from '@bdc/ui-astro/card/StatCard.astro';
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import PageSection from '@bdc/ui-astro/layout/PageSection.astro';
 import EepMember from '@components/eep/EepMember.astro';
 import Base from '@layouts/Base.astro';
@@ -27,25 +28,29 @@ const rendered = await Promise.all(
 ---
 
 <Base title="BDC External Expert Panel">
-  <section class="usa-section">
+  <Hero
+    eyebrow="About BDC"
+    title="BDC External Expert Panel"
+    description="The BDC External Expert Panel (EEP) is an independent body of experts that provides feedback and input that helps NHLBI make strategic decisions about the BDC program."
+  >
+    <div slot="visual" class="width-full maxw-mobile-lg">
+      <StatCard
+        icon="people"
+        number={members.length - adHocMemberCount}
+        qualifier="Panel Members"
+        meta={`Plus ${adHocMemberCount} Ad-hoc Member${adHocMemberCount === 1 ? '' : 's'}`}
+        description="Independent experts advising NHLBI leadership on the BDC ecosystem"
+        float="right"
+        tone="cool"
+        width="100%"
+      />
+    </div>
+  </Hero>
+
+  <section class="usa-section padding-top-3 padding-bottom-0">
     <div class="grid-container">
-      <h1>BDC External Expert Panel</h1>
       <div class="usa-prose usa-prose--full-width">
-        <StatCard
-          icon="people"
-          number={members.length - adHocMemberCount}
-          qualifier="Panel Members"
-          meta={`Plus ${adHocMemberCount} Ad-hoc Member${adHocMemberCount === 1 ? '' : 's'}`}
-          description="Independent experts advising NHLBI leadership on the BDC ecosystem"
-          float="right"
-          tone="cool"
-        />
-        <p>
-          The BDC External Expert Panel (EEP) is an independent body of experts that 
-          provides feedback and input that helps NHLBI make strategic decisions about 
-          the BDC program.
-        </p>
-        <p>
+        <p class="margin-top-0 margin-bottom-0">
           The expertise of EEP members spans biomedical informatics, artificial 
           intelligence, genomics, data science, cyberinfrastructure, education, and 
           clinical research. Members volunteer their time and insights over multi-year 

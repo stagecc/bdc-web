@@ -12,24 +12,27 @@ import TestonomialCard from '@components/cards/TestonomialCard.astro';
 import fayuanPhoto from '@content/headshots/dr-fayuan-wen.png';
 import katerinaPhoto from '@content/headshots/dr-katerina-kechris.png';
 import InPageNav from '@components/layout/InPageNav.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
+import Notice from '@components/Notice.astro';
 
 <Hero
+  eyebrow="About BDC"
   title="Learning and Training"
   description="Prepare researchers for modern, data-driven biomedical science"
   primaryCta={{ label: 'Discuss Your Training Program', href: '/help/contact-bdc' }}
 >
-  <Card slot="visual" className="bg-primary text-white">
-    <div class="usa-prose maxw-none">
-      <p class="margin-0 font-sans-md text-base-dark line-height-sans-5">
+  <div slot="visual" class="width-full maxw-mobile-lg">
+    <Card variant="panel">
+      <IconBadge icon="school" tone="secondary" size={6} iconSize={4} class="margin-right-105" />
+      <span class="margin-top-2 margin-bottom-0 text-base line-height-sans-4">
         Give students, trainees, and early-career investigators hands-on experience with real-world data,
         cloud-based analysis, collaborative research environments, and reproducible workflows.
-      </p>
-      <p class="margin-top-2 margin-bottom-0 font-sans-sm text-base line-height-sans-5">
+
         BDC can complement academic courses, NIH T32 and other institutional training programs, workshops,
         and fellowships.
-      </p>
-    </div>
-  </Card>
+      </span>
+    </Card>
+  </div>
 </Hero>
 
 <section class="usa-section padding-top-4">
@@ -168,7 +171,13 @@ early-career researchers. Fellows advanced scientific research using BDC and pro
 helped inform development of the BDC ecosystem. Their work also contributed to some of the earliest
 BDC-enabled research.
 
-<Button to="/about/bdc/fellows" variant="outline">View the NHLBI BDC Fellows</Button>
+<Notice
+  icon="people"
+  tone="neutral"
+  class="flex-justify-start margin-left-2"
+>
+  <Link to="/about/bdc/fellow">View the NHLBI BDC Fellows</Link>
+</Notice>
 
 ### TOPMed Fellowship Program
 The [NHLBI Trans-Omics for Precision Medicine](https://topmed.nhlbi.nih.gov/) (TOPMed) Fellowship Program
