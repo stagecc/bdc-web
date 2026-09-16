@@ -360,7 +360,7 @@ function renderSearchPagination(
   pagination.hidden = false;
 }
 
-/** Builds one result row and runs breadcrumb/badge enhancement on it. */
+/** Builds one result row and runs breadcrumb/tag enhancement on it. */
 function createResultElement(record: ProcessedSearchResult): HTMLElement {
   const result = document.createElement('li');
   result.className =
@@ -376,7 +376,7 @@ function createResultElement(record: ProcessedSearchResult): HTMLElement {
         <a class="pagefind-ui__result-link usa-link text-primary" href="${escapeHtml(record.url)}">${escapeHtml(record.title)}</a>
       </p>
       <div data-search-result-breadcrumb-slot></div>
-      <p class="margin-0" data-search-result-badge-slot></p>
+      <p class="margin-0" data-search-result-tag-slot></p>
       ${excerptMarkup}
     </div>
   `;
@@ -614,7 +614,7 @@ function cloneTemplateElement(templateId: string): HTMLElement | null {
 }
 
 /**
- * Adds the breadcrumb, kind badge, and link styles to a single result row.
+ * Adds the breadcrumb, kind tag, and link styles to a single result row.
  */
 export function enhanceSearchResult(result: Element): void {
   const link = result.querySelector(LINK_SELECTOR);
@@ -650,12 +650,12 @@ export function enhanceSearchResult(result: Element): void {
     }
   }
 
-  const badgeSlot = result.querySelector('[data-search-result-badge-slot]');
-  if (badgeSlot && !badgeSlot.hasChildNodes()) {
+  const tagSlot = result.querySelector('[data-search-result-tag-slot]');
+  if (tagSlot && !tagSlot.hasChildNodes()) {
     const kind = getSearchResultKind(link.href, window.location.origin);
-    const badge = cloneTemplateElement(`search-result-badge-${kind}-template`);
-    if (badge) {
-      badgeSlot.appendChild(badge);
+    const tag = cloneTemplateElement(`search-result-tag-${kind}-template`);
+    if (tag) {
+      tagSlot.appendChild(tag);
     }
   }
 }

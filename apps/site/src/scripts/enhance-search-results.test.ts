@@ -11,14 +11,14 @@ import {
 
 function renderTemplates() {
   document.body.innerHTML = `
-    <template id="search-result-badge-news-template">
-      <span class="shared-badge">News</span>
+    <template id="search-result-tag-news-template">
+      <span class="shared-tag">News</span>
     </template>
-    <template id="search-result-badge-event-template">
-      <span class="shared-badge">Event</span>
+    <template id="search-result-tag-event-template">
+      <span class="shared-tag">Event</span>
     </template>
-    <template id="search-result-badge-page-template">
-      <span class="shared-badge">Page</span>
+    <template id="search-result-tag-page-template">
+      <span class="shared-tag">Page</span>
     </template>
     <template id="search-result-breadcrumb-template">
       <p data-search-result-breadcrumb></p>
@@ -60,7 +60,7 @@ function createResult(href = '/news/latest-updates/example') {
   result.innerHTML = `
     <a class="pf-result-link" href="${href}">Example</a>
     <div data-search-result-breadcrumb-slot></div>
-    <p data-search-result-badge-slot></p>
+    <p data-search-result-tag-slot></p>
   `;
   return result;
 }
@@ -106,34 +106,34 @@ describe('search result enhancements', () => {
     renderTemplates();
   });
 
-  it('uses the News badge for latest-updates results', () => {
+  it('uses the News tag for latest-updates results', () => {
     const result = createResult('/news/latest-updates/example');
     document.body.appendChild(result);
 
     enhanceSearchResult(result);
 
-    expect(result.querySelector('.shared-badge')).toHaveTextContent('News');
+    expect(result.querySelector('.shared-tag')).toHaveTextContent('News');
     expect(
       result.querySelector('[data-search-result-breadcrumb]'),
     ).toHaveTextContent('News > Latest Updates > Example');
   });
 
-  it('uses the Event badge for events results', () => {
+  it('uses the Event tag for events results', () => {
     const result = createResult('/news/events/2026/07/community-hours');
     document.body.appendChild(result);
 
     enhanceSearchResult(result);
 
-    expect(result.querySelector('.shared-badge')).toHaveTextContent('Event');
+    expect(result.querySelector('.shared-tag')).toHaveTextContent('Event');
   });
 
-  it('uses the Page badge for other results', () => {
+  it('uses the Page tag for other results', () => {
     const result = createResult('/data/explore');
     document.body.appendChild(result);
 
     enhanceSearchResult(result);
 
-    expect(result.querySelector('.shared-badge')).toHaveTextContent('Page');
+    expect(result.querySelector('.shared-tag')).toHaveTextContent('Page');
   });
 
   it('uses the shared breadcrumb and standard link style for Default UI results', () => {
@@ -149,10 +149,10 @@ describe('search result enhancements', () => {
       'usa-link',
       'text-primary',
     );
-    expect(result.querySelector('.shared-badge')).not.toBeInTheDocument();
+    expect(result.querySelector('.shared-tag')).not.toBeInTheDocument();
   });
 
-  it('uses News, Event, and Page badges on the search results page', async () => {
+  it('uses News, Event, and Page tags on the search results page', async () => {
     mountSearchResults([
       createRecord('Alpha update', '/news/latest-updates/alpha', 0),
       createRecord(
@@ -164,11 +164,11 @@ describe('search result enhancements', () => {
     ]);
 
     await vi.waitFor(() => {
-      const badges = Array.from(
-        document.querySelectorAll('#search-results-list .shared-badge'),
-      ).map((badge) => badge.textContent);
+      const tags = Array.from(
+        document.querySelectorAll('#search-results-list .shared-tag'),
+      ).map((tag) => tag.textContent);
 
-      expect(badges).toEqual(['News', 'Event', 'Page']);
+      expect(tags).toEqual(['News', 'Event', 'Page']);
     });
   });
 

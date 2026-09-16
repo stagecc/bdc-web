@@ -6,7 +6,7 @@ const resultTemplate = `<li class="pf-result">
         <a class="pf-result-link" href="{{ meta.url | default(url) | safeUrl }}">{{ meta.title | default('Untitled') }}</a>
       </p>
       <div data-search-result-breadcrumb-slot></div>
-      <p class="margin-0" data-search-result-badge-slot></p>
+      <p class="margin-0" data-search-result-tag-slot></p>
       {{#if excerpt}}
       <p class="pf-result-excerpt">{{+ excerpt +}}</p>
       {{/if}}

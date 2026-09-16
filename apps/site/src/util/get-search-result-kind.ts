@@ -1,4 +1,4 @@
-/** Badge/filter category for a search hit, derived from its URL path. */
+/** Tag/filter category for a search hit, derived from its URL path. */
 export type SearchResultKind = 'news' | 'event' | 'page';
 
 /** True when `pathname` is `prefix` or a nested path under it. */
