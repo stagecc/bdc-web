@@ -90,9 +90,9 @@ const { items } = Astro.props;
 
               <div class="display-flex margin-top-2 flex-wrap flex-align-center gap-1">
                 {tags?.length > 0 && (
-                  <div class="display-flex flex-wrap gap-05 margin-right-1">
+                  <div class="display-flex flex-wrap margin-right-1">
                     {tags.map((tag: string) => (
-                      <Link to={`/tagged/${tag}`} class="text-no-underline hover:text-no-underline">
+                      <Link to={`/tagged/${tag}`} class="margin-right-05 margin-bottom-05 text-no-underline hover:text-no-underline">
                         <Tag label={tag} tone="cool" />
                       </Link>
                     ))}

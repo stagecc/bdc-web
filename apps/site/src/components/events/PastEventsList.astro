@@ -76,21 +76,19 @@ const years = Object.keys(byYear)
                     </h3>
                   </div>
 
-                  <div class="display-flex margin-top-2 flex-wrap flex-align-center gap-1">
-                    {tags?.length > 0 && (
-                      <div class="display-flex flex-wrap gap-05 margin-right-1">
-                        {tags.map((tag: string) => (
-                          <Link to={`/tagged/${tag}`} class="text-no-underline hover:text-no-underline">
-                            <Tag label={tag} tone="cool" />
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                  {tags?.length > 0 && (
+                    <div class="display-flex flex-wrap margin-right-1">
+                      {tags.map((tag: string) => (
+                        <Link to={`/tagged/${tag}`} class="margin-right-05 margin-bottom-05 text-no-underline hover:text-no-underline">
+                          <Tag label={tag} tone="cool" />
+                        </Link>
+                      ))}
+                    </div>
+                  )}
 
                   <div class="display-flex flex-justify margin-top-2 flex-wrap gap-2 flex-align-center">
                     {(materials && materials.length > 0) ? (
-                      <div class="display-flex flex-wrap gap-1 margin-top-1">
+                      <div class="display-flex flex-wrap margin-top-1">
                         {
                           materials.map(
                             (material: {
@@ -100,7 +98,7 @@ const years = Object.keys(byYear)
                             }) => (
                               <a
                                 href={material.url}
-                                class="usa-link display-flex flex-align-center font-sans-xs"
+                                class="usa-link display-flex flex-align-center font-sans-xs margin-right-1 margin-bottom-1"
                                 target="_blank"
                                 rel="noopener noreferrer"
                               >
