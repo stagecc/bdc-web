@@ -245,4 +245,79 @@ describe('AnalyticsController', () => {
       page_path: '/',
     });
   });
+
+  it('tracks submit attempts for forms marked with analytics metadata', () => {
+    renderController();
+    appendFixture(`
+      <form data-analytics-form="get_help" id="form">
+        <input id="field" name="email" type="email" />
+      </form>
+    `);
+
+    fireEvent.submit(requireElement('form'));
+
+    expect(pushAnalyticsEventMock).toHaveBeenCalledTimes(1);
+    expect(pushAnalyticsEventMock).toHaveBeenCalledWith({
+      event: 'form_submit_attempt',
+      form_name: 'get_help',
+      site_section: undefined,
+      page_path: '/',
+    });
+  });
+
+  it('tracks form_start on first input or change within a tracked form', () => {
+    renderController();
+    appendFixture(`
+      <form data-analytics-form="get_help" id="form">
+        <input id="first-field" name="email" type="email" />
+        <select id="second-field" name="topic">
+          <option value="">Select one</option>
+          <option value="support">Support</option>
+        </select>
+      </form>
+    `);
+
+    fireEvent.input(requireElement('first-field'), {
+      target: { value: 'user@example.com' },
+    });
+    fireEvent.change(requireElement('second-field'), {
+      target: { value: 'support' },
+    });
+
+    expect(pushAnalyticsEventMock).toHaveBeenCalledTimes(1);
+    expect(pushAnalyticsEventMock).toHaveBeenCalledWith({
+      event: 'form_start',
+      form_name: 'get_help',
+      site_section: undefined,
+      page_path: '/',
+    });
+  });
+
+  it('ignores form_start input events inside forms without analytics metadata', () => {
+    renderController();
+    appendFixture(`
+      <form id="form">
+        <input id="field" name="email" type="email" />
+      </form>
+    `);
+
+    fireEvent.input(requireElement('field'), {
+      target: { value: 'user@example.com' },
+    });
+
+    expect(pushAnalyticsEventMock).not.toHaveBeenCalled();
+  });
+
+  it('ignores submit attempts for forms without analytics metadata', () => {
+    renderController();
+    appendFixture(`
+      <form id="form">
+        <input id="field" name="email" type="email" />
+      </form>
+    `);
+
+    fireEvent.submit(requireElement('form'));
+
+    expect(pushAnalyticsEventMock).not.toHaveBeenCalled();
+  });
 });
