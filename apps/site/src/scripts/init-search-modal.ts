@@ -1,3 +1,4 @@
+import { trackSearchSubmit } from '../components/layout/analytics/search';
 import { observeSearchResults } from './enhance-search-results';
 
 type SearchModalElement = HTMLElement & {
@@ -45,6 +46,10 @@ export function handleSearchModalEnter(
   if (!query) return;
 
   event.preventDefault();
+  trackSearchSubmit({
+    searchTerm: query,
+    searchSurface: 'modal',
+  });
   navigateToResults(`/search?q=${encodeURIComponent(query)}`);
 }
 

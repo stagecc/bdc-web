@@ -1,3 +1,4 @@
+import { trackSearchResultClick } from '../components/layout/analytics/search';
 import { getBreadcrumbLabel } from '../util/get-breadcrumb-label';
 import {
   getSearchResultKind,
@@ -373,7 +374,7 @@ function createResultElement(record: ProcessedSearchResult): HTMLElement {
   result.innerHTML = `
     <div class="pagefind-ui__result-inner flex-fill display-flex flex-column flex-align-start margin-top-1">
       <p class="pagefind-ui__result-title display-inline-block font-body-md text-bold margin-0">
-        <a class="pagefind-ui__result-link usa-link text-primary" href="${escapeHtml(record.url)}">${escapeHtml(record.title)}</a>
+        <a class="pagefind-ui__result-link usa-link text-primary" href="${escapeHtml(record.url)}" data-search-result-index="${record.originalIndex + 1}">${escapeHtml(record.title)}</a>
       </p>
       <div data-search-result-breadcrumb-slot></div>
       <p class="margin-0" data-search-result-tag-slot></p>
@@ -580,7 +581,21 @@ export function initSearchResultsControls(container: HTMLElement): void {
 
   layout.addEventListener('click', (event) => {
     const target = event.target;
-    if (!(target instanceof HTMLElement)) return;
+    if (!(target instanceof Element)) return;
+
+    const resultLink = target.closest<HTMLAnchorElement>(LINK_SELECTOR);
+    if (resultLink) {
+      const { query } = getSearchResultsState(container);
+      const resultIndex = Number(resultLink.dataset.searchResultIndex);
+
+      trackSearchResultClick({
+        searchTerm: query,
+        resultUrl: resultLink.href,
+        resultTitle: resultLink.textContent?.trim() || undefined,
+        resultIndex: Number.isNaN(resultIndex) ? undefined : resultIndex,
+      });
+      return;
+    }
 
     if (target.matches('[data-clear-search-filters]')) {
       container.dataset.searchKinds = '[]';
