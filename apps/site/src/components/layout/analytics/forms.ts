@@ -25,6 +25,18 @@ export function trackFormSubmitAttempt(form: HTMLFormElement) {
   });
 }
 
+export function trackFormStart(form: HTMLFormElement) {
+  const formName = getAnalyticsFormName(form);
+  if (!formName) return;
+
+  pushAnalyticsEvent({
+    event: 'form_start',
+    form_name: formName,
+    site_section: getAnalyticsSection(form) ?? undefined,
+    page_path: window.location.pathname,
+  });
+}
+
 export function trackFormSubmitSuccess(formName: string) {
   pushAnalyticsEvent({
     event: 'form_submit_success',

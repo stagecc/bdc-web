@@ -1,7 +1,11 @@
 import { useEffect } from 'react';
 import { pushAnalyticsEvent } from '../../util/google-analytics/pushAnalyticsEvent';
 import { trackFooterInteraction } from './analytics/footer';
-import { getTrackedForm, trackFormSubmitAttempt } from './analytics/forms';
+import {
+  getTrackedForm,
+  trackFormStart,
+  trackFormSubmitAttempt,
+} from './analytics/forms';
 import { trackInPageNavInteraction } from './analytics/inPageNav';
 import { trackNavInteraction } from './analytics/nav';
 import {
@@ -71,6 +75,8 @@ function trackGenericLinkClick(target: HTMLAnchorElement) {
 
 export function AnalyticsController() {
   useEffect(() => {
+    const startedForms = new Set<HTMLFormElement>();
+
     trackPageView();
 
     const handleNavigation = () => {
@@ -120,13 +126,30 @@ export function AnalyticsController() {
       trackFormSubmitAttempt(form);
     };
 
+    const handleFormStart = (event: Event) => {
+      const target = getEventElement(event.target);
+
+      if (!target) return;
+
+      const form = getTrackedForm(target);
+
+      if (!form || startedForms.has(form)) return;
+
+      startedForms.add(form);
+      trackFormStart(form);
+    };
+
     document.addEventListener('astro:after-swap', handleNavigation);
     document.addEventListener('click', handleClick);
+    document.addEventListener('input', handleFormStart);
+    document.addEventListener('change', handleFormStart);
     document.addEventListener('submit', handleSubmit);
 
     return () => {
       document.removeEventListener('astro:after-swap', handleNavigation);
       document.removeEventListener('click', handleClick);
+      document.removeEventListener('input', handleFormStart);
+      document.removeEventListener('change', handleFormStart);
       document.removeEventListener('submit', handleSubmit);
     };
   }, []);
