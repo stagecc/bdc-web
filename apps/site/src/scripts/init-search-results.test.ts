@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { pushAnalyticsEvent } from '../util/google-analytics/pushAnalyticsEvent';
 
 const enhancementMocks = vi.hoisted(() => ({
   initSearchResultsControls: vi.fn(),
@@ -8,12 +9,17 @@ const enhancementMocks = vi.hoisted(() => ({
 }));
 
 vi.mock('./enhance-search-results', () => enhancementMocks);
+vi.mock('../util/google-analytics/pushAnalyticsEvent', () => ({
+  pushAnalyticsEvent: vi.fn(),
+}));
 
 import {
   initSearchResults,
   loadSearchResults,
   type PagefindModule,
 } from './init-search-results';
+
+const pushAnalyticsEventMock = vi.mocked(pushAnalyticsEvent);
 
 function renderSearchElements(): HTMLElement {
   document.body.innerHTML = `
@@ -41,6 +47,7 @@ describe('search results initialization', () => {
   beforeEach(() => {
     vi.useFakeTimers();
     vi.clearAllMocks();
+    pushAnalyticsEventMock.mockReset();
     document.body.innerHTML = '';
     window.history.replaceState({}, '', '/search');
   });
@@ -150,5 +157,61 @@ describe('search results initialization', () => {
 
     expect(enhancementMocks.setSearchResultsState).toHaveBeenCalledOnce();
     expect(enhancementMocks.renderSearchResultsView).toHaveBeenCalledOnce();
+  });
+
+  it('tracks non-empty search page submits', () => {
+    const pagefind = createPagefind();
+    const loadPagefind = vi.fn().mockResolvedValue(pagefind);
+
+    renderSearchElements();
+    initSearchResults(loadPagefind);
+
+    const input = document.querySelector<HTMLInputElement>(
+      '#search-results-query',
+    );
+    const form = document.querySelector<HTMLFormElement>(
+      '#search-results-form',
+    );
+    if (!input || !form) {
+      throw new Error('Search form elements are missing from the test DOM');
+    }
+
+    input.value = ' kidney disease ';
+    form.dispatchEvent(
+      new Event('submit', { bubbles: true, cancelable: true }),
+    );
+
+    expect(pushAnalyticsEventMock).toHaveBeenCalledTimes(1);
+    expect(pushAnalyticsEventMock).toHaveBeenCalledWith({
+      event: 'search_submit',
+      search_term: 'kidney disease',
+      search_surface: 'results_page',
+      page_path: '/search',
+    });
+  });
+
+  it('does not track empty search page submits', () => {
+    const pagefind = createPagefind();
+    const loadPagefind = vi.fn().mockResolvedValue(pagefind);
+
+    renderSearchElements();
+    initSearchResults(loadPagefind);
+
+    const input = document.querySelector<HTMLInputElement>(
+      '#search-results-query',
+    );
+    const form = document.querySelector<HTMLFormElement>(
+      '#search-results-form',
+    );
+    if (!input || !form) {
+      throw new Error('Search form elements are missing from the test DOM');
+    }
+
+    input.value = '   ';
+    form.dispatchEvent(
+      new Event('submit', { bubbles: true, cancelable: true }),
+    );
+
+    expect(pushAnalyticsEventMock).not.toHaveBeenCalled();
   });
 });
