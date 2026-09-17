@@ -52,7 +52,7 @@ const years = Object.keys(byYear)
 
                 <div class="tablet:grid-col-fill">
                   <div class="display-flex flex-wrap flex-align-center flex-justify margin-bottom-1">
-                    <div class="font-sans-xs text-bold text-base margin-0">
+                    <div class="font-sans-xs text-bold text-base">
                       {date.toLocaleDateString('en-US', {
                         month: 'long', day: 'numeric', year: 'numeric',
                       })}
@@ -68,7 +68,7 @@ const years = Object.keys(byYear)
                     </div>
                   </div>
 
-                  <div class="display-flex flex-wrap flex-align-center gap-1 margin-bottom-1">
+                  <div class="margin-bottom-1">
                     <h3 class="font-heading-sm tablet:font-heading-md line-height-heading-2 margin-0">
                       <Link to={`/news/events/${event.id}/`} class="text-no-underline hover:text-underline">
                         {title}
@@ -77,7 +77,7 @@ const years = Object.keys(byYear)
                   </div>
 
                   {tags?.length > 0 && (
-                    <div class="display-flex flex-wrap margin-right-1">
+                    <div class="display-flex flex-wrap">
                       {tags.map((tag: string) => (
                         <Link to={`/tagged/${tag}`} class="margin-right-05 margin-bottom-05 text-no-underline hover:text-no-underline">
                           <Tag label={tag} tone="cool" />
@@ -86,7 +86,7 @@ const years = Object.keys(byYear)
                     </div>
                   )}
 
-                  <div class="display-flex flex-justify margin-top-2 flex-wrap gap-2 flex-align-center">
+                  <div class="display-flex flex-justify margin-top-2 flex-wrap flex-align-center">
                     {(materials && materials.length > 0) ? (
                       <div class="display-flex flex-wrap margin-top-1">
                         {

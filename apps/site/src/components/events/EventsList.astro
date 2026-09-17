@@ -58,7 +58,7 @@ const { items } = Astro.props;
                 </div>
               </div>
 
-              <div class="display-flex flex-wrap flex-align-center gap-1 margin-bottom-1">
+              <div class="margin-bottom-1">
                 <h3 class="font-heading-sm tablet:font-heading-md line-height-heading-2 margin-0">
                   <Link to={`/news/events/${event.id}/`} class="text-no-underline hover:text-underline">
                     {title}
@@ -88,9 +88,9 @@ const { items } = Astro.props;
                 </p>
               )}
 
-              <div class="display-flex margin-top-2 flex-wrap flex-align-center gap-1">
+              <div class="margin-top-2">
                 {tags?.length > 0 && (
-                  <div class="display-flex flex-wrap margin-right-1">
+                  <div class="display-flex flex-wrap">
                     {tags.map((tag: string) => (
                       <Link to={`/tagged/${tag}`} class="margin-right-05 margin-bottom-05 text-no-underline hover:text-no-underline">
                         <Tag label={tag} tone="cool" />
@@ -100,7 +100,7 @@ const { items } = Astro.props;
                 )}
               </div>
 
-              <div class="display-flex flex-justify margin-top-2 flex-wrap gap-2 flex-align-center">
+              <div class="display-flex flex-justify margin-top-2 flex-wrap flex-align-center">
                 {url && (!isPast || !registration_required) && (
                   <Link to={url} class="text-bold">
                     {registration_required ? 'Register now' : 'Event website'}
