@@ -16,6 +16,7 @@ The analytics setup is currently split into two layers:
    - tracks page views
    - listens for `astro:after-swap` so client-side navigations also emit page views
    - attaches one delegated document click listener
+   - attaches delegated form listeners for `input`, `change`, and `submit`
    - routes click interactions to the helpers in this folder
 
 ### Markup Contract
@@ -25,6 +26,7 @@ The current markup contract is:
 - `data-analytics-section` identifies a routing bucket
 - `data-analytics-custom-event` provides an explicit event name override for
   interactions that do not belong in a shared section handler
+- `data-analytics-form` marks a form for delegated analytics tracking
 
 Current shared layout examples:
 
@@ -43,8 +45,17 @@ Example custom event markup:
 </button>
 ```
 
-That produces an event shaped from the clicked element, including section,
-element type, label text, `page_path`, and `element_url` for anchor clicks.
+That produces an event shaped from the clicked element, including section, element type, label text, `page_path`, and `element_url` for anchor clicks.
+
+Example tracked form markup:
+
+```html
+<form data-analytics-form="get_help">
+  <input name="email" type="email" />
+</form>
+```
+
+That enables delegated `form_start` and `form_submit_attempt` tracking for the form, and provides the `form_name` used by the form analytics helpers.
 
 ## 2. Click Routing & Event Behavior
 
@@ -63,10 +74,17 @@ On click, `AnalyticsController` currently does the following:
 5. otherwise, if `data-analytics-custom-event` is present, pushes that custom event
 6. otherwise, if the interactive element is an `a`, pushes a generic `link_click`
 
-`AnalyticsController` listens to document click events, but only tracks
-interactions that resolve to supported interactive elements, currently `a` and
-`button`. Clicks on non-interactive container space, such as footer whitespace,
-are intentionally ignored.
+`AnalyticsController` listens to document click events, but only tracks interactions that resolve to supported interactive elements, currently `a` and `button`. Clicks on non-interactive container space, such as footer whitespace, are intentionally ignored.
+
+For forms, `AnalyticsController` currently does the following:
+
+1. listens to delegated `input` and `change` events
+2. finds the nearest `form[data-analytics-form]`
+3. emits `form_start` the first time that tracked form is interacted with
+4. listens to delegated `submit` events
+5. emits `form_submit_attempt` for tracked forms
+
+The controller keeps a per-mount `Set` of started forms so repeated edits in the same form do not emit duplicate `form_start` events.
 
 ### Section Handlers
 
@@ -87,9 +105,7 @@ Their helper modules are:
 - `inPageNav.ts`
   - `in_page_nav_item_click`
 
-Known section handlers win over custom events. For example, a click inside a
-`data-analytics-section="header"` container will still be tracked as a header
-interaction even if an ancestor also provides `data-analytics-custom-event`.
+Known section handlers win over custom events. For example, a click inside a `data-analytics-section="header"` container will still be tracked as a header interaction even if an ancestor also provides `data-analytics-custom-event`.
 
 ### Generic Fallbacks
 
@@ -103,10 +119,7 @@ This means custom feature-specific buttons should opt in explicitly.
 
 ### Page Views
 
-`AnalyticsController` sends a `page_view` event on mount and after Astro swaps.
-It deduplicates those events with `window.__bdcLastTrackedPath`, using the
-current pathname, search, and hash together so the same location is not
-tracked repeatedly.
+`AnalyticsController` sends a `page_view` event on mount and after Astro swaps. It deduplicates those events with `window.__bdcLastTrackedPath`, using the current pathname, search, and hash together so the same location is not tracked repeatedly.
 
 The current `page_view` payload includes:
 
@@ -114,6 +127,21 @@ The current `page_view` payload includes:
 - `page_location`
 - `page_path`
 - `page_search`
+
+### Form Events
+
+Tracked forms use `data-analytics-form` as the form name source.
+
+Current form helpers are:
+
+- `forms.ts`
+  - `form_start`
+  - `form_submit_attempt`
+  - `form_submit_success`
+
+`form_start` and `form_submit_attempt` are emitted by `AnalyticsController`'s delegated form listeners.
+
+`form_submit_success` is emitted explicitly by form implementations that know a submission has actually completed successfully. That helper currently takes a form name directly rather than deriving it from the DOM.
 
 ## 3. Implementation Reference
 
@@ -143,10 +171,7 @@ All helpers send analytics through
 Likely next additions include:
 
 - copy-to-clipboard tracking
-- form tracking
 - search-specific analytics
-
-Keyboard interactions, form submissions, and other non-click interactions are not implemented in this layer yet.
 
 ### Things Worth Considering
 
