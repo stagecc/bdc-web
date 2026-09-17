@@ -42,6 +42,7 @@ import { buildPayload } from '../../../../util/freshdesk/buildPayload';
 import { getSectionFieldIds } from '../../../../util/freshdesk/getFormFields';
 import type { FreshdeskField } from '../../../../util/freshdesk/types';
 import { getRecaptchaToken } from '../../../../util/recaptcha';
+import { trackFormSubmitSuccess } from '../../../layout/analytics/forms';
 import ConsentField, { CONSENT_FIELD_NAME } from '../../fields/ConsentField';
 import HoneypotField from '../../fields/HoneypotField';
 import { fieldErrors, formErrors, formStatus } from '../../util/errorMessages';
@@ -85,6 +86,7 @@ export default function DynamicForm({
   recaptchaSiteKey,
   error = false,
 }: DynamicFormProps) {
+  const analyticsFormName = formType;
   const [status, setStatus] = useState<FormStatus>('idle');
   const [submitError, setSubmitError] = useState<string | null>(null);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
@@ -209,6 +211,7 @@ export default function DynamicForm({
         throw new Error(`Submit failed: ${response.status}`);
       }
 
+      trackFormSubmitSuccess(analyticsFormName);
       setStatus('success');
 
       // Move focus to confirmation message per UX spec accessibility requirement.
@@ -235,6 +238,7 @@ export default function DynamicForm({
     <FormProvider {...methods}>
       <form
         className="usa-form usa-form--large"
+        data-analytics-form={analyticsFormName}
         onSubmit={handleSubmit(onSubmit, onError)}
         noValidate // Disable native browser validation — RHF handles it
       >

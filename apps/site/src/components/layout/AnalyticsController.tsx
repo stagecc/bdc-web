@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { pushAnalyticsEvent } from '../../util/google-analytics/pushAnalyticsEvent';
 import { trackFooterInteraction } from './analytics/footer';
+import { getTrackedForm, trackFormSubmitAttempt } from './analytics/forms';
 import { trackInPageNavInteraction } from './analytics/inPageNav';
 import { trackNavInteraction } from './analytics/nav';
 import {
@@ -107,12 +108,26 @@ export function AnalyticsController() {
       }
     };
 
+    const handleSubmit = (event: SubmitEvent) => {
+      const target = getEventElement(event.target);
+
+      if (!target) return;
+
+      const form = getTrackedForm(target);
+
+      if (!form) return;
+
+      trackFormSubmitAttempt(form);
+    };
+
     document.addEventListener('astro:after-swap', handleNavigation);
     document.addEventListener('click', handleClick);
+    document.addEventListener('submit', handleSubmit);
 
     return () => {
       document.removeEventListener('astro:after-swap', handleNavigation);
       document.removeEventListener('click', handleClick);
+      document.removeEventListener('submit', handleSubmit);
     };
   }, []);
 

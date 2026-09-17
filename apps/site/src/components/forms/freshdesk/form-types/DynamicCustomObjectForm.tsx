@@ -42,6 +42,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { buildCustomObjectPayload } from '../../../../util/freshdesk/buildCustomObjectPayload';
 import type { CustomObjectField } from '../../../../util/freshdesk/typesCustomObjects';
 import { getRecaptchaToken } from '../../../../util/recaptcha';
+import { trackFormSubmitSuccess } from '../../../layout/analytics/forms';
 import ConsentField, { CONSENT_FIELD_NAME } from '../../fields/ConsentField';
 import HoneypotField from '../../fields/HoneypotField';
 import { fieldErrors, formErrors, formStatus } from '../../util/errorMessages';
@@ -87,6 +88,7 @@ export default function DynamicCustomObjectForm({
   recaptchaSiteKey,
   error = false,
 }: DynamicCustomObjectFormProps) {
+  const analyticsFormName = idPrefix.toLowerCase();
   const [status, setStatus] = useState<FormStatus>('idle');
   const [submitError, setSubmitError] = useState<string | null>(null);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
@@ -197,6 +199,7 @@ export default function DynamicCustomObjectForm({
         throw new Error(`Submit failed: ${response.status}`);
       }
 
+      trackFormSubmitSuccess(analyticsFormName);
       setStatus('success');
 
       // Move focus to confirmation message per UX spec accessibility requirement.
@@ -223,6 +226,7 @@ export default function DynamicCustomObjectForm({
     <FormProvider {...methods}>
       <form
         className="usa-form usa-form--large"
+        data-analytics-form={analyticsFormName}
         onSubmit={handleSubmit(onSubmit, onError)}
         noValidate // Disable native browser validation — RHF handles it
       >
