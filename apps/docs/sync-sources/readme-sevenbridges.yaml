@@ -1,8 +1,8 @@
 id: readme-sevenbridges
 type: readme
 base_url: https://sb-biodatacatalyst.readme.io
-output_dir: external/sevenbridges
-sidebar_section: Seven Bridges
+output_dir: written-documentation/analyze-data-1/seven-bridges
+sidebar_label: BDC-Seven Bridges
 strict_missing: true
 link_policy: externalize_non_mirrored
 badge:
@@ -12,33 +12,44 @@ badge:
 pages:
   - title: Before you start
     target_path: /docs/before-you-start
+    result_path: before-you-start
 
   - title: Sign up for BioData Catalyst powered by Seven Bridges
     target_path: /docs/sign-up-for-biodata-catalyst-powered-by-seven-bridges
+    result_path: sign-up-for-biodata-catalyst-powered-by-seven-bridges
 
   - title: Account settings
     target_path: /docs/account-settings
+    result_path: account-settings
 
   - title: About the Payments page
     target_path: /docs/payments
+    result_path: payments
 
   - title: Manage billing group members
     target_path: /docs/manage-billing-group-members
+    result_path: manage-billing-group-members
 
   - title: Cloud infrastructure pricing
     target_path: /docs/about-pricing
+    result_path: about-pricing
 
   - title: Compute Costs
     target_path: /docs/compute-costs
+    result_path: compute-costs
 
   - title: Storage Costs
     target_path: /docs/storage-costs
+    result_path: storage-costs
 
   - title: Data transfer costs
     target_path: /docs/data-transfer-costs
+    result_path: data-transfer-costs
 
   - title: Getting started
     target_path: /docs/getting-started
+    result_path: getting-started
 
   - title: Comprehensive user guide
     target_path: /docs/comprehensive-user-guide
+    result_path: comprehensive-user-guide

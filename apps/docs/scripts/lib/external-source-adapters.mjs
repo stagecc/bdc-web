@@ -11,9 +11,11 @@ const COMMON_HEADERS = {
   'cache-control': 'no-cache',
   pragma: 'no-cache',
 };
+const MAX_RETRIES = Number.parseInt(process.env.EXTERNAL_SYNC_MAX_RETRIES ?? '4', 10);
+const BASE_DELAY_MS = Number.parseInt(process.env.EXTERNAL_SYNC_RETRY_DELAY_MS ?? '1500', 10);
 
 export async function fetchHtmlPage(url) {
-  return fetch(url, {
+  return fetchWithRetry(url, {
     headers: {
       ...COMMON_HEADERS,
       accept:
@@ -23,7 +25,7 @@ export async function fetchHtmlPage(url) {
 }
 
 export async function fetchJsonPage(url) {
-  return fetch(url, {
+  return fetchWithRetry(url, {
     headers: {
       ...COMMON_HEADERS,
       accept: 'application/json,text/plain,*/*',
@@ -63,4 +65,44 @@ export function stripCloudflareEmailProtection(input) {
     /<a[^>]*href="[^"]*\/cdn-cgi\/l\/email-protection[^"]*"[^>]*>[\s\S]*?<\/a>/gi,
     '[email protected]',
   );
+}
+
+async function fetchWithRetry(url, options) {
+  let attempt = 0;
+
+  while (true) {
+    const response = await fetch(url, options);
+    const isRetryable = response.status === 429 || response.status === 503;
+    if (!isRetryable) return response;
+    if (attempt >= MAX_RETRIES) return response;
+
+    const retryAfterMs = parseRetryAfterMs(response.headers.get('retry-after'));
+    const backoffMs = retryAfterMs ?? BASE_DELAY_MS * 2 ** attempt;
+    const jitterMs = Math.floor(Math.random() * 250);
+    const delayMs = backoffMs + jitterMs;
+
+    console.warn(
+      `[external-sync] ${url} returned HTTP ${response.status}; retrying in ${delayMs}ms (${attempt + 1}/${MAX_RETRIES})`,
+    );
+
+    await wait(delayMs);
+    attempt += 1;
+  }
+}
+
+function parseRetryAfterMs(value) {
+  if (!value) return null;
+
+  const asSeconds = Number.parseInt(value, 10);
+  if (Number.isFinite(asSeconds) && asSeconds >= 0) return asSeconds * 1000;
+
+  const asDateMs = Date.parse(value);
+  if (!Number.isFinite(asDateMs)) return null;
+
+  const diff = asDateMs - Date.now();
+  return diff > 0 ? diff : 0;
+}
+
+function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }

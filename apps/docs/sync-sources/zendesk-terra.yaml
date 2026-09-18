@@ -1,8 +1,8 @@
 id: zendesk-terra
 type: zendesk
 base_url: https://support.terra.bio
-output_dir: external/terra
-sidebar_section: Terra
+output_dir: written-documentation/analyze-data-1/terra
+sidebar_label: BDC-Terra
 strict_missing: true
 link_policy: externalize_non_mirrored
 badge:

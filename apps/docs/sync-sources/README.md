@@ -12,7 +12,7 @@ This directory contains config files for external documentation sources that are
 Each `*.yaml` file defines one source and includes:
 
 - Source metadata (`id`, `type`, `base_url`)
-- Output placement (`output_dir`, `sidebar_section`)
+- Output placement (`output_dir`, `sidebar_label`)
 - Sync behavior (`strict_missing`, `link_policy`)
 - Source badge metadata (`badge`)
 - Explicit page allowlist (`pages[]`)

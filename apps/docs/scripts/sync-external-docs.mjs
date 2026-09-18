@@ -111,7 +111,7 @@ for (const source of sources) {
 
   if (sidebarItems.length > 0) {
     sidebarSections.push({
-      label: source.sidebarSection,
+      label: source.sidebarLabel,
       items: sidebarItems,
     });
   }

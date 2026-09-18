@@ -9,7 +9,7 @@
     "type",
     "base_url",
     "output_dir",
-    "sidebar_section",
+    "sidebar_label",
     "strict_missing",
     "link_policy",
     "pages"
@@ -35,10 +35,10 @@
       "minLength": 1,
       "description": "Directory under src/content/docs where synced pages are written."
     },
-    "sidebar_section": {
+    "sidebar_label": {
       "type": "string",
       "minLength": 1,
-      "description": "Top-level sidebar label for this source."
+      "description": "Sidebar label for this source group."
     },
     "strict_missing": {
       "type": "boolean",

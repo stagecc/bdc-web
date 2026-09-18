@@ -62,11 +62,7 @@ function normalizeAndValidateSyncSource(raw, fileName) {
   const outputDir = normalizePath(
     asString(raw.output_dir, 'output_dir', fileName),
   );
-  const sidebarSection = asString(
-    raw.sidebar_section,
-    'sidebar_section',
-    fileName,
-  );
+  const sidebarLabel = resolveSidebarLabel(raw, fileName);
   const strictMissing = asBoolean(
     raw.strict_missing,
     'strict_missing',
@@ -97,7 +93,7 @@ function normalizeAndValidateSyncSource(raw, fileName) {
     baseUrl: source.baseUrl,
     internalPathPrefixes: resolveInternalPathPrefixes(source.type),
     outputDir,
-    sidebarSection,
+    sidebarLabel,
     strictMissing,
     linkPolicy,
     badge,
@@ -167,6 +163,10 @@ function normalizeBadge(rawBadge, fileName) {
       ? 'Synced from external docs'
       : asString(rawBadge.label, 'badge.label', fileName);
   return { label };
+}
+
+function resolveSidebarLabel(raw, fileName) {
+  return asString(raw.sidebar_label, 'sidebar_label', fileName);
 }
 
 function normalizeSyncPage(rawPage, index, fileName) {
