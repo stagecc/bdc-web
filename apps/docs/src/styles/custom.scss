@@ -146,3 +146,9 @@
 .site-title span {
   align-self: flex-end;
 }
+
+// Starlight always prepends an "Overview" TOC entry that links to #_top.
+// We hide it so "On this page" only lists content-derived headings.
+starlight-toc a[href='#_top'] {
+  display: none;
+}
