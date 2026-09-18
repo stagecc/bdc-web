@@ -1,70 +1,73 @@
 ---
+import Card from '@bdc/ui-astro/card/Card.astro';
+import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import Base from '@layouts/Base.astro';
 ---
 
 <Base title="Contact & Support">
-  <section class="usa-section">
+  <Hero
+    eyebrow="Help"
+    title="Contact & Support"
+    description="Find technical help, documentation, live support, or the right contact for your question."
+  />
+
+  <section class="usa-section padding-top-4">
     <div class="grid-container">
-      <div class="grid-row">
-        <div class="grid-col-12">
+      <p class="usa-hint margin-top-0 margin-bottom-3">
+        Not sure where to start? Use <strong>Get Help</strong> to report problems using BDC. Use <strong>Contact BDC</strong> for general questions.
+      </p>
 
-          <h1>Contact & Support</h1>
-          
-          <p class="usa-intro">
-            Find technical help, documentation, live support, or the right contact 
-            for your question.
-          </p>
-
-          <p class="usa-hint margin-bottom-3">
-            Not sure where to start? Use <strong>Get Help</strong> to report problems using BDC. Use <strong>Contact BDC</strong> for general questions.
-          </p>
-
-          <div class="usa-prose margin-top-6">
-
-            <h2>Get Help</h2>
-
-            <p>
-              Report an access problem, error, platform issue, suspected bug, or other blocker affecting your use of BDC.
+      <div class="grid-container grid-gap-2 padding-x-0">
+        <div class="grid-row grid-gap-2 flex-row flex-align-stretch">
+          <div class="tablet:grid-col-12 desktop:grid-col-4 margin-bottom-2 display-flex">
+            <Card variant="overview" class="display-flex flex-column height-full">
+              <span class="font-heading-md text-primary-dark text-bold">Get Help</span>
+              <p class="usa-prose">Report an access problem, error, platform issue, suspected bug, or other blocker affecting your use of BDC.</p>
+  
+              <span class="margin-top-auto margin-bottom-0">
+                <Link to="/help/get-help">
+                  Get Help →
+                </Link>
+              </span>
+            </Card>
+          </div>
+          <div class="tablet:grid-col-12 desktop:grid-col-4 margin-bottom-2 display-flex">
+            <Card variant="overview" class="display-flex flex-column height-full">
+              <span class="font-heading-md text-primary-dark text-bold">Contact BDC</span>
+              <p class="usa-prose">Contact the BDC team to inquire about partnerships, collaborations, communications, or other general topics that are not technical-support requests.</p>
+  
+              <span class="margin-top-auto margin-bottom-0">
+                <Link to="/help/contact-bdc">Contact BDC →</Link>
+              </span>
+            </Card>
+          </div>
+          <div class="tablet:grid-col-12 desktop:grid-col-4 margin-bottom-2 display-flex">
+            <Card variant="overview" class="display-flex flex-column height-full">
+              <span class="font-heading-md text-primary-dark text-bold">Find Answers</span>
+              <p class="usa-prose">CoBrowse documentation and tutorials to learn how to work in BDC.</p>
+  
+              <span class="margin-top-auto margin-bottom-0">
+                <Link to="/help/documentation">Go to BDC documentation →</Link>
+              </span>
+            </Card>
+          </div>
+        </div>
+        <div class="tablet:grid-col-12 desktop:grid-col-12" >
+          <Card variant="overview">
+            <span class="font-heading-md text-primary-dark text-bold">Join Office Hours</span>
+            <p class="usa-prose">
+              Bring questions to a live drop-in session with BDC-Seven Bridges for everything from getting started to workflow integration to cost estimation.
             </p>
-
-            <Link to="/help/get-help">Get Help →</Link>
-
-            <h2>Contact BDC</h2>
-            <p>
-              Contact the BDC team to inquire about partnerships, collaborations, communications, or other general topics that are not technical-support requests
-            </p>
-            <Link to="/help/contact-bdc">
-              Contact BDC →
-            </Link>
-
-            <h2>Find Answers</h2>
-            <p>
-              Browse documentation and tutorials to learn how to work in BDC.
-            </p>
-            <Link to="/help/documentation">
-              Go to BDC documentation →
-            </Link>
-
-
-
-            <h2>Join Office Hours</h2>
-            <p>
-              Bring questions to a live drop-in session with BDC-Seven Bridges for everything from getting started to workflow integration to cost estimation. 
-            </p>
-            <h3>BDC-Seven Bridges Office Hours</h3>
+            <p class="text-bold usa-prose">BDC-Seven Bridges Office Hours</p>
             <ul>
               <li>Tuesdays, 10:00 - 11:00 am ET</li>
               <li>Thursdays, 2:00 - 3:00 pm ET</li>
             </ul>
-            
-            <p>
-              Sessions are held over Google Meet using the following link: <Link to="https://meet.google.com/kbs-ojnj-dcg">https://meet.google.com/kbs-ojnj-dcg</Link>
+            <p class="margin-bottom-0 usa-prose">
+              Sessions are held over Google Meet: <Link to="https://meet.google.com/kbs-ojnj-dcg">Join Office Hours</Link>
             </p>
-
-
-          </div>
-
+          </Card>
         </div>
       </div>
     </div>
