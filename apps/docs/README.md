@@ -49,8 +49,6 @@ From repo root:
   - `npm run sync:gitbook --workspace=@bdc/docs`
 - Sync external source content only:
   - `npm run sync:external --workspace=@bdc/docs`
-- Clean all generated synced docs outputs (GitBook + external) before a fresh sync:
-  - `npm run sync:clean --workspace=@bdc/docs`
 - Refresh external source change-detection lock only:
   - `npm run check:external-updates --workspace=@bdc/docs`
 
@@ -88,7 +86,7 @@ Amplify listens to this repository and deploys `apps/docs` from resulting commit
 - External lock file (committed): `apps/docs/external.lock.json`.
 - Generated external sidebar: `apps/docs/src/generated/external-sidebar.json`.
 
-Generated external page content is written under `apps/docs/src/content/docs/external/` during sync and is ignored by git via `apps/docs/.gitignore`.
+Generated external page content is written under each source's configured `output_dir` under `apps/docs/src/content/docs/` during sync and is ignored by git via `apps/docs/.gitignore`.
 
 Workflow: `.github/workflows/docs-external-sync.yml`
 
