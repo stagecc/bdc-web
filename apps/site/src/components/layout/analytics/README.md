@@ -1,7 +1,9 @@
 # Analytics
 
 This folder contains the delegated interaction helpers used by
-`src/components/layout/AnalyticsController.tsx`.
+`src/components/layout/AnalyticsController.tsx`, plus feature-specific
+analytics helpers for interactions that are emitted directly from their owning
+scripts.
 
 ## 1. Overview & Markup Contract
 
@@ -164,6 +166,18 @@ All helpers send analytics through
 `pushAnalyticsEvent()` logs events to the console in development and calls
 `window.gtag('event', ...)` outside development when GA is available.
 
+### Search
+
+Basic search analytics are emitted directly from the search scripts rather than
+through `AnalyticsController`, because search submission is keyboard- and
+form-driven rather than a pure delegated click interaction.
+
+Current search helper:
+
+- `search.ts`
+  - `search_submit`
+  - `search_result_click`
+
 ## 4. Roadmap & Open Questions
 
 ### Next Steps
@@ -171,7 +185,9 @@ All helpers send analytics through
 Likely next additions include:
 
 - copy-to-clipboard tracking
-- search-specific analytics
+
+
+Keyboard interactions, form submissions, and other non-click interactions are not implemented in this layer yet.
 
 ### Things Worth Considering
 

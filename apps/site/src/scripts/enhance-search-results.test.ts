@@ -1,4 +1,5 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { pushAnalyticsEvent } from '../util/google-analytics/pushAnalyticsEvent';
 import {
   enhanceSearchResult,
   initSearchResultsControls,
@@ -8,6 +9,12 @@ import {
   setSearchResultsState,
   syncSearchNoResultsSuggestions,
 } from './enhance-search-results';
+
+vi.mock('../util/google-analytics/pushAnalyticsEvent', () => ({
+  pushAnalyticsEvent: vi.fn(),
+}));
+
+const pushAnalyticsEventMock = vi.mocked(pushAnalyticsEvent);
 
 function renderTemplates() {
   document.body.innerHTML = `
@@ -52,6 +59,10 @@ function mountSearchResults(records: SearchResultRecord[]) {
   setSearchResultsState(container, records, 'example');
   renderSearchResultsView(container);
   return container;
+}
+
+function absoluteUrl(path: string) {
+  return new URL(path, window.location.href).href;
 }
 
 function createResult(href = '/news/latest-updates/example') {
@@ -104,6 +115,7 @@ describe('search result enhancements', () => {
   beforeEach(() => {
     window.history.replaceState({}, '', '/search');
     renderTemplates();
+    pushAnalyticsEventMock.mockReset();
   });
 
   it('uses the News tag for latest-updates results', () => {
@@ -169,6 +181,36 @@ describe('search result enhancements', () => {
       ).map((tag) => tag.textContent);
 
       expect(tags).toEqual(['News', 'Event', 'Page']);
+    });
+  });
+
+  it('tracks search result clicks with the active query', async () => {
+    mountSearchResults([
+      createRecord('Alpha update', '/news/latest-updates/alpha', 0),
+    ]);
+
+    const link = await vi.waitFor(() => {
+      const resultLink = document.querySelector<HTMLAnchorElement>(
+        '#search-results-list .pagefind-ui__result-link',
+      );
+      expect(resultLink).toBeInTheDocument();
+      if (!resultLink) {
+        throw new Error('Expected a rendered search result link');
+      }
+      return resultLink;
+    });
+
+    link.addEventListener('click', (event) => event.preventDefault());
+    link.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+
+    expect(pushAnalyticsEventMock).toHaveBeenCalledTimes(1);
+    expect(pushAnalyticsEventMock).toHaveBeenCalledWith({
+      event: 'search_result_click',
+      search_term: 'example',
+      result_url: absoluteUrl('/news/latest-updates/alpha'),
+      result_title: 'Alpha update',
+      result_index: 1,
+      page_path: '/search',
     });
   });
 
