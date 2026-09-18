@@ -26,8 +26,10 @@ type Props = {
 // If these option strings change in the data, tooltips will silently stop appearing.
 // Content manager is aware — see publications filtering decision log.
 const RESEARCH_COMMUNITY_TOOLTIPS: Record<string, string> = {
-  'Not Applicable': 'This work is not part of a research community effort.',
-  Other: 'This work is part of a research community not listed on the website.',
+  'Not Applicable':
+    'This work is not part of a research program/initiative effort.',
+  Other:
+    'This work is part of a research program/initiative not listed on the website.',
 };
 
 const BDC_CONTRIBUTION_TOOLTIPS: Record<string, string> = {
@@ -102,7 +104,7 @@ export default function PublicationsFilterPanel({
           onToggle={(v) => toggleFilter('year', v)}
         />
         <PublicationsFilterGroup
-          legend="Research Community"
+          legend="Research Program/Initiative"
           options={filterOptions.researchCommunities}
           selected={filters.researchCommunity}
           collapsible={collapsibleGroups}
