@@ -9,6 +9,8 @@ import {
   stripCloudflareEmailProtection,
 } from './lib/external-source-adapters.mjs';
 import { readSourceConfigsForSync } from './lib/external-source-config.mjs';
+import { convertExternalHtmlToMarkdown } from './lib/external-html-to-markdown.mjs';
+import { assertOverviewHeadingPreserved } from './lib/external-source-integrity.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
 const docsRoot = resolve(scriptDir, '..');
@@ -76,8 +78,14 @@ for (const source of sources) {
         title: pageTitle,
         badgeLabel: source.badge?.label,
         sourceUrl,
-        bodyHtml: rewriteResult.html,
+        bodyMarkdown:
+          convertExternalHtmlToMarkdown(rewriteResult.html) || rewriteResult.html,
       });
+      assertOverviewHeadingPreserved(
+        fetched.bodyHtml,
+        markdown,
+        `${source.id}:${page.targetPath}`,
+      );
 
       const outputPath = join(sourceOutputDir, `${page.resultPath}.md`);
       await mkdir(dirname(outputPath), { recursive: true });
@@ -270,7 +278,7 @@ function rewriteHtmlLinks({
   };
 }
 
-function renderMarkdownDocument({ title, badgeLabel, sourceUrl, bodyHtml }) {
+function renderMarkdownDocument({ title, badgeLabel, sourceUrl, bodyMarkdown }) {
   const lines = [
     '---',
     `title: ${JSON.stringify(title)}`,
@@ -283,7 +291,7 @@ function renderMarkdownDocument({ title, badgeLabel, sourceUrl, bodyHtml }) {
     lines.push(`> **${badgeLabel}:** [View original page](${sourceUrl})`, '');
   }
 
-  lines.push(bodyHtml.trim(), '');
+  lines.push(bodyMarkdown.trim(), '');
   return lines.join('\n');
 }
 
