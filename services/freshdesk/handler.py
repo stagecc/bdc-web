@@ -1,7 +1,6 @@
 import os
 import json
 import base64
-import urllib.request
 import urllib.error
 
 import urllib.parse
@@ -37,6 +36,7 @@ def cors_headers(event):
         'https://biodatacatalyst.nhlbi.nih.gov',
         'https://staging.biodatacatalyst.nhlbi.nih.gov',
         'http://localhost:8000',
+        'http://localhost:4321'
     ]
 
     headers = {
@@ -76,6 +76,11 @@ def lambda_handler(event, context):
 
     if 'Access-Control-Allow-Origin' not in headers:
         return _error(403, 'CORS origin not allowed', headers)
+
+    # Preflight only needs CORS headers. Keep this independent from Freshdesk
+    # credential checks so local browser submits behave like the deployed Lambda.
+    if method == 'OPTIONS':
+        return { 'statusCode': 204, 'headers': headers, 'body': '' }
         
     api_key = os.getenv('FRESHDESK_API_KEY')
     domain = os.getenv('FRESHDESK_DOMAIN')
@@ -85,36 +90,17 @@ def lambda_handler(event, context):
     auth = base64.b64encode(f'{api_key}:X'.encode()).decode()
     base_url = f'https://{domain}/api/v2'
 
-    # preflight
-    if method == 'OPTIONS':
-        return { 'statusCode': 204, 'headers': headers, 'body': '' }
-
-    # GET /faqs
     if method == 'GET':
-        path = event.get('rawPath') or event.get('path', '/')
         print('Requested path:', path)
-
-        normalized_path = path.strip('/')
-        if normalized_path == 'faqs':
+        if path == 'faqs':
             url = f'{base_url}/solutions/folders/60000230495/articles'
             print('Matched /faqs route, fetching:', url)
             return _proxy_request(url, 'GET', None, auth, headers)
         else:
-            print('No route match for path:', normalized_path)
+            print('No route match for path:', path)
             return _error(404, 'Not Found', headers)
     
-    # POST routes (/cloud-credits, /join)
     if method == 'POST':
-        route_map = {
-            'join': 'contacts',
-            'cloud-credits': 'tickets'
-        }
-        # ensure target resource exists
-        resource = route_map.get(path)
-        if not resource:
-            return _error(404, f'Unknown POST route: /{path}', headers)
-
-        # ensure body exists
         body = event.get('body')
         if not body:
             return _error(400, 'Missing request body', headers)
@@ -134,12 +120,34 @@ def lambda_handler(event, context):
         print('reCAPTCHA verification result:', verification)
         if not verification.get('success'):
             return _error(403, 'reCAPTCHA verification failed', headers)
+
+        route_map = {
+            'join': f'{base_url}/contacts',
+            'cloud-credits': f'{base_url}/tickets',
+        }
+
+        url = route_map.get(path)
+        if not url and path == '':
+            schema_id = payload.pop('schema_id', None)
+            if schema_id:
+                url = f'{base_url}/custom_objects/schemas/{schema_id}/records'
+            else:
+                url = f'{base_url}/tickets'
+
+        if not url:
+            return _error(404, f'Unknown POST route: /{path}', headers)
+
+        # Keep minimal fallbacks in the proxy for resilience, but let the site
+        # own the real ticket payload construction.
+        if url.endswith('/tickets'):
+            payload.setdefault('description', 'Submitted from website form.')
+            payload.setdefault('status', 2)
+            payload.setdefault('priority', 1)
         
         # remove token before forwarding
         payload.pop('recaptcha_token', None)
         body = json.dumps(payload)
-        
-        url = f'{base_url}/{resource}'
+
         return _proxy_request(url, 'POST', body, auth, headers)
 
 

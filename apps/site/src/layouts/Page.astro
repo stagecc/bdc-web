@@ -10,6 +10,7 @@ interface Props {
     // Example format used across the site: "June 2026".
     lastReviewed?: string;
     in_page_nav?: boolean;
+    enableRecaptcha?: boolean;
   };
 }
 
@@ -17,7 +18,10 @@ const { frontmatter }: Props = Astro.props;
 const showNav = frontmatter.in_page_nav !== false;
 ---
 
-<Base title={frontmatter.title}>
+<Base
+  title={frontmatter.title}
+  enableRecaptcha={frontmatter.enableRecaptcha}
+>
   <section class="usa-section">
     <div class="grid-container">
       <h1>{frontmatter.title}</h1>
