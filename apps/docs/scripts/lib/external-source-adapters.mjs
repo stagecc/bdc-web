@@ -13,6 +13,7 @@ const COMMON_HEADERS = {
 };
 const MAX_RETRIES = Number.parseInt(process.env.EXTERNAL_SYNC_MAX_RETRIES ?? '4', 10);
 const BASE_DELAY_MS = Number.parseInt(process.env.EXTERNAL_SYNC_RETRY_DELAY_MS ?? '1500', 10);
+const RETRYABLE_STATUS_CODES = new Set([429, 500, 502, 503, 504]);
 
 export async function fetchHtmlPage(url) {
   return fetchWithRetry(url, {
@@ -71,16 +72,31 @@ async function fetchWithRetry(url, options) {
   let attempt = 0;
 
   while (true) {
-    const response = await fetch(url, options);
-    const isRetryable = response.status === 429 || response.status === 503;
-    if (!isRetryable) return response;
+    let response;
+
+    try {
+      response = await fetch(url, options);
+    } catch (error) {
+      if (attempt >= MAX_RETRIES) {
+        throw error;
+      }
+
+      const delayMs = computeRetryDelayMs(null, attempt);
+      const reason = error instanceof Error ? error.message : String(error);
+      console.warn(
+        `[external-sync] ${url} request failed (${reason}); retrying in ${delayMs}ms (${attempt + 1}/${MAX_RETRIES})`,
+      );
+      await wait(delayMs);
+      attempt += 1;
+      continue;
+    }
+
+    if (!RETRYABLE_STATUS_CODES.has(response.status)) {
+      return response;
+    }
     if (attempt >= MAX_RETRIES) return response;
 
-    const retryAfterMs = parseRetryAfterMs(response.headers.get('retry-after'));
-    const backoffMs = retryAfterMs ?? BASE_DELAY_MS * 2 ** attempt;
-    const jitterMs = Math.floor(Math.random() * 250);
-    const delayMs = backoffMs + jitterMs;
-
+    const delayMs = computeRetryDelayMs(response.headers.get('retry-after'), attempt);
     console.warn(
       `[external-sync] ${url} returned HTTP ${response.status}; retrying in ${delayMs}ms (${attempt + 1}/${MAX_RETRIES})`,
     );
@@ -88,6 +104,13 @@ async function fetchWithRetry(url, options) {
     await wait(delayMs);
     attempt += 1;
   }
+}
+
+function computeRetryDelayMs(retryAfterHeader, attempt) {
+  const retryAfterMs = parseRetryAfterMs(retryAfterHeader);
+  const backoffMs = retryAfterMs ?? BASE_DELAY_MS * 2 ** attempt;
+  const jitterMs = Math.floor(Math.random() * 250);
+  return backoffMs + jitterMs;
 }
 
 function parseRetryAfterMs(value) {

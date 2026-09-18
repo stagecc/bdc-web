@@ -1,4 +1,5 @@
 import { execFileSync } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import {
   cp,
   mkdir,
@@ -77,7 +78,10 @@ try {
   await ensureDefault404Doc(outputDocsDir);
   await copyGitbookAssets(sourceDir, outputAssetsDir);
 
-  const sidebar = buildSidebarFromSummary(summaryText);
+  const sidebar = filterSidebarByExistingDocs(
+    buildSidebarFromSummary(summaryText),
+    outputDocsDir,
+  );
   await writeSidebarFile(outputSidebarFile, sidebar);
 
   const sha = execFileSync('git', ['-C', sourceDir, 'rev-parse', 'HEAD'], {
@@ -118,11 +122,25 @@ async function copyMarkdownFiles(sourceDir, destinationDir) {
     const content = await readFile(absPath, 'utf8');
     const transformed = transformMarkdown(content, relPath);
 
+    if (shouldSkipBlankOverviewDoc(transformed, relPath)) {
+      continue;
+    }
+
     const outRelPath = mapContentOutputPath(relPath);
     const outAbsPath = join(destinationDir, outRelPath);
     await mkdir(dirname(outAbsPath), { recursive: true });
     await writeFile(outAbsPath, transformed, 'utf8');
   }
+}
+
+function shouldSkipBlankOverviewDoc(content, fileRelPath) {
+  if (basename(fileRelPath).toLowerCase() !== 'readme.md') {
+    return false;
+  }
+
+  const parsed = parseFrontmatter(content);
+  const body = parsed ? parsed.body : content;
+  return body.trim() === '';
 }
 
 async function copyGitbookAssets(sourceDir, destinationDir) {
@@ -477,6 +495,45 @@ function sidebarItemKey(item) {
   if ('slug' in item && item.slug) return `slug:${item.slug}`;
   if ('link' in item && item.link) return `link:${item.link}`;
   return null;
+}
+
+function filterSidebarByExistingDocs(sidebar, docsDir) {
+  return sidebar
+    .map((section) => filterSidebarItem(section, docsDir))
+    .filter((section) => section && Array.isArray(section.items) && section.items.length > 0);
+}
+
+function filterSidebarItem(item, docsDir) {
+  if (!item || typeof item !== 'object') return null;
+
+  if ('slug' in item && typeof item.slug === 'string') {
+    return hasDocForSlug(item.slug, docsDir) ? item : null;
+  }
+
+  if ('items' in item && Array.isArray(item.items)) {
+    const items = item.items
+      .map((child) => filterSidebarItem(child, docsDir))
+      .filter(Boolean);
+
+    if (items.length === 0) return null;
+    return {
+      ...item,
+      items,
+    };
+  }
+
+  return item;
+}
+
+function hasDocForSlug(slug, docsDir) {
+  const normalized = slug.replace(/^\/+/, '').replace(/\/+$/, '');
+  const docPath = join(docsDir, `${normalized}.md`);
+  const indexPath = join(docsDir, normalized, 'index.md');
+  return fileExists(docPath) || fileExists(indexPath);
+}
+
+function fileExists(filePath) {
+  return existsSync(filePath);
 }
 
 async function writeSidebarFile(filePath, sidebar) {
