@@ -1,4 +1,4 @@
-import { mkdir, rm, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
@@ -29,17 +29,19 @@ if (sources.length === 0) {
   process.exit(0);
 }
 
+const previousManifest = await readPreviousManifest(outputManifestFile);
+const previousManagedFiles = collectManagedFiles(previousManifest, docsRoot);
+
 const manifest = {
   syncedAt: new Date().toISOString(),
   sources: [],
 };
 const sidebarSections = [];
+const currentManagedFiles = new Set();
 
 for (const source of sources) {
   const sourceOutputDir = resolve(outputDocsRoot, source.outputDir);
   const pageMap = buildPageMap(source);
-
-  await cleanDir(sourceOutputDir);
 
   const sourceResult = {
     id: source.id,
@@ -48,10 +50,13 @@ for (const source of sources) {
     outputDir: source.outputDir,
     pageCount: source.pages.length,
     writtenCount: 0,
+    managedFiles: [],
     errors: [],
   };
 
   const sidebarItems = [];
+
+  await mkdir(sourceOutputDir, { recursive: true });
 
   for (const page of source.pages) {
     try {
@@ -78,7 +83,11 @@ for (const source of sources) {
       await mkdir(dirname(outputPath), { recursive: true });
       await writeFile(outputPath, markdown, 'utf8');
 
+      const outputPathRelative = toRelativeDocsPath(outputPath, docsRoot);
+
       sourceResult.writtenCount += 1;
+      sourceResult.managedFiles.push(outputPathRelative);
+      currentManagedFiles.add(outputPathRelative);
       sidebarItems.push({
         label: pageTitle,
         slug: pageMap.get(page.targetPath),
@@ -113,6 +122,8 @@ for (const source of sources) {
   );
 }
 
+await removeStaleManagedFiles(previousManagedFiles, currentManagedFiles, docsRoot);
+
 await mkdir(dirname(outputManifestFile), { recursive: true });
 await writeFile(
   outputManifestFile,
@@ -142,6 +153,68 @@ function buildPageMap(source) {
   }
 
   return pathToSlug;
+}
+
+async function readPreviousManifest(filePath) {
+  try {
+    const raw = await readFile(filePath, 'utf8');
+    const parsed = JSON.parse(raw);
+    return parsed && typeof parsed === 'object' ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function collectManagedFiles(manifest, docsRootDir) {
+  const files = new Set();
+  if (!manifest || !Array.isArray(manifest.sources)) return files;
+  const docsContentRoot = `${normalizeFilePath(resolve(docsRootDir, 'src/content/docs'))}/`;
+
+  for (const source of manifest.sources) {
+    if (!source || typeof source !== 'object') continue;
+    if (!Array.isArray(source.managedFiles)) continue;
+
+    for (const entry of source.managedFiles) {
+      if (typeof entry !== 'string' || entry.trim() === '') continue;
+      const normalized = normalizeFilePath(entry).replace(/^\/+/, '');
+      if (!normalized.startsWith('src/content/docs/')) continue;
+      if (!normalized.endsWith('.md')) continue;
+
+      const absolutePath = normalizeFilePath(resolve(docsRootDir, normalized));
+      if (!absolutePath.startsWith(docsContentRoot)) continue;
+
+      files.add(normalized);
+    }
+  }
+
+  return files;
+}
+
+async function removeStaleManagedFiles(previousFiles, currentFiles, docsRootDir) {
+  let removedCount = 0;
+
+  for (const filePath of previousFiles) {
+    if (currentFiles.has(filePath)) continue;
+
+    const absolutePath = resolve(docsRootDir, filePath);
+    await rm(absolutePath, { force: true });
+    removedCount += 1;
+  }
+
+  if (removedCount > 0) {
+    console.log(`Removed ${removedCount} stale external page file(s)`);
+  }
+}
+
+function toRelativeDocsPath(filePath, docsRootDir) {
+  const normalized = normalizeFilePath(filePath);
+  const docsRootPrefix = `${normalizeFilePath(docsRootDir)}/`;
+
+  if (!normalized.startsWith(docsRootPrefix)) {
+    throw new Error(`External sync wrote file outside docs root: ${filePath}`);
+  }
+
+  return normalized.slice(docsRootPrefix.length);
 }
 
 function rewriteHtmlLinks({
@@ -227,6 +300,10 @@ function normalizePath(value) {
     .trim();
 }
 
+function normalizeFilePath(value) {
+  return value.replace(/\\/g, '/').replace(/\/+/g, '/').trim();
+}
+
 function escapeHtmlAttribute(value) {
   return value.replace(/&/g, '&amp;').replace(/"/g, '&quot;');
 }
@@ -299,9 +376,4 @@ function decodeHtmlEntities(input) {
     .replace(/&gt;/g, '>')
     .replace(/&quot;/g, '"')
     .replace(/&#39;/g, "'");
-}
-
-async function cleanDir(dirPath) {
-  await rm(dirPath, { recursive: true, force: true });
-  await mkdir(dirPath, { recursive: true });
 }

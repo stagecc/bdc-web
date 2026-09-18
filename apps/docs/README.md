@@ -49,6 +49,8 @@ From repo root:
   - `npm run sync:gitbook --workspace=@bdc/docs`
 - Sync external source content only:
   - `npm run sync:external --workspace=@bdc/docs`
+- Clean generated external source pages/metadata before a fresh sync:
+  - `npm run sync:clean --workspace=@bdc/docs`
 - Refresh external source change-detection lock only:
   - `npm run check:external-updates --workspace=@bdc/docs`
 
