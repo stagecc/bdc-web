@@ -4,6 +4,7 @@ import Icon from './Icon.astro';
 interface Props {
   icon: string;
   tone?: 'secondary' | 'cool' | 'warm' | 'neutral';
+  variant?: 'inline' | 'medium' | 'feature' | 'feature-lg';
   size?: 3 | 4 | 5 | 6 | 7 | 8 | 9;
   iconSize?: 3 | 4 | 5 | 6 | 7;
   label?: string;
@@ -13,8 +14,9 @@ interface Props {
 const {
   icon,
   tone = 'secondary',
-  size = 4,
-  iconSize = 3,
+  variant = 'inline',
+  size,
+  iconSize,
   label,
   class: className,
 } = Astro.props;
@@ -26,7 +28,27 @@ const toneClasses = {
   neutral: 'bg-base-lightest text-base-dark',
 } as const;
 
-const sizeClass = `height-${size} width-${size}`;
+const sizeByVariant = {
+  inline: 4,
+  medium: 6,
+  feature: 8,
+  'feature-lg': 9,
+} as const;
+
+const iconSizeByBadgeSize = {
+  3: 3,
+  4: 3,
+  5: 3,
+  6: 4,
+  7: 4,
+  8: 5,
+  9: 5,
+} as const;
+
+const resolvedSize = size ?? sizeByVariant[variant];
+const resolvedIconSize = iconSize ?? iconSizeByBadgeSize[resolvedSize];
+
+const sizeClass = `height-${resolvedSize} width-${resolvedSize}`;
 ---
 
 <span
@@ -38,5 +60,5 @@ const sizeClass = `height-${size} width-${size}`;
   ]}
   style="aspect-ratio: 1;"
 >
-  <Icon name={icon} size={iconSize} label={label} />
+  <Icon name={icon} size={resolvedIconSize} label={label} />
 </span>
