@@ -25,7 +25,7 @@ In addition to access to HLBS datasets, the BioData Catalyst ecosystem offers re
 
 The BioData Catalyst ecosystem is both a technical and people-centric endeavor. While the NHLBI has built a technical platform that allows researchers to use tools and workspaces to accelerate discovery and scientific advancement, moving the work to the cloud can also facilitate reproducibility and increased collaboration among researchers. Researchers utilizing BioData Catalyst are able to easily share workflows and communicate with each other on the forums. Further, the ecosystem’s interoperability efforts mean researchers will be able to connect research done on BioData Catalyst to data systems across the National Institutes of Health.
 
-Researchers interested in learning more about BioData Catalyst can [join the community](/join-bdc) and start exploring and working with resources within the ecosystem today.
+Researchers interested in learning more about BioData Catalyst can [join the community](/stay-connected) and start exploring and working with resources within the ecosystem today.
 
 ---
 
