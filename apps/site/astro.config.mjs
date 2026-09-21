@@ -8,6 +8,7 @@ import { defineConfig } from 'astro/config';
 import favicons from 'astro-favicons';
 import robotsTxt from 'astro-robots-txt';
 import { loadEnv } from 'vite';
+import redirects from './src/config/redirects/index.mjs';
 
 const siteUrl = process.env.SITE_URL || 'https://biodatacatalyst.nhlbi.nih.gov';
 
@@ -86,6 +87,7 @@ function externalLinks() {
 
 export default defineConfig({
   site: siteUrl,
+  redirects,
   integrations: [
     mdx({
       extendMarkdownConfig: false,
