@@ -54,6 +54,12 @@ interface TextFieldProps {
   register: ReturnType<UseFormRegister<Record<string, unknown>>>;
   // The React Hook Form error for this field, if any.
   error?: FieldError;
+  // Optional explicit id when the field name is not unique on the page.
+  id?: string;
+  // Optional browser autocomplete token.
+  autoComplete?: string;
+  // Disables the input while async submission is in progress.
+  disabled?: boolean;
 }
 
 export default function TextField({
@@ -64,9 +70,13 @@ export default function TextField({
   inputType = 'text',
   register,
   error,
+  id,
+  autoComplete,
+  disabled = false,
 }: TextFieldProps) {
-  const hintId = hint ? `${name}-hint` : undefined;
-  const errorId = error ? `${name}-error` : undefined;
+  const inputId = id ?? name;
+  const hintId = hint ? `${inputId}-hint` : undefined;
+  const errorId = error ? `${inputId}-error` : undefined;
 
   // aria-describedby wires the input to both hint and error text for screen readers.
   // Both may be present simultaneously — hint is always shown, error only on failure.
@@ -81,7 +91,7 @@ export default function TextField({
 
   return (
     <div className={`usa-form-group${error ? ' usa-form-group--error' : ''}`}>
-      <label className="usa-label" htmlFor={name}>
+      <label className="usa-label" htmlFor={inputId}>
         {label}
         {required && (
           <abbr title="required" className="usa-hint usa-hint--required">
@@ -104,12 +114,14 @@ export default function TextField({
       )}
 
       <input
-        id={name}
+        id={inputId}
         className={`usa-input${error ? ' usa-input--error' : ''}`}
         type={htmlType}
         step={step}
         aria-required={required}
         aria-describedby={describedBy}
+        autoComplete={autoComplete}
+        disabled={disabled}
         {...register}
       />
     </div>

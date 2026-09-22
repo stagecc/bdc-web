@@ -3,7 +3,7 @@ import { Image } from 'astro:assets';
 import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import Breadcrumbs from '@components/Breadcrumbs.astro';
-import EmailSignup from '@components/EmailSignup.astro';
+import EmailSignupForm from '@components/forms/freshdesk/composed/EmailSignupForm.astro';
 import ArticleHeader from '@components/news/ArticleHeader.astro';
 import Base from '@layouts/Base.astro';
 
@@ -15,6 +15,8 @@ const crumbs = [
 ];
 
 const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
+const showEmailSignup =
+  updateType === 'Newsletter' || updateType === 'Release Notes';
 
 const updateTypeCardText = {
   Newsletter: `Read the latest newsletter, including recent ecosystem news, 
@@ -25,7 +27,7 @@ const updateTypeCardText = {
 };
 ---
 
-<Base title={title}>
+<Base title={title} enableRecaptcha={showEmailSignup}>
 
   <section class="usa-section">
     <article class="article">
@@ -48,27 +50,21 @@ const updateTypeCardText = {
           />
         )}
 
-      {
-        (updateType === "Newsletter" || updateType === "Release Notes") && (
+        {showEmailSignup && (
           <InlineAlert variant="info" heading={updateType} noIcon>
-            <p class="margin-0 font-sans-sm">
-              {updateTypeCardText[updateType]}
-            </p>
+            <p class="margin-0 font-sans-sm">{updateTypeCardText[updateType]}</p>
           </InlineAlert>
-        )
-      }
+        )}
 
         <div class="article__content clearfix line-height-sans-5">
           <slot />
         </div>
 
-        {
-          (updateType === "Newsletter" || updateType === "Release Notes") && (
-            <div class="margin-top-4">
-              <EmailSignup/>
-            </div>
-          )
-        }
+        {showEmailSignup && (
+          <div class="margin-top-4">
+            <EmailSignupForm />
+          </div>
+        )}
         
         <nav aria-label="More news articles" class="margin-top-10">
           <div class="display-flex flex-justify grid-row">

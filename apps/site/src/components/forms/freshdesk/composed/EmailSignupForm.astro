@@ -1,0 +1,47 @@
+---
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
+import Card from '@bdc/ui-astro/card/Card.astro';
+import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
+import EmailSignupFormFields from '../form-types/EmailSignupForm';
+
+interface Props {
+  successHeading?: string;
+  successText?: string;
+  errorMessage?: string;
+  alreadyExistsMessage?: string;
+}
+
+const submitUrl = `${import.meta.env.FRESHDESK_PROXY_URL}/join`;
+const recaptchaSiteKey = import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY;
+const {
+  successHeading,
+  successText,
+  errorMessage,
+  alreadyExistsMessage,
+}: Props = Astro.props;
+---
+<InlineAlert variant="warning" heading="Temporary Notice">
+  This form is currently being updated. Submission may be temporarily unavailable, so please try again later if needed.
+</InlineAlert>
+<Card as="div" variant="panel">
+  <div class="display-flex flex-align-center margin-bottom-2">
+    <IconBadge
+      icon="mail_outline"
+      tone="secondary"
+      size={5}
+      iconSize={3}
+      class="margin-right-1"
+    />
+    <h2 class="font-sans-lg text-bold margin-0">Never miss an update</h2>
+  </div>
+
+  <EmailSignupFormFields
+    submitUrl={submitUrl}
+    recaptchaSiteKey={recaptchaSiteKey}
+    successHeading={successHeading}
+    successText={successText}
+    errorMessage={errorMessage}
+    alreadyExistsMessage={alreadyExistsMessage}
+    client:load
+  />
+</Card>

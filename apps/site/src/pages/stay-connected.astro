@@ -3,10 +3,10 @@ import Card from '@bdc/ui-astro/card/Card.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
-import EmailSignup from '@components/EmailSignup.astro';
+import EmailSignupForm from '@components/forms/freshdesk/composed/EmailSignupForm.astro';
 import Base from '@layouts/Base.astro';
 ---
-<Base title="Stay Connected">
+<Base title="Stay Connected" enableRecaptcha>
   <Hero
     eyebrow="Join BDC"
     title="Stay Connected"
@@ -47,7 +47,7 @@ import Base from '@layouts/Base.astro';
   </Hero>
   <section class="usa-section margin-y-0">
     <div class="grid-container">
-      <EmailSignup/>
+      <EmailSignupForm />
     </div>
     </section>
 </Base>

@@ -132,6 +132,9 @@ export const formErrors = {
     recaptchaUnavailable:
       "A required security check couldn't load. " +
       'Refresh the page and try again. If the problem continues, contact us at biodatacatalyst@nhlbi.nih.gov.',
+    emailSignup: 'Signup is temporarily unavailable. Please try again later.',
+    emailSignupAlreadyExists:
+      'An account may already exist for that email address. Email biodatacatalyst@nhlbi.nih.gov to have an activation email resent.',
   },
 };
 
@@ -152,4 +155,7 @@ export const formStatus = {
   successText:
     'Thank you for submitting your publication to BDC. Your submission has been received and forwarded to the appropriate BDC team for review. If additional information is needed, we may contact you using the email address you provided. Additionally, a copy of your responses has been sent to you at the email address provided. Note that submission does not guarantee inclusion on the BDC-Enabled Research page.',
   customObjectSuccessText: 'Thank you for submitting.',
+  emailSignupSuccessHeading: 'Subscription received',
+  emailSignupSuccessText:
+    'You will receive monthly BDC newsletters and other announcements.',
 };
