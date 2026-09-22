@@ -32,6 +32,11 @@ import type {
   CustomObjectSchema,
 } from './typesCustomObjects';
 
+export interface CustomObjectFormSchema {
+  fields: CustomObjectField[];
+  primaryFieldName: string;
+}
+
 // ---------------------------------------------------------------------------
 // Environment
 // ---------------------------------------------------------------------------
@@ -100,13 +105,14 @@ function isVisibleField(field: CustomObjectField): boolean {
  * @param schemaId - The numeric ID of the custom object schema.
  *   Stored in .env as FRESHDESK_CUSTOM_OBJECT_{NAME}_SCHEMA_ID.
  *   Obtain by calling GET /api/v2/custom_objects/schemas and noting the `id`.
- * @returns Filtered array of CustomObjectField objects ready to pass as props
- *   to the form component. PRIMARY, RELATIONSHIP, and hidden fields are excluded.
+ * @returns Filtered array of CustomObjectField objects plus the schema's
+ *   PRIMARY field name so submit-time payload construction can use the real
+ *   identifier key instead of assuming it is always `name`.
  * @throws If the Freshdesk API returns a non-ok response.
  */
 export async function getCustomObjectSchema(
   schemaId: string | number,
-): Promise<CustomObjectField[]> {
+): Promise<CustomObjectFormSchema> {
   const response = await fetch(
     `https://${FRESHDESK_DOMAIN}/api/v2/custom_objects/schemas/${schemaId}`,
     {
@@ -125,6 +131,10 @@ export async function getCustomObjectSchema(
   }
 
   const schema: CustomObjectSchema = await response.json();
+  const primaryField = schema.fields.find((field) => field.type === 'PRIMARY');
 
-  return schema.fields.filter(isVisibleField);
+  return {
+    fields: schema.fields.filter(isVisibleField),
+    primaryFieldName: primaryField?.name ?? 'name',
+  };
 }

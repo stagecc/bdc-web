@@ -59,6 +59,10 @@ interface DynamicCustomObjectFormProps {
   // PRIMARY, RELATIONSHIP, and hidden fields are excluded.
   // DROPDOWN and MULTI_SELECT fields include choices from the schema response.
   fields: CustomObjectField[];
+  // The internal name of the schema PRIMARY field. This is preserved from the
+  // schema fetch so record creation uses the actual identifier key required by
+  // Freshdesk instead of assuming it is always `name`.
+  primaryFieldName?: string;
   // The numeric ID of the custom object schema.
   // Passed to the Lambda proxy so it can construct the correct endpoint:
   // POST /api/v2/custom_objects/schemas/{schemaId}/records/
@@ -82,6 +86,7 @@ interface DynamicCustomObjectFormProps {
 
 export default function DynamicCustomObjectForm({
   fields,
+  primaryFieldName = 'name',
   schemaId,
   idPrefix = 'SUB',
   submitUrl,
@@ -179,7 +184,7 @@ export default function DynamicCustomObjectForm({
       const recaptchaToken = await getRecaptchaToken(recaptchaSiteKey);
 
       const payload = {
-        ...buildCustomObjectPayload(values, fields, 'name', idPrefix),
+        ...buildCustomObjectPayload(values, fields, primaryFieldName, idPrefix),
         recaptcha_token: recaptchaToken,
         // Pass schemaId so the Lambda knows which endpoint to hit.
         // The Lambda constructs: POST /api/v2/custom_objects/schemas/{schemaId}/records/

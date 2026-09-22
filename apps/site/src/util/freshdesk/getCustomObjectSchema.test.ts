@@ -51,17 +51,18 @@ describe('getCustomObjectSchema — filtering', () => {
     ]);
 
     const result = await getCustomObjectSchema('1001');
-    expect(result.map((f) => f.name)).toEqual(['title', 'journal']);
+    expect(result.fields.map((f) => f.name)).toEqual(['title', 'journal']);
   });
 
-  it('excludes PRIMARY fields', async () => {
+  it('excludes PRIMARY fields from renderable fields and preserves the primary field name', async () => {
     mockSchemaFetch([
       makeField({ name: 'submission_id', type: 'PRIMARY' }),
       makeField({ name: 'title', type: 'TEXT' }),
     ]);
 
     const result = await getCustomObjectSchema('1001');
-    expect(result.map((f) => f.name)).toEqual(['title']);
+    expect(result.fields.map((f) => f.name)).toEqual(['title']);
+    expect(result.primaryFieldName).toBe('submission_id');
   });
 
   it('excludes fields where visible is false', async () => {
@@ -71,7 +72,7 @@ describe('getCustomObjectSchema — filtering', () => {
     ]);
 
     const result = await getCustomObjectSchema('1001');
-    expect(result.map((f) => f.name)).toEqual(['title']);
+    expect(result.fields.map((f) => f.name)).toEqual(['title']);
   });
 
   it('excludes deleted fields', async () => {
@@ -81,7 +82,7 @@ describe('getCustomObjectSchema — filtering', () => {
     ]);
 
     const result = await getCustomObjectSchema('1001');
-    expect(result.map((f) => f.name)).toEqual(['title']);
+    expect(result.fields.map((f) => f.name)).toEqual(['title']);
   });
 
   it('excludes RELATIONSHIP fields — not yet supported by the renderer', async () => {
@@ -91,7 +92,7 @@ describe('getCustomObjectSchema — filtering', () => {
     ]);
 
     const result = await getCustomObjectSchema('1001');
-    expect(result.map((f) => f.name)).toEqual(['title']);
+    expect(result.fields.map((f) => f.name)).toEqual(['title']);
   });
 
   it('returns an empty array when all fields are filtered out', async () => {
@@ -102,7 +103,8 @@ describe('getCustomObjectSchema — filtering', () => {
     ]);
 
     const result = await getCustomObjectSchema('1001');
-    expect(result).toEqual([]);
+    expect(result.fields).toEqual([]);
+    expect(result.primaryFieldName).toBe('test_field');
   });
 });
 
@@ -121,7 +123,7 @@ describe('getCustomObjectSchema — choices', () => {
     ]);
 
     const result = await getCustomObjectSchema('1001');
-    expect(result[0].choices).toEqual(choices);
+    expect(result.fields[0].choices).toEqual(choices);
   });
 
   it('includes choices on DROPDOWN fields', async () => {
@@ -134,7 +136,7 @@ describe('getCustomObjectSchema — choices', () => {
     ]);
 
     const result = await getCustomObjectSchema('1001');
-    expect(result[0].choices).toEqual(choices);
+    expect(result.fields[0].choices).toEqual(choices);
   });
 });
 
@@ -158,6 +160,13 @@ describe('getCustomObjectSchema — error handling', () => {
   it('accepts schema ID as a number', async () => {
     mockSchemaFetch([makeField({ name: 'title' })]);
     const result = await getCustomObjectSchema(1001);
-    expect(result).toHaveLength(1);
+    expect(result.fields).toHaveLength(1);
+  });
+
+  it('falls back to name when the schema does not expose a PRIMARY field', async () => {
+    mockSchemaFetch([makeField({ name: 'title' })]);
+
+    const result = await getCustomObjectSchema('1001');
+    expect(result.primaryFieldName).toBe('name');
   });
 });

@@ -5,6 +5,7 @@ import type { CustomObjectField } from '../../../../util/freshdesk/typesCustomOb
 import DynamicCustomObjectForm from '../form-types/DynamicCustomObjectForm.tsx';
 
 let fields: CustomObjectField[] = [];
+let primaryFieldName = 'name';
 let formError = false;
 const hasFreshdeskAuth =
   Boolean(import.meta.env.FRESHDESK_DOMAIN) &&
@@ -21,7 +22,9 @@ if (!hasFreshdeskAuth || !schemaIdRaw || Number.isNaN(schemaId)) {
   formError = true;
 } else {
   try {
-    fields = await getCustomObjectSchema(schemaId);
+    const schema = await getCustomObjectSchema(schemaId);
+    fields = schema.fields;
+    primaryFieldName = schema.primaryFieldName;
   } catch (e) {
     console.error('Failed to fetch publication submission form config:', e);
     formError = true;
@@ -35,6 +38,7 @@ if (!hasFreshdeskAuth || !schemaIdRaw || Number.isNaN(schemaId)) {
 
 <DynamicCustomObjectForm
   fields={fields}
+  primaryFieldName={primaryFieldName}
   schemaId={schemaId}
   idPrefix="PUB"
   submitUrl={import.meta.env.FRESHDESK_PROXY_URL}
