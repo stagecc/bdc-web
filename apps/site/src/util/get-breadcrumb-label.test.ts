@@ -63,8 +63,8 @@ describe('getBreadcrumbLabel', () => {
       'Help > Contact BDC',
     );
     expect(
-      getBreadcrumbLabel('/data/analyze/bdc-workspaces', 'https://example.com'),
-    ).toBe('Data > Analyze > BDC Workspaces');
+      getBreadcrumbLabel('/about/bdc/fellows', 'https://example.com'),
+    ).toBe('About > BDC > Fellows');
   });
 
   it('uses the nav label for BDC-Enabled Research, including as a parent crumb', () => {
