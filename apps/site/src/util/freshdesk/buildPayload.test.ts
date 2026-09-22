@@ -116,13 +116,32 @@ describe('buildPayload', () => {
 
     const payload = buildPayload(values, fields, FORM_TYPE);
     expect(payload.description).toBe(
-      'Email Address: user@example.com\n\n' +
-        'Type of Assistance Needed: Website Issue\n\n' +
-        'Include logs: Yes\n\n' +
-        'Platforms affected: Terra, Seven Bridges\n\n' +
-        'Details: Some details here',
+      'Email Address: user@example.com <br />' +
+        'Type of Assistance Needed: Website Issue <br />' +
+        'Include logs: Yes <br />' +
+        'Platforms affected: Terra, Seven Bridges <br />' +
+        'Details: Some details here <br />',
     );
     expect(payload.custom_fields.description).toBeUndefined();
+  });
+
+  it('escapes HTML and preserves line breaks in description values', () => {
+    const fields = [
+      makeField({
+        name: 'cf_details',
+        label_for_customers: 'Details <script>',
+        type: 'custom_paragraph',
+      }),
+    ];
+    const values = {
+      cf_details: 'Line 1\nLine <2> & "quoted"',
+    };
+
+    const payload = buildPayload(values, fields, FORM_TYPE);
+
+    expect(payload.description).toBe(
+      'Details &lt;script&gt;: Line 1<br />Line &lt;2&gt; &amp; &quot;quoted&quot; <br />',
+    );
   });
 
   it('skips default_company because Freshdesk rejects top-level company', () => {
@@ -222,11 +241,11 @@ describe('buildPayload', () => {
     expect(payload).toEqual({
       subject: 'Support Needed: Publishing Research',
       description:
-        'Email Address: researcher@university.edu\n\n' +
-        'Type of Assistance Needed: Publishing Research\n\n' +
-        'Journal Name: Nature\n\n' +
-        'Paper Title: A study of things\n\n' +
-        'Publication Date: 2025-06-01',
+        'Email Address: researcher@university.edu <br />' +
+        'Type of Assistance Needed: Publishing Research <br />' +
+        'Journal Name: Nature <br />' +
+        'Paper Title: A study of things <br />' +
+        'Publication Date: 2025-06-01 <br />',
       type: 'Publishing Research',
       email: 'researcher@university.edu',
       custom_fields: {

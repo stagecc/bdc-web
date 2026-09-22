@@ -1,4 +1,5 @@
 export * from './buildCustomObjectPayload.ts';
+export * from './buildFreshdeskDescription';
 export * from './buildPayload';
 export * from './getCustomObjectRecords';
 export * from './getCustomObjectSchema';
