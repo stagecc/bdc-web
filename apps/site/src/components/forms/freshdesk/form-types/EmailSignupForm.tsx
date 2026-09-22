@@ -4,7 +4,7 @@ import type { FieldError } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { getRecaptchaToken } from '../../../../util/recaptcha/getRecaptchaToken';
 import TextField from '../../fields/TextField';
-import { fieldErrors, formErrors, formStatus } from '../../util/errorMessages';
+import { fieldErrors, formMessages } from '../../util/errorMessages';
 
 interface Props {
   submitUrl: string;
@@ -20,8 +20,8 @@ type FormStatus = 'idle' | 'submitting' | 'success' | 'warning' | 'error';
 export default function EmailSignupForm({
   submitUrl,
   recaptchaSiteKey,
-  successHeading = formStatus.emailSignupSuccessHeading,
-  successText = formStatus.emailSignupSuccessText,
+  successHeading = formMessages.emailSignup.successHeading,
+  successText = formMessages.emailSignup.successText,
   errorMessage,
   alreadyExistsMessage,
 }: Props) {
@@ -31,9 +31,9 @@ export default function EmailSignupForm({
   const errorRef = useRef<HTMLDivElement>(null);
   const nameId = useId();
   const emailId = useId();
-  const defaultErrorMessage = formErrors.submission.emailSignup;
+  const defaultErrorMessage = formMessages.emailSignup.submitError;
   const defaultAlreadyExistsMessage =
-    formErrors.submission.emailSignupAlreadyExists;
+    formMessages.emailSignup.alreadyExistsError ?? defaultErrorMessage;
   const resolvedErrorMessage = errorMessage ?? defaultErrorMessage;
   const resolvedAlreadyExistsMessage =
     alreadyExistsMessage ?? defaultAlreadyExistsMessage;

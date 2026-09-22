@@ -45,7 +45,12 @@ import { getRecaptchaToken } from '../../../../util/recaptcha';
 import { trackFormSubmitSuccess } from '../../../layout/analytics/forms';
 import ConsentField, { CONSENT_FIELD_NAME } from '../../fields/ConsentField';
 import HoneypotField from '../../fields/HoneypotField';
-import { fieldErrors, formErrors, formStatus } from '../../util/errorMessages';
+import {
+  type FormMessages,
+  fieldErrors,
+  formErrors,
+  formMessages,
+} from '../../util/errorMessages';
 import { renderCustomObjectField } from '../helpers/renderCustomObjectField';
 
 // ---------------------------------------------------------------------------
@@ -76,6 +81,8 @@ interface DynamicCustomObjectFormProps {
   // The reCAPTCHA v3 site key for the current environment.
   // Passed from the Astro page via import.meta.env.PUBLIC_RECAPTCHA_SITE_KEY.
   recaptchaSiteKey: string;
+  // Per-form copy for fallback, submit-error, and success states.
+  messages?: FormMessages;
   // True if getCustomObjectSchema threw at build time — renders fallback UI.
   error?: boolean;
 }
@@ -91,6 +98,7 @@ export default function DynamicCustomObjectForm({
   idPrefix = 'SUB',
   submitUrl,
   recaptchaSiteKey,
+  messages = formMessages.contactBdc,
   error = false,
 }: DynamicCustomObjectFormProps) {
   const analyticsFormName = idPrefix.toLowerCase();
@@ -123,10 +131,8 @@ export default function DynamicCustomObjectForm({
     return (
       <div className="usa-alert usa-alert--error" role="alert">
         <div className="usa-alert__body">
-          <h3 className="usa-alert__heading">
-            {formStatus.unavailableHeading}
-          </h3>
-          <p className="usa-alert__text">{formStatus.unavailable}</p>
+          <h3 className="usa-alert__heading">{messages.unavailableHeading}</h3>
+          <p className="usa-alert__text">{messages.unavailableText}</p>
         </div>
       </div>
     );
@@ -143,10 +149,8 @@ export default function DynamicCustomObjectForm({
       <div ref={confirmationRef} tabIndex={-1}>
         <output className="usa-alert usa-alert--success display-block">
           <div className="usa-alert__body">
-            <h2 className="usa-alert__heading">{formStatus.successHeading}</h2>
-            <p className="usa-alert__text">
-              {formStatus.customObjectSuccessText}
-            </p>
+            <h2 className="usa-alert__heading">{messages.successHeading}</h2>
+            <p className="usa-alert__text">{messages.successText}</p>
           </div>
         </output>
 
@@ -209,7 +213,7 @@ export default function DynamicCustomObjectForm({
       setTimeout(() => confirmationRef.current?.focus(), 0);
     } catch {
       setStatus('error');
-      setSubmitError(formErrors.submission.general);
+      setSubmitError(messages.submitError);
     }
   };
 

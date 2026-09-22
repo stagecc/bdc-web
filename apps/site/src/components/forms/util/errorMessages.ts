@@ -9,7 +9,7 @@
  *   - A clear handoff point for the content team to review copy
  *
  * Usage:
- *   import { fieldErrors, formErrors, formStatus } from '../copy/errorMessages'
+ *   import { fieldErrors, formErrors, formMessages } from '../copy/errorMessages'
  *
  *   Static message:
  *   required: fieldErrors.email.required
@@ -24,11 +24,23 @@
  *   - Keep it short — a phrase, not a sentence, where possible
  *
  * Open questions:
- *   - Support email address for error fallback messages is TBD
- *     (see formErrors.submission.general and formStatus.unavailable)
- *   - Per-form success copy and button labels are defined per form, not here
- *
+ *   - Per-form button labels are still defined in the form components
  */
+
+const SUPPORT_EMAIL = 'biodatacatalyst@nhlbi.nih.gov';
+
+export interface FormMessages {
+  unavailableHeading: string;
+  unavailableText: string;
+  successHeading: string;
+  successText: string;
+  submitError: string;
+  alreadyExistsError?: string;
+}
+
+const genericUnavailableText = `Try again later or email ${SUPPORT_EMAIL} if you need help right away.`;
+
+const genericUnavailableHeading = "This form isn't available right now.";
 
 // ---------------------------------------------------------------------------
 // Field-level validation errors
@@ -120,42 +132,61 @@ export const formErrors = {
     // General connection or server error
     general:
       "Your submission didn't go through. Check your connection and try again. " +
-      'If the problem continues, contact us at biodatacatalyst@nhlbi.nih.gov.',
+      `If the problem continues, contact us at ${SUPPORT_EMAIL}.`,
     // Request timed out
     timeout:
       'This is taking longer than expected. Check your connection and try again.',
     // reCAPTCHA verification failed
     recaptchaFailed:
       "We weren't able to verify your submission. " +
-      'If you are having trouble, contact us at biodatacatalyst@nhlbi.nih.gov.',
+      `If you are having trouble, contact us at ${SUPPORT_EMAIL}.`,
     // reCAPTCHA script failed to load
     recaptchaUnavailable:
       "A required security check couldn't load. " +
-      'Refresh the page and try again. If the problem continues, contact us at biodatacatalyst@nhlbi.nih.gov.',
-    emailSignup: 'Signup is temporarily unavailable. Please try again later.',
-    emailSignupAlreadyExists:
-      'An account may already exist for that email address. Email biodatacatalyst@nhlbi.nih.gov to have an activation email resent.',
+      `Refresh the page and try again. If the problem continues, contact us at ${SUPPORT_EMAIL}.`,
   },
 };
 
-// ---------------------------------------------------------------------------
-// Form status messages
-// Shown when the form itself cannot load or has succeeded.
-// ---------------------------------------------------------------------------
-
-export const formStatus = {
-  // Shown when getFormFields fails at build time and DynamicForm renders
-  // the fallback UI instead of the form.
-  unavailable:
-    'Try again later, or contact us by email at biodatacatalyst@nhlbi.nih.gov if you need help right away.',
-  unavailableHeading: "This form isn't available right now.",
-
-  // Default success heading — per-form follow-up copy is defined per form
-  successHeading: 'Submission Received',
-  successText:
-    'Thank you for submitting your publication to BDC. Your submission has been received and forwarded to the appropriate BDC team for review. If additional information is needed, we may contact you using the email address you provided. Additionally, a copy of your responses has been sent to you at the email address provided. Note that submission does not guarantee inclusion on the BDC-Enabled Research page.',
-  customObjectSuccessText: 'Thank you for submitting.',
-  emailSignupSuccessHeading: 'Subscription received',
-  emailSignupSuccessText:
-    'You will receive monthly BDC newsletters and other announcements.',
-};
+export const formMessages = {
+  getHelp: {
+    unavailableHeading: genericUnavailableHeading,
+    unavailableText: genericUnavailableText,
+    successHeading: 'Request received',
+    successText:
+      'Thank you for contacting BDC support. Your request has been submitted.',
+    submitError: `Your support request didn't go through, so please try again or email ${SUPPORT_EMAIL}.`,
+  },
+  cloudCredits: {
+    unavailableHeading: genericUnavailableHeading,
+    unavailableText: genericUnavailableText,
+    successHeading: 'Request received',
+    successText:
+      'Thank you for contacting BDC about usage costs and cloud credits. Your cloud credits request has been submitted.',
+    submitError: `Your cloud credits request didn't go through, so please try again or email ${SUPPORT_EMAIL}.`,
+  },
+  publishedResearch: {
+    unavailableHeading: genericUnavailableHeading,
+    unavailableText: genericUnavailableText,
+    successHeading: 'Submission received',
+    successText:
+      'Thank you for submitting your publication to BDC. We will review it and follow up if needed.',
+    submitError: `Your publication submission didn't go through, so please try again or email ${SUPPORT_EMAIL}.`,
+  },
+  contactBdc: {
+    unavailableHeading: genericUnavailableHeading,
+    unavailableText: genericUnavailableText,
+    successHeading: 'Message received',
+    successText:
+      'Thank you for contacting BDC. We will review your message and follow up if needed.',
+    submitError: `Your message didn't go through, so please try again or email ${SUPPORT_EMAIL}.`,
+  },
+  emailSignup: {
+    unavailableHeading: genericUnavailableHeading,
+    unavailableText: genericUnavailableText,
+    successHeading: 'Subscription received',
+    successText:
+      'Thanks for subscribing! You’ll receive monthly BDC newsletters and other announcements.',
+    submitError: 'Signup is temporarily unavailable. Please try again later.',
+    alreadyExistsError: `An account may already exist for that email address. Email ${SUPPORT_EMAIL} to have an activation email resent.`,
+  },
+} satisfies Record<string, FormMessages>;
