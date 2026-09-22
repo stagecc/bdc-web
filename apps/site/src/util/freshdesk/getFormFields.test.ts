@@ -73,6 +73,18 @@ describe('getFormFields — filtering', () => {
     expect(result.map((f) => f.name)).toEqual(['cf_active']);
   });
 
+  it('filters out Freshdesk-native company and description fields', async () => {
+    mockFormFetch([
+      makeField({ name: 'requester', type: 'default_requester' }),
+      makeField({ name: 'description', type: 'default_description' }),
+      makeField({ name: 'company', type: 'default_company' }),
+      makeField({ name: 'cf_details', type: 'custom_paragraph' }),
+    ]);
+
+    const result = await getFormFields('123');
+    expect(result.map((f) => f.name)).toEqual(['requester', 'cf_details']);
+  });
+
   it('returns an empty array when all fields are filtered out', async () => {
     mockFormFetch([
       makeField({ displayed_to_customers: false }),

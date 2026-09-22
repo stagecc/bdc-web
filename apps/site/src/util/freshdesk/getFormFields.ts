@@ -79,6 +79,8 @@ function getAuthHeader(): string {
  *   - archived: true — retired fields that may still exist in the API response
  *   - default_company — hidden in the site because Freshdesk rejects top-level
  *     `company` in the tickets API for this account
+ *   - default_description — hidden in the site because the payload generates
+ *     a summary description from the submitted fields instead
  *
  * Note: default_subject passes this filter (displayed_to_customers is true)
  * but is rendered as a hidden input by DynamicForm — it's set programmatically
@@ -88,7 +90,8 @@ function isVisibleField(field: FreshdeskField): boolean {
   return (
     field.displayed_to_customers &&
     !field.archived &&
-    field.type !== 'default_company'
+    field.type !== 'default_company' &&
+    field.type !== 'default_description'
   );
 }
 
