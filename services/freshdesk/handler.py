@@ -70,7 +70,7 @@ def lambda_handler(event, context):
     )
 
     path = event.get('rawPath') or event.get('path', '/')
-    path = path.lstrip('/').lower()  # normalize path like 'faqs', 'join', etc.
+    path = path.strip('/').lower()  # normalize path like 'faqs' or 'join'
 
     headers = cors_headers(event)
 
@@ -90,16 +90,21 @@ def lambda_handler(event, context):
     auth = base64.b64encode(f'{api_key}:X'.encode()).decode()
     base_url = f'https://{domain}/api/v2'
 
+    # GET /faqs
     if method == 'GET':
+        path = event.get('rawPath') or event.get('path', '/')
         print('Requested path:', path)
-        if path == 'faqs':
+
+        normalized_path = path.strip('/').lower()
+        if normalized_path == 'faqs':
             url = f'{base_url}/solutions/folders/60000230495/articles'
             print('Matched /faqs route, fetching:', url)
             return _proxy_request(url, 'GET', None, auth, headers)
         else:
-            print('No route match for path:', path)
+            print('No route match for path:', normalized_path)
             return _error(404, 'Not Found', headers)
     
+    # POST routes (/cloud-credits, /join)
     if method == 'POST':
         body = event.get('body')
         if not body:
