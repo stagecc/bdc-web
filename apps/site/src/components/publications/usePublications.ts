@@ -197,7 +197,6 @@ export function usePublications(publications: Publication[]) {
   const [sort, setSort] = useState<SortOption>('most-recent');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
   const filtersRef = useRef(filters);
-  const sortRef = useRef(sort);
   const searchAnalyticsTimeoutRef = useRef<number | undefined>(undefined);
   const lastTrackedSearchRef = useRef('');
 
@@ -211,10 +210,6 @@ export function usePublications(publications: Publication[]) {
   useEffect(() => {
     filtersRef.current = filters;
   }, [filters]);
-
-  useEffect(() => {
-    sortRef.current = sort;
-  }, [sort]);
 
   useEffect(() => {
     return () => {
