@@ -1,9 +1,5 @@
 # Analytics
 
-This folder contains the delegated interaction helpers used by
-`src/components/layout/AnalyticsController.tsx`, plus feature-specific
-analytics helpers for interactions that are emitted directly from their owning
-scripts.
 This folder contains the analytics helpers used by
 `src/components/layout/AnalyticsController.tsx` and by feature-specific code
 that needs to send structured analytics events.
