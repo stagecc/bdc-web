@@ -154,7 +154,7 @@ export default function DynamicForm({
       // tabIndex={-1} allows focus to be programmatically moved here
       // after submission, per the UX spec accessibility requirement.
       <div ref={confirmationRef} tabIndex={-1}>
-        <output className="usa-alert usa-alert--success">
+        <output className="usa-alert usa-alert--success display-block">
           <div className="usa-alert__body">
             <h2 className="usa-alert__heading">{formStatus.successHeading}</h2>
             <p className="usa-alert__text">{formStatus.successText}</p>

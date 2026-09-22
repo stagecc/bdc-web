@@ -136,19 +136,16 @@ export default function DynamicCustomObjectForm({
       // tabIndex={-1} allows focus to be programmatically moved here
       // after submission, per the UX spec accessibility requirement.
       <div ref={confirmationRef} tabIndex={-1}>
-        <output className="usa-alert usa-alert--success">
+        <output className="usa-alert usa-alert--success display-block">
           <div className="usa-alert__body">
             <h2 className="usa-alert__heading">{formStatus.successHeading}</h2>
             <p className="usa-alert__text">
-              {/* TODO: Per-form follow-up copy — confirm with content team */}
-              Check your inbox for a confirmation email with a copy of your
-              submission.
+              {formStatus.customObjectSuccessText}
             </p>
           </div>
         </output>
 
         <div className="margin-top-3">
-          {/* TODO: Per-form button labels and destinations — confirm with content team */}
           <button
             type="button"
             className="usa-button usa-button--outline margin-right-2"
