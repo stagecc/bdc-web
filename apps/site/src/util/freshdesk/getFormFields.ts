@@ -77,13 +77,19 @@ function getAuthHeader(): string {
  * Excludes:
  *   - displayed_to_customers: false — agent-only fields, never shown to users
  *   - archived: true — retired fields that may still exist in the API response
+ *   - default_company — hidden in the site because Freshdesk rejects top-level
+ *     `company` in the tickets API for this account
  *
  * Note: default_subject passes this filter (displayed_to_customers is true)
  * but is rendered as a hidden input by DynamicForm — it's set programmatically
  * via the formType prop and never shown to the user.
  */
 function isVisibleField(field: FreshdeskField): boolean {
-  return field.displayed_to_customers && !field.archived;
+  return (
+    field.displayed_to_customers &&
+    !field.archived &&
+    field.type !== 'default_company'
+  );
 }
 
 // ---------------------------------------------------------------------------

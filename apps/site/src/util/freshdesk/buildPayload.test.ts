@@ -62,12 +62,12 @@ describe('buildPayload', () => {
     expect(payload.custom_fields.description).toBeUndefined();
   });
 
-  it('maps default_company to top-level company', () => {
+  it('skips default_company because Freshdesk rejects top-level company', () => {
     const fields = [makeField({ name: 'company', type: 'default_company' })];
     const values = { company: 'Acme Corp' };
 
     const payload = buildPayload(values, fields, FORM_TYPE);
-    expect(payload.company).toBe('Acme Corp');
+    expect(payload.company).toBeUndefined();
     expect(payload.custom_fields.company).toBeUndefined();
   });
 
@@ -128,7 +128,6 @@ describe('buildPayload', () => {
       type: FORM_TYPE,
       email: 'researcher@university.edu',
       description: 'Submitting my paper for the record.',
-      company: 'State University',
       custom_fields: {
         cf_journal_name: 'Nature',
         cf_paper_title: 'A study of things',

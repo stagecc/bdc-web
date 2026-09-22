@@ -9,7 +9,6 @@
  *   email: string,          // from default_requester field
  *   subject: string,        // set programmatically via formType — never from user input
  *   description: string,    // from default_description field
- *   company: string,        // from default_company field
  *   type: string,           // the Freshdesk ticket type string (e.g. "Usage Costs/Cloud Credits")
  *   custom_fields: {        // all cf_* fields go here, keyed by their full cf_ name
  *     cf_field_name: value,
@@ -30,16 +29,16 @@ import type { FreshdeskField } from './types';
 const DEFAULT_FIELD_MAP: Partial<Record<FreshdeskField['type'], string>> = {
   default_requester: 'email',
   default_description: 'description',
-  default_company: 'company',
   // default_subject is intentionally omitted — it's set via formType,
   // not from user input, and should never appear in form values.
+  // default_company is intentionally omitted. Freshdesk rejects top-level
+  // `company` for this account's tickets API, so we do not send it.
 };
 
 export interface FreshdeskTicketPayload {
   email?: string;
   subject: string;
   description?: string;
-  company?: string;
   type: string;
   custom_fields: Record<string, unknown>;
 }

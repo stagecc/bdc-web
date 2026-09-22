@@ -10,7 +10,8 @@
  *
  * Freshdesk field types fall into two categories:
  *   - default_* — system fields that map to top-level ticket properties
- *     (email, subject, description, company). These exist on every form
+ *     (email, subject, description, and some account-specific system fields).
+ *     These exist on every form
  *     and cannot be deleted, only hidden.
  *   - custom_* — custom fields that map to the custom_fields object
  *     in the ticket payload, always prefixed with cf_ in the field name
@@ -25,7 +26,7 @@ export type FreshdeskFieldType =
   | 'default_requester' // Email address — maps to top-level `email`
   | 'default_subject' // Ticket subject — set programmatically, never shown to users
   | 'default_description' // Ticket body — maps to top-level `description`
-  | 'default_company' // Organization — maps to top-level `company`
+  | 'default_company' // Organization field returned by Freshdesk form config
   | 'default_ticket_type' // Ticket type dropdown — maps to top-level `type`.
   // Uses choices[] from the per-field endpoint.
   // Can have dynamic sections attached to its choices.
