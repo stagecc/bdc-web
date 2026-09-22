@@ -24,6 +24,10 @@ export const latestUpdateRedirectEntries = [
     '/news/latest-updates/2024/02/nhlbi-75th-anniversary',
   ],
   [
+    '/latest-updates/recover_welcome/',
+    '/news/latest-updates/2024/04/expanding-recover-access',
+  ],
+  [
     '/latest-updates/recover_first_peds_data',
     '/news/latest-updates/2024/10/recover-data-released',
   ],
@@ -34,5 +38,9 @@ export const latestUpdateRedirectEntries = [
   [
     '/latest-updates/nsrr-sleep-harmonization',
     '/news/latest-updates/2026/06/nsrr-sleep-harmonization',
+  ],
+  [
+    '/latest-updates/bdc-enabled-research-diabetes-paper-of-the-month/',
+    '/news/latest-updates/2026/07/bdc-enabled-research-diabetes-paper-of-the-month/',
   ],
 ];

@@ -504,4 +504,8 @@ export const eventRedirectEntries = [
     '/events/2026-10-14/community_hours',
     '/news/events/2026/10/community-hours',
   ],
+  [
+    '/events/2026-12-16/community_hours',
+    '/news/events/2026/12/community-hours',
+  ],
 ];
