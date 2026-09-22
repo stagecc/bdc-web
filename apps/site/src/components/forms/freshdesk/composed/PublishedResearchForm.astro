@@ -1,4 +1,5 @@
 ---
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import { getCustomObjectSchema } from '../../../../util/freshdesk/getCustomObjectSchema';
 import type { CustomObjectField } from '../../../../util/freshdesk/typesCustomObjects';
 import DynamicCustomObjectForm from '../form-types/DynamicCustomObjectForm.tsx';
@@ -27,6 +28,10 @@ if (!hasFreshdeskAuth || !schemaIdRaw || Number.isNaN(schemaId)) {
   }
 }
 ---
+
+<InlineAlert variant="warning" heading="Temporary Notice">
+  This form is currently being updated. Submission may be temporarily unavailable, so please try again later if needed.
+</InlineAlert>
 
 <DynamicCustomObjectForm
   fields={fields}
