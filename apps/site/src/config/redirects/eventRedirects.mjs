@@ -116,10 +116,6 @@ export const eventRedirectEntries = [
     '/news/events/2023/06/community-hours',
   ],
   [
-    '/events/2023-06-21/community_hours',
-    '/news/events/2023/06/community-hours',
-  ],
-  [
     '/news-and-events/events/2023-07-19/community_hours',
     '/news/events/2023/07/community-hours',
   ],

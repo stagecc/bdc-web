@@ -23,7 +23,6 @@ export const coreRedirectEntries = [
   ['/platforms/pic-sure', '/about/bdc'],
   ['/platforms/seven-bridges', '/about/bdc'],
   ['/platforms/terra', '/about/bdc'],
-  ['/about/studies', '/about/studies'],
   ['/use-bdc/analyze-data', '/data/analyze'],
   [
     '/use-bdc/analyze-data/bdc-workspaces',
