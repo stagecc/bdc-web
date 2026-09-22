@@ -44,7 +44,12 @@ export default function PublicationCard({ pub }: Props) {
       className="margin-y-2 tablet:margin-0 tablet:margin-bottom-2"
     >
       <h3 className="font-heading-md margin-top-0 margin-bottom-1">
-        <Link to={pub.url} className="usa-link--external">
+        <Link
+          to={pub.url}
+          className="usa-link--external"
+          data-analytics-section="bdc_enabled_research"
+          data-analytics-custom-event="bdc_enabled_research_publication_click"
+        >
           {pub.title}
         </Link>
       </h3>

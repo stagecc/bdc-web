@@ -1,6 +1,18 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import {
+  getActiveFilterCount,
+  getActiveFilters,
+  trackBdcEnabledResearchClearAll,
+  trackBdcEnabledResearchClearFilters,
+  trackBdcEnabledResearchFilterChange,
+  trackBdcEnabledResearchLoadMore,
+  trackBdcEnabledResearchSearch,
+  trackBdcEnabledResearchSortChange,
+} from '../layout/analytics/bdcEnabledResearch';
 
 const PAGE_SIZE = 20;
+const SEARCH_ANALYTICS_DEBOUNCE_MS = 750;
+const MIN_TRACKED_SEARCH_LENGTH = 2;
 
 export type Publication = {
   title: string;
@@ -127,11 +139,67 @@ function writeParamsToURL(search: string, filters: Filters, sort: SortOption) {
   window.history.replaceState(null, '', newUrl);
 }
 
+function filterAndSortPublications(
+  publications: Publication[],
+  search: string,
+  filters: Filters,
+  sort: SortOption,
+) {
+  let result = publications;
+
+  if (filters.year.length > 0) {
+    result = result.filter((pub) =>
+      filters.year.includes(String(new Date(pub.date).getFullYear())),
+    );
+  }
+  if (filters.researchCommunity.length > 0) {
+    result = result.filter((pub) =>
+      pub.researchCommunity?.some((rc) =>
+        filters.researchCommunity.includes(rc),
+      ),
+    );
+  }
+  if (filters.researchArea.length > 0) {
+    result = result.filter((pub) =>
+      pub.researchArea?.some((ra) => filters.researchArea.includes(ra)),
+    );
+  }
+  if (filters.bdcContribution.length > 0) {
+    result = result.filter((pub) =>
+      pub.bdcContribution?.some((oc) => filters.bdcContribution.includes(oc)),
+    );
+  }
+
+  if (search.trim()) {
+    const term = search.trim().toLowerCase();
+    result = result.filter((pub) => matchesSearch(pub, term));
+  }
+
+  return [...result].sort((a, b) => {
+    switch (sort) {
+      case 'most-recent':
+        return new Date(b.date).getTime() - new Date(a.date).getTime();
+      case 'least-recent':
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+      case 'title-az':
+        return a.title.localeCompare(b.title);
+      case 'title-za':
+        return b.title.localeCompare(a.title);
+      default:
+        return 0;
+    }
+  });
+}
+
 export function usePublications(publications: Publication[]) {
   const [search, setSearch] = useState('');
   const [filters, setFilters] = useState<Filters>(createEmptyFilters());
   const [sort, setSort] = useState<SortOption>('most-recent');
   const [visibleCount, setVisibleCount] = useState(PAGE_SIZE);
+  const filtersRef = useRef(filters);
+  const sortRef = useRef(sort);
+  const searchAnalyticsTimeoutRef = useRef<number | undefined>(undefined);
+  const lastTrackedSearchRef = useRef('');
 
   useEffect(() => {
     const initial = readParamsFromURL();
@@ -140,53 +208,22 @@ export function usePublications(publications: Publication[]) {
     setSort(initial.sort);
   }, []);
 
+  useEffect(() => {
+    filtersRef.current = filters;
+  }, [filters]);
+
+  useEffect(() => {
+    sortRef.current = sort;
+  }, [sort]);
+
+  useEffect(() => {
+    return () => {
+      window.clearTimeout(searchAnalyticsTimeoutRef.current);
+    };
+  }, []);
+
   const filtered = useMemo(() => {
-    let result = publications;
-
-    if (filters.year.length > 0) {
-      result = result.filter((pub) =>
-        filters.year.includes(String(new Date(pub.date).getFullYear())),
-      );
-    }
-    if (filters.researchCommunity.length > 0) {
-      result = result.filter((pub) =>
-        pub.researchCommunity?.some((rc) =>
-          filters.researchCommunity.includes(rc),
-        ),
-      );
-    }
-    if (filters.researchArea.length > 0) {
-      result = result.filter((pub) =>
-        pub.researchArea?.some((ra) => filters.researchArea.includes(ra)),
-      );
-    }
-    if (filters.bdcContribution.length > 0) {
-      result = result.filter((pub) =>
-        pub.bdcContribution?.some((oc) => filters.bdcContribution.includes(oc)),
-      );
-    }
-
-    if (search.trim()) {
-      const term = search.trim().toLowerCase();
-      result = result.filter((pub) => matchesSearch(pub, term));
-    }
-
-    result = [...result].sort((a, b) => {
-      switch (sort) {
-        case 'most-recent':
-          return new Date(b.date).getTime() - new Date(a.date).getTime();
-        case 'least-recent':
-          return new Date(a.date).getTime() - new Date(b.date).getTime();
-        case 'title-az':
-          return a.title.localeCompare(b.title);
-        case 'title-za':
-          return b.title.localeCompare(a.title);
-        default:
-          return 0;
-      }
-    });
-
-    return result;
+    return filterAndSortPublications(publications, search, filters, sort);
   }, [publications, search, filters, sort]);
 
   const visible = useMemo(() => {
@@ -194,43 +231,98 @@ export function usePublications(publications: Publication[]) {
   }, [filtered, visibleCount]);
 
   function loadMore() {
+    trackBdcEnabledResearchLoadMore(
+      getActiveFilterCount(filters),
+      getActiveFilters(filters),
+      search.trim() || undefined,
+    );
     setVisibleCount((c) => c + PAGE_SIZE);
   }
 
   function toggleFilter(key: keyof Filters, value: string) {
     if (!FILTER_KEYS.includes(key)) return;
 
+    const current = filters[key];
+    const next = current.includes(value)
+      ? current.filter((v) => v !== value)
+      : [...current, value];
+    const nextFilters = { ...filters, [key]: next };
+
     setFilters((prev) => {
-      const current = prev[key];
-      const next = current.includes(value)
-        ? current.filter((v) => v !== value)
-        : [...current, value];
       const updated = { ...prev, [key]: next };
       writeParamsToURL(search, updated, sort);
       return updated;
     });
     setVisibleCount(PAGE_SIZE);
+
+    trackBdcEnabledResearchFilterChange(
+      key,
+      value,
+      current.includes(value) ? 'removed' : 'applied',
+      getActiveFilterCount(nextFilters),
+      getActiveFilters(nextFilters),
+      search.trim() || undefined,
+    );
   }
 
   function clearFilters() {
     const nextFilters = createEmptyFilters();
+
     setFilters(nextFilters);
     writeParamsToURL(search, nextFilters, sort);
     setVisibleCount(PAGE_SIZE);
+
+    trackBdcEnabledResearchClearFilters(
+      getActiveFilterCount(nextFilters),
+      getActiveFilters(nextFilters),
+      search.trim() || undefined,
+    );
   }
 
   function clearAll() {
     const nextFilters = createEmptyFilters();
+
+    window.clearTimeout(searchAnalyticsTimeoutRef.current);
+    lastTrackedSearchRef.current = '';
     setFilters(nextFilters);
     setSearch('');
     writeParamsToURL('', nextFilters, sort);
     setVisibleCount(PAGE_SIZE);
+
+    trackBdcEnabledResearchClearAll(0, [], undefined);
   }
 
   function updateSearch(term: string) {
     setSearch(term);
     writeParamsToURL(term, filters, sort);
     setVisibleCount(PAGE_SIZE);
+
+    window.clearTimeout(searchAnalyticsTimeoutRef.current);
+    searchAnalyticsTimeoutRef.current = window.setTimeout(() => {
+      const trimmedTerm = term.trim();
+
+      if (trimmedTerm.length === 0) {
+        if (!lastTrackedSearchRef.current) return;
+
+        trackBdcEnabledResearchSearch(
+          '',
+          getActiveFilterCount(filtersRef.current),
+          getActiveFilters(filtersRef.current),
+        );
+        lastTrackedSearchRef.current = '';
+        return;
+      }
+
+      if (trimmedTerm.length < MIN_TRACKED_SEARCH_LENGTH) return;
+      if (trimmedTerm === lastTrackedSearchRef.current) return;
+
+      trackBdcEnabledResearchSearch(
+        trimmedTerm,
+        getActiveFilterCount(filtersRef.current),
+        getActiveFilters(filtersRef.current),
+      );
+      lastTrackedSearchRef.current = trimmedTerm;
+    }, SEARCH_ANALYTICS_DEBOUNCE_MS);
   }
 
   function updateSort(option: string) {
@@ -239,6 +331,13 @@ export function usePublications(publications: Publication[]) {
     setSort(option);
     writeParamsToURL(search, filters, option);
     setVisibleCount(PAGE_SIZE);
+
+    trackBdcEnabledResearchSortChange(
+      option,
+      getActiveFilterCount(filters),
+      getActiveFilters(filters),
+      search.trim() || undefined,
+    );
   }
 
   const filterOptions = useMemo(() => {

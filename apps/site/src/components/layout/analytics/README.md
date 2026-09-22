@@ -4,6 +4,9 @@ This folder contains the delegated interaction helpers used by
 `src/components/layout/AnalyticsController.tsx`, plus feature-specific
 analytics helpers for interactions that are emitted directly from their owning
 scripts.
+This folder contains the analytics helpers used by
+`src/components/layout/AnalyticsController.tsx` and by feature-specific code
+that needs to send structured analytics events.
 
 ## 1. Overview & Markup Contract
 
@@ -144,6 +147,40 @@ Current form helpers are:
 `form_start` and `form_submit_attempt` are emitted by `AnalyticsController`'s delegated form listeners.
 
 `form_submit_success` is emitted explicitly by form implementations that know a submission has actually completed successfully. That helper currently takes a form name directly rather than deriving it from the DOM.
+
+### BDC-Enabled Research Interactions
+
+The BDC-enabled research publications explorer uses the following pattern:
+
+1. direct events for search, filter, sort, clear, and load-more interactions
+2. delegated click routing through `AnalyticsController` for publication result clicks
+
+Note: the publications explorer also writes search and filter state to query
+parameters. These events provide another angle by capturing the user action and
+active context.
+
+Current event names in `bdcEnabledResearch.ts`:
+
+- `bdc_enabled_research_search`
+- `bdc_enabled_research_filter_change`
+- `bdc_enabled_research_sort_change`
+- `bdc_enabled_research_clear_filters`
+- `bdc_enabled_research_clear_all`
+- `bdc_enabled_research_load_more`
+
+Common payload fields across the BDC-enabled research events include:
+
+- `site_section`
+- `search_term`
+- `active_filter_count`
+- `active_filters`
+- `page_path`
+
+For `active_filters`, the current convention is an array of stable strings such as:
+
+```ts
+['year:2024', 'researchCommunity:RECOVER', 'researchArea:Sleep']
+```
 
 ## 3. Implementation Reference
 
