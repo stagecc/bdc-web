@@ -24,6 +24,8 @@ const alertId = `site-alert-${storageKey}`;
 const containerClasses = [
   'usa-site-alert',
   'bdc-site-alert',
+  'border-bottom',
+  'border-base-lighter',
   `usa-site-alert--${variant}`,
   slim && 'usa-site-alert--slim',
   !title && 'usa-site-alert--no-heading',
@@ -59,6 +61,18 @@ const containerClasses = [
     </div>
   </div>
 </section>
+
+<style>
+  /* MDX banner content renders paragraphs with default margins, so this resets them in
+     no-heading alerts to keep the first line aligned with the site-alert icon. */
+  :global(.bdc-site-alert.usa-site-alert--no-heading .usa-alert__text > :first-child) {
+    margin-top: 0;
+  }
+
+  :global(.bdc-site-alert.usa-site-alert--no-heading .usa-alert__text > :last-child) {
+    margin-bottom: 0;
+  }
+</style>
 
 <script is:inline>
   (() => {
