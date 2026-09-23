@@ -1,4 +1,5 @@
 ---
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import GetHelpForm from '@components/forms/freshdesk/composed/GetHelpForm.astro';
 import Base from '@layouts/Base.astro';
 ---
@@ -8,16 +9,15 @@ import Base from '@layouts/Base.astro';
     <div class="grid-container">
 
       <h1>Get Help</h1>
-
-      <p class="usa-intro">
+      <InlineAlert variant="info" heading="When to use this form ">
         Use this form to report technical issues, access problems, platform errors, suspected bugs, or other blockers affecting your use of BDC.
-      </p>
+      </InlineAlert>
 
-      <p>
+      <p class="usa-prose">
         Generally helpful to include in the description of your problem, if applicable: 
       </p>
 
-      <ul>
+      <ul class="usa-list">
         <li>Include the platform or service you were using.</li>
         <li>Describe what you expected to happen and what occurred instead.</li>
         <li>Include the exact error message, if available.</li>
