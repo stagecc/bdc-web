@@ -1,5 +1,4 @@
 ---
-import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import { getFormFields } from '../../../../util/freshdesk/getFormFields';
 import type { FreshdeskField } from '../../../../util/freshdesk/types';
 import { formMessages } from '../../util/errorMessages';
@@ -26,10 +25,6 @@ if (!hasFreshdeskAuth || !formId) {
   }
 }
 ---
-
-<InlineAlert variant="warning" heading="Temporary Notice">
-  This form is currently being updated. Submission may be temporarily unavailable, so please try again later if needed.
-</InlineAlert>
 
 <DynamicForm
   fields={fields}

@@ -1,5 +1,4 @@
 ---
-import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import Card from '@bdc/ui-astro/card/Card.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import EmailSignupFormFields from '../form-types/EmailSignupForm';
@@ -20,9 +19,6 @@ const {
   alreadyExistsMessage,
 }: Props = Astro.props;
 ---
-<InlineAlert variant="warning" heading="Temporary Notice">
-  This form is currently being updated. Submission may be temporarily unavailable, so please try again later if needed.
-</InlineAlert>
 <Card as="div" variant="panel">
   <div class="display-flex flex-align-center margin-bottom-2">
     <IconBadge
