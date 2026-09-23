@@ -31,10 +31,11 @@ let pagefindModule: PagefindModule | null = null;
 let activeSearchToken = 0;
 
 /** Runtime `import()` so Vite does not try to bundle the Pagefind script. */
-const importExternalModule = new Function(
-  'specifier',
-  'return import(specifier)',
-) as (specifier: string) => Promise<PagefindModule>;
+const importExternalModule = (specifier: string) =>
+  import(
+    /* @vite-ignore */
+    specifier
+  ) as Promise<PagefindModule>;
 
 /** Loads and caches the Pagefind runtime from /pagefind/pagefind.js. */
 async function getPagefind(): Promise<PagefindModule> {
