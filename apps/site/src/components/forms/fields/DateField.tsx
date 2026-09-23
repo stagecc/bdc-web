@@ -51,7 +51,7 @@ export default function DateField({
 
   return (
     <div className={`usa-form-group${error ? ' usa-form-group--error' : ''}`}>
-      <label className="usa-label" htmlFor={name}>
+      <label className="usa-label maxw-none" htmlFor={name}>
         {label}
         {required && (
           <abbr title="required" className="usa-hint usa-hint--required">

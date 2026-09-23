@@ -91,7 +91,7 @@ export default function TextField({
 
   return (
     <div className={`usa-form-group${error ? ' usa-form-group--error' : ''}`}>
-      <label className="usa-label" htmlFor={inputId}>
+      <label className="usa-label maxw-none" htmlFor={inputId}>
         {label}
         {required && (
           <abbr title="required" className="usa-hint usa-hint--required">

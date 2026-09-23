@@ -98,7 +98,7 @@ export default function MultiSelectCheckbox({
   return (
     <div className={`usa-form-group${error ? ' usa-form-group--error' : ''}`}>
       <fieldset className="usa-fieldset" aria-describedby={describedBy}>
-        <legend className="usa-legend">
+        <legend className="usa-legend maxw-none">
           {label}
           {required && (
             <abbr title="required" className="usa-hint usa-hint--required">
@@ -125,7 +125,7 @@ export default function MultiSelectCheckbox({
           const optionId = `${name}-${option.toLowerCase().replace(/\s+/g, '-')}`;
 
           return (
-            <div key={option} className="usa-checkbox">
+            <div key={option} className="usa-checkbox bg-transparent">
               <input
                 id={optionId}
                 className="usa-checkbox__input"
@@ -148,7 +148,10 @@ export default function MultiSelectCheckbox({
                 ref={register.ref}
                 name={register.name}
               />
-              <label className="usa-checkbox__label" htmlFor={optionId}>
+              <label
+                className="usa-checkbox__label display-block width-full maxw-none"
+                htmlFor={optionId}
+              >
                 {option}
               </label>
             </div>

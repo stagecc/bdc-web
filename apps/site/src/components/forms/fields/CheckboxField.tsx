@@ -71,7 +71,7 @@ export default function CheckboxField({
         </span>
       )}
 
-      <div className="usa-checkbox">
+      <div className="usa-checkbox bg-transparent">
         <input
           id={name}
           className="usa-checkbox__input"
@@ -82,7 +82,10 @@ export default function CheckboxField({
           }
           {...register}
         />
-        <label className="usa-checkbox__label" htmlFor={name}>
+        <label
+          className="usa-checkbox__label display-block width-full maxw-none"
+          htmlFor={name}
+        >
           {label}
           {required && (
             <abbr title="required" className="usa-hint usa-hint--required">

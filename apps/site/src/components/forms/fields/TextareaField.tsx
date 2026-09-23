@@ -48,7 +48,7 @@ export default function TextareaField({
   const textarea = (
     <textarea
       id={name}
-      className={`usa-textarea${error ? ' usa-input--error' : ''}`}
+      className={`usa-textarea height-10${error ? ' usa-input--error' : ''}`}
       aria-required={required}
       aria-describedby={describedBy}
       maxLength={maxLength}
@@ -58,7 +58,7 @@ export default function TextareaField({
 
   return (
     <div className={`usa-form-group${error ? ' usa-form-group--error' : ''}`}>
-      <label className="usa-label" htmlFor={name}>
+      <label className="usa-label maxw-none" htmlFor={name}>
         {label}
         {required && (
           <abbr title="required" className="usa-hint usa-hint--required">

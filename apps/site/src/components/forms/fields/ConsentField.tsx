@@ -33,9 +33,14 @@ export const CONSENT_FIELD_NAME = 'consent';
 interface ConsentFieldProps {
   register: ReturnType<UseFormRegister<Record<string, unknown>>>;
   error?: FieldError;
+  required?: boolean;
 }
 
-export default function ConsentField({ register, error }: ConsentFieldProps) {
+export default function ConsentField({
+  register,
+  error,
+  required = true,
+}: ConsentFieldProps) {
   return (
     <div className={`usa-form-group${error ? ' usa-form-group--error' : ''}`}>
       {error && (
@@ -44,11 +49,12 @@ export default function ConsentField({ register, error }: ConsentFieldProps) {
         </span>
       )}
 
-      <div className="usa-checkbox">
+      <div className="usa-checkbox bg-transparent">
         <input
           id={CONSENT_FIELD_NAME}
           className="usa-checkbox__input"
           type="checkbox"
+          aria-required={required}
           aria-describedby={error ? 'consent-error' : undefined}
           {...register}
         />
@@ -57,6 +63,12 @@ export default function ConsentField({ register, error }: ConsentFieldProps) {
           I understand that submitting this form does not guarantee a particular
           outcome, and I consent to this information being used to process my
           request.
+          {required && (
+            <abbr title="required" className="usa-hint usa-hint--required">
+              {' '}
+              *
+            </abbr>
+          )}
         </label>
       </div>
     </div>

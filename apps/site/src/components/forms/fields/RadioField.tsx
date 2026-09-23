@@ -90,7 +90,7 @@ export default function RadioField({
   return (
     <div className={`usa-form-group${error ? ' usa-form-group--error' : ''}`}>
       <fieldset className="usa-fieldset" aria-describedby={describedBy}>
-        <legend className="usa-legend">
+        <legend className="usa-legend maxw-none">
           {label}
           {required && (
             <abbr title="required" className="usa-hint usa-hint--required">
@@ -142,7 +142,10 @@ export default function RadioField({
                 ref={register.ref}
                 name={register.name}
               />
-              <label className="usa-radio__label" htmlFor={optionId}>
+              <label
+                className="usa-radio__label display-block width-full maxw-none"
+                htmlFor={optionId}
+              >
                 {option}
               </label>
             </div>
