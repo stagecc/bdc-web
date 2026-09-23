@@ -1,5 +1,5 @@
 ---
-import Icon from '@bdc/ui-astro/icon/Icon.astro';
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import ContactBdcForm from '@components/forms/freshdesk/composed/ContactBdcForm.astro';
 import Base from '@layouts/Base.astro';
@@ -10,21 +10,14 @@ import Base from '@layouts/Base.astro';
     <div class="grid-container">
 
       <h1>Contact BDC</h1>
-      <p class="usa-intro">
-        Use this form for general inquiries, partnerships, collaborations, outreach, and other questions that are not technical-support requests.
-      </p>
-
-      <div class="usa-card">
-        <div class="usa-card__container">
-          <div class="usa-card__body">
-            <Icon name="help_outline" size={4}/>
-            <p>
-              Need help with an error, data access, account issue, or platform problem?
-            </p>
-            <Link to="/help/get-help">Get Help instead→</Link>
-          </div>
-        </div>
-      </div>
+      <InlineAlert variant="info" heading="When to use this form ">
+        <p class="margin-top-0">
+          Use this form for general inquiries, partnerships, collaborations, outreach, and other questions that are not technical-support requests.
+        </p>
+        <p class="margin-bottom-0">
+          Need help with an error, data access, account issue, or platform problem? <Link to="/help/get-help">Get Help instead→</Link>
+        </p>
+      </InlineAlert>
 
       <h2>Contact BDC Form</h2>
       <ContactBdcForm />
