@@ -101,5 +101,27 @@ const hasGa = typeof gaId === 'string' && gaId.length > 0;
     <SiteFooter />
     <script src="../scripts/init-uswds.ts"></script>
     <script src="../scripts/init-search-modal.ts"></script>
+    <script is:inline>
+      const loadFreshdeskWidget = () => {
+        if (document.querySelector('iframe[src*="freshworks.com"]')) return;
+        window.fwSettings = { widget_id: 60000000998 };
+        window.FreshworksWidget = (...args) =>
+          ((window.FreshworksWidget.q ||= []).push(args));
+        document.body.append(
+          Object.assign(document.createElement('script'), {
+            src: 'https://widget.freshworks.com/widgets/60000000998.js',
+            async: true,
+            defer: true,
+          })
+        );
+      };
+
+      if (!window.__bdcFreshdeskWidget) {
+        document.addEventListener('astro:page-load', loadFreshdeskWidget);
+        window.__bdcFreshdeskWidget = true;
+      }
+
+      loadFreshdeskWidget();
+    </script>
   </body>
 </html>
