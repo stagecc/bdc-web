@@ -1,6 +1,7 @@
 import { mkdir, readFile, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { convertExternalHtmlToMarkdown } from './lib/external-html-to-markdown.mjs';
 import {
   extractReadmeBodyHtml,
   fetchHtmlPage,
@@ -9,7 +10,6 @@ import {
   stripCloudflareEmailProtection,
 } from './lib/external-source-adapters.mjs';
 import { readSourceConfigsForSync } from './lib/external-source-config.mjs';
-import { convertExternalHtmlToMarkdown } from './lib/external-html-to-markdown.mjs';
 import { assertOverviewHeadingPreserved } from './lib/external-source-integrity.mjs';
 
 const scriptDir = dirname(fileURLToPath(import.meta.url));
@@ -79,7 +79,8 @@ for (const source of sources) {
         badgeLabel: source.badge?.label,
         sourceUrl,
         bodyMarkdown:
-          convertExternalHtmlToMarkdown(rewriteResult.html) || rewriteResult.html,
+          convertExternalHtmlToMarkdown(rewriteResult.html) ||
+          rewriteResult.html,
       });
       assertOverviewHeadingPreserved(
         fetched.bodyHtml,
@@ -130,7 +131,11 @@ for (const source of sources) {
   );
 }
 
-await removeStaleManagedFiles(previousManagedFiles, currentManagedFiles, docsRoot);
+await removeStaleManagedFiles(
+  previousManagedFiles,
+  currentManagedFiles,
+  docsRoot,
+);
 
 await mkdir(dirname(outputManifestFile), { recursive: true });
 await writeFile(
@@ -198,7 +203,11 @@ function collectManagedFiles(manifest, docsRootDir) {
   return files;
 }
 
-async function removeStaleManagedFiles(previousFiles, currentFiles, docsRootDir) {
+async function removeStaleManagedFiles(
+  previousFiles,
+  currentFiles,
+  docsRootDir,
+) {
   let removedCount = 0;
 
   for (const filePath of previousFiles) {
@@ -278,7 +287,12 @@ function rewriteHtmlLinks({
   };
 }
 
-function renderMarkdownDocument({ title, badgeLabel, sourceUrl, bodyMarkdown }) {
+function renderMarkdownDocument({
+  title,
+  badgeLabel,
+  sourceUrl,
+  bodyMarkdown,
+}) {
   const lines = [
     '---',
     `title: ${JSON.stringify(title)}`,

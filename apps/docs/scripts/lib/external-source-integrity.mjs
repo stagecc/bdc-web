@@ -1,4 +1,8 @@
-export function assertOverviewHeadingPreserved(sourceHtml, outputMarkdown, pageRef) {
+export function assertOverviewHeadingPreserved(
+  sourceHtml,
+  outputMarkdown,
+  pageRef,
+) {
   if (!hasExactOverviewHeading(sourceHtml)) return;
   if (hasExactOverviewHeading(outputMarkdown)) return;
 
@@ -8,7 +12,9 @@ export function assertOverviewHeadingPreserved(sourceHtml, outputMarkdown, pageR
 }
 
 function hasExactOverviewHeading(value) {
-  return hasExactOverviewHtmlHeading(value) || hasExactOverviewMarkdownHeading(value);
+  return (
+    hasExactOverviewHtmlHeading(value) || hasExactOverviewMarkdownHeading(value)
+  );
 }
 
 function hasExactOverviewHtmlHeading(value) {

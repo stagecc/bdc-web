@@ -500,7 +500,10 @@ function sidebarItemKey(item) {
 function filterSidebarByExistingDocs(sidebar, docsDir) {
   return sidebar
     .map((section) => filterSidebarItem(section, docsDir))
-    .filter((section) => section && Array.isArray(section.items) && section.items.length > 0);
+    .filter(
+      (section) =>
+        section && Array.isArray(section.items) && section.items.length > 0,
+    );
 }
 
 function filterSidebarItem(item, docsDir) {

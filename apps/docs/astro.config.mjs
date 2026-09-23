@@ -173,7 +173,11 @@ function collectLeafSlugs(items) {
   for (const item of items) {
     if (!item || typeof item !== 'object') continue;
 
-    if ('slug' in item && typeof item.slug === 'string' && item.slug.trim() !== '') {
+    if (
+      'slug' in item &&
+      typeof item.slug === 'string' &&
+      item.slug.trim() !== ''
+    ) {
       slugs.push(item.slug);
     }
 
@@ -185,9 +189,17 @@ function collectLeafSlugs(items) {
   return slugs;
 }
 
-function insertSectionUnderParentSlug(sidebarSections, parentSlug, sectionToInsert) {
+function insertSectionUnderParentSlug(
+  sidebarSections,
+  parentSlug,
+  sectionToInsert,
+) {
   for (const section of sidebarSections) {
-    if (!section || typeof section !== 'object' || !Array.isArray(section.items)) {
+    if (
+      !section ||
+      typeof section !== 'object' ||
+      !Array.isArray(section.items)
+    ) {
       continue;
     }
 
