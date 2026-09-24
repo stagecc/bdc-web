@@ -7,6 +7,8 @@ import NextStepsAlert from '@components/NextStepsAlert.astro'
 import InPageNav from '@components/layout/InPageNav.astro'
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Card from '@bdc/ui-astro/card/Card.astro';
+import Notice from '@components/Notice.astro';
+import Link from '@bdc/ui-astro/link/Link.astro'
 
 <Hero
   eyebrow="Data"
@@ -62,7 +64,15 @@ Researchers can use BDC as a data repository when preparing to submit or share d
 
 ## BDC Data Submission Instructions
 
-The BDC Data Management Core (DMC) helps researchers submit data into BDC. BDC currently accepts a variety of data types for controlled and open access, which include clinical assessment (such as clinical observations, laboratory measurements, survey, and EHR/EMR), omics data (such as WGS, RNA-Sequencing, DNA Methylation, Metabolome, Proteome, and so on), medical imaging data (such as MRI, ECG, and CT Scan), sleep data (such as polysomnography), wearables (such as actigraphy and smartwatch). Researchers preparing to submit data should begin with the data submission instructions, which explain the submission process and help study teams understand what to prepare before working with the DMC. BDC uses the [NIH database of Genotypes and Phenotypes (dbGaP)](https://dbgap.ncbi.nlm.nih.gov/home/) for registration and access. 
+The BDC Data Management Core (DMC) helps researchers submit data into BDC. BDC currently accepts a variety of data types for controlled and open access, which include clinical assessment (such as clinical observations, laboratory measurements, survey, and EHR/EMR), omics data (such as WGS, RNA-Sequencing, DNA Methylation, Metabolome, Proteome, and so on), medical imaging data (such as MRI, ECG, and CT Scan), sleep data (such as polysomnography), wearables (such as actigraphy and smartwatch). Researchers preparing to submit data should begin with the [data submission instructions](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/data-management/data-submission-instructions), which explain the submission process and help study teams understand what to prepare before working with the DMC. BDC uses the [NIH database of Genotypes and Phenotypes (dbGaP)](https://dbgap.ncbi.nlm.nih.gov/home/) for registration and access.
+
+<Notice
+  icon="database"
+  tone="cool"
+  class="flex-justify-start margin-left-2"
+>
+  <Link to="https://bdcatalyst.gitbook.io/biodata-catalyst-documentation/data-management/data-submission-instructions">View Instructions for Data Submission to BDC</Link>
+</Notice>
 
 <div class="grid-row grid-gap-2 margin-top-3">
   <div class="tablet:grid-col-12 desktop:grid-col-6 grid-gap-2 margin-bottom-2">
@@ -87,7 +97,13 @@ The BDC Data Management Core (DMC) helps researchers submit data into BDC. BDC c
 
 NIH has data-sharing policies that researchers must abide by, including the NIH [Data Management and Sharing (DMS) Policy (effective January 25, 2023\)](https://sharing.nih.gov/data-management-and-sharing-policy/about-data-management-and-sharing-policies/data-management-and-sharing-policy-overview#after). Researchers who plan to use BDC as their data repository should include "NHLBI BioData Catalyst" in their [data management and sharing plans](https://sharing.nih.gov/data-management-and-sharing-policy/planning-and-budgeting-for-data-management-and-sharing/writing-a-data-management-and-sharing-plan#after).
 
-[→ Refer to NIH Data Management and Sharing](https://grants.nih.gov/policy-and-compliance/policy-topics/sharing-policies/dms) for more information
+<Notice
+  icon="layers"
+  tone="cool"
+  class="flex-justify-start margin-left-2"
+>
+  <Link to="https://grants.nih.gov/policy-and-compliance/policy-topics/sharing-policies/dms">Refer to NIH Data Management and Sharing for more information</Link>
+</Notice>
 
 <NextStepsAlert
   heading="Contact us about data submission"
