@@ -3,6 +3,7 @@ import {
   decodeJwtPayload,
   doesNonceMatch,
   extractProjects,
+  getCheckMyAccessConfig,
   getCurrentRedirectUri,
   getPreviewData,
   isIdTokenExpired,
@@ -46,17 +47,22 @@ describe('check my access helpers', () => {
   });
 
   it('builds the Fence authorization url for the current page', () => {
-    const url = new URL('https://biodatacatalyst.nhlbi.nih.gov/data/explore/');
-    const authUrl = new URL(buildCheckMyAccessUrl(url, 'nonce-123'));
+    const url = new URL(
+      'https://preview.biodatacatalyst.nhlbi.nih.gov/data/explore/',
+    );
+    const authUrl = new URL(
+      buildCheckMyAccessUrl(url, 'nonce-123', {
+        authRoot: 'https://gen3.biodatacatalyst.nhlbi.nih.gov',
+        clientId: 'client-123',
+      }),
+    );
 
     expect(authUrl.origin).toBe('https://gen3.biodatacatalyst.nhlbi.nih.gov');
     expect(authUrl.pathname).toBe('/user/oauth2/authorize');
     expect(authUrl.searchParams.get('idp')).toBe('ras');
-    expect(authUrl.searchParams.get('client_id')).toBe(
-      'xMhuXjGdk9zpzdJjufEinh3nKzOUKOTFZcwzU5xT',
-    );
+    expect(authUrl.searchParams.get('client_id')).toBe('client-123');
     expect(authUrl.searchParams.get('redirect_uri')).toBe(
-      'https://biodatacatalyst.nhlbi.nih.gov/data/explore/',
+      'https://preview.biodatacatalyst.nhlbi.nih.gov/data/explore/',
     );
     expect(authUrl.searchParams.get('nonce')).toBe('nonce-123');
   });
@@ -72,15 +78,56 @@ describe('check my access helpers', () => {
     expect(isIdTokenExpired(expiredToken)).toBe(true);
   });
 
-  it('checks returned nonce values when present', () => {
+  it('returns false when the expected nonce is missing', () => {
+    const token = createJwt({
+      exp: Math.floor(Date.now() / 1000) + 60,
+      nonce: 'abc',
+    });
+
+    expect(doesNonceMatch(token, null)).toBe(false);
+    expect(doesNonceMatch(token, undefined)).toBe(false);
+  });
+
+  it('returns false when the token nonce is missing or mismatched', () => {
+    const missingNonceToken = createJwt({
+      exp: Math.floor(Date.now() / 1000) + 60,
+    });
+    const mismatchedNonceToken = createJwt({
+      exp: Math.floor(Date.now() / 1000) + 60,
+      nonce: 'abc',
+    });
+
+    expect(doesNonceMatch(missingNonceToken, 'abc')).toBe(false);
+    expect(doesNonceMatch(mismatchedNonceToken, 'xyz')).toBe(false);
+  });
+
+  it('returns true when the token nonce matches the expected nonce', () => {
     const token = createJwt({
       exp: Math.floor(Date.now() / 1000) + 60,
       nonce: 'abc',
     });
 
     expect(doesNonceMatch(token, 'abc')).toBe(true);
-    expect(doesNonceMatch(token, 'xyz')).toBe(false);
-    expect(doesNonceMatch(token, null)).toBe(true);
+  });
+
+  it('reads the Check My Access auth config from public env vars', () => {
+    expect(
+      getCheckMyAccessConfig({
+        PUBLIC_CHECK_MY_ACCESS_AUTH_ROOT: 'https://gen3.example.org',
+        PUBLIC_CHECK_MY_ACCESS_CLIENT_ID: 'client-123',
+      }),
+    ).toEqual({
+      authRoot: 'https://gen3.example.org',
+      clientId: 'client-123',
+    });
+  });
+
+  it('returns null when the Check My Access auth config is incomplete', () => {
+    expect(
+      getCheckMyAccessConfig({
+        PUBLIC_CHECK_MY_ACCESS_AUTH_ROOT: 'https://gen3.example.org',
+      }),
+    ).toBeNull();
   });
 
   it('extracts and sorts approved project names', () => {

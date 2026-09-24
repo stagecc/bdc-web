@@ -1,7 +1,3 @@
-export const CHECK_MY_ACCESS_AUTH_ROOT =
-  'https://gen3.biodatacatalyst.nhlbi.nih.gov';
-export const CHECK_MY_ACCESS_CLIENT_ID =
-  'xMhuXjGdk9zpzdJjufEinh3nKzOUKOTFZcwzU5xT';
 export const CHECK_MY_ACCESS_IDP = 'ras';
 export const CHECK_MY_ACCESS_STORAGE_KEY = 'bdc-check-my-access-auth';
 export const CHECK_MY_ACCESS_NONCE_STORAGE_KEY = 'bdc-check-my-access-nonce';
@@ -37,6 +33,11 @@ export interface CheckMyAccessPreviewData {
   state: CheckMyAccessPreviewState;
   userName: string;
   projects: string[];
+}
+
+export interface CheckMyAccessConfig {
+  authRoot: string;
+  clientId: string;
 }
 
 const PREVIEW_STATES = new Set<CheckMyAccessPreviewState>([
@@ -75,10 +76,33 @@ export const createNonce = () => {
   ).join('');
 };
 
-export const buildCheckMyAccessUrl = (url: URL, nonce: string) => {
-  const authUrl = new URL('/user/oauth2/authorize', CHECK_MY_ACCESS_AUTH_ROOT);
+export const getCheckMyAccessConfig = (
+  env: Pick<
+    ImportMetaEnv,
+    'PUBLIC_CHECK_MY_ACCESS_AUTH_ROOT' | 'PUBLIC_CHECK_MY_ACCESS_CLIENT_ID'
+  > = import.meta.env,
+): CheckMyAccessConfig | null => {
+  const authRoot = env.PUBLIC_CHECK_MY_ACCESS_AUTH_ROOT;
+  const clientId = env.PUBLIC_CHECK_MY_ACCESS_CLIENT_ID;
+
+  if (!authRoot || !clientId) {
+    return null;
+  }
+
+  return {
+    authRoot,
+    clientId,
+  };
+};
+
+export const buildCheckMyAccessUrl = (
+  url: URL,
+  nonce: string,
+  config: CheckMyAccessConfig,
+) => {
+  const authUrl = new URL('/user/oauth2/authorize', config.authRoot);
   authUrl.searchParams.set('idp', CHECK_MY_ACCESS_IDP);
-  authUrl.searchParams.set('client_id', CHECK_MY_ACCESS_CLIENT_ID);
+  authUrl.searchParams.set('client_id', config.clientId);
   authUrl.searchParams.set('response_type', 'id_token token');
   authUrl.searchParams.set('scope', 'openid user');
   authUrl.searchParams.set('nonce', nonce);
@@ -128,11 +152,11 @@ export const doesNonceMatch = (
   expectedNonce?: string | null,
 ) => {
   if (!expectedNonce) {
-    return true;
+    return false;
   }
 
   const payload = decodeJwtPayload<{ nonce?: string }>(idToken);
-  return payload.nonce === expectedNonce;
+  return typeof payload.nonce === 'string' && payload.nonce === expectedNonce;
 };
 
 export const extractProjects = (user: CheckMyAccessUser) => {

@@ -10,3 +10,8 @@
  */
 declare const __BUILD_DATE__: string;
 declare const __BUILD_YEAR__: string;
+
+interface ImportMetaEnv {
+  readonly PUBLIC_CHECK_MY_ACCESS_AUTH_ROOT?: string;
+  readonly PUBLIC_CHECK_MY_ACCESS_CLIENT_ID?: string;
+}

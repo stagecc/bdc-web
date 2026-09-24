@@ -1,6 +1,5 @@
 import {
   buildCheckMyAccessUrl,
-  CHECK_MY_ACCESS_AUTH_ROOT,
   CHECK_MY_ACCESS_NONCE_STORAGE_KEY,
   CHECK_MY_ACCESS_STORAGE_KEY,
   type CheckMyAccessPreviewData,
@@ -11,6 +10,7 @@ import {
   doesNonceMatch,
   downloadProjectsCsv,
   extractProjects,
+  getCheckMyAccessConfig,
   getPreviewData,
   isIdTokenExpired,
   parseHashTokens,
@@ -142,8 +142,15 @@ const clearStoredAuth = () => {
   window.localStorage.removeItem(CHECK_MY_ACCESS_STORAGE_KEY);
 };
 
-const fetchFenceUser = async (tokens: CheckMyAccessTokens) => {
-  const response = await fetch(`${CHECK_MY_ACCESS_AUTH_ROOT}/user/user/`, {
+const clearStoredNonce = () => {
+  window.sessionStorage.removeItem(CHECK_MY_ACCESS_NONCE_STORAGE_KEY);
+};
+
+const fetchFenceUser = async (
+  authRoot: string,
+  tokens: CheckMyAccessTokens,
+) => {
+  const response = await fetch(`${authRoot}/user/user/`, {
     headers: {
       Authorization: `Bearer ${tokens.accessToken}`,
     },
@@ -389,20 +396,34 @@ const mountCheckMyAccess = async (root: HTMLElement) => {
   let latestTokens: CheckMyAccessTokens | null = null;
   let latestUserName = '';
   let latestProjects: string[] = [];
+  const config = getCheckMyAccessConfig();
   const preview = getPreviewData(new URL(window.location.href));
 
   const startLogin = () => {
+    if (!config) {
+      renderState(elements, { kind: 'session-error' });
+      return;
+    }
+
     const nonce = createNonce();
     window.sessionStorage.setItem(CHECK_MY_ACCESS_NONCE_STORAGE_KEY, nonce);
-    const authUrl = buildCheckMyAccessUrl(new URL(window.location.href), nonce);
+    const authUrl = buildCheckMyAccessUrl(
+      new URL(window.location.href),
+      nonce,
+      config,
+    );
     window.location.assign(authUrl);
   };
 
   const handleLookup = async (tokens: CheckMyAccessTokens) => {
+    if (!config) {
+      throw new Error('Check My Access config missing');
+    }
+
     renderState(elements, { kind: 'processing' });
     latestTokens = tokens;
 
-    const user = await fetchFenceUser(tokens);
+    const user = await fetchFenceUser(config.authRoot, tokens);
     const userName = user.name?.trim() || 'Authenticated user';
     const projects = extractProjects(user);
 
@@ -470,18 +491,27 @@ const mountCheckMyAccess = async (root: HTMLElement) => {
 
     if (returnedTokens) {
       renderState(elements, { kind: 'processing' });
+      if (!config) {
+        clearStoredAuth();
+        clearStoredNonce();
+        clearHash();
+        renderState(elements, { kind: 'session-error' });
+        return;
+      }
+
       if (
         isIdTokenExpired(returnedTokens.idToken) ||
         !doesNonceMatch(returnedTokens.idToken, expectedNonce)
       ) {
         clearStoredAuth();
+        clearStoredNonce();
         clearHash();
         renderState(elements, { kind: 'session-error' });
         return;
       }
 
       saveStoredAuth(returnedTokens, expectedNonce);
-      window.sessionStorage.removeItem(CHECK_MY_ACCESS_NONCE_STORAGE_KEY);
+      clearStoredNonce();
       clearHash();
 
       await handleLookup(returnedTokens);
@@ -494,11 +524,19 @@ const mountCheckMyAccess = async (root: HTMLElement) => {
       return;
     }
 
+    if (!config) {
+      clearStoredAuth();
+      clearStoredNonce();
+      renderState(elements, { kind: 'session-error' });
+      return;
+    }
+
     if (
       isIdTokenExpired(storedAuth.idToken) ||
       !doesNonceMatch(storedAuth.idToken, storedAuth.nonce)
     ) {
       clearStoredAuth();
+      clearStoredNonce();
       renderState(elements, { kind: 'session-error' });
       return;
     }
