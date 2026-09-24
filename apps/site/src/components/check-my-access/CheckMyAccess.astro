@@ -1,0 +1,44 @@
+---
+---
+
+<section
+  data-check-my-access
+  class="margin-top-2"
+  aria-labelledby="check-my-access-title"
+>
+  <div class="border border-base-lighter radius-lg padding-3 bg-base-lightest shadow-1">
+    <div class="display-flex flex-justify flex-align-start flex-wrap">
+      <div>
+        <h3
+          id="check-my-access-title"
+          data-check-my-access-title
+          class="font-heading-lg margin-top-0 margin-bottom-0"
+          tabindex="-1"
+        >
+          Check My Access
+        </h3>
+      </div>
+
+      <span
+        data-check-my-access-preview-badge
+        class="usa-tag bg-accent-cool-light text-base-darkest"
+        hidden
+      >
+        Preview Mode
+      </span>
+    </div>
+
+    <div
+      data-check-my-access-content
+      class="margin-top-2"
+      aria-live="polite"
+      aria-busy="false"
+    ></div>
+  </div>
+</section>
+
+<script>
+  import { bootCheckMyAccess } from './client';
+
+  bootCheckMyAccess();
+</script>
