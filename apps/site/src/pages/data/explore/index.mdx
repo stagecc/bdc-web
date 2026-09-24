@@ -10,6 +10,7 @@ import Card from '@bdc/ui-astro/card/Card.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import CheckMyAccess from '@components/check-my-access/CheckMyAccess.astro';
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import Notice from '@components/Notice.astro';
 
 <Hero
@@ -103,6 +104,10 @@ Researchers who want to use **controlled-access datasets** must have an approved
 Use the button below to sign in and verify your current data access approvals. 
 
 <h3 id="check-my-access" class="usa-sr-only">Check My Access</h3>
+
+<InlineAlert variant="warning" heading="Temporary Notice">
+  Check My Access may not work correctly while this feature is being updated.
+</InlineAlert>
 
     <CheckMyAccess />
 
