@@ -7,12 +7,14 @@ type Props = {
   copyLabel: string;
   copyText: string;
   className?: string;
+  analyticsSection?: string;
 };
 
 export default function CopyToClipboard({
   copyLabel,
   copyText,
   className,
+  analyticsSection,
 }: Props) {
   const [status, setStatus] = useState<CopyStatus>('idle');
   const resetStatusTimeoutRef = useRef<ReturnType<
@@ -81,6 +83,8 @@ export default function CopyToClipboard({
           label={copyLabel}
           tone="primary"
           onClick={handleCopy}
+          data-analytics-custom-event="copy_to_clipboard_click"
+          data-analytics-section={analyticsSection}
           small
         />
       </div>
