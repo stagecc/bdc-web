@@ -10,6 +10,7 @@ import Card from '@bdc/ui-astro/card/Card.astro';
 import Icon from '@bdc/ui-astro/icon/Icon.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Notice from '@components/Notice.astro';
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 
 <Hero
   eyebrow="Data"
@@ -101,12 +102,16 @@ Researchers who want to use **controlled-access datasets** must have an approved
 
 Use the button below to sign in and verify your current data access approvals. 
 
-<Notice
+  <InlineAlert variant="warning" heading="Temporary Notice">
+    Check My Access temporarily unavailable. This feature will be returning soon.
+  </InlineAlert>
+  
+{/* <Notice
   icon="lock_open"
   tone="neutral"
 >
   <Link to="https://gen3.biodatacatalyst.nhlbi.nih.gov/user/oauth2/authorize?idp=ras&client_id=xMhuXjGdk9zpzdJjufEinh3nKzOUKOTFZcwzU5xT&response_type=id_token+token&scope=openid+user&nonce=2bfe151af238d21f48d8a8bf8bbec408838c8dc0ace6b4c5621ac9dfa157798b&redirect_uri=https://biodatacatalyst.nhlbi.nih.gov/data/explore/">Check My Access</Link>
-</Notice>
+</Notice> */}
 
     </InPageNav>
   </div>
