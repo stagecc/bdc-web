@@ -79,7 +79,7 @@ export const customIcons: Record<string, CustomIconDefinition> = {
     ],
   },
   sleep: {
-    viewBox: '0 0 24 24',
+    viewBox: '-2 -2 28 28',
     paths: [],
     strokedPaths: [
       'M1.5 13.91h21v3.82h-21Z',
@@ -94,7 +94,7 @@ export const customIcons: Record<string, CustomIconDefinition> = {
     strokeMiterlimit: 10,
   },
   stethoscope: {
-    viewBox: '0 0 24 24',
+    viewBox: '-2 -2 28 28',
     paths: [],
     strokedPaths: [
       'M22.5 19.64a2.86 2.86 0 1 1-5.72 0 2.86 2.86 0 0 1 5.72 0Z',

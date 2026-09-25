@@ -18,7 +18,7 @@ import Base from '@layouts/Base.astro';
     <div slot="visual" class="width-full maxw-mobile-lg">
       <Card variant="panel">
         <div class="display-flex flex-align-center margin-bottom-1">
-          <IconBadge icon="people" tone="secondary" size={6} iconSize={4} class="margin-right-105" />
+          <IconBadge icon="people" tone="secondary" variant="medium" class="margin-right-105" />
         </div>
         <p class="font-sans-sm text-bold text-base-dark margin-top-1 ">More than hosting data</p>
         <p class="margin-top-2 margin-bottom-0 text-base line-height-sans-4">
@@ -65,7 +65,7 @@ import Base from '@layouts/Base.astro';
               For genotype imputation using the TOPMed reference panel, refer to the 
               <Link to="https://imputation.biodatacatalyst.nhlbi.nih.gov/">TOPMed Imputation Server</Link>.
             </p>
-              <Notice icon="database" tone="cool" size={5}>
+              <Notice icon="database" tone="cool">
                 <Link to={`/about/studies/topmed`}>See a list of the TOPMed data available in BDC</Link>
               </Notice>
 
@@ -89,10 +89,9 @@ import Base from '@layouts/Base.astro';
               <Link to="https://recovercovid.org/data">RECOVER</Link> to help researchers 
               understand and work with these datasets.
             </p>
-            <Notice icon="database" tone="cool" size={5}>
+            <Notice icon="database" tone="cool">
               <Link to={`/about/studies/recover`}>See a list of the RECOVER data available in BDC</Link>
             </Notice>
-          </section>
 
           <section id="heartshare" class="border-top-1px border-base-light margin-top-6">
             <h2>HeartShare</h2>
@@ -113,10 +112,9 @@ import Base from '@layouts/Base.astro';
               available in BDC, along with supporting investigators to ensure data meets 
               needs for desired analyses.
             </p>
-            <Notice icon="database" tone="cool" size={5}>
+            <Notice icon="database" tone="cool">
               <Link to={`/about/studies/heartshare`}>See a list of the HeartShare data available in BDC</Link>
             </Notice>
-          </section>
 
           <section id="nsrr" class="border-top-1px border-base-light margin-top-6">
             <h2>National Sleep Research Resource (NSRR)</h2>
@@ -134,10 +132,9 @@ import Base from '@layouts/Base.astro';
               communities, aiming to expand the breadth and depth of the sleep-related
               data and understand optimal methods of sleep data analysis.
             </p>
-            <Notice icon="database" tone="cool" size={5}>
+            <Notice icon="database" tone="cool">
               <Link to={`/about/studies/nsrr`}>See a list of the NSRR data available in BDC</Link>
             </Notice>
-          </section>
           <section id="rmip" class="border-top-1px border-base-light margin-top-6">
             <h2>Regenerative Medicine Innovation Project (RMIP)</h2>
             <p>
