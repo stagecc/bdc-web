@@ -14,7 +14,7 @@ applications:
               style-src 'self' 'unsafe-inline';
               img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://www.gstatic.com https://script.crazyegg.com https://www.crazyegg.com;
               font-src 'self' data:;
-              connect-src 'self' https://search.biodatacatalyst.renci.org https://www.google.com https://www.google-analytics.com https://www.googletagmanager.com https://epxuifil2cc4sqfqws62zejcwi0cgfds.lambda-url.us-east-1.on.aws https://script.crazyegg.com https://www.crazyegg.com;
+              connect-src 'self' https://search.biodatacatalyst.renci.org https://www.google.com https://www.google-analytics.com https://www.googletagmanager.com https://epxuifil2cc4sqfqws62zejcwi0cgfds.lambda-url.us-east-1.on.aws https://script.crazyegg.com https://www.crazyegg.com https://gen3.biodatacatalyst.nhlbi.nih.gov;
               frame-src 'self' https://www.youtube-nocookie.com https://www.googletagmanager.com https://www.google.com https://www.recaptcha.net;
               manifest-src 'self';
               worker-src 'self' blob:;
