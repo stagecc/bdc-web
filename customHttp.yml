@@ -3,14 +3,14 @@ applications:
     customHeaders: &defaultSecurityHeaders
       - pattern: '**'
         headers:
-          - key: Content-Security-Policy-Report-Only
+          - key: Content-Security-Policy
             value: >-
               default-src 'self';
               base-uri 'self';
               object-src 'none';
               frame-ancestors 'self';
               form-action 'self';
-              script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://script.crazyegg.com;
+              script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://script.crazyegg.com;
               style-src 'self' 'unsafe-inline';
               img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://www.gstatic.com https://script.crazyegg.com https://www.crazyegg.com;
               font-src 'self' data:;
@@ -29,7 +29,37 @@ applications:
             value: accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
 
   - appRoot: apps/site
-    customHeaders: *defaultSecurityHeaders
+    customHeaders:
+      - pattern: '**'
+        headers:
+          - key: Content-Security-Policy
+            value: >-
+              default-src 'self' https://crazyegg.com https://script.crazyegg.com;
+              base-uri 'self';
+              object-src 'none';
+              frame-ancestors 'self';
+              form-action 'self';
+              script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://script.crazyegg.com https://widget.freshworks.com;
+              style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://widget.freshworks.com https://script.crazyegg.com;
+              img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://www.gstatic.com https://widget.freshworks.com https://script.crazyegg.com;
+              font-src 'self' data:;
+              connect-src 'self' https://search.biodatacatalyst.renci.org https://www.google.com https://www.google-analytics.com https://www.googletagmanager.com https://epxuifil2cc4sqfqws62zejcwi0cgfds.lambda-url.us-east-1.on.aws https://crazyegg.com https://*.crazyegg.com https://bdcatalyst.freshdesk.com https://widget.freshworks.com wss://widget.freshworks.com;
+              frame-src 'self' https://www.youtube-nocookie.com https://www.googletagmanager.com https://www.google.com https://www.recaptcha.net https://widget.freshworks.com https://script.crazyegg.com;
+              manifest-src 'self';
+              worker-src 'self' blob:;
+              upgrade-insecure-requests
+          - key: X-XSS-Protection
+            value: 1; mode=block
+          - key: X-Frame-Options
+            value: DENY
+          - key: Referrer-Policy
+            value: same-origin
+          - key: X-Content-Type-Options
+            value: nosniff
+          - key: Strict-Transport-Security
+            value: max-age=31536000; includeSubDomains; preload
+          - key: Cache-Control
+            value: max-age=0, no-cache, no-store, must-revalidate
 
   - appRoot: apps/consortium
     customHeaders: *defaultSecurityHeaders
