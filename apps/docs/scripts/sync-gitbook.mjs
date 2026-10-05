@@ -278,14 +278,9 @@ function rewriteGitbookAssetPaths(content) {
 }
 
 function rewriteInternalMarkdownLinks(content, fileRelPath) {
-  return content.replace(/\]\(([^)]+)\)/g, (match, rawTarget) => {
-    const trimmed = rawTarget.trim().replace(/^<|>$/g, '');
-    if (!trimmed) return match;
-
-    const rewritten = rewriteLinkTarget(trimmed, fileRelPath);
-    if (!rewritten) return match;
-    return `](${rewritten})`;
-  });
+  return rewriteMarkdownLinkDestinations(content, (destination) =>
+    rewriteLinkTarget(destination, fileRelPath),
+  );
 }
 
 function rewriteLinkTarget(target, fileRelPath) {
