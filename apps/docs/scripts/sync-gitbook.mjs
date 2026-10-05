@@ -14,6 +14,7 @@ import { tmpdir } from 'node:os';
 import { basename, dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { transformEmojiShortcodes } from './lib/gitbook-emoji-shortcodes.mjs';
+import { rewriteMarkdownLinkDestinations } from './lib/markdown-link-rewrite.mjs';
 
 // Build-time GitBook sync pipeline:
 // 1. Resolve source repo/ref (env -> lock file -> defaults)
