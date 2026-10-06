@@ -10,8 +10,9 @@
     "sync:external": "node ./scripts/sync-external-docs.mjs",
     "check:external-updates": "node ./scripts/check-external-updates.mjs",
     "sync:content": "npm run sync:gitbook && npm run sync:external",
-    "build": "npm run sync:content && astro build",
-    "preview": "astro preview"
+    "build": "npm run sync:content && astro build && npm run export:markdown",
+    "preview": "astro preview",
+    "export:markdown": "node -e \"const fs = require('node:fs'); fs.accessSync('src/content/docs/index.md'); fs.rmSync('dist/markdown', { recursive: true, force: true }); fs.cpSync('src/content/docs', 'dist/markdown', { recursive: true });\""
   },
   "dependencies": {
     "@astrojs/markdown-remark": "^7.2.3",

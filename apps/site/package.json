@@ -16,6 +16,7 @@
     "a11y:smoke": "astro build && playwright test a11y/smoke.test.ts",
     "a11y:full": "astro build && node a11y/full.js",
     "test": "vitest run",
+    "test:markdown": "node --test src/integrations/markdown/convert.test.mjs",
     "test:analytics-sections": "astro build && playwright test e2e/analytics-sections.test.ts",
     "test:watch": "vitest",
     "test:ui": "vitest --ui"
@@ -45,6 +46,9 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.10.1",
     "@playwright/test": "^1.52.0",
-    "pagefind": "^1.4.0"
+    "jsdom": "^28.1.0",
+    "pagefind": "^1.4.0",
+    "turndown": "^7.2.4",
+    "turndown-plugin-gfm": "^1.0.2"
   }
 }
