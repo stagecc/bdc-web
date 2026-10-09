@@ -13,6 +13,8 @@ import {
 import { tmpdir } from 'node:os';
 import { basename, dirname, extname, join, relative, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { transformEmojiShortcodes } from './lib/gitbook-emoji-shortcodes.mjs';
+import { rewriteMarkdownLinkDestinations } from './lib/markdown-link-rewrite.mjs';
 
 // Build-time GitBook sync pipeline:
 // 1. Resolve source repo/ref (env -> lock file -> defaults)
@@ -193,6 +195,7 @@ function transformMarkdown(input, fileRelPath) {
   content = transformFileBlocks(content, fileRelPath);
   content = transformIncludeBlocks(content);
   content = transformEmbedBlocks(content);
+  content = transformEmojiShortcodes(content);
   content = rewriteGitbookAssetPaths(content);
   content = rewriteInternalMarkdownLinks(content, fileRelPath);
   content = ensureFrontmatter(content, fileRelPath);
@@ -275,14 +278,9 @@ function rewriteGitbookAssetPaths(content) {
 }
 
 function rewriteInternalMarkdownLinks(content, fileRelPath) {
-  return content.replace(/\]\(([^)]+)\)/g, (match, rawTarget) => {
-    const trimmed = rawTarget.trim().replace(/^<|>$/g, '');
-    if (!trimmed) return match;
-
-    const rewritten = rewriteLinkTarget(trimmed, fileRelPath);
-    if (!rewritten) return match;
-    return `](${rewritten})`;
-  });
+  return rewriteMarkdownLinkDestinations(content, (destination) =>
+    rewriteLinkTarget(destination, fileRelPath),
+  );
 }
 
 function rewriteLinkTarget(target, fileRelPath) {

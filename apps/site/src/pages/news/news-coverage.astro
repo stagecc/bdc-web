@@ -54,7 +54,7 @@ const years = Object.keys(coverageByYear)
           Articles on this page are published by third-party organizations
           and will open on external websites. Some articles may require a
           subscription or login to access and are identified with a paywall
-          notice <IconBadge icon="verified_user" tone="neutral" size={4} iconSize={3} class="text-middle margin-bottom-05" />.
+          notice <IconBadge icon="verified_user" tone="neutral" variant="inline" class="text-middle margin-bottom-05" />.
         </p>
         <p class="text-bold">
           Showing {coverage.length} {coverage.length === 1 ? 'external news article' : 'external news articles'}
@@ -89,12 +89,7 @@ const years = Object.keys(coverageByYear)
                         {
                           item.data.paywall && (
                             <li class="usa-collection__meta-item margin-left-1 display-flex flex-align-center">
-                              <IconBadge
-                                icon="verified_user"
-                                tone="neutral"
-                                size={4}
-                                iconSize={3}
-                              />
+                              <IconBadge icon="verified_user" tone="neutral" variant="inline" />
                             </li>
                           )
                         }

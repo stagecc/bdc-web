@@ -29,7 +29,7 @@ const iconBadgeTone = isDarkTone ? 'warm' : 'secondary';
 
 <Card variant="feature" class="height-full display-flex flex-column" border={border} surface={surface}>
   <div class="display-flex flex-align-center margin-top-1 margin-bottom-2">
-    {icon && <IconBadge icon={icon} class:list={['margin-right-105', !isDarkTone && 'text-primary']} tone={iconBadgeTone} size={6} />}
+    {icon && <IconBadge icon={icon} class:list={['margin-right-105', !isDarkTone && 'text-primary']} tone={iconBadgeTone} variant="medium" />}
     <h3 class:list={['margin-0 flex-1 font-heading-md', isDarkTone ? 'text-base-lightest' : 'text-primary-dark']}>{title}</h3>
   </div>
   <p class:list={['margin-y-2 flex-1', isDarkTone ? 'text-base-lighter' : 'text-base']}>{text}</p>

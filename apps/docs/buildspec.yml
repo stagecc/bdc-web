@@ -1,0 +1,22 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 22
+  pre_build:
+    commands:
+      - npm ci
+  build:
+    commands:
+      - GITBOOK_ALLOW_OVERWRITE=1 npm run build --workspace=@bdc/docs
+
+artifacts:
+  base-directory: apps/docs/dist
+  files:
+    - '**/*'
+
+cache:
+  paths:
+    - node_modules/**/*
+    - /root/.npm/**/*

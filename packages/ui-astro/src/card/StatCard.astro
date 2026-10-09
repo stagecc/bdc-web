@@ -50,7 +50,7 @@ const numberToneClasses = {
   ]}
   style={`--stat-card-width: ${width};`}
 >
-  {icon && <IconBadge icon={icon} tone={tone} size={5} class="margin-bottom-105" />}
+  {icon && <IconBadge icon={icon} tone={tone} variant="medium" class="margin-bottom-105" />}
   <div class:list={['font-heading-xl text-bold line-height-heading-2', numberToneClasses[tone]]}>{number}</div>
   <div class="font-sans-sm text-bold text-base-dark margin-top-1">{qualifier}</div>
   {meta && <p class="margin-top-105 margin-bottom-0 font-sans-2xs text-bold text-base-dark line-height-sans-3">{meta}</p>}
