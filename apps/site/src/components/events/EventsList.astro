@@ -20,7 +20,7 @@ const { items } = Astro.props;
     const {
       title,
       date,
-      end_date,
+      endDate,
       time,
       eventType,
       location,
@@ -28,17 +28,17 @@ const { items } = Astro.props;
       tags,
       externalEvent,
       excerpt,
-      registration_required,
+      registrationRequired,
     } = event.data;
 
-    const isPast = (end_date ?? date) < new Date();
+    const isPast = (endDate ?? date) < new Date();
 
     return (
       <li class="margin-bottom-2">
         <Card variant="panel">
           <div class="grid-row grid-gap-1 tablet:grid-gap-2">
             <div class="tablet:grid-col-auto">
-              <CalendarDate date={date} endDate={end_date} />
+              <CalendarDate date={date} endDate={endDate} />
             </div>
             <div class="tablet:grid-col-fill display-flex flex-column">
               <div class="display-flex flex-wrap flex-align-center flex-justify margin-bottom-1">
@@ -46,7 +46,7 @@ const { items } = Astro.props;
                   {date.toLocaleDateString('en-US', {
                     weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
                   })}
-                  {end_date && ` - ${end_date.toLocaleDateString('en-US', {
+                  {endDate && ` - ${endDate.toLocaleDateString('en-US', {
                     weekday: 'long', month: 'long', day: 'numeric', year: 'numeric',
                   })}`}
                 </div>
@@ -101,9 +101,9 @@ const { items } = Astro.props;
               </div>
 
               <div class="display-flex flex-justify margin-top-2 flex-wrap flex-align-center">
-                {url && (!isPast || !registration_required) && (
+                {url && (!isPast || !registrationRequired) && (
                   <Link to={url} class="text-bold">
-                    {registration_required ? 'Register now' : 'Event website'}
+                    {registrationRequired ? 'Register now' : 'Event website'}
                   </Link>
                 )}
                 <Link to={`/news/events/${event.id}/`} class="text-bold">View details &raquo;</Link>

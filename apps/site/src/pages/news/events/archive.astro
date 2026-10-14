@@ -11,7 +11,7 @@ import Base from '@layouts/Base.astro';
 const now = new Date();
 
 const past = (await getCollection('events'))
-  .filter((e) => (e.data.end_date ?? e.data.date) < now)
+  .filter((e) => (e.data.endDate ?? e.data.date) < now)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 
