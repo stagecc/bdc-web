@@ -80,21 +80,24 @@ layout: ../../../layouts/MdxBase.astro
 - Images referenced by content entries should usually live next to the entry file.
 - Prefer `YYYY-MM-DD` date values for local markdown and YAML content.
 - Use MDX only when you need richer markdown behavior or component imports.
+- Use `camelCase` for compound frontmatter and schema field names. Migrate or remove legacy snake_case fields when they are touched.
 
 ## News
 
 - Source: `apps/site/src/content/news/**/index.{md,mdx}`
-- Recommended structure: `news/YYYY/MM/slug/index.mdx`
+- Path structure: `news/YYYY/MM/slug/index.mdx`
 - Route pattern: `/news/latest-updates/<entry.id>/`
 - Additional route: `/tagged/<tag>/`
 - Required fields: `title`, `date`
-- Common optional fields: `updateType`, `tags`, `excerpt`, `heroImage`, `heroAlt`, `seo`
+- Current optional fields: `updateType`, `tags`, `excerpt`, `heroImage`, `heroAlt`, `seo`
 - Valid `updateType` values: `General Update`, `Research Highlight`, `Contributor Highlight`, `Newsletter`, `Release Notes`
+- Display behavior: entries are automatically sorted newest-first and grouped by year on the listing page.
 
 How to edit:
 
 - Create a dated folder.
 - Add `index.md` or `index.mdx`.
+- Keep the file-based route structure. News URLs are derived from the entry folder path and filename, not from a frontmatter `path` field.
 - Add the required frontmatter.
 - Add `excerpt` and tags when possible because they improve listings and search.
 - Add hero images in the same folder when used.
@@ -109,19 +112,22 @@ Implementation references:
 ## Events
 
 - Source: `apps/site/src/content/events/**/index.{md,mdx}`
-- Recommended structure: `events/YYYY/MM/slug/index.mdx`
+- Path structure: `events/YYYY/MM/slug/index.mdx`
 - Route pattern: `/news/events/<entry.id>/`
 - Additional routes: `/news/events/`, `/news/events/archive/`, `/tagged/<tag>/`
 - Required fields: `title`, `date`
-- Common optional fields: `time`, `display_date`, `location`, `url`, `eventType`, `registration_required`, `tags`, `materials`, `heroImage`, `heroAlt`, `seo`, `excerpt`
-- Less clear fields still present in schema: `path`, `meeting_info`, `flyer`
+- Current optional fields: `time`, `displayDate`, `location`, `url`, `externalEvent`, `eventType`, `registrationRequired`, `tags`, `materials`, `heroImage`, `heroAlt`, `seo`, `excerpt`
+- Fields still present in schema but not clearly rendered: `meetingInfo` and `flyer`
+- Display behavior: upcoming and past events are split automatically using `endDate` when present, otherwise `date`. Upcoming events display soonest-first. Archive events display newest-first and are grouped by year.
 
 How to edit:
 
 - Create a dated folder.
 - Add `index.md` or `index.mdx`.
-- Use `url` and `registration_required` for live event registration.
-- Use `end_date` for multi-day events or events that should remain upcoming through a later date.
+- Keep the file-based route structure. Event URLs are derived from the entry folder path and filename, not from a frontmatter `path` field.
+- Use `url` and `registrationRequired` for live event registration.
+- Use `externalEvent: true` for non-BDC-hosted events. Omit it or set `false` for BDC-hosted events.
+- Use `endDate` for multi-day events or events that should remain upcoming through a later date.
 - Add `materials` after the event when recordings, slides, or forum links are available.
 
 Implementation references:
@@ -138,7 +144,7 @@ Implementation references:
 - Route: `/news/bdc-enabled-research/`
 - Detail pages: none
 - Required fields: `title`, `date`, `journalName`, `url`
-- Common optional fields: `status`, `bdcContribution`, `researchArea`, `researchCommunity`
+- Current optional fields: `status`, `bdcContribution`, `researchArea`, `researchCommunity`
 
 How to edit:
 
@@ -157,8 +163,8 @@ Implementation references:
 - Route: `/news/news-coverage/`
 - Detail pages: none
 - Required fields: `title`, `url`, `date`, `source`
-- Common optional fields: `paywall`
-- Field present but currently unused by the page: `external`
+- Current optional fields: `paywall`
+- Display behavior: entries are automatically sorted newest-first and grouped by year on the page.
 
 How to edit:
 
@@ -210,6 +216,11 @@ Local overlay fields:
 - `priority`
 - `dataAvailable`
 
+Display behavior:
+
+- Entries with `dataAvailable: false` are hidden from the listing page.
+- Listing order uses `priority` ascending when present, then alphabetical by title.
+
 How to edit:
 
 - Edit or create `apps/site/src/content/programs/<program-slug>.mdx`.
@@ -249,9 +260,10 @@ Implementation references:
 - Source: `apps/site/src/content/eep/*.md`
 - Route: `/about/bdc/eep/`
 - Detail pages: none
-- Required fields: `name`, `slug`, `roles`, `term_start`
-- Common optional fields: `signifier`, `photo`, `adhoc`
+- Required fields: `name`, `slug`, `roles`, `termStart`
+- Current optional fields: `signifier`, `photo`, `adhoc`
 - Unlike Fellows, EEP markdown body content is rendered on the page.
+- Display behavior: members are sorted alphabetically by last name, with ad-hoc members listed after regular members.
 
 How to edit:
 
@@ -269,7 +281,7 @@ Implementation references:
 - Source: `apps/site/src/content/banners/*.{md,mdx}`
 - Route: none; banners render globally
 - Required fields: `importance`
-- Common optional fields: `variant`, `title`, `active`, `homeOnly`
+- Current optional fields: `variant`, `title`, `active`, `homeOnly`
 - Only banners with `active: true` render.
 
 How to edit:
@@ -290,7 +302,5 @@ Implementation references:
 | --- | --- |
 | Decision needed | Should FAQs remain entirely Freshdesk-managed, or should the repo support local FAQ authoring? |
 | Decision needed | Should Programs remain a hybrid remote-plus-local model, or should more metadata move into the repo? |
-| Dev task | Remove or implement the `path` field in News and Events. |
-| Dev task | Remove or implement `meeting_info` and `flyer` in Events. |
-| Dev task | Remove or implement `external` in Coverage. |
+| Dev task | Events: decide whether `meetingInfo` and `flyer` should render on event pages. If not, remove both from the schema and move any needed details into body content. |
 | Backlog | Decide whether `heroAlt` should be required whenever `heroImage` is present in News or Events. |
