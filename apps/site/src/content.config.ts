@@ -40,7 +40,6 @@ const events = defineCollection({
       title: z.string(),
       subtitle: z.string().optional(),
       externalEvent: z.boolean().optional(),
-      path: z.string().optional(),
       date: z.coerce.date(),
       end_date: z.coerce.date().optional(),
       time: z.string().optional(),
@@ -103,7 +102,6 @@ const coverage = defineCollection({
     url: z.string(),
     date: z.coerce.date(),
     source: z.string(),
-    external: z.boolean().optional(),
     paywall: z.boolean().optional(),
   }),
 });
