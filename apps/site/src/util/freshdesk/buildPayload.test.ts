@@ -65,6 +65,27 @@ describe('buildPayload', () => {
     });
   });
 
+  it('normalizes number, decimal, and date custom field values', () => {
+    const fields = [
+      makeField({ name: 'cf_student_count', type: 'custom_number' }),
+      makeField({ name: 'cf_requested_credits', type: 'custom_decimal' }),
+      makeField({ name: 'cf_training_date', type: 'custom_date' }),
+    ];
+    const values = {
+      cf_student_count: '25',
+      cf_requested_credits: '12.5',
+      cf_training_date: '10/14/2026',
+    };
+
+    const payload = buildPayload(values, fields, FORM_TYPE);
+
+    expect(payload.custom_fields).toEqual({
+      cf_student_count: 25,
+      cf_requested_credits: 12.5,
+      cf_training_date: '2026-10-14',
+    });
+  });
+
   it('maps default_requester to top-level email', () => {
     const fields = [
       makeField({ name: 'requester', type: 'default_requester' }),
@@ -123,6 +144,34 @@ describe('buildPayload', () => {
         'Details: Some details here <br />',
     );
     expect(payload.custom_fields.description).toBeUndefined();
+  });
+
+  it('uses normalized values in the generated description', () => {
+    const fields = [
+      makeField({
+        name: 'cf_student_count',
+        label_for_customers: 'Number of Students',
+        type: 'custom_number',
+      }),
+      makeField({
+        name: 'cf_training_date',
+        label_for_customers: 'Training Date',
+        type: 'custom_date',
+      }),
+    ];
+
+    const payload = buildPayload(
+      {
+        cf_student_count: '25',
+        cf_training_date: '10/14/2026',
+      },
+      fields,
+      FORM_TYPE,
+    );
+
+    expect(payload.description).toBe(
+      'Number of Students: 25 <br />' + 'Training Date: 2026-10-14 <br />',
+    );
   });
 
   it('escapes HTML and preserves line breaks in description values', () => {
