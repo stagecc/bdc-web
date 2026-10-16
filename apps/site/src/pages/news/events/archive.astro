@@ -7,11 +7,14 @@ import Link from '@bdc/ui-astro/link/Link.astro';
 import BdcHostedIndicator from '@components/events/BdcHostedIndicator.astro';
 import PastEventsList from '@components/events/PastEventsList.astro';
 import Base from '@layouts/Base.astro';
+import { isPastEvent } from '../../../util/eventDateTime';
 
 const now = new Date();
 
 const past = (await getCollection('events'))
-  .filter((e) => (e.data.end_date ?? e.data.date) < now)
+  .filter((e) =>
+    isPastEvent({ date: e.data.date, endDate: e.data.end_date }, now),
+  )
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
 

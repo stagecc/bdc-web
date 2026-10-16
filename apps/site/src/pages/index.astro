@@ -21,6 +21,7 @@ import programs from '@content/programs.json';
 import Base from '@layouts/Base.astro';
 import homeCoursesImage from '../assets/bdc-course-photo.png';
 import homeHeroGraphic from '../assets/home-hero.png';
+import { isPastEvent } from '../util/eventDateTime';
 import { slugify } from '../util/slugify';
 
 const news = (await getCollection('news'))
@@ -36,7 +37,10 @@ const programExcerptById = new Map(
 
 const upcomingEvents = (await getCollection('events'))
   .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
-  .filter((event) => event.data.date >= new Date());
+  .filter(
+    (event) =>
+      !isPastEvent({ date: event.data.date, endDate: event.data.end_date }),
+  );
 
 const events = (
   upcomingEvents.length > 0
