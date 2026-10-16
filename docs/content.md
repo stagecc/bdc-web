@@ -1,76 +1,78 @@
 # Content Authoring Guide
 
-```md
 > This document is authoritative. If implementation contradicts this guide, update the guide or refactor the code.
-````
 
-## Editable Areas
+This document describes content at the monorepo level.
 
-Non-developers may edit:
+Use app-local documentation for app-specific content models, schemas, routes, and editorial workflows.
 
-```
+## Purpose
 
-src/pages/**/*.mdx
-src/content/**/*.md
+This repository contains multiple applications with different content pipelines:
 
-```
+- `apps/site`: the public-facing site with local MDX pages and structured Astro content collections
+- `apps/docs`: the documentation site, built from synced GitBook and external-source content in a Starlight docs collection
+- `apps/consortium`: the consortium portal with its own local Astro content collections backed by MDX, Markdown, and YAML
 
-Do NOT edit:
+Because those apps use different content models, detailed content documentation should live with the app it describes.
 
-```
+## Where To Document Content
 
-src/components/
-src/layouts/
-src/pages/**/*.astro
+Use these locations as the primary references:
 
-```
+| App | Content model reference | Implementation source of truth |
+| --- | --- | --- |
+| `apps/site` | `apps/site/src/content/README.md` | `apps/site/src/content.config.ts` |
+| `apps/docs` | `apps/docs/README.md` and sync docs under `apps/docs/sync-sources/README.md` | `apps/docs/src/content.config.ts`, sync scripts, and lock files |
+| `apps/consortium` | Add or maintain app-local docs as needed near the app | `apps/consortium/src/content.config.ts` |
 
----
+## App Summaries
 
-## Creating a New Page
+### `apps/site`
 
-Create:
+The BDC public site mixes two patterns:
 
-```
+- routes in `apps/site/src/pages/**`, which include both MDX-authored pages and Astro implementation pages
+- structured collections in `apps/site/src/content/**`
 
-src/pages/section/page-name.mdx
+That content model is specific to the public site and is documented in `apps/site/src/content/README.md`.
 
-````
+### `apps/docs`
 
-Add frontmatter:
+The docs app is not primarily hand-authored local content. It is a Starlight site whose `docs` collection is loaded through Starlight's docs loader, with content generated at build time from:
 
-```mdx
----
-title: Page Title
-layout: ../path/to/layouts/Page.astro
----
-````
+- GitBook sync
+- external source sync
 
----
+Relevant references:
 
-## Using Components in MDX
+- `apps/docs/README.md`
+- `apps/docs/sync-sources/README.md`
+- `apps/docs/src/content.config.ts`
 
-You may import approved components:
+### `apps/consortium`
 
-```mdx
-import BlockLink from '@components/link/BlockLink.astro'
+The consortium app has its own structured Astro content collections, including members, working groups, recurring meetings, BAMs, RFCs, and meeting materials.
 
-<BlockLink to="/docs">
-  Read documentation
-</BlockLink>
-```
+Its implementation source of truth is:
 
-When using profile-style components with images (for example `ProfileCard`), use this alt-text convention:
+- `apps/consortium/src/content.config.ts`
 
-- Default `imageAlt` to the person's full name.
-- Only add extra detail when needed to disambiguate (for example two people with the same name on one page).
-- Do not include decorative phrases like "photo of" unless editorially required.
+Its content lives under:
 
----
+- `apps/consortium/src/content/**`
 
-## What Not To Do
+## General Rules
 
-* Do not add Astro or React components
-* Do not modify layouts
-* Do not add client directives
-* Do not modify routing structure
+- Keep app-specific content guidance inside the app whenever the content model is app-specific.
+- Keep repo-level documentation in `docs/` focused on shared rules and cross-app orientation.
+- When content schemas change, update both the implementation source of truth and the app-local reference doc.
+- Do not assume one app's authoring model applies to another app.
+
+## Current Canonical References
+
+- Public site content model: `apps/site/src/content/README.md`
+- Public site schema definitions: `apps/site/src/content.config.ts`
+- Docs app content pipeline: `apps/docs/README.md`
+- Docs external sync flow: `apps/docs/sync-sources/README.md`
+- Consortium app schema definitions: `apps/consortium/src/content.config.ts`

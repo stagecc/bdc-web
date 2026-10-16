@@ -11,7 +11,7 @@ const {
   time,
   location,
   eventType,
-  registration_required,
+  registrationRequired,
   url,
   externalEvent = false,
   isPast,
@@ -57,10 +57,10 @@ const endDateStr = endDate?.toLocaleDateString('en-US', dateOptions);
           ))}
         </div>
       )}
-      {url && (!isPast || !registration_required) && (
+      {url && (!isPast || !registrationRequired) && (
         <div class="margin-top-2">
           <Link to={url} class="text-bold">{
-            registration_required ? 'Register now' : 'Event website'
+            registrationRequired ? 'Register now' : 'Event website'
           }</Link>
         </div>
       )}

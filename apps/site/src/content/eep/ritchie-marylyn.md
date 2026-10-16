@@ -9,7 +9,7 @@ roles:
   - "Associate Dean for Artificial Intelligence, College of Medicine"
   - "Director, Division for Biomedical Informatics and AI"
   - "Medical University of South Carolina"
-term_start: 2024-08-08
+termStart: 2024-08-08
 photo: ritchie-marylyn.jpeg
 ---
 

@@ -6,7 +6,7 @@ roles:
   - "Professor of Radiology, Icahn School of Medicine"
   - "Vice Chair Radiology IT, Mount Sinai Health System"
   - "Associate Chief Medical Information Officer, Mount Sinai Doctor Faculty Practice"
-term_start: 2018-08-08
+termStart: 2018-08-08
 photo: mendelson-david.jpg
 ---
 
