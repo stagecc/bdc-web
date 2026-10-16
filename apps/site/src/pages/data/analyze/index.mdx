@@ -8,6 +8,7 @@ import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Notice from '@components/Notice.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import InPageNav from '@components/layout/InPageNav.astro';
+import NextStepsAlert from '@components/NextStepsAlert.astro';
 import Screenshot from '@components/screenshot/Screenshot.astro';
 import heroVisual from '../../../assets/analyze-hero.webm';
 import heroVisualPoster from '../../../assets/analyze-hero-poster.png';
@@ -163,12 +164,15 @@ An approved billing account, billing group, or other funding source is required 
 
 Connect to data in your project or workspace and then use interactive environments, applications, workflows, or your own tools to conduct your analysis and collaborate with your research team.
 
-## Need Help?
+<NextStepsAlert
+  heading="Need help getting started with analysis in BDC?"
+>
+  BDC Support can help you determine which platform and data pathway apply to your research,
+  understand access requirements, and find the appropriate documentation.
 
-BDC Support can help you determine which platform and data pathway apply to your research, understand access requirements, and find the appropriate documentation.
-
-<Link to="/help/contact-and-support/">Contact BDC Support</Link><br />
-<Link to="https://bdcatalyst.gitbook.io/biodata-catalyst-documentation">View BDC Documentation</Link>
+  [Contact BDC Support](/help/contact-and-support/)<br />
+  [View BDC Documentation](https://bdcatalyst.gitbook.io/biodata-catalyst-documentation)
+</NextStepsAlert>
 
 </InPageNav>
 </div>

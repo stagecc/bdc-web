@@ -129,7 +129,11 @@ export default function DynamicCustomObjectForm({
 
   if (error) {
     return (
-      <div className="usa-alert usa-alert--error" role="alert">
+      <div
+        className="usa-alert usa-alert--error"
+        role="alert"
+        data-markdown-exclude
+      >
         <div className="usa-alert__body">
           <h3 className="usa-alert__heading">{messages.unavailableHeading}</h3>
           <p className="usa-alert__text">{messages.unavailableText}</p>

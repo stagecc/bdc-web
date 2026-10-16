@@ -23,6 +23,7 @@
  */
 
 import { buildFreshdeskDescription } from './buildFreshdeskDescription';
+import { normalizeFreshdeskFieldValue } from './normalizeFreshdeskFieldValue';
 import type { FreshdeskField } from './types';
 
 // Maps default_* Freshdesk field types to their top-level ticket property names.
@@ -85,7 +86,7 @@ export function buildPayload(
   };
 
   for (const field of fields) {
-    const value = values[field.name];
+    const value = normalizeFreshdeskFieldValue(field, values[field.name]);
 
     // Skip fields with no value — don't send empty strings or undefined
     // to Freshdesk as that can trigger validation errors on their end.

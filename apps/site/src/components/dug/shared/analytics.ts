@@ -14,9 +14,13 @@ export function trackDugSearch(term: string, location: string) {
   });
 }
 
-export function trackDugDownloadCollection(collection: DugCollectionLike) {
+export function trackDugDownloadCollection(
+  collection: DugCollectionLike,
+  location: string,
+) {
   pushAnalyticsEvent({
     event: 'dug-download-collection',
+    location,
     dugConceptIds: collection.concepts.map((item) => item.id),
     dugStudyIds: collection.studies.map((item) => item.id),
     dugVariableIds: collection.variables.map((item) => item.id),

@@ -67,4 +67,29 @@ describe('buildFreshdeskDescription', () => {
       'Details &lt;script&gt;: Line 1<br />Line &lt;2&gt; &amp; &quot;quoted&quot; <br />',
     );
   });
+
+  it('normalizes number and date field values before formatting', () => {
+    const description = buildFreshdeskDescription(
+      {
+        cf_student_count: '25',
+        cf_training_date: '10/14/2026',
+      },
+      [
+        makeField({
+          name: 'cf_student_count',
+          label_for_customers: 'Number of Students',
+          type: 'custom_number',
+        }),
+        makeField({
+          name: 'cf_training_date',
+          label_for_customers: 'Training Date',
+          type: 'custom_date',
+        }),
+      ],
+    );
+
+    expect(description).toBe(
+      'Number of Students: 25 <br />' + 'Training Date: 2026-10-14 <br />',
+    );
+  });
 });

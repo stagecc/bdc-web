@@ -82,10 +82,25 @@ describe('buildCustomObjectPayload — field mapping', () => {
 
   it('maps date fields into data object', () => {
     const fields = [makeField({ name: 'publication_date', type: 'DATE' })];
-    const values = { publication_date: '2025-06-01' };
+    const values = { publication_date: '6/1/2025' };
 
     const payload = buildCustomObjectPayload(values, fields);
     expect(payload.data.publication_date).toBe('2025-06-01');
+  });
+
+  it('normalizes number and decimal fields into numeric values', () => {
+    const fields = [
+      makeField({ name: 'student_count', type: 'NUMBER' }),
+      makeField({ name: 'requested_credits', type: 'DECIMAL' }),
+    ];
+    const values = {
+      student_count: '25',
+      requested_credits: '12.5',
+    };
+
+    const payload = buildCustomObjectPayload(values, fields);
+    expect(payload.data.student_count).toBe(25);
+    expect(payload.data.requested_credits).toBe(12.5);
   });
 
   it('maps checkbox fields as booleans', () => {
