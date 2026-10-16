@@ -8,6 +8,7 @@ import Breadcrumbs from '@components/Breadcrumbs.astro';
 import AddToCalendar from '@components/events/AddToCalendar.astro';
 import EventHeader from '@components/events/EventHeader.astro';
 import Base from '@layouts/Base.astro';
+import { isPastEvent } from '../util/eventDateTime';
 
 const { frontmatter } = Astro.props;
 
@@ -37,8 +38,7 @@ const {
 } = frontmatter;
 
 const now = new Date();
-const eventEnd = end_date ?? date;
-const isPast = eventEnd < now;
+const isPast = isPastEvent({ date, endDate: end_date }, now);
 ---
 
 <Base title={title}>

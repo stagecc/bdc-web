@@ -6,6 +6,7 @@ import Link from '@bdc/ui-astro/link/Link.astro';
 import Tag from '@bdc/ui-astro/tag/Tag.astro';
 import BdcHostedIndicator from '@components/events/BdcHostedIndicator.astro';
 import CalendarDate from '@components/events/CalendarDate.astro';
+import { isPastEvent } from '../../util/eventDateTime';
 
 interface Props {
   items: (CollectionEntry<'events'> | { event: CollectionEntry<'events'> })[];
@@ -31,7 +32,7 @@ const { items } = Astro.props;
       registration_required,
     } = event.data;
 
-    const isPast = (end_date ?? date) < new Date();
+    const isPast = isPastEvent({ date, endDate: end_date });
 
     return (
       <li class="margin-bottom-2">
