@@ -6,6 +6,7 @@ import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import BdcHostedIndicator from '@components/events/BdcHostedIndicator.astro';
 import EventsList from '@components/events/EventsList.astro';
 import Base from '@layouts/Base.astro';
+import { isPastEvent } from '../../../util/eventDateTime';
 
 const now = new Date();
 
@@ -14,10 +15,14 @@ const allEvents = (await getCollection('events')).sort(
 );
 
 const upcoming = allEvents
-  .filter((e) => (e.data.end_date ?? e.data.date) >= now)
+  .filter(
+    (e) => !isPastEvent({ date: e.data.date, endDate: e.data.end_date }, now),
+  )
   .reverse();
 
-const past = allEvents.filter((e) => (e.data.end_date ?? e.data.date) < now);
+const past = allEvents.filter((e) =>
+  isPastEvent({ date: e.data.date, endDate: e.data.end_date }, now),
+);
 ---
 
 <Base title="Events">
