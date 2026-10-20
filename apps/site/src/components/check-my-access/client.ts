@@ -1,3 +1,4 @@
+import { trackCheckMyAccessCsvExport } from './analytics';
 import {
   buildCheckMyAccessUrl,
   CHECK_MY_ACCESS_NONCE_STORAGE_KEY,
@@ -458,6 +459,7 @@ const mountCheckMyAccess = async (root: HTMLElement) => {
 
     if (action === 'download') {
       if (latestProjects.length > 0) {
+        trackCheckMyAccessCsvExport(latestProjects.length);
         downloadProjectsCsv(latestUserName, latestProjects);
       }
       return;

@@ -119,7 +119,7 @@ export default function DugSearchApp() {
   };
 
   const downloadCollection = () => {
-    trackDugDownloadCollection(collection);
+    trackDugDownloadCollection(collection, 'dug-search');
 
     const blob = new Blob([JSON.stringify(collection, null, 2)], {
       type: 'application/json',

@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import {
   type DugCollection,
+  trackDugDownloadCollection,
   trackDugNextStepsSelectStep,
   useDugCollection,
 } from '../shared';
@@ -10,11 +11,13 @@ import DugNextStepsApp from './DugNextStepsApp';
 
 vi.mock('../shared', () => ({
   DugCollectionContents: () => null,
+  trackDugDownloadCollection: vi.fn(),
   useDugCollection: vi.fn(),
   trackDugNextStepsSelectStep: vi.fn(),
 }));
 
 const mockUseDugCollection = vi.mocked(useDugCollection);
+const mockTrackDugDownloadCollection = vi.mocked(trackDugDownloadCollection);
 const mockTrackDugNextStepsSelectStep = vi.mocked(trackDugNextStepsSelectStep);
 
 const COLLECTION_WITH_ITEMS: DugCollection = {
@@ -134,5 +137,38 @@ describe('DugNextStepsApp', () => {
     expect(
       screen.getByRole('button', { name: 'Download collection' }),
     ).toBeEnabled();
+  });
+
+  it('tracks download analytics when downloading the collection', async () => {
+    const user = userEvent.setup();
+    const createObjectUrlSpy = vi
+      .spyOn(window.URL, 'createObjectURL')
+      .mockReturnValue('blob:test-url');
+    const revokeObjectUrlSpy = vi
+      .spyOn(window.URL, 'revokeObjectURL')
+      .mockImplementation(() => undefined);
+    const anchorClickSpy = vi
+      .spyOn(HTMLAnchorElement.prototype, 'click')
+      .mockImplementation(() => undefined);
+
+    mockUseDugCollection.mockReturnValue({
+      collection: COLLECTION_WITH_ITEMS,
+      collectionCount: 3,
+    } as ReturnType<typeof useDugCollection>);
+
+    render(<DugNextStepsApp />);
+
+    await user.click(
+      screen.getByRole('button', { name: 'Download collection' }),
+    );
+
+    expect(mockTrackDugDownloadCollection).toHaveBeenCalledWith(
+      COLLECTION_WITH_ITEMS,
+      'dug-next-steps',
+    );
+
+    createObjectUrlSpy.mockRestore();
+    revokeObjectUrlSpy.mockRestore();
+    anchorClickSpy.mockRestore();
   });
 });

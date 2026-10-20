@@ -1,3 +1,4 @@
+import { normalizeFreshdeskFieldValue } from './normalizeFreshdeskFieldValue';
 import type { FreshdeskField } from './types';
 
 function escapeHtml(value: string): string {
@@ -47,7 +48,9 @@ export function buildFreshdeskDescription(
         field.type !== 'default_company',
     )
     .map((field) => {
-      const formattedValue = formatDescriptionValue(values[field.name]);
+      const formattedValue = formatDescriptionValue(
+        normalizeFreshdeskFieldValue(field, values[field.name]),
+      );
       if (!formattedValue) return null;
       return `${escapeHtml(field.label_for_customers)}: ${formattedValue} <br />`;
     })

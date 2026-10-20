@@ -6,6 +6,7 @@ import { useMemo, useState } from 'react';
 import {
   type DugCollection,
   DugCollectionContents,
+  trackDugDownloadCollection,
   trackDugNextStepsSelectStep,
   useDugCollection,
 } from '../shared';
@@ -82,6 +83,8 @@ export default function DugNextStepsApp() {
   };
 
   const downloadCollection = () => {
+    trackDugDownloadCollection(collection, 'dug-next-steps');
+
     const blob = new Blob([JSON.stringify(collection, null, 2)], {
       type: 'application/json',
     });
