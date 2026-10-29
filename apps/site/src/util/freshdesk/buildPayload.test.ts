@@ -97,6 +97,45 @@ describe('buildPayload', () => {
     expect(payload.custom_fields.requester).toBeUndefined();
   });
 
+  it('maps the Cloud Credits requester name field to top-level name', () => {
+    const fields = [
+      makeField({
+        name: 'cf_requestors_name',
+        label_for_customers: "Requestor's Name",
+      }),
+      makeField({ name: 'requester', type: 'default_requester' }),
+    ];
+    const values = {
+      cf_requestors_name: 'Jane Researcher',
+      requester: 'jane@example.com',
+    };
+
+    const payload = buildPayload(values, fields, FORM_TYPE);
+
+    expect(payload.name).toBe('Jane Researcher');
+    expect(payload.email).toBe('jane@example.com');
+    expect(payload.custom_fields.cf_requestors_name).toBe('Jane Researcher');
+  });
+
+  it('does not mistake project_name for a requester name', () => {
+    const fields = [
+      makeField({
+        name: 'cf_project_name',
+        label_for_customers: 'Project Name',
+      }),
+      makeField({ name: 'requester', type: 'default_requester' }),
+    ];
+    const values = {
+      cf_project_name: 'Cardio Study',
+      requester: 'jane@example.com',
+    };
+
+    const payload = buildPayload(values, fields, FORM_TYPE);
+
+    expect(payload.name).toBeUndefined();
+    expect(payload.custom_fields.cf_project_name).toBe('Cardio Study');
+  });
+
   it('builds description from submitted field labels and values', () => {
     const fields = [
       makeField({
