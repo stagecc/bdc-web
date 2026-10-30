@@ -66,6 +66,7 @@ layout: ../../../layouts/MdxBase.astro
 | Events | `src/content/events/**/index.{md,mdx}` | `/news/events/`, archive, detail pages, tag pages | Dated folder structure |
 | Publications | `src/content/publications.yaml` | `/news/bdc-enabled-research/` | YAML list only |
 | Coverage | `src/content/coverage.yaml` | `/news/news-coverage/` | YAML list only |
+| Testimonials | `src/content/testimonials.yaml` | homepage only | YAML list only |
 | FAQs | Freshdesk via `content.config.ts` | `/help/faqs/` | No local source file |
 | Programs | remote API plus `src/content/programs/*.mdx` | `/about/studies/`, detail pages | Hybrid remote + local overlay |
 | Fellows | `src/content/fellows/*.md` | `/about/bdc/fellows/` | Frontmatter-driven |
@@ -175,6 +176,26 @@ Implementation references:
 
 - Schema: `apps/site/src/content.config.ts`
 - Listing page: `apps/site/src/pages/news/news-coverage.astro`
+
+## Testimonials
+
+- Source: `apps/site/src/content/testimonials.yaml`
+- Route: none directly; homepage only
+- Detail pages: none
+- Required fields: `quote`, `name`, `title`
+- Current optional fields: `organization`
+- Display behavior: one testimonial is selected at random for homepage display.
+
+How to edit:
+
+- Add a YAML object to `testimonials.yaml`.
+- Keep quote text concise enough to work in homepage card space.
+- Use `organization` only when it helps attribution.
+
+Implementation references:
+
+- Schema: `apps/site/src/content.config.ts`
+- Homepage: `apps/site/src/pages/index.astro`
 
 ## FAQs
 
