@@ -82,7 +82,8 @@ export default function DateField({
             id={name}
             name={name}
             // Trussworks DatePicker returns the selected date as a string
-            // in YYYY-MM-DD format via its onChange callback.
+            // in the active display format. Shared Freshdesk payload builders
+            // normalize that value before submission.
             onChange={(val) => field.onChange(val)}
             aria-describedby={
               [hintId, errorId].filter(Boolean).join(' ') || undefined

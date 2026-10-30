@@ -1,6 +1,7 @@
 import IconButton from '@bdc/ui-react/button/IconButton';
 import type { RefObject } from 'react';
 import type { DugConcept, DugStudy, DugVariable } from './api';
+import DugConceptId from './DugConceptId';
 import DugExplanationPanel from './DugExplanationPanel';
 import styles from './DugSearchApp.module.scss';
 
@@ -81,8 +82,12 @@ export default function DugConceptDetailPanel({
             >
               {selectedResult.name}
             </h2>
-            <p className="margin-y-0 text-base-dark font-mono-2xs">
-              {selectedResult.id}
+            <p className="margin-y-0 text-base-dark">
+              <DugConceptId
+                id={selectedResult.id}
+                conceptAction={selectedResult.conceptAction}
+                className="font-mono-2xs"
+              />
             </p>
           </div>
           <button

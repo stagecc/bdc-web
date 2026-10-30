@@ -23,7 +23,19 @@
  */
 
 import { buildFreshdeskDescription } from './buildFreshdeskDescription';
+import { normalizeFreshdeskFieldValue } from './normalizeFreshdeskFieldValue';
 import type { FreshdeskField } from './types';
+
+function getNonEmptyString(value: unknown): string | undefined {
+  if (typeof value !== 'string') return undefined;
+
+  const trimmed = value.trim();
+  return trimmed === '' ? undefined : trimmed;
+}
+
+function getRequesterName(values: Record<string, unknown>): string | undefined {
+  return getNonEmptyString(values.cf_requestors_name);
+}
 
 // Maps default_* Freshdesk field types to their top-level ticket property names.
 // These are the only default fields we expect to encounter in customer-facing forms.
@@ -40,6 +52,7 @@ const DEFAULT_FIELD_MAP: Partial<Record<FreshdeskField['type'], string>> = {
 
 export interface FreshdeskTicketPayload {
   email?: string;
+  name?: string;
   subject: string;
   description: string;
   type: string;
@@ -84,8 +97,13 @@ export function buildPayload(
     custom_fields: {},
   };
 
+  const requesterName = getRequesterName(values);
+  if (requesterName) {
+    payload.name = requesterName;
+  }
+
   for (const field of fields) {
-    const value = values[field.name];
+    const value = normalizeFreshdeskFieldValue(field, values[field.name]);
 
     // Skip fields with no value — don't send empty strings or undefined
     // to Freshdesk as that can trigger validation errors on their end.

@@ -4,6 +4,7 @@ export interface DugConcept {
   description: string;
   type: string;
   identifiers: Array<{ label?: string }>;
+  conceptAction?: string;
   explanation?: unknown;
 }
 
@@ -30,8 +31,13 @@ export interface DugStudy {
 
 const SEARCH_BASE_URL = 'https://search.biodatacatalyst.renci.org/search-api';
 
+interface DugConceptSource
+  extends Omit<DugConcept, 'conceptAction' | 'explanation'> {
+  concept_action?: string;
+}
+
 interface DugConceptHit {
-  _source?: Omit<DugConcept, 'explanation'>;
+  _source?: DugConceptSource;
   _explanation?: unknown;
 }
 
@@ -88,6 +94,7 @@ export async function fetchConcepts(
     description: hit._source?.description ?? '',
     type: hit._source?.type ?? 'UNKNOWN',
     identifiers: hit._source?.identifiers ?? [],
+    conceptAction: hit._source?.concept_action,
     explanation: hit._explanation,
   }));
 

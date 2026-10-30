@@ -90,14 +90,6 @@ export default function DugExplanationPanel({ explanation }: Props) {
           </Card>
         ))}
       </ul>
-      <details className="margin-top-2">
-        <summary className="cursor-pointer text-bold font-body-sm">
-          View raw scoring details
-        </summary>
-        <pre className="bg-base-darkest text-base-lightest radius-sm padding-2 overflow-auto font-mono-2xs margin-bottom-0 margin-top-1">
-          {JSON.stringify(explanation ?? {}, null, 2)}
-        </pre>
-      </details>
     </div>
   );
 }

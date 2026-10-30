@@ -41,6 +41,7 @@
  *   passed through as booleans.
  */
 
+import { normalizeFreshdeskFieldValue } from './normalizeFreshdeskFieldValue';
 import type { CustomObjectField } from './typesCustomObjects';
 
 // ---------------------------------------------------------------------------
@@ -107,7 +108,7 @@ export function buildCustomObjectPayload(
   };
 
   for (const field of fields) {
-    const value = values[field.name];
+    const value = normalizeFreshdeskFieldValue(field, values[field.name]);
 
     // Skip PRIMARY fields — already handled above
     if (field.type === 'PRIMARY') continue;
@@ -125,8 +126,7 @@ export function buildCustomObjectPayload(
       continue;
     }
 
-    // All other field types — pass value through as-is.
-    // Freshdesk handles type coercion for DATE, NUMBER, DECIMAL, CHECKBOX.
+    // All other field types — pass the normalized value through as-is.
     data[field.name] = value;
   }
 

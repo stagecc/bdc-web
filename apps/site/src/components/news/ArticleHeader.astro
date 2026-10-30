@@ -21,7 +21,7 @@ import Tag from '@bdc/ui-astro/tag/Tag.astro';
   <div class="display-flex flex-justify flex-align-center border-bottom">
     
     {tags.length > 0 && (
-      <div class="tags display-flex padding-0 margin-y-1">
+      <div class="tags display-flex padding-0 margin-y-1" data-markdown-tags={JSON.stringify(tags)}>
         {tags.map((tag) => (
           <Link to={`/tagged/${tag}`} class="margin-right-05 margin-bottom-05 text-no-underline">
             <Tag label={tag} tone="neutral" />

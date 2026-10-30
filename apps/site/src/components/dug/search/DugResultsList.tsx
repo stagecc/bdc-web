@@ -4,6 +4,7 @@ import Icon from '@bdc/ui-react/icon/Icon';
 import Tag from '@bdc/ui-react/tag/Tag';
 import type { FormEvent } from 'react';
 import type { DugConcept } from './api';
+import DugConceptId from './DugConceptId';
 import DugSearchBar from './DugSearchBar';
 
 type Props = {
@@ -169,9 +170,11 @@ export default function DugResultsList({
                 <div className="font-body-2xs desktop:font-body-xs text-base-dark display-flex flex-align-end flex-wrap gap-1 tablet:flex-justify margin-top-auto">
                   <span className="display-flex flex-align-center">
                     <Icon.Identification aria-hidden />
-                    <code className="font-mono-2xs margin-left-05">
-                      {result.id}
-                    </code>
+                    <DugConceptId
+                      id={result.id}
+                      conceptAction={result.conceptAction}
+                      className="font-mono-2xs margin-left-05"
+                    />
                   </span>
                   <span className="display-flex flex-align-center">
                     <Tag

@@ -54,7 +54,7 @@ const hasGa = typeof gaId === 'string' && gaId.length > 0;
 
         if (!window.__bdcGaInitialized) {
           window.gtag('js', new Date());
-          window.gtag('config', gaId, { send_page_view: false });
+          window.gtag('config', gaId, { send_page_view: false, cookie_flags: 'SameSite=Lax;Secure' });
           window.__bdcGaInitialized = true;
         }
       </script>

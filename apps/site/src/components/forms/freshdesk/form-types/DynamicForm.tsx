@@ -142,7 +142,10 @@ export default function DynamicForm({
 
   if (error) {
     return (
-      <div className="usa-alert usa-alert--error custom-form">
+      <div
+        className="usa-alert usa-alert--error custom-form"
+        data-markdown-exclude
+      >
         <div className="usa-alert__body">
           <h3 className="usa-alert__heading">{messages.unavailableHeading}</h3>
           <p className="usa-alert__text">{messages.unavailableText}</p>
