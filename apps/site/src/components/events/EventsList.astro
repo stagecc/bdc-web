@@ -32,7 +32,7 @@ const { items } = Astro.props;
       registrationRequired,
     } = event.data;
 
-    const isPast = isPastEvent({ date, endDate: end_date });
+    const isPast = isPastEvent({ date, endDate });
 
     return (
       <li class="margin-bottom-2">

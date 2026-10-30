@@ -16,12 +16,12 @@ const allEvents = (await getCollection('events')).sort(
 
 const upcoming = allEvents
   .filter(
-    (e) => !isPastEvent({ date: e.data.date, endDate: e.data.end_date }, now),
+    (e) => !isPastEvent({ date: e.data.date, endDate: e.data.endDate }, now),
   )
   .reverse();
 
 const past = allEvents.filter((e) =>
-  isPastEvent({ date: e.data.date, endDate: e.data.end_date }, now),
+  isPastEvent({ date: e.data.date, endDate: e.data.endDate }, now),
 );
 ---
 

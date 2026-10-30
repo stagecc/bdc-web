@@ -39,7 +39,7 @@ const upcomingEvents = (await getCollection('events'))
   .sort((a, b) => a.data.date.valueOf() - b.data.date.valueOf())
   .filter(
     (event) =>
-      !isPastEvent({ date: event.data.date, endDate: event.data.end_date }),
+      !isPastEvent({ date: event.data.date, endDate: event.data.endDate }),
   );
 
 const events = (

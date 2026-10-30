@@ -13,7 +13,7 @@ const now = new Date();
 
 const past = (await getCollection('events'))
   .filter((e) =>
-    isPastEvent({ date: e.data.date, endDate: e.data.end_date }, now),
+    isPastEvent({ date: e.data.date, endDate: e.data.endDate }, now),
   )
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 ---
