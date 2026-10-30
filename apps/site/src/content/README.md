@@ -116,7 +116,7 @@ Implementation references:
 - Route pattern: `/news/events/<entry.id>/`
 - Additional routes: `/news/events/`, `/news/events/archive/`, `/tagged/<tag>/`
 - Required fields: `title`, `date`
-- Current optional fields: `time`, `displayDate`, `location`, `url`, `externalEvent`, `eventType`, `registrationRequired`, `tags`, `materials`, `heroImage`, `heroAlt`, `seo`, `excerpt`
+- Current optional fields: `time`, `location`, `url`, `externalEvent`, `eventType`, `registrationRequired`, `tags`, `materials`, `heroImage`, `heroAlt`, `seo`, `excerpt`
 - Fields still present in schema but not clearly rendered: `meetingInfo` and `flyer`
 - Display behavior: upcoming and past events are split automatically using `endDate` when present, otherwise `date`. Upcoming events display soonest-first. Archive events display newest-first and are grouped by year.
 
