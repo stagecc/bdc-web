@@ -8,7 +8,7 @@ roles:
   - "Chair in Computational Science and Engineering"
   - "Presidential Professor, Kahlert School of Computing"
   - "University of Utah"
-term_start: 2024-08-08
+termStart: 2024-08-08
 photo: parashar-manish.jpg
 ---
 

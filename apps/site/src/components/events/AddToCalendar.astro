@@ -5,12 +5,11 @@ interface Props {
   title: string;
   date: Date;
   endDate?: Date;
-  end_date?: Date;
   location?: string;
 }
 
-const { title, date, endDate, end_date, location } = Astro.props;
-const endDateValue = endDate ?? end_date;
+const { title, date, endDate, location } = Astro.props;
+const endDateValue = endDate;
 
 function toCalDate(d: Date): string {
   return d.toISOString().slice(0, 10).replace(/-/g, '');

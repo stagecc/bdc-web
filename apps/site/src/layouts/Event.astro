@@ -8,6 +8,7 @@ import Breadcrumbs from '@components/Breadcrumbs.astro';
 import AddToCalendar from '@components/events/AddToCalendar.astro';
 import EventHeader from '@components/events/EventHeader.astro';
 import Base from '@layouts/Base.astro';
+import { isPastEvent } from '../util/eventDateTime';
 
 const { frontmatter } = Astro.props;
 
@@ -23,11 +24,11 @@ const materialIcons: Record<string, string> = {
 const {
   title,
   date,
-  end_date,
+  endDate,
   time,
   location,
   url,
-  registration_required,
+  registrationRequired,
   eventType,
   tags,
   externalEvent,
@@ -37,8 +38,7 @@ const {
 } = frontmatter;
 
 const now = new Date();
-const eventEnd = end_date ?? date;
-const isPast = eventEnd < now;
+const isPast = isPastEvent({ date, endDate }, now);
 ---
 
 <Base title={title}>
@@ -61,12 +61,12 @@ const isPast = eventEnd < now;
         <EventHeader
           title={title}
           date={date}
-          endDate={end_date}
+          endDate={endDate}
           time={time}
           location={location}
           url={url}
           tags={tags}
-          registration_required={registration_required}
+          registrationRequired={registrationRequired}
           eventType={eventType}
           externalEvent={externalEvent}
           isPast={isPast}
@@ -77,7 +77,7 @@ const isPast = eventEnd < now;
             <AddToCalendar
               title={title}
               date={date}
-              endDate={end_date}
+              endDate={endDate}
               location={location}
             />
           </p>

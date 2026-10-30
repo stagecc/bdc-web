@@ -6,7 +6,7 @@ roles:
   - "Assistant Director, Diversity and Research Readiness"
   - "DNA Learning Center"
   - "Cold Spring Harbor Laboratory"
-term_start: 2018-08-08
+termStart: 2018-08-08
 photo: williams-jason.png
 ---
 
