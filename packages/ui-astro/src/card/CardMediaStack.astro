@@ -6,7 +6,7 @@ interface Props {
   title: string;
   summary: string;
   badgeLabel: string;
-  metric: string;
+  metric?: string;
   href: string;
   mediaVariant?: 1 | 2 | 3 | 4;
   border?: boolean;
@@ -30,7 +30,7 @@ const {
     <p class="margin-top-0 margin-bottom-2 text-base line-height-sans-5 flex-1">{summary}</p>
     <div class="display-flex flex-justify flex-align-center gap-1">
       <Tag label={badgeLabel} />
-      <p class="margin-0 text-bold text-base-dark text-no-wrap">{metric}</p>
+      {metric && <p class="margin-0 text-bold text-base-dark text-no-wrap">{metric}</p>}
     </div>
   </div>
 </Card>

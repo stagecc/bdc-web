@@ -160,35 +160,70 @@ const faqs = defineCollection({
 
 import { slugify } from './util/slugify';
 
+const PROGRAMS_SEARCH_API_BASE =
+  'https://search.biodatacatalyst.renci.org/search-api';
+
+async function fetchProgramsJson<T>(url: string): Promise<T> {
+  const response = await fetch(url, {
+    headers: { Accept: 'application/json' },
+  });
+
+  if (!response.ok) {
+    const text = await response.text();
+    throw new Error(
+      `${response.status} ${response.statusText}: ${text.slice(0, 200)}`,
+    );
+  }
+
+  return (await response.json()) as T;
+}
+
 const programs = defineCollection({
   loader: async () => {
-    const listResponse = await fetch(
-      'https://search.biodatacatalyst.renci.org/search-api/program_list',
-      { headers: { Accept: 'application/json' } },
-    );
-    const listData = await listResponse.json();
-    const programs = await Promise.all(
-      listData.result.map(async (program: Record<string, unknown>) => {
-        const studiesResponse = await fetch(
-          `https://search.biodatacatalyst.renci.org/search-api/search_program?program_name=${encodeURIComponent(String(program.key))}`,
-          { headers: { Accept: 'application/json' } },
-        );
-        const studiesData = await studiesResponse.json();
-        const name = String(program.key);
-        return {
-          id: slugify(name),
-          name,
-          description: String(program.description),
-          numberOfStudies: (program.No_of_studies as { value: number }).value,
-          studies: studiesData.result.map((s: Record<string, unknown>) => ({
-            name: String(s.collection_name),
-            id: String(s.collection_id),
-            url: String(s.collection_action),
-          })),
-        };
-      }),
-    );
-    return programs;
+    try {
+      const listData = await fetchProgramsJson<{
+        result?: Array<Record<string, unknown>>;
+      }>(`${PROGRAMS_SEARCH_API_BASE}/program_list`);
+
+      return await Promise.all(
+        (listData.result ?? []).map(
+          async (program: Record<string, unknown>) => {
+            const name = String(program.key);
+            const studiesData = await fetchProgramsJson<{
+              result?: Array<Record<string, unknown>>;
+            }>(
+              `${PROGRAMS_SEARCH_API_BASE}/search_program?program_name=${encodeURIComponent(name)}`,
+            );
+
+            const studyCount = Number(
+              (program.No_of_studies as { value?: number | string } | undefined)
+                ?.value ?? 0,
+            );
+
+            return {
+              id: slugify(name),
+              name,
+              description: String(program.description),
+              numberOfStudies: Number.isFinite(studyCount) ? studyCount : 0,
+              studies: (studiesData.result ?? []).map(
+                (s: Record<string, unknown>) => ({
+                  name: String(s.collection_name),
+                  id: String(s.collection_id),
+                  url: String(s.collection_action),
+                }),
+              ),
+            };
+          },
+        ),
+      );
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error(
+        `[programs] unable to fetch hosted program content from ${PROGRAMS_SEARCH_API_BASE}. ` +
+          `Continuing with degraded hosted data pages. ${message}`,
+      );
+      return [];
+    }
   },
   schema: z.object({
     name: z.string(),
