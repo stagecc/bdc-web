@@ -22,6 +22,7 @@ import Base from '@layouts/Base.astro';
 import homeCoursesImage from '../assets/bdc-course-photo.png';
 import homeHeroGraphic from '../assets/home-hero.png';
 import { isPastEvent } from '../util/eventDateTime';
+import { getProgramsWithContent } from '../util/programs';
 import { slugify } from '../util/slugify';
 
 const news = (await getCollection('news'))
@@ -57,26 +58,40 @@ const featuredPublications = publications
   .slice(0, 2)
   .map((publication) => publication.data);
 
+const remoteProgramDataAvailable = (await getProgramsWithContent()).length > 0;
+
 const defaultCommunityDescription =
   'Approved datasets and tools for this research community.';
 
-const initiatives = new Set([
-  'TOPMed',
-  'RECOVER',
-  'HeartShare',
-  'National Sleep Research Resource (NSRR)',
-]);
-const featuredPrograms = programs
-  .filter((program) => initiatives.has(program.key))
-  .sort((p, q) => programs.indexOf(q) - programs.indexOf(p))
-  .map((program) => {
+const featuredInitiatives = [
+  { program: 'TOPMed', anchor: 'topmed' },
+  { program: 'RECOVER', anchor: 'recover' },
+  { program: 'HeartShare', anchor: 'heartshare' },
+  { program: 'National Sleep Research Resource (NSRR)', anchor: 'nsrr' },
+] as const;
+
+const featuredPrograms = featuredInitiatives
+  .map((initiative) => {
+    const program = programs.find((entry) => entry.key === initiative.program);
+
+    if (!program) {
+      return null;
+    }
+
     const slug = slugify(program.key);
+
     return {
       ...program,
+      href: remoteProgramDataAvailable
+        ? `/about/studies/${slug}`
+        : `/about/researcher-focused-initiatives/#${initiative.anchor}`,
       slug,
       excerpt: programExcerptById.get(slug) ?? defaultCommunityDescription,
     };
-  });
+  })
+  .filter(
+    (program): program is Exclude<typeof program, null> => program !== null,
+  );
 
 const testimonials = await getCollection('testimonials');
 const featuredTestimonial =
@@ -381,8 +396,12 @@ const nextEvent = events[0];
               title={program.key}
               description={program.excerpt}
               badgeLabel={program.description}
-              metric={`${program.doc_count} dataset${program.doc_count === 1 ? '' : 's'}`}
-              href={`/about/studies/${program.slug}`}
+              metric={
+                remoteProgramDataAvailable
+                  ? `${program.doc_count} dataset${program.doc_count === 1 ? '' : 's'}`
+                  : undefined
+              }
+              href={program.href}
             />
           </div>
         ))}
