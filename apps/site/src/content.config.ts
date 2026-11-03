@@ -186,31 +186,35 @@ const programs = defineCollection({
       }>(`${PROGRAMS_SEARCH_API_BASE}/program_list`);
 
       return await Promise.all(
-        (listData.result ?? []).map(async (program: Record<string, unknown>) => {
-          const name = String(program.key);
-          const studiesData = await fetchProgramsJson<{
-            result?: Array<Record<string, unknown>>;
-          }>(
-            `${PROGRAMS_SEARCH_API_BASE}/search_program?program_name=${encodeURIComponent(name)}`,
-          );
+        (listData.result ?? []).map(
+          async (program: Record<string, unknown>) => {
+            const name = String(program.key);
+            const studiesData = await fetchProgramsJson<{
+              result?: Array<Record<string, unknown>>;
+            }>(
+              `${PROGRAMS_SEARCH_API_BASE}/search_program?program_name=${encodeURIComponent(name)}`,
+            );
 
-          const studyCount = Number(
-            (program.No_of_studies as { value?: number | string } | undefined)
-              ?.value ?? 0,
-          );
+            const studyCount = Number(
+              (program.No_of_studies as { value?: number | string } | undefined)
+                ?.value ?? 0,
+            );
 
-          return {
-            id: slugify(name),
-            name,
-            description: String(program.description),
-            numberOfStudies: Number.isFinite(studyCount) ? studyCount : 0,
-            studies: (studiesData.result ?? []).map((s: Record<string, unknown>) => ({
-              name: String(s.collection_name),
-              id: String(s.collection_id),
-              url: String(s.collection_action),
-            })),
-          };
-        }),
+            return {
+              id: slugify(name),
+              name,
+              description: String(program.description),
+              numberOfStudies: Number.isFinite(studyCount) ? studyCount : 0,
+              studies: (studiesData.result ?? []).map(
+                (s: Record<string, unknown>) => ({
+                  name: String(s.collection_name),
+                  id: String(s.collection_id),
+                  url: String(s.collection_action),
+                }),
+              ),
+            };
+          },
+        ),
       );
     } catch (error) {
       const message = error instanceof Error ? error.message : String(error);
