@@ -1,7 +1,7 @@
 applications:
   - appRoot: apps/docs
     customHeaders: &defaultSecurityHeaders
-      - pattern: '**'
+      - pattern: "**"
         headers:
           - key: Content-Security-Policy
             value: >-
@@ -15,7 +15,7 @@ applications:
               img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://www.gstatic.com https://script.crazyegg.com https://www.crazyegg.com;
               font-src 'self' data:;
               connect-src 'self' https://search.biodatacatalyst.renci.org https://www.google.com https://www.google-analytics.com https://www.googletagmanager.com https://epxuifil2cc4sqfqws62zejcwi0cgfds.lambda-url.us-east-1.on.aws https://script.crazyegg.com https://www.crazyegg.com https://gen3.biodatacatalyst.nhlbi.nih.gov;
-              frame-src 'self' https://www.youtube-nocookie.com https://www.googletagmanager.com https://www.google.com https://www.recaptcha.net;
+              frame-src 'self' https://www.youtube-nocookie.com https://www.googletagmanager.com https://www.google.com https://www.recaptcha.net https://docs.google.com;
               manifest-src 'self';
               worker-src 'self' blob:;
               upgrade-insecure-requests
@@ -30,7 +30,7 @@ applications:
 
   - appRoot: apps/site
     customHeaders:
-      - pattern: '**'
+      - pattern: "**"
         headers:
           - key: Content-Security-Policy
             value: >-
