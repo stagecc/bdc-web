@@ -12,6 +12,7 @@ const uswdsPackages = join(rootDir, '../../node_modules/@uswds/uswds/packages');
 export default defineConfig({
   output: 'server',
   security: {
+    checkOrigin: false,
     allowedDomains: process.env.AUTH_ORIGIN
       ? [
           {
