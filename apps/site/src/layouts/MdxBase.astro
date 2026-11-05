@@ -1,16 +1,27 @@
 ---
 import Base from '@layouts/Base.astro';
+import type { SeoConfig } from '../util/seo';
 
 interface Props {
   frontmatter: {
     title: string;
     enableRecaptcha?: boolean;
+    excerpt?: string;
+    seo?: SeoConfig;
   };
 }
 
 const { frontmatter }: Props = Astro.props;
 ---
 
-<Base title={frontmatter.title} enableRecaptcha={frontmatter.enableRecaptcha}>
+<Base
+  title={frontmatter.title}
+  enableRecaptcha={frontmatter.enableRecaptcha}
+  seo={{
+    ...frontmatter.seo,
+    description: frontmatter.seo?.description ?? frontmatter.excerpt,
+    keywords: frontmatter.seo?.keywords,
+  }}
+>
   <slot />
 </Base>
