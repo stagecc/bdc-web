@@ -35,13 +35,24 @@ const {
   heroImage,
   heroAlt,
   materials,
+  excerpt,
+  seo,
 } = frontmatter;
 
 const now = new Date();
 const isPast = isPastEvent({ date, endDate }, now);
 ---
 
-<Base title={title}>
+<Base
+  title={title}
+  seo={{
+    ...seo,
+    description: seo?.description ?? excerpt,
+    keywords: seo?.keywords,
+    image: heroImage,
+    type: 'article',
+  }}
+>
 
   <section class="usa-section">
     <article class="event">

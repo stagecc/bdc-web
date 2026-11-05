@@ -14,7 +14,8 @@ const crumbs = [
   { label: frontmatter.title },
 ];
 
-const { title, date, tags, updateType, heroImage, heroAlt } = frontmatter;
+const { title, date, tags, updateType, heroImage, heroAlt, excerpt, seo } =
+  frontmatter;
 const showEmailSignup =
   updateType === 'Newsletter' || updateType === 'Release Notes';
 
@@ -27,7 +28,17 @@ const updateTypeCardText = {
 };
 ---
 
-<Base title={title} enableRecaptcha={showEmailSignup}>
+<Base
+  title={title}
+  enableRecaptcha={showEmailSignup}
+  seo={{
+    ...seo,
+    description: seo?.description ?? excerpt,
+    keywords: seo?.keywords,
+    image: heroImage,
+    type: 'article',
+  }}
+>
 
   <section class="usa-section">
     <article class="article">
