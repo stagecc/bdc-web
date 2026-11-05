@@ -15,7 +15,12 @@ export default defineConfig({
   },
   vite: {
     optimizeDeps: {
-      include: ['react', 'react-dom', '@trussworks/react-uswds'],
+      include: [
+        'react',
+        'react-dom',
+        '@trussworks/react-uswds',
+        'oidc-client-ts',
+      ],
     },
     css: {
       preprocessorOptions: {

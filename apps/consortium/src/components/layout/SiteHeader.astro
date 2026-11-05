@@ -44,6 +44,8 @@ const isActive = (href: string) =>
           </a>
         ))
       }
+      <button type="button" class="site-header__nav-link" data-auth-login> Login </button>
+      <button type="button" class="site-header__nav-link" data-auth-logout hidden> Log out </button>
     </nav>
   </div>
 
@@ -66,18 +68,28 @@ const isActive = (href: string) =>
           </li>
         ))
       }
+      <li>
+        <button type="button" class="mobile-drawer__link" data-auth-login> Login </button>
+      </li>
+      <li>
+        <button type="button" class="mobile-drawer__link" data-auth-logout hidden> Log out </button>
+      </li>
     </ul>
   </nav>
+  <p class="site-header__auth-message" data-auth-message role="alert" hidden></p>
 </header>
 
 <script>
+  import { getCurrentUser, handleAuthCallback, signIn, signOutRedirect, subscribeAuthState } from "../../lib/auth";
+
   function initMobileNav() {
     const menuBtn = document.querySelector<HTMLButtonElement>(".site-header__menu-btn");
     const drawer = document.getElementById("site-nav-mobile");
     const closeBtn = document.querySelector<HTMLButtonElement>(".mobile-drawer__close");
     const overlay = document.querySelector<HTMLDivElement>(".mobile-overlay");
 
-    if (!menuBtn || !drawer || !closeBtn) return;
+    if (!menuBtn || !drawer || !closeBtn || menuBtn.dataset.navBound === "true") return;
+    menuBtn.dataset.navBound = "true";
 
     function open() {
       drawer!.classList.add("is-open");
@@ -107,12 +119,113 @@ const isActive = (href: string) =>
     document.addEventListener("keydown", onKeyDown);
   }
 
+  function setAuthUi(signedIn: boolean) {
+    document.querySelectorAll<HTMLElement>("[data-auth-login]").forEach((el) => {
+      el.hidden = signedIn;
+    });
+    document.querySelectorAll<HTMLElement>("[data-auth-logout]").forEach((el) => {
+      el.hidden = !signedIn;
+    });
+  }
+
+  let authBusy = false;
+  let authSubscription: (() => void) | undefined;
+  let initialization: Promise<void> | undefined;
+
+  function showAuthMessage(message: string) {
+    document.querySelectorAll<HTMLElement>("[data-auth-message]").forEach((el) => {
+      el.textContent = message;
+      el.hidden = !message;
+    });
+  }
+
+  function setAuthBusy(busy: boolean) {
+    authBusy = busy;
+    document.querySelectorAll<HTMLButtonElement>("[data-auth-login], [data-auth-logout]").forEach((el) => {
+      el.disabled = busy;
+      el.setAttribute("aria-busy", String(busy));
+    });
+  }
+
+  async function runAuthAction(action: () => Promise<void>, message: string) {
+    if (authBusy) return;
+    setAuthBusy(true);
+    showAuthMessage("");
+    document.querySelector<HTMLButtonElement>(".mobile-drawer.is-open .mobile-drawer__close")?.click();
+    try {
+      await action();
+    } catch {
+      showAuthMessage(message);
+      setAuthBusy(false);
+    }
+  }
+
+  function bindAuthControls() {
+    document.querySelectorAll<HTMLButtonElement>("[data-auth-login], [data-auth-logout]").forEach((el) => {
+      el.disabled = authBusy;
+      if (el.dataset.authBound === "true") return;
+      el.dataset.authBound = "true";
+      el.addEventListener("click", () => {
+        const login = el.hasAttribute("data-auth-login");
+        void runAuthAction(login ? signIn : signOutRedirect, login ? "Unable to start login. Please try again." : "Logout could not be completed. Please try again.");
+      });
+    });
+  }
+
+  function initAuth() {
+    if (initialization) return initialization;
+    setAuthBusy(true);
+    bindAuthControls();
+    initialization = (async () => {
+      try {
+        await handleAuthCallback();
+        const user = await getCurrentUser();
+        setAuthUi(Boolean(user && !user.expired));
+      } catch {
+        setAuthUi(false);
+        showAuthMessage("Sign-in could not be completed. Please try logging in again.");
+      } finally {
+        setAuthBusy(false);
+      }
+      if (!authSubscription) {
+        try {
+          authSubscription = subscribeAuthState(setAuthUi, showAuthMessage);
+        } catch {
+          showAuthMessage("Unable to read your sign-in session. Please try again.");
+        }
+      }
+    })().finally(() => {
+      initialization = undefined;
+    });
+    return initialization;
+  }
+
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) void initAuth();
+  });
+
   initMobileNav();
-  document.addEventListener("astro:after-swap", initMobileNav);
+  void initAuth();
+  document.addEventListener("astro:after-swap", () => {
+    initMobileNav();
+    void initAuth();
+  });
 </script>
 
 <style lang="scss">
   @use "@bdc/uswds-theme/src/uswds-init" as core;
+
+  .site-header__auth-message {
+    max-width: 64rem;
+    margin: 0.75rem auto 0;
+    padding: 0 1rem;
+    color: core.core-color("error-dark");
+  }
+  [data-auth-login]:disabled,
+  [data-auth-logout]:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
 
   .site-header {
     padding: 0.75rem 0;
@@ -164,10 +277,15 @@ const isActive = (href: string) =>
   .site-header__nav-link {
     display: inline-block;
     padding: 0.5rem 0.75rem;
+    border: 0;
     border-radius: 4px;
+    background: transparent;
+    font: inherit;
     font-size: 0.9375rem;
+    text-align: left;
     text-decoration: none;
     color: core.core-color("base-darkest");
+    cursor: pointer;
     transition:
       background 0.15s ease,
       color 0.15s ease;
@@ -180,6 +298,9 @@ const isActive = (href: string) =>
   .site-header__nav-link.is-active {
     font-weight: 700;
     color: core.core-color("primary");
+  }
+  .site-header__nav-link[hidden] {
+    display: none;
   }
 
   .mobile-overlay {
@@ -266,11 +387,17 @@ const isActive = (href: string) =>
   }
   .mobile-drawer__link {
     display: block;
+    width: 100%;
     padding: 0.875rem 1.25rem;
+    border: 0;
+    border-left: 4px solid transparent;
+    background: transparent;
+    font: inherit;
     font-size: 1rem;
+    text-align: left;
     text-decoration: none;
     color: core.core-color("base-darkest");
-    border-left: 4px solid transparent;
+    cursor: pointer;
     transition:
       background 0.15s ease,
       border-color 0.15s ease;
@@ -284,6 +411,9 @@ const isActive = (href: string) =>
     color: core.core-color("primary");
     border-left-color: core.core-color("primary");
     background: core.core-color("primary-lightest");
+  }
+  .mobile-drawer__link[hidden] {
+    display: none;
   }
 
   @media (max-width: 63.99em) {
