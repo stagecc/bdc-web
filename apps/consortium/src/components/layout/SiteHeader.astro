@@ -21,6 +21,8 @@ const nav = [
   },
 ];
 
+const signedIn = Boolean(Astro.locals.user);
+const loginHref = `/auth/login?returnTo=${encodeURIComponent(Astro.url.pathname + Astro.url.search)}`;
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) =>
   pathname === href || pathname.startsWith(`${href}/`);
@@ -44,8 +46,22 @@ const isActive = (href: string) =>
           </a>
         ))
       }
-      <button type="button" class="site-header__nav-link" data-auth-login> Login </button>
-      <button type="button" class="site-header__nav-link" data-auth-logout hidden> Log out </button>
+      {
+        !signedIn && (
+          <a href={loginHref} class="site-header__nav-link">
+            Login
+          </a>
+        )
+      }
+      {
+        signedIn && (
+          <form method="post" action="/auth/logout">
+            <button type="submit" class="site-header__nav-link">
+              Log out
+            </button>
+          </form>
+        )
+      }
     </nav>
   </div>
 
@@ -69,19 +85,30 @@ const isActive = (href: string) =>
         ))
       }
       <li>
-        <button type="button" class="mobile-drawer__link" data-auth-login> Login </button>
+        {
+          !signedIn && (
+            <a href={loginHref} class="mobile-drawer__link">
+              Login
+            </a>
+          )
+        }
       </li>
       <li>
-        <button type="button" class="mobile-drawer__link" data-auth-logout hidden> Log out </button>
+        {
+          signedIn && (
+            <form method="post" action="/auth/logout">
+              <button type="submit" class="mobile-drawer__link">
+                Log out
+              </button>
+            </form>
+          )
+        }
       </li>
     </ul>
   </nav>
-  <p class="site-header__auth-message" data-auth-message role="alert" hidden></p>
 </header>
 
 <script>
-  import { getCurrentUser, handleAuthCallback, signIn, signOutRedirect, subscribeAuthState } from "../../lib/auth";
-
   function initMobileNav() {
     const menuBtn = document.querySelector<HTMLButtonElement>(".site-header__menu-btn");
     const drawer = document.getElementById("site-nav-mobile");
@@ -119,113 +146,14 @@ const isActive = (href: string) =>
     document.addEventListener("keydown", onKeyDown);
   }
 
-  function setAuthUi(signedIn: boolean) {
-    document.querySelectorAll<HTMLElement>("[data-auth-login]").forEach((el) => {
-      el.hidden = signedIn;
-    });
-    document.querySelectorAll<HTMLElement>("[data-auth-logout]").forEach((el) => {
-      el.hidden = !signedIn;
-    });
-  }
-
-  let authBusy = false;
-  let authSubscription: (() => void) | undefined;
-  let initialization: Promise<void> | undefined;
-
-  function showAuthMessage(message: string) {
-    document.querySelectorAll<HTMLElement>("[data-auth-message]").forEach((el) => {
-      el.textContent = message;
-      el.hidden = !message;
-    });
-  }
-
-  function setAuthBusy(busy: boolean) {
-    authBusy = busy;
-    document.querySelectorAll<HTMLButtonElement>("[data-auth-login], [data-auth-logout]").forEach((el) => {
-      el.disabled = busy;
-      el.setAttribute("aria-busy", String(busy));
-    });
-  }
-
-  async function runAuthAction(action: () => Promise<void>, message: string) {
-    if (authBusy) return;
-    setAuthBusy(true);
-    showAuthMessage("");
-    document.querySelector<HTMLButtonElement>(".mobile-drawer.is-open .mobile-drawer__close")?.click();
-    try {
-      await action();
-    } catch {
-      showAuthMessage(message);
-      setAuthBusy(false);
-    }
-  }
-
-  function bindAuthControls() {
-    document.querySelectorAll<HTMLButtonElement>("[data-auth-login], [data-auth-logout]").forEach((el) => {
-      el.disabled = authBusy;
-      if (el.dataset.authBound === "true") return;
-      el.dataset.authBound = "true";
-      el.addEventListener("click", () => {
-        const login = el.hasAttribute("data-auth-login");
-        void runAuthAction(login ? signIn : signOutRedirect, login ? "Unable to start login. Please try again." : "Logout could not be completed. Please try again.");
-      });
-    });
-  }
-
-  function initAuth() {
-    if (initialization) return initialization;
-    setAuthBusy(true);
-    bindAuthControls();
-    initialization = (async () => {
-      try {
-        await handleAuthCallback();
-        const user = await getCurrentUser();
-        setAuthUi(Boolean(user && !user.expired));
-      } catch {
-        setAuthUi(false);
-        showAuthMessage("Sign-in could not be completed. Please try logging in again.");
-      } finally {
-        setAuthBusy(false);
-      }
-      if (!authSubscription) {
-        try {
-          authSubscription = subscribeAuthState(setAuthUi, showAuthMessage);
-        } catch {
-          showAuthMessage("Unable to read your sign-in session. Please try again.");
-        }
-      }
-    })().finally(() => {
-      initialization = undefined;
-    });
-    return initialization;
-  }
-
-  window.addEventListener("pageshow", (event) => {
-    if (event.persisted) void initAuth();
-  });
-
   initMobileNav();
-  void initAuth();
-  document.addEventListener("astro:after-swap", () => {
-    initMobileNav();
-    void initAuth();
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) window.location.reload();
   });
 </script>
 
 <style lang="scss">
   @use "@bdc/uswds-theme/src/uswds-init" as core;
-
-  .site-header__auth-message {
-    max-width: 64rem;
-    margin: 0.75rem auto 0;
-    padding: 0 1rem;
-    color: core.core-color("error-dark");
-  }
-  [data-auth-login]:disabled,
-  [data-auth-logout]:disabled {
-    opacity: 0.6;
-    cursor: wait;
-  }
 
   .site-header {
     padding: 0.75rem 0;

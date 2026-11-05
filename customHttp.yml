@@ -81,10 +81,12 @@ applications:
               manifest-src 'self';
               worker-src 'self' blob:;
               upgrade-insecure-requests
+          - key: Cache-Control
+            value: private, no-store
           - key: X-Content-Type-Options
             value: nosniff
           - key: Referrer-Policy
-            value: strict-origin-when-cross-origin
+            value: no-referrer
           - key: X-Frame-Options
             value: SAMEORIGIN
           - key: Permissions-Policy
