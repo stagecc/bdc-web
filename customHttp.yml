@@ -86,7 +86,7 @@ applications:
           - key: X-Content-Type-Options
             value: nosniff
           - key: Referrer-Policy
-            value: no-referrer
+            value: same-origin
           - key: X-Frame-Options
             value: SAMEORIGIN
           - key: Permissions-Policy
