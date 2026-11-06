@@ -21,6 +21,8 @@ const nav = [
   },
 ];
 
+const signedIn = Boolean(Astro.locals.user);
+const loginHref = `/auth/login?returnTo=${encodeURIComponent(Astro.url.pathname + Astro.url.search)}`;
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) =>
   pathname === href || pathname.startsWith(`${href}/`);
@@ -44,6 +46,22 @@ const isActive = (href: string) =>
           </a>
         ))
       }
+      {
+        !signedIn && (
+          <a href={loginHref} class="site-header__nav-link">
+            Login
+          </a>
+        )
+      }
+      {
+        signedIn && (
+          <form method="post" action="/auth/logout">
+            <button type="submit" class="site-header__nav-link">
+              Log out
+            </button>
+          </form>
+        )
+      }
     </nav>
   </div>
 
@@ -66,6 +84,26 @@ const isActive = (href: string) =>
           </li>
         ))
       }
+      <li>
+        {
+          !signedIn && (
+            <a href={loginHref} class="mobile-drawer__link">
+              Login
+            </a>
+          )
+        }
+      </li>
+      <li>
+        {
+          signedIn && (
+            <form method="post" action="/auth/logout">
+              <button type="submit" class="mobile-drawer__link">
+                Log out
+              </button>
+            </form>
+          )
+        }
+      </li>
     </ul>
   </nav>
 </header>
@@ -77,7 +115,8 @@ const isActive = (href: string) =>
     const closeBtn = document.querySelector<HTMLButtonElement>(".mobile-drawer__close");
     const overlay = document.querySelector<HTMLDivElement>(".mobile-overlay");
 
-    if (!menuBtn || !drawer || !closeBtn) return;
+    if (!menuBtn || !drawer || !closeBtn || menuBtn.dataset.navBound === "true") return;
+    menuBtn.dataset.navBound = "true";
 
     function open() {
       drawer!.classList.add("is-open");
@@ -108,7 +147,9 @@ const isActive = (href: string) =>
   }
 
   initMobileNav();
-  document.addEventListener("astro:after-swap", initMobileNav);
+  window.addEventListener("pageshow", (event) => {
+    if (event.persisted) window.location.reload();
+  });
 </script>
 
 <style lang="scss">
@@ -164,10 +205,15 @@ const isActive = (href: string) =>
   .site-header__nav-link {
     display: inline-block;
     padding: 0.5rem 0.75rem;
+    border: 0;
     border-radius: 4px;
+    background: transparent;
+    font: inherit;
     font-size: 0.9375rem;
+    text-align: left;
     text-decoration: none;
     color: core.core-color("base-darkest");
+    cursor: pointer;
     transition:
       background 0.15s ease,
       color 0.15s ease;
@@ -180,6 +226,9 @@ const isActive = (href: string) =>
   .site-header__nav-link.is-active {
     font-weight: 700;
     color: core.core-color("primary");
+  }
+  .site-header__nav-link[hidden] {
+    display: none;
   }
 
   .mobile-overlay {
@@ -266,11 +315,17 @@ const isActive = (href: string) =>
   }
   .mobile-drawer__link {
     display: block;
+    width: 100%;
     padding: 0.875rem 1.25rem;
+    border: 0;
+    border-left: 4px solid transparent;
+    background: transparent;
+    font: inherit;
     font-size: 1rem;
+    text-align: left;
     text-decoration: none;
     color: core.core-color("base-darkest");
-    border-left: 4px solid transparent;
+    cursor: pointer;
     transition:
       background 0.15s ease,
       border-color 0.15s ease;
@@ -284,6 +339,9 @@ const isActive = (href: string) =>
     color: core.core-color("primary");
     border-left-color: core.core-color("primary");
     background: core.core-color("primary-lightest");
+  }
+  .mobile-drawer__link[hidden] {
+    display: none;
   }
 
   @media (max-width: 63.99em) {

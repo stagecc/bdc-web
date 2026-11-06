@@ -1,20 +1,11 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
+import { getCollection } from 'astro:content';
 import Base from '@layouts/Base.astro';
 
-interface Props {
-  member: CollectionEntry<'members'>;
-}
-
-export async function getStaticPaths() {
-  const members = await getCollection('members');
-  return members.map((member) => ({
-    params: { id: member.id },
-    props: { member },
-  }));
-}
-
-const { member } = Astro.props;
+const member = (await getCollection('members')).find(
+  (item) => item.id === Astro.params.id,
+);
+if (!member) return new Response('Not found', { status: 404 });
 const fullName = `${member.data.firstName} ${member.data.surname}`.trim();
 ---
 
