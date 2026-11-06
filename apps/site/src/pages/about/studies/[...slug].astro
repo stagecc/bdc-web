@@ -43,7 +43,12 @@ const crumbs = [
 ];
 ---
 
-<Base title={title}>
+<Base
+  title={title}
+  seo={{
+    description: heroDescription,
+  }}
+>
   <Hero
     eyebrow="BDC-Hosted Data"
     title={title}
