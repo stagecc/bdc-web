@@ -144,13 +144,13 @@ Implementation references:
 - Source: `apps/site/src/content/publications.yaml`
 - Route: `/news/bdc-enabled-research/`
 - Detail pages: none
-- Required fields: `title`, `date`, `journalName`, `url`
+- Required fields: `title`, `year`, `journalName`, `url`
 - Current optional fields: `status`, `bdcContribution`, `researchArea`, `researchCommunity`
 
 How to edit:
 
 - Add a YAML object to `publications.yaml`.
-- Keep dates parseable and preferably in `YYYY-MM-DD` format.
+- Use a four-digit publication year such as `2026`.
 - Use arrays for contribution and taxonomy fields.
 
 Implementation references:
