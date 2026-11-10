@@ -845,17 +845,6 @@
   bdcContribution:
     - "Data Analysis/Tool Usage"
 -
-  title: "Association of Polygenic Risk Score With Blood Pressure and Adverse Cardiovascular Outcomes in Individuals With Type II Diabetes: Insights From the ACCORD Trial"
-  year: 2022
-  journalName: "Hypertension"
-  url: https://www.ahajournals.org/doi/10.1161/HYPERTENSIONAHA.122.18976
-  status: "Published"
-  researchArea:
-    - "Blood"
-    - "Heart"
-  bdcContribution:
-    - "Data Analysis/Tool Usage"
--
   title: "Collaborative Cohort of Cohorts for COVID-19 Research (C4R) Study: Study Design"
   year: 2022
   journalName: "American Journal of Epidemiology"
@@ -885,10 +874,12 @@
   journalName: "Journal of Clinical and Translational Science"
   url: https://www.cambridge.org/core/journals/journal-of-clinical-and-translational-science/article/development-and-implementation-of-the-national-heart-lung-and-blood-institute-covid19-common-data-elements/DF687DD8150997358AF78F4DCDFA5C55
   status: "Published"
+  researchCommunity:
+    - "Other"
   researchArea:
     - "COVID-19"
   bdcContribution:
-    - "Data Analysis/Tool Usage"
+    - "Standards/Practices"
 -
   title: "Wearable-derived Sleep Measurements are Associated with Long-COVID in the RECOVER Adult Cohort"
   year: 2025
@@ -1384,11 +1375,12 @@
   year: 2025
   journalName: "BMC Nephrology"
   url: https://link.springer.com/article/10.1186/s12882-025-04425-4
-  status: "PrePrint"
+  status: "Published"
   researchArea:
     - "Blood"
+    - "Genetics"
   bdcContribution:
-    - "Data Analysis/Tool Usage"
+    - "Data Deposition"
 -
   title: "Transthyretin Cardiac Amyloidosis in Older Black and Hispanic Individuals With Heart Failure"
   year: 2025
@@ -1511,18 +1503,6 @@
   bdcContribution:
     - "Data Deposition"
 -
-  title: "Centralized clinical research operations reporting for a multi-network, multi-study research program: The NHLBI COVID-19 CONNECTS experience"
-  year: 2025
-  journalName: "Journal of Clinical and Translational Science"
-  url: https://doi.org/10.1017/cts.2025.10189
-  status: "Published"
-  researchCommunity:
-    - "RECOVER"
-  researchArea:
-    - "COVID-19"
-  bdcContribution:
-    - "Data Analysis/Tool Usage"
--
   title: "Sleep and Big Data: harnessing data, technology, and analytics for monitoring sleep and improving diagnostics, prediction, and interventions—an era for Sleep-Omics?"
   year: 2021
   journalName: "Sleep"
@@ -1577,6 +1557,7 @@
     - "TOPMed"
   researchArea:
     - "Lung"
+    - "Genetics"
   bdcContribution:
     - "Data Analysis/Tool Usage"
 -
@@ -1644,9 +1625,10 @@
   researchCommunity:
     - "Other"
   researchArea:
-    - "Management"
+    - "COVID-19"
   bdcContribution:
-    - "Data Analysis/Tool Usage"
+    - "Data Deposition"
+    - "Standards/Practices"
 -
   title: "Classifying COVID-19 hospitalizations in epidemiology cohort studies: The C4R study"
   year: 2025
@@ -1954,8 +1936,6 @@
   status: "Published"
   researchArea:
     - "Blood"
-  bdcContribution:
-    - "Data Analysis/Tool Usage"
 -
   title: "GAWMerge expands GWAS sample size and diversity by combining array-based genotyping and whole-genome sequencing"
   year: 2022
