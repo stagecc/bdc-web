@@ -46,7 +46,7 @@ function expandCollections(document, main, collections) {
       throw new Error('Missing publications export data');
     publications.replaceChildren(textElement(document, 'h2', 'Publications'));
     const sorted = [...collections.publications].sort(
-      (a, b) => b.date.localeCompare(a.date) || a.title.localeCompare(b.title),
+      (a, b) => b.year - a.year || a.title.localeCompare(b.title),
     );
     for (const publication of sorted) {
       const heading = document.createElement('h3');
@@ -58,7 +58,7 @@ function expandCollections(document, main, collections) {
         textElement(
           document,
           'p',
-          `${publication.journalName} — ${publication.date.slice(0, 10)}`,
+          `${publication.journalName} — ${publication.year}`,
         ),
       );
       for (const [key, label] of Object.entries({

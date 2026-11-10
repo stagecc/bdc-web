@@ -105,7 +105,7 @@ test('exports every publication and client-only fellow details', () => {
     ],
     publications: Array.from({ length: 25 }, (_, i) => ({
       title: `Publication ${i}`,
-      date: '2026-01-01',
+      year: 2026,
       journalName: 'Journal',
       url: `https://example.org/p/${i}`,
     })),
