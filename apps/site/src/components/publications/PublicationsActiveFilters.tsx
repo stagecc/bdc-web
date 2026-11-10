@@ -44,7 +44,8 @@ export default function PublicationsActiveFilters({
         )}
         {search && (
           <RemovableTagPill
-            label={search}
+            label={`Search: "${search}"`}
+            ariaLabel={`Remove search term: ${search}`}
             tone="secondary"
             onRemove={() => updateSearch('')}
           />
