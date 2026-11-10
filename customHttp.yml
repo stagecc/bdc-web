@@ -1,7 +1,7 @@
 applications:
   - appRoot: apps/docs
     customHeaders: &defaultSecurityHeaders
-      - pattern: '**'
+      - pattern: "**"
         headers:
           - key: Content-Security-Policy
             value: >-
@@ -30,7 +30,7 @@ applications:
 
   - appRoot: apps/site
     customHeaders:
-      - pattern: '**'
+      - pattern: "**"
         headers:
           - key: Content-Security-Policy
             value: >-
@@ -62,4 +62,32 @@ applications:
             value: max-age=0, no-cache, no-store, must-revalidate
 
   - appRoot: apps/consortium
-    customHeaders: *defaultSecurityHeaders
+    customHeaders:
+      - pattern: "**"
+        headers:
+          - key: Content-Security-Policy
+            value: >-
+              default-src 'self';
+              base-uri 'self';
+              object-src 'none';
+              frame-ancestors 'self';
+              form-action 'self' https://us-east-1hdbiex6vb.auth.us-east-1.amazoncognito.com;
+              script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval' https://www.googletagmanager.com https://www.google.com https://www.gstatic.com https://script.crazyegg.com;
+              style-src 'self' 'unsafe-inline';
+              img-src 'self' data: blob: https://www.googletagmanager.com https://www.google-analytics.com https://www.gstatic.com https://script.crazyegg.com https://www.crazyegg.com;
+              font-src 'self' data:;
+              connect-src 'self' https://cognito-idp.us-east-1.amazonaws.com https://us-east-1hdbiex6vb.auth.us-east-1.amazoncognito.com https://search.biodatacatalyst.renci.org https://www.google.com https://www.google-analytics.com https://www.googletagmanager.com https://epxuifil2cc4sqfqws62zejcwi0cgfds.lambda-url.us-east-1.on.aws https://script.crazyegg.com https://www.crazyegg.com https://gen3.biodatacatalyst.nhlbi.nih.gov;
+              frame-src 'self' https://www.youtube-nocookie.com https://www.googletagmanager.com https://www.google.com https://www.recaptcha.net https://docs.google.com;
+              manifest-src 'self';
+              worker-src 'self' blob:;
+              upgrade-insecure-requests
+          - key: Cache-Control
+            value: private, no-store
+          - key: X-Content-Type-Options
+            value: nosniff
+          - key: Referrer-Policy
+            value: same-origin
+          - key: X-Frame-Options
+            value: SAMEORIGIN
+          - key: Permissions-Policy
+            value: accelerometer=(), autoplay=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()
