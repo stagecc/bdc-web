@@ -1,4 +1,704 @@
 -
+  title: "WGS2IBI: a cloud-based workflow for individualized Bayesian inference from whole genome sequencing data"
+  year: 2026
+  journalName: "BMC Bioinformatics"
+  url: https://link.springer.com/article/10.1186/s12859-026-06520-1
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+    - "Technology"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "Pregnancy Outcomes in Individuals with Long COVID"
+  year: 2026
+  journalName: "Obstetrics & Gynecology"
+  url: https://doi.org/10.1097/AOG.0000000000006410
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "Nirmatrelvir–ritonavir targeting viral persistence in post-COVID-19 condition (RECOVER-VITAL)"
+  year: 2026
+  journalName: "The Lancet Infectious Diseases"
+  url: https://www.thelancet.com/journals/laninf/article/PIIS1473-3099(26)00406-8/fulltext
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Associations of pre-pandemic CKD with acute and post-acute COVID-19: The C4R study"
+  year: 2026
+  journalName: "American Journal of Kidney Diseases"
+  url: https://www.ajkd.org/article/S0272-6386(26)00977-7/fulltext
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "The effect of pre-existing sleep disturbance on T cell responses to SARS-CoV-2 variants, pro-inflammatory and pro-resolving mediators, and glucocorticoid sensitivity in Long COVID"
+  year: 2026
+  journalName: "Scientific Reports"
+  url: https://pubmed.ncbi.nlm.nih.gov/41933012/
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "School Difficulties and Long COVID in Children and Adolescents"
+  year: 2026
+  journalName: "Academic Pediatrics"
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC13386493/
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Design and rationale of RECOVER-AUTONOMIC: A randomized platform trial evaluating interventions for Long COVID postural orthostatic tachycardia syndrome"
+  year: 2026
+  journalName: "American Heart Journal"
+  url: https://www.sciencedirect.com/science/article/pii/S0002870326000463?via%3Dihub
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Intrauterine SARS-CoV-2 Exposure and Infant Neurodevelopment through 18 Months of Age: Findings from the RECOVER Pregnancy Study"
+  year: 2026
+  journalName: "Journal of Pediatrics"
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12962406/
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Social Determinants of Health and Pediatric Long COVID in the United States"
+  year: 2026
+  journalName: "JAMA Pediatrics"
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12771387/
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Social Determinants of Health and Risk of Long COVID in the U.S. RECOVER-Adult Cohort"
+  year: 2025
+  journalName: "Annals of Internal Medicine"
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC12352746/
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Differentiation of Prior SARS-CoV-2 Infection and Postacute Sequelae by Standard Clinical Laboratory Measurements in the RECOVER Cohort"
+  year: 2025
+  journalName: "Annals of Internal Medicine"
+  url: https://pmc.ncbi.nlm.nih.gov/articles/PMC11408082/
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Effect of modernized collaborative care for depression on depressive symptoms and cardiovascular disease risk biomarkers: eIMPACT randomized controlled trial"
+  year: 2023
+  journalName: "Brain, Behavior, and Immunity"
+  url: https://www.sciencedirect.com/science/article/pii/S0889159123001253
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "Blood"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Pediatric and Congenital Cardiovascular Disease Research Challenges and Opportunities: JACC Review Topic of the Week"
+  year: 2022
+  journalName: "JACC"
+  url: https://www.jacc.org/doi/10.1016/j.jacc.2022.09.032
+  status: "Published"
+  researchCommunity:
+    - "Pediatric Heart Network"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "Proceedings of the NHLBI Workshop on Artificial Intelligence in Cardiovascular Imaging: Translation to Patient Care"
+  year: 2023
+  journalName: "JACC: Cardiovascular Imaging"
+  url: https://www.jacc.org/doi/10.1016/j.jcmg.2023.05.012
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "AI/ML"
+    - "Technology"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "The Science of Precision Prevention: Research Opportunities and Clinical Applications to Reduce Cardiovascular Health Disparities"
+  year: 2024
+  journalName: "JACC: Advances"
+  url: https://www.sciencedirect.com/science/article/pii/S2772963X23007871
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "ClipSV: improving structural variation detection by read extension, spliced alignment and tree-based decision rules"
+  year: 2021
+  journalName: "NAR Genomics and Bioinformatics"
+  url: https://academic.oup.com/nargab/article/3/1/lqab003/6125550?login=false
+  status: "Published"
+  researchArea:
+    - "Genomics"
+    - "Technology"
+  bdcContribution:
+    - "Other"
+-
+  title: "Determinants of mosaic chromosomal alteration fitness"
+  year: 2024
+  journalName: "Nature Communications"
+  url: https://www.nature.com/articles/s41467-024-48190-8
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Blood"
+    - "Genomics"
+  bdcContribution:
+    - "Other"
+-
+  title: "Gene Fusion Detection and Characterization in Long-Read Cancer Transcriptome Sequencing Data with FusionSeeker"
+  year: 2023
+  journalName: "Cancer Research"
+  url: https://doi.org/10.1158/0008-5472.CAN-22-1628
+  status: "Published"
+  researchArea:
+    - "Genomics"
+    - "Technology"
+-
+  title: "Variant of the lactase LCT gene explains association between milk intake and incident type 2 diabetes"
+  year: 2024
+  journalName: "Nature Metabolism"
+  url: https://doi.org/10.1038/s42255-023-00961-1
+  status: "Published"
+  researchArea:
+    - "Genomics"
+-
+  title: "Fundamentals of FAIR biomedical data analyses in the cloud using custom pipelines"
+  year: 2025
+  journalName: "PLOS Computational Biology"
+  url: https://doi.org/10.1371/journal.pcbi.1013215
+  status: "Published"
+  researchArea:
+    - "Technology"
+    - "Genomics"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "Genome-wide association analyses identify new Brugada syndrome risk loci and highlight a new mechanism of sodium channel regulation in disease susceptibility"
+  year: 2022
+  journalName: "Nature Genetics"
+  url: https://doi.org/10.1038/s41588-021-01007-6
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "Genetics"
+-
+  title: "Interaction of Cigarette Smoking and Polygenic Risk Score on Reduced Lung Function"
+  year: 2021
+  journalName: "JAMA Network Open"
+  url: https://doi.org/10.1001/jamanetworkopen.2021.39525
+  status: "Published"
+  researchArea:
+    - "Lung"
+    - "Genomics"
+-
+  title: "Prediction and characterization of genetically regulated expression of asthma tissues from African-ancestry populations"
+  year: 2026
+  journalName: "Journal of Allergy and Clinical Immunology"
+  url: https://www.jacionline.org/article/S0091-6749(25)00938-8/fulltext
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Lung"
+    - "Genomics"
+-
+  title: "rMATS-cloud: Large-scale Alternative Splicing Analysis in the Cloud"
+  year: 2025
+  journalName: "Genomics, Proteomics & Bioinformatics"
+  url: https://doi.org/10.1093/gpbjnl/qzaf036
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "Stressful life events, social support, and epigenetic aging in the Women's Health Initiative"
+  year: 2024
+  journalName: "Journal of the American Geriatrics Society"
+  url: https://doi.org/10.1111/jgs.18726
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+-
+  title: "STRling: a k-mer counting approach that detects short tandem repeat expansions at known and novel loci"
+  year: 2022
+  journalName: "Genome Biology"
+  url: https://doi.org/10.1186/s13059-022-02826-4
+  status: "Published"
+  researchArea:
+    - "Genomics"
+    - "Technology"
+-
+  title: "Clinical and Therapeutic Applications of Individual-level Tissue-Specific Imputed Transcriptomes"
+  year: 2022
+  journalName: "medRxiv"
+  url: https://doi.org/10.1101/2022.11.23.22282644
+  status: "PrePrint"
+  researchArea:
+    - "Heart"
+    - "Genomics"
+-
+  title: "TP53-mediated clonal hematopoiesis confers increased risk for incident atherosclerotic disease"
+  year: 2023
+  journalName: "Nature Cardiovascular Research"
+  url: https://doi.org/10.1038/s44161-022-00206-6
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "Blood"
+    - "Genomics"
+-
+  title: "Validation of biomarkers of aging"
+  year: 2024
+  journalName: "Nature Medicine"
+  url: https://doi.org/10.1038/s41591-023-02784-9
+  status: "Published"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "Common and rare variants associated with cardiometabolic traits across 98,622 whole-genome sequences in the All of Us research program"
+  year: 2023
+  journalName: "Journal of Human Genetics"
+  url: https://doi.org/10.1038/s10038-023-01147-z
+  status: "Published"
+  researchArea:
+    - "Heart"
+-
+  title: "Deciphering the exact breakpoints of structural variations using long sequencing reads with DeBreak"
+  year: 2023
+  journalName: "Nature Communications"
+  url: https://doi.org/10.1038/s41467-023-35996-1
+  status: "Published"
+  researchArea:
+    - "Genomics"
+    - "Technology"
+-
+  title: "Deep Learning of Electrocardiograms Enables Scalable Human Disease Profiling"
+  year: 2022
+  journalName: "medRxiv"
+  url: https://doi.org/10.1101/2022.12.21.22283757
+  status: "PrePrint"
+  researchArea:
+    - "Heart"
+    - "AI/ML"
+-
+  title: "Expert-level detection of pathologies from unannotated chest X-ray images via self-supervised learning"
+  year: 2022
+  journalName: "Nature Biomedical Engineering"
+  url: https://doi.org/10.1038/s41551-022-00936-9
+  status: "Published"
+  researchArea:
+    - "Lung"
+-
+  title: "Harnessing metabolomics and proteomics in a clinical trial for pulmonary arterial hypertension: insights from post-hoc analysis of the REHAB-PH trial"
+  year: 2026
+  journalName: "eBioMedicine"
+  url: https://www.thelancet.com/journals/ebiom/article/PIIS2352-3964(26)00073-3/fulltext
+  status: "Published"
+  researchArea:
+    - "Lung"
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Hierarchical Probabilistic Principal Component Analysis of Longitudinal Data"
+  year: 2026
+  journalName: "arXiv"
+  url: https://arxiv.org/abs/2604.22015
+  status: "PrePrint"
+  researchArea:
+    - "COVID-19"
+    - "Technology"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "Penalized regression with negative-unlabeled data: an approach to developing a Long COVID research index"
+  year: 2025
+  journalName: "BMC Medical Research Methodology"
+  url: https://doi.org/10.1186/s12874-025-02737-5
+  status: "Published"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Implementing the NHLBI's Strategic Vision in the Division of Cardiovascular Sciences – 2022 Update"
+  year: 2022
+  journalName: "Circulation Research"
+  url: https://doi.org/10.1161/CIRCRESAHA.122.321449
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "AI-Enabled Echocardiography Identifies an Adverse Epicardial Adiposity Phenotype Associated with Cardiometabolic Dysfunction"
+  year: 2026
+  journalName: "medRxiv"
+  url: https://doi.org/10.64898/2026.07.22.26358690
+  status: "PrePrint"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Spatial and neighborhood data in the collaborative cohort of cohorts for COVID-19 Research (C4R)"
+  year: 2026
+  journalName: "PLOS One"
+  url: https://doi.org/10.1371/journal.pone.0352170
+  status: "Published"
+  researchCommunity:
+    - "C4R"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Proteomics risk scores and mortality in heart failure: Generalizability across populations"
+  year: 2026
+  journalName: "PLOS One"
+  url: https://doi.org/10.1371/journal.pone.0350697
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Applying Artificial Intelligence and machine learning in precision nutrition"
+  year: 2026
+  journalName: "Nature Communications"
+  url: https://doi.org/10.1038/s41467-026-75004-w
+  status: "Published"
+  researchArea:
+    - "AI/ML"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "Dairy Products Are Not Adversely Associated with Depressive Symptoms over 6 Years in the Hispanic Community Health Study/Study of Latinos"
+  year: 2026
+  journalName: "Nutrients"
+  url: https://doi.org/10.3390/nu18111805
+  status: "Published"
+  researchArea:
+    - "Other"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Activity of Cardiomyocyte Type 3 Deiodinase After Myocardial Infarction Influences Cardiac Recovery in Females"
+  year: 2026
+  journalName: "Endocrinology"
+  url: https://doi.org/10.1210/endocr/bqaf181
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Heart"
+    - "Genomics"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Comparison of methods for isolation of extracellular vesicles from bronchoalveolar lavage fluid"
+  year: 2026
+  journalName: "Extracellular Vesicles and Circulating Nucleic Acids"
+  url: https://doi.org/10.20517/evcna.2025.85
+  status: "Published"
+  researchArea:
+    - "Lung"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Comparative Efficacy of Transfusion Strategies in Women and Men with Myocardial Infarction and Anemia: Pre-Specified Secondary Findings from the MINT Trial"
+  year: 2026
+  journalName: "Circulation"
+  url: https://doi.org/10.1161/CIRCULATIONAHA.125.078320
+  status: "Published"
+  researchArea:
+    - "Heart"
+    - "Blood"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Efficient identification of de novo mutations in family trios: a consensus-based informatic approach"
+  year: 2025
+  journalName: "Life Science Alliance"
+  url: https://doi.org/10.26508/lsa.202403039
+  status: "Published"
+  researchArea:
+    - "Genomics"
+    - "Heart"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "Diverse-Ancestry GWAS of Age-Related Macular Degeneration on 16,108 Examined Cases and 18,038 Controls"
+  year: 2025
+  journalName: "Investigative Ophthalmology & Visual Science"
+  url: https://doi.org/10.1167/iovs.66.13.51
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "Adult Onset Foveomacular Vitelliform Dystrophy Shows Genetic Overlap With Age-Related Macular Degeneration"
+  year: 2024
+  journalName: "Investigative Ophthalmology & Visual Science"
+  url: https://doi.org/10.1167/iovs.65.13.53
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "ACTIV-6: Operationalizing a decentralized, outpatient randomized platform trial to evaluate efficacy of repurposed medicines for COVID-19"
+  year: 2023
+  journalName: "Journal of Clinical and Translational Science"
+  url: https://doi.org/10.1017/cts.2023.644
+  status: "Published"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Introducing field-programmable gate arrays in genotype phasing and imputation"
+  year: 2024
+  journalName: "ioinformatics Advances"
+  url: https://doi.org/10.1093/bioadv/vbae114
+  status: "Published"
+  researchArea:
+    - "Technology"
+    - "Genomics"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "A multi-ancestry genome-wide association study in type 1 diabetes"
+  year: 2024
+  journalName: "Human Molecular Genetics"
+  url: https://doi.org/10.1093/hmg/ddae024
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "Metabolomics Prediction for Genetic Discovery in COPD using MetaboXcan"
+  year: 2023
+  journalName: "Master's thesis, University of Colorado"
+  url: https://digitalcollections.cuanschutz.edu/works/publication-dissertation/3j58d-r3550
+  status: "Other"
+  researchArea:
+    - "Lung"
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "Genome-wide evaluation of the effect of short tandem repeat variation on local DNA methylation"
+  year: 2023
+  journalName: "Genome Research"
+  url: https://doi.org/10.1101/gr.277057.122
+  status: "Published"
+  researchArea:
+    - "Genomics"
+-
+  title: "LungMAP Portal Ecosystem: Systems-level Exploration of the Lung"
+  year: 2024
+  journalName: "American Journal of Respiratory Cell and Molecular Biology"
+  url: https://doi.org/10.1165/rcmb.2022-0165OC
+  status: "Published"
+  researchArea:
+    - "Lung"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Corin Missense Variants, Blood Pressure, and Hypertension in 11 322 Black Individuals: Insights From REGARDS and the Jackson Heart Study"
+  year: 2022
+  journalName: "Journal of the American Heart Association"
+  url: https://doi.org/10.1161/JAHA.121.025582
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "GA4GH: International policies and standards for data sharing across genomic research and healthcare"
+  year: 2021
+  journalName: "Cell Genomics"
+  url: https://www.cell.com/cell-genomics/fulltext/S2666-979X(21)00036-7?_returnURL=https%3A%2F%2Flinkinghub.elsevier.com%2Fretrieve%2Fpii%2FS2666979X21000367%3Fshowall%3Dtrue
+  status: "Published"
+  researchArea:
+    - "Genomics"
+    - "Technology"
+-
+  title: "The Dockstore: enhancing a community platform for sharing reproducible and accessible computational protocols"
+  year: 2021
+  journalName: "Nucleic Acids Research"
+  url: https://academic.oup.com/nar/article/49/W1/W624/6274534
+  status: "Published"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Standards/Practices"
+-
+  title: "CT-adipose measures identify severe SARS-CoV-2 risk beyond traditional obesity metrics: a C4R cohort study"
+  year: 2026
+  journalName: "BMC Pulmonary Medicine"
+  url: https://doi.org/10.1186/s12890-026-04338-4
+  status: "Published"
+  researchCommunity:
+    - "C4R"
+  researchArea:
+    - "Lung"
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Additive prognostic value of functional performance to coronary artery anatomy: the ISCHEMIA trial"
+  year: 2026
+  journalName: "European Heart Journal"
+  url: https://doi.org/10.1093/ehjci/jeag032
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Design, rationale, and baseline patient characteristics for the Sickle Cell Disease and CardiovAscular Risk-Red cell Exchange (SCD-CARRE) trial"
+  year: 2026
+  journalName: "American Heart Journal"
+  url: https://doi.org/10.1016/j.ahj.2026.107542
+  status: "Published"
+  researchArea:
+    - "Blood"
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Determinants of Rural Household Resilience to Food Insecurity and Variations in Resilience Capacity across Livelihood Groups in Southwest Districts of Rural South Wollo, Ethiopia"
+  year: 2026
+  journalName: "Current Developments in Nutrition"
+  url: https://cdn.nutrition.org/article/S2475-2991(26)01755-5/fulltext
+  status: "Published"
+  researchArea:
+    - "Other"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Stress Trajectory and Hypertension 2 to 7 Years After Delivery: A nuMoM2b-HHS Study"
+  year: 2026
+  journalName: "Hypertension"
+  url: https://doi.org/10.1161/HYPERTENSIONAHA.125.25991
+  status: "Published"
+  researchArea:
+    - "Heart"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "Statistical Considerations in Long COVID Research"
+  year: 2026
+  journalName: "arXiv"
+  url: https://arxiv.org/abs/2608.04919
+  status: "PrePrint"
+  researchCommunity:
+    - "RECOVER"
+  researchArea:
+    - "COVID-19"
+  bdcContribution:
+    - "Data Deposition"
+-
+  title: "TorchGWAS2: Cost-Effective Phenome- and Genome-Wide Association Testing in Related Samples"
+  year: 2026
+  journalName: "medRxiv"
+  url: https://doi.org/10.64898/2026.09.10.26362744
+  status: "PrePrint"
+  researchCommunity:
+    - "TOPMed"
+  researchArea:
+    - "Genomics"
+  bdcContribution:
+    - "Data Analysis/Tool Usage"
+-
+  title: "The ARDS, Pneumonia, and Sepsis Consortium: Rationale, Design, and Feasibility of a National Platform for Phenotyping Critical Illness Syndromes"
+  year: 2026
+  journalName: "CHEST Journal"
+  url: https://journal.chestnet.org/article/S0012-3692(26)00959-1/fulltext
+  status: "Published"
+  researchArea:
+    - "Lung"
+  bdcContribution:
+    - "Data Deposition"
+-
   title: "Whole Genome Sequence Analysis of Weight Loss in 16 972 Participants With COPD Reveals Novel Risk Loci in DRAIC and RFX3"
   year: 2026
   journalName: "Journal of Cachexia, Sarcopenia and Muscle"
