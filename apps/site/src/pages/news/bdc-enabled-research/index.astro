@@ -7,10 +7,9 @@ import Icon from '@components/Icon.astro';
 import PublicationsExplorer from '@components/publications/PublicationsExplorer.tsx';
 import Base from '@layouts/Base.astro';
 
-const publications = (await getCollection('publications')).map((pub) => ({
-  ...pub.data,
-  date: pub.data.date.toISOString(),
-}));
+const publications = (await getCollection('publications')).map(
+  (pub) => pub.data,
+);
 ---
 
 <Base title="BDC-Enabled Research">

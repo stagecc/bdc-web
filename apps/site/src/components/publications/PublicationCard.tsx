@@ -7,7 +7,7 @@ import type { ComponentProps } from 'react';
 import { publicationTagGroups } from './publicationTagGroups';
 
 type Props = {
-  pub: CollectionEntry<'publications'>['data'] & { date: string };
+  pub: CollectionEntry<'publications'>['data'];
 };
 
 type TagTone = NonNullable<ComponentProps<typeof Tag>['tone']>;
@@ -20,15 +20,6 @@ type TagGroup = {
 
 export default function PublicationCard({ pub }: Props) {
   if (!pub) return null;
-
-  const publicationDate = new Date(pub.date);
-  const formattedDate = Number.isNaN(publicationDate.getTime())
-    ? 'Date unavailable'
-    : publicationDate.toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric',
-      });
 
   const tagGroups = publicationTagGroups
     .map((group) => {
@@ -62,8 +53,8 @@ export default function PublicationCard({ pub }: Props) {
 
         <div className="display-flex flex-align-center margin-top-05 tablet:margin-top-0">
           <Icon.CalendarToday aria-hidden />
-          <time className="margin-left-05" dateTime={pub.date}>
-            {formattedDate}
+          <time className="margin-left-05" dateTime={String(pub.year)}>
+            {pub.year}
           </time>
           {pub.status && (
             <>
