@@ -36,10 +36,11 @@
  *   of the form.
  */
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { buildCustomObjectPayload } from '../../../../util/freshdesk/buildCustomObjectPayload';
+import { getFormPrefillValuesFromSearch } from '../../../../util/formPrefill';
 import type { CustomObjectField } from '../../../../util/freshdesk/typesCustomObjects';
 import { getRecaptchaToken } from '../../../../util/recaptcha';
 import { trackFormSubmitSuccess } from '../../../layout/analytics/forms';
@@ -106,6 +107,7 @@ export default function DynamicCustomObjectForm({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
   const confirmationRef = useRef<HTMLDivElement>(null);
+  const hasAppliedPrefillRef = useRef(false);
 
   // methods is the full RHF form instance. Spread into FormProvider so all
   // child field components can access register, unregister, control, etc.
@@ -122,6 +124,25 @@ export default function DynamicCustomObjectForm({
     reset,
     formState: { errors },
   } = methods;
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || hasAppliedPrefillRef.current) {
+      return;
+    }
+
+    const prefillValues = getFormPrefillValuesFromSearch(
+      fields,
+      window.location.search,
+    );
+
+    hasAppliedPrefillRef.current = true;
+
+    if (Object.keys(prefillValues).length === 0) {
+      return;
+    }
+
+    reset(prefillValues);
+  }, [fields, reset]);
 
   // ---------------------------------------------------------------------------
   // Fallback — shown when getCustomObjectSchema failed at build time

@@ -35,12 +35,16 @@
  *   error={true}. This component renders a fallback message instead of the form.
  */
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
 import { buildPayload } from '../../../../util/freshdesk/buildPayload';
 import { getSectionFieldIds } from '../../../../util/freshdesk/getFormFields';
 import type { FreshdeskField } from '../../../../util/freshdesk/types';
+import {
+  getDynamicSectionSelectionsFromPrefill,
+  getFormPrefillValuesFromSearch,
+} from '../../../../util/formPrefill';
 import { getRecaptchaToken } from '../../../../util/recaptcha';
 import { trackFormSubmitSuccess } from '../../../layout/analytics/forms';
 import ConsentField, { CONSENT_FIELD_NAME } from '../../fields/ConsentField';
@@ -99,6 +103,7 @@ export default function DynamicForm({
   const [submitError, setSubmitError] = useState<string | null>(null);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
   const confirmationRef = useRef<HTMLDivElement>(null);
+  const hasAppliedPrefillRef = useRef(false);
 
   // Tracks the currently selected value for each dropdown that has sections.
   // Keyed by field name, value is the selected choice value string.
@@ -122,6 +127,26 @@ export default function DynamicForm({
     reset,
     formState: { errors },
   } = methods;
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || hasAppliedPrefillRef.current) {
+      return;
+    }
+
+    const prefillValues = getFormPrefillValuesFromSearch(
+      fields,
+      window.location.search,
+    );
+
+    hasAppliedPrefillRef.current = true;
+
+    if (Object.keys(prefillValues).length === 0) {
+      return;
+    }
+
+    reset(prefillValues);
+    setSectionSelections(getDynamicSectionSelectionsFromPrefill(fields, prefillValues));
+  }, [fields, reset]);
 
   // Called by SelectField (via renderField) when a section-controlling
   // dropdown changes. Updates sectionSelections which triggers a re-render,
