@@ -66,7 +66,27 @@ jobs:
       - run: npm ci
 
       - name: Build ${{ matrix.app }}
+        if: ${{ !(matrix.app == 'site' && (github.event_name == 'push' && github.ref == 'refs/heads/prod')) }}
         run: npm run build -w @bdc/${{ matrix.app }}
+
+      - name: Build site with Freshdesk metadata
+        if: matrix.app == 'site' && (github.event_name == 'push' && github.ref == 'refs/heads/prod')
+        env:
+          FRESHDESK_DOMAIN: ${{ secrets.FRESHDESK_DOMAIN }}
+          FRESHDESK_API_KEY: ${{ secrets.FRESHDESK_API_KEY }}
+          FRESHDESK_FORM_GET_HELP: ${{ secrets.FRESHDESK_FORM_GET_HELP }}
+          FRESHDESK_FORM_USAGE_COSTS_CLOUD_CREDITS: ${{ secrets.FRESHDESK_FORM_USAGE_COSTS_CLOUD_CREDITS }}
+          FRESHDESK_CUSTOM_OBJECT_PUBLICATIONS_SCHEMA_ID: ${{ secrets.FRESHDESK_CUSTOM_OBJECT_PUBLICATIONS_SCHEMA_ID }}
+          FRESHDESK_CUSTOM_OBJECT_CONTACT_BDC_SCHEMA_ID: ${{ secrets.FRESHDESK_CUSTOM_OBJECT_CONTACT_BDC_SCHEMA_ID }}
+        run: |
+          set -euo pipefail
+          npm run build -w @bdc/site
+          for page in help/get-help help/contact-bdc help/costs news/bdc-enabled-research/publication-submission; do
+            if ! grep -q '^```form$' "apps/site/dist/markdown/${page}.md"; then
+              echo "::error::Missing form metadata in ${page}. Check Freshdesk configuration and build logs."
+              exit 1
+            fi
+          done
 
       - name: Upload build output
         if: matrix.os == 'ubuntu-latest'
