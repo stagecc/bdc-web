@@ -1,4 +1,5 @@
 ---
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import { DugSearchApp } from '@components/dug';
 import Base from '@layouts/Base.astro';
 ---
@@ -11,6 +12,10 @@ import Base from '@layouts/Base.astro';
         Search BDC-hosted concepts and review related studies and variables using
         Dug semantic search.
       </p>
+
+      <InlineAlert variant="warning" heading="Routine Maintenance">
+        The Disease, Phenotype, Biological Process, or Anatomical Entity Search will have planned maintenance on Friday, November 13 at 3:00 PM that may result in a temporary outage. Please check back later if you experience an interruption.
+      </InlineAlert>
 
       <br />
       
