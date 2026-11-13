@@ -99,6 +99,9 @@ export function convertPage(html, { url, collections = {} }) {
       element.remove();
     }
     expandCollections(document, main, collections);
+    for (const form of main.querySelectorAll('[data-markdown-form]')) {
+      form.replaceChildren(document.createTextNode('Form metadata'));
+    }
     main
       .querySelectorAll(
         'script, style, template, svg, nav, .usa-in-page-nav, [data-markdown-exclude], [aria-hidden="true"], input, select, textarea',
@@ -135,6 +138,20 @@ export function convertPage(html, { url, collections = {} }) {
     const escapeMarkdown = converter.escape.bind(converter);
     converter.escape = (text) => escapeMarkdown(text).replace(/</g, '\\<');
     converter.use(strikethrough);
+    converter.addRule('formMetadata', {
+      filter: (node) => node.hasAttribute?.('data-markdown-form'),
+      replacement: (_content, node) => {
+        const { fields } = JSON.parse(node.getAttribute('data-markdown-form'));
+        const yaml = dump({ url, fields }, { lineWidth: -1, noRefs: true });
+        const fence = '`'.repeat(
+          Math.max(
+            3,
+            ...[...yaml.matchAll(/`+/g)].map((match) => match[0].length + 1),
+          ),
+        );
+        return `\n\n${fence}form\n${yaml}${fence}\n\n`;
+      },
+    });
     converter.addRule('table', {
       filter: 'table',
       replacement: (_content, node) => {
