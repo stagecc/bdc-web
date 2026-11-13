@@ -16,7 +16,7 @@ const MIN_TRACKED_SEARCH_LENGTH = 2;
 
 export type Publication = {
   title: string;
-  date: string;
+  year: number;
   journalName: string;
   url: string;
   status?: string;
@@ -68,9 +68,8 @@ function isSortOption(value: string | null | undefined): value is SortOption {
   );
 }
 
-function getYear(dateValue: string) {
-  const date = new Date(dateValue);
-  return Number.isNaN(date.getTime()) ? null : String(date.getFullYear());
+function getYear(yearValue: number) {
+  return Number.isInteger(yearValue) ? String(yearValue) : null;
 }
 
 function matchesSearch(pub: Publication, term: string) {
@@ -148,9 +147,7 @@ function filterAndSortPublications(
   let result = publications;
 
   if (filters.year.length > 0) {
-    result = result.filter((pub) =>
-      filters.year.includes(String(new Date(pub.date).getFullYear())),
-    );
+    result = result.filter((pub) => filters.year.includes(String(pub.year)));
   }
   if (filters.researchCommunity.length > 0) {
     result = result.filter((pub) =>
@@ -178,9 +175,9 @@ function filterAndSortPublications(
   return [...result].sort((a, b) => {
     switch (sort) {
       case 'most-recent':
-        return new Date(b.date).getTime() - new Date(a.date).getTime();
+        return b.year - a.year || a.title.localeCompare(b.title);
       case 'least-recent':
-        return new Date(a.date).getTime() - new Date(b.date).getTime();
+        return a.year - b.year || a.title.localeCompare(b.title);
       case 'title-az':
         return a.title.localeCompare(b.title);
       case 'title-za':
@@ -342,7 +339,7 @@ export function usePublications(publications: Publication[]) {
     const bdcContributions = new Map<string, number>();
 
     for (const pub of publications) {
-      const year = getYear(pub.date);
+      const year = getYear(pub.year);
       if (year && !years.has(year)) years.set(year, 0);
       for (const rc of pub.researchCommunity ?? []) {
         if (!researchCommunities.has(rc)) researchCommunities.set(rc, 0);
@@ -381,15 +378,14 @@ export function usePublications(publications: Publication[]) {
     );
 
     for (const pub of forYearCounts) {
-      const year = getYear(pub.date);
+      const year = getYear(pub.year);
       if (year) years.set(year, (years.get(year) ?? 0) + 1);
     }
 
     const forCommunityCounts = applySearch(
       publications.filter((pub) => {
         const inYear =
-          filters.year.length === 0 ||
-          filters.year.includes(String(new Date(pub.date).getFullYear()));
+          filters.year.length === 0 || filters.year.includes(String(pub.year));
         const inArea =
           filters.researchArea.length === 0 ||
           pub.researchArea?.some((ra) => filters.researchArea.includes(ra));
@@ -411,8 +407,7 @@ export function usePublications(publications: Publication[]) {
     const forAreaCounts = applySearch(
       publications.filter((pub) => {
         const inYear =
-          filters.year.length === 0 ||
-          filters.year.includes(String(new Date(pub.date).getFullYear()));
+          filters.year.length === 0 || filters.year.includes(String(pub.year));
         const inCommunity =
           filters.researchCommunity.length === 0 ||
           pub.researchCommunity?.some((rc) =>
@@ -436,8 +431,7 @@ export function usePublications(publications: Publication[]) {
     const forOrgCounts = applySearch(
       publications.filter((pub) => {
         const inYear =
-          filters.year.length === 0 ||
-          filters.year.includes(String(new Date(pub.date).getFullYear()));
+          filters.year.length === 0 || filters.year.includes(String(pub.year));
         const inCommunity =
           filters.researchCommunity.length === 0 ||
           pub.researchCommunity?.some((rc) =>

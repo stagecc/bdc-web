@@ -80,7 +80,7 @@ const publications = defineCollection({
   },
   schema: z.object({
     title: z.string(),
-    date: z.coerce.date(),
+    year: z.coerce.number().int().min(1000).max(9999),
     journalName: z.string(),
     url: z.string(),
     status: z.enum(['Published', 'PrePrint', 'Other']).optional(),

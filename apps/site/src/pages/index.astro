@@ -51,7 +51,8 @@ const events = (
 ).slice(0, 3);
 
 const publications = (await getCollection('publications')).sort(
-  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+  (a, b) =>
+    b.data.year - a.data.year || a.data.title.localeCompare(b.data.title),
 );
 const featuredPublications = publications
   .slice(0, 2)
@@ -411,7 +412,7 @@ const nextEvent = events[0];
                 <CardCopy
                   eyebrow="Recent Publication"
                   title={publication.title}
-                  description={`Published in ${publication.journalName} on ${dateFormat.format(publication.date)}`}
+                  description={`Published in ${publication.journalName} in ${publication.year}`}
                   href={publication.url}
                   linkLabel="View Publication"
                 />
