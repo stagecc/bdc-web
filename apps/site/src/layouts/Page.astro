@@ -1,6 +1,7 @@
 ---
 import InPageNav from '@components/layout/InPageNav.astro';
 import Base from '@layouts/Base.astro';
+import type { SeoConfig } from '../util/seo';
 
 interface Props {
   frontmatter: {
@@ -11,6 +12,8 @@ interface Props {
     lastReviewed?: string;
     in_page_nav?: boolean;
     enableRecaptcha?: boolean;
+    excerpt?: string;
+    seo?: SeoConfig;
   };
 }
 
@@ -21,6 +24,11 @@ const showNav = frontmatter.in_page_nav !== false;
 <Base
   title={frontmatter.title}
   enableRecaptcha={frontmatter.enableRecaptcha}
+  seo={{
+    ...frontmatter.seo,
+    description: frontmatter.seo?.description ?? frontmatter.excerpt,
+    keywords: frontmatter.seo?.keywords,
+  }}
 >
   <section class="usa-section">
     <div class="grid-container">
