@@ -1,10 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import type { FreshdeskField } from './freshdesk/types';
-import type { CustomObjectField } from './freshdesk/typesCustomObjects';
 import {
   getDynamicSectionSelectionsFromPrefill,
   getFormPrefillValuesFromSearch,
+  getSkippedFormPrefillFieldNamesFromSearch,
 } from './formPrefill';
+import type { FreshdeskField } from './freshdesk/types';
+import type { CustomObjectField } from './freshdesk/typesCustomObjects';
 
 const makeFreshdeskField = (
   overrides: Partial<FreshdeskField>,
@@ -150,6 +151,63 @@ describe('getFormPrefillValuesFromSearch', () => {
       research_area: 'Genomics',
       abstract: 'Longer summary',
     });
+  });
+});
+
+describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
+  it('returns known field names whose supplied values were skipped', () => {
+    const fields = [
+      makeFreshdeskField({ name: 'cf_subject', type: 'custom_text' }),
+      makeFreshdeskField({
+        name: 'ticket_type',
+        type: 'default_ticket_type',
+        choices: [
+          {
+            id: 1,
+            label: 'Website Issue',
+            value: 'Website Issue',
+            position: 1,
+            parent_choice_id: 0,
+            choices: [],
+          },
+        ],
+      }),
+      makeFreshdeskField({ name: 'cf_requested_date', type: 'custom_date' }),
+    ];
+
+    const skippedFieldNames = getSkippedFormPrefillFieldNamesFromSearch(
+      fields,
+      '?cf_subject=Need%20help&ticket_type=Unknown&cf_requested_date=2026-11-13&unknown=value',
+    );
+
+    expect(skippedFieldNames).toEqual(['ticket_type', 'cf_requested_date']);
+  });
+
+  it('does not report applied or absent field values as skipped', () => {
+    const fields = [
+      makeFreshdeskField({ name: 'cf_subject', type: 'custom_text' }),
+      makeFreshdeskField({
+        name: 'ticket_type',
+        type: 'default_ticket_type',
+        choices: [
+          {
+            id: 1,
+            label: 'Website Issue',
+            value: 'Website Issue',
+            position: 1,
+            parent_choice_id: 0,
+            choices: [],
+          },
+        ],
+      }),
+    ];
+
+    const skippedFieldNames = getSkippedFormPrefillFieldNamesFromSearch(
+      fields,
+      '?cf_subject=Need%20help&ticket_type=Website%20Issue',
+    );
+
+    expect(skippedFieldNames).toEqual([]);
   });
 });
 

@@ -39,8 +39,11 @@
 import { useEffect, useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import {
+  getFormPrefillValuesFromSearch,
+  getSkippedFormPrefillFieldNamesFromSearch,
+} from '../../../../util/formPrefill';
 import { buildCustomObjectPayload } from '../../../../util/freshdesk/buildCustomObjectPayload';
-import { getFormPrefillValuesFromSearch } from '../../../../util/formPrefill';
 import type { CustomObjectField } from '../../../../util/freshdesk/typesCustomObjects';
 import { getRecaptchaToken } from '../../../../util/recaptcha';
 import { trackFormSubmitSuccess } from '../../../layout/analytics/forms';
@@ -59,6 +62,25 @@ import { renderCustomObjectField } from '../helpers/renderCustomObjectField';
 // ---------------------------------------------------------------------------
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+const PREFILL_NOTICE = {
+  heading: 'Some fields were prepopulated',
+  text: 'Please review the prefilled information and complete any additional required fields before submitting.',
+};
+
+const SKIPPED_PREFILL_NOTICE = {
+  heading: 'Some prefilled values could not be applied',
+  text: 'Please review all fields and complete any missing information before submitting.',
+};
+
+function getPrefillFieldLabel(field: CustomObjectField): string {
+  return field.label || field.name;
+}
+
+type SkippedPrefillField = {
+  name: string;
+  label: string;
+};
 
 interface DynamicCustomObjectFormProps {
   // Filtered, enriched field config from getCustomObjectSchema.
@@ -105,6 +127,10 @@ export default function DynamicCustomObjectForm({
   const analyticsFormName = idPrefix.toLowerCase();
   const [status, setStatus] = useState<FormStatus>('idle');
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [hasAppliedPrefillValues, setHasAppliedPrefillValues] = useState(false);
+  const [skippedPrefillFields, setSkippedPrefillFields] = useState<
+    SkippedPrefillField[]
+  >([]);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
   const confirmationRef = useRef<HTMLDivElement>(null);
   const hasAppliedPrefillRef = useRef(false);
@@ -134,8 +160,22 @@ export default function DynamicCustomObjectForm({
       fields,
       window.location.search,
     );
+    const skippedPrefillFieldNames = getSkippedFormPrefillFieldNamesFromSearch(
+      fields,
+      window.location.search,
+    );
 
     hasAppliedPrefillRef.current = true;
+    setHasAppliedPrefillValues(Object.keys(prefillValues).length > 0);
+    setSkippedPrefillFields(
+      skippedPrefillFieldNames.map((fieldName) => {
+        const field = fields.find((candidate) => candidate.name === fieldName);
+        return {
+          name: fieldName,
+          label: field ? getPrefillFieldLabel(field) : fieldName,
+        };
+      }),
+    );
 
     if (Object.keys(prefillValues).length === 0) {
       return;
@@ -252,6 +292,8 @@ export default function DynamicCustomObjectForm({
   // ---------------------------------------------------------------------------
 
   const errorFields = Object.keys(errors);
+  const showPrefillNotice =
+    hasAppliedPrefillValues && skippedPrefillFields.length === 0;
 
   return (
     <FormProvider {...methods}>
@@ -294,6 +336,31 @@ export default function DynamicCustomObjectForm({
                       {errors[fieldName]?.message as string}
                     </a>
                   </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {showPrefillNotice && (
+          <div className="usa-alert usa-alert--info margin-bottom-3">
+            <div className="usa-alert__body">
+              <h2 className="usa-alert__heading">{PREFILL_NOTICE.heading}</h2>
+              <p className="usa-alert__text">{PREFILL_NOTICE.text}</p>
+            </div>
+          </div>
+        )}
+
+        {skippedPrefillFields.length > 0 && (
+          <div className="usa-alert usa-alert--warning margin-bottom-3">
+            <div className="usa-alert__body">
+              <h2 className="usa-alert__heading">
+                {SKIPPED_PREFILL_NOTICE.heading}
+              </h2>
+              <p className="usa-alert__text">{SKIPPED_PREFILL_NOTICE.text}</p>
+              <ul className="usa-list margin-top-1 margin-bottom-0">
+                {skippedPrefillFields.map((field) => (
+                  <li key={field.name}>{field.label}</li>
                 ))}
               </ul>
             </div>

@@ -66,6 +66,23 @@ function getAllowedSelectValues(field: PrefillField): string[] {
   return field.choices.map((choice) => choice.value);
 }
 
+function shouldApplyPrefillFieldValue(
+  field: PrefillField,
+  value: string,
+): boolean {
+  if (isSupportedTextField(field)) {
+    return true;
+  }
+
+  if (!isSupportedSelectField(field)) {
+    return false;
+  }
+
+  const allowedValues = getAllowedSelectValues(field);
+
+  return allowedValues.includes(value);
+}
+
 export function getFormPrefillValuesFromSearch(
   fields: PrefillField[],
   search: string,
@@ -80,23 +97,34 @@ export function getFormPrefillValuesFromSearch(
       continue;
     }
 
-    if (isSupportedTextField(field)) {
-      prefillValues[field.name] = value;
-      continue;
-    }
-
-    if (!isSupportedSelectField(field)) {
-      continue;
-    }
-
-    const allowedValues = getAllowedSelectValues(field);
-
-    if (allowedValues.includes(value)) {
+    if (shouldApplyPrefillFieldValue(field, value)) {
       prefillValues[field.name] = value;
     }
   }
 
   return prefillValues;
+}
+
+export function getSkippedFormPrefillFieldNamesFromSearch(
+  fields: PrefillField[],
+  search: string,
+): string[] {
+  const params = new URLSearchParams(search);
+  const skippedFieldNames: string[] = [];
+
+  for (const field of fields) {
+    const value = getTrimmedParamValue(params, field.name);
+
+    if (value == null) {
+      continue;
+    }
+
+    if (!shouldApplyPrefillFieldValue(field, value)) {
+      skippedFieldNames.push(field.name);
+    }
+  }
+
+  return skippedFieldNames;
 }
 
 export function getDynamicSectionSelectionsFromPrefill(
