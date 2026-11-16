@@ -7,6 +7,7 @@ const SUPPORTED_FRESHDESK_TEXT_TYPES = new Set([
   'default_requester',
   'default_company',
   'custom_text',
+  'custom_paragraph',
 ] satisfies FreshdeskField['type'][]);
 
 const SUPPORTED_FRESHDESK_SELECT_TYPES = new Set([
@@ -16,6 +17,7 @@ const SUPPORTED_FRESHDESK_SELECT_TYPES = new Set([
 
 const SUPPORTED_CUSTOM_OBJECT_TEXT_TYPES = new Set([
   'TEXT',
+  'PARAGRAPH',
 ] satisfies CustomObjectField['type'][]);
 
 const SUPPORTED_CUSTOM_OBJECT_SELECT_TYPES = new Set([

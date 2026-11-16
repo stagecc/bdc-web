@@ -72,15 +72,35 @@ describe('getFormPrefillValuesFromSearch', () => {
   it('ignores unknown parameters, blank values, and unsupported field types', () => {
     const fields = [
       makeFreshdeskField({ name: 'cf_project_name', type: 'custom_text' }),
-      makeFreshdeskField({ name: 'cf_details', type: 'custom_paragraph' }),
+      makeFreshdeskField({ name: 'cf_requested_date', type: 'custom_date' }),
     ];
 
     const prefillValues = getFormPrefillValuesFromSearch(
       fields,
-      '?cf_project_name=%20%20%20&cf_details=Long%20description&unknown=value',
+      '?cf_project_name=%20%20%20&cf_requested_date=2026-11-13&unknown=value',
     );
 
     expect(prefillValues).toEqual({});
+  });
+
+  it('supports Freshdesk paragraph fields', () => {
+    const fields = [
+      makeFreshdeskField({ name: 'cf_subject', type: 'custom_text' }),
+      makeFreshdeskField({
+        name: 'cf_submitted_description',
+        type: 'custom_paragraph',
+      }),
+    ];
+
+    const prefillValues = getFormPrefillValuesFromSearch(
+      fields,
+      '?cf_subject=Need%20help&cf_submitted_description=Detailed%20problem%20description',
+    );
+
+    expect(prefillValues).toEqual({
+      cf_subject: 'Need help',
+      cf_submitted_description: 'Detailed problem description',
+    });
   });
 
   it('skips select values that do not match an allowed choice', () => {
@@ -109,7 +129,7 @@ describe('getFormPrefillValuesFromSearch', () => {
     expect(prefillValues).toEqual({});
   });
 
-  it('supports custom object TEXT and DROPDOWN fields', () => {
+  it('supports custom object TEXT, PARAGRAPH, and DROPDOWN fields', () => {
     const fields = [
       makeCustomObjectField({ name: 'title', type: 'TEXT' }),
       makeCustomObjectField({
@@ -122,12 +142,13 @@ describe('getFormPrefillValuesFromSearch', () => {
 
     const prefillValues = getFormPrefillValuesFromSearch(
       fields,
-      '?title=A%20study%20of%20things&research_area=Genomics&abstract=Ignored',
+      '?title=A%20study%20of%20things&research_area=Genomics&abstract=Longer%20summary',
     );
 
     expect(prefillValues).toEqual({
       title: 'A study of things',
       research_area: 'Genomics',
+      abstract: 'Longer summary',
     });
   });
 });
