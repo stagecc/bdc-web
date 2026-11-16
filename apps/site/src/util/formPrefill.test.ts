@@ -184,13 +184,13 @@ describe('getFormPrefillResultFromSearch', () => {
       prefillValues: {
         cf_subject: 'Need help',
       },
-      skippedFieldNames: ['ticket_type', 'unknown'],
+      skippedFieldNames: ['ticket_type'],
     });
   });
 });
 
 describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
-  it('returns known and unknown field names whose supplied values were skipped', () => {
+  it('returns field names whose supplied values were skipped', () => {
     const fields = [
       makeFreshdeskField({ name: 'cf_subject', type: 'custom_text' }),
       makeFreshdeskField({
@@ -215,11 +215,7 @@ describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
       '?cf_subject=Need%20help&ticket_type=Unknown&cf_requested_date=2026-11-13&unknown=value',
     );
 
-    expect(skippedFieldNames).toEqual([
-      'ticket_type',
-      'cf_requested_date',
-      'unknown',
-    ]);
+    expect(skippedFieldNames).toEqual(['ticket_type', 'cf_requested_date']);
   });
 
   it('does not report applied or absent field values as skipped', () => {
@@ -249,17 +245,18 @@ describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
     expect(skippedFieldNames).toEqual([]);
   });
 
-  it('ignores blank unknown query params and deduplicates repeated names', () => {
+  it('ignores unknown query params and deduplicates repeated known names', () => {
     const fields = [
       makeFreshdeskField({ name: 'cf_subject', type: 'custom_text' }),
+      makeFreshdeskField({ name: 'cf_requested_date', type: 'custom_date' }),
     ];
 
     const skippedFieldNames = getSkippedFormPrefillFieldNamesFromSearch(
       fields,
-      '?unknown=value&unknown=second&empty=%20%20%20',
+      '?unknown=value&unknown=second&cf_requested_date=2026-11-13&cf_requested_date=2026-11-14',
     );
 
-    expect(skippedFieldNames).toEqual(['unknown']);
+    expect(skippedFieldNames).toEqual(['cf_requested_date']);
   });
 });
 

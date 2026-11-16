@@ -93,7 +93,6 @@ export function getFormPrefillResultFromSearch(
     const field = fieldsByName.get(name);
 
     if (!field) {
-      skippedFieldNames.add(name);
       continue;
     }
 
