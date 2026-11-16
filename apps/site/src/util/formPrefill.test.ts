@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   getDynamicSectionSelectionsFromPrefill,
+  getFormPrefillResultFromSearch,
   getFormPrefillValuesFromSearch,
   getSkippedFormPrefillFieldNamesFromSearch,
 } from './formPrefill';
@@ -154,8 +155,42 @@ describe('getFormPrefillValuesFromSearch', () => {
   });
 });
 
+describe('getFormPrefillResultFromSearch', () => {
+  it('returns both applied and skipped prefill data in one pass', () => {
+    const fields = [
+      makeFreshdeskField({ name: 'cf_subject', type: 'custom_text' }),
+      makeFreshdeskField({
+        name: 'ticket_type',
+        type: 'default_ticket_type',
+        choices: [
+          {
+            id: 1,
+            label: 'Website Issue',
+            value: 'Website Issue',
+            position: 1,
+            parent_choice_id: 0,
+            choices: [],
+          },
+        ],
+      }),
+    ];
+
+    const result = getFormPrefillResultFromSearch(
+      fields,
+      '?cf_subject=Need%20help&ticket_type=Unknown&unknown=value',
+    );
+
+    expect(result).toEqual({
+      prefillValues: {
+        cf_subject: 'Need help',
+      },
+      skippedFieldNames: ['ticket_type', 'unknown'],
+    });
+  });
+});
+
 describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
-  it('returns known field names whose supplied values were skipped', () => {
+  it('returns known and unknown field names whose supplied values were skipped', () => {
     const fields = [
       makeFreshdeskField({ name: 'cf_subject', type: 'custom_text' }),
       makeFreshdeskField({
@@ -180,7 +215,11 @@ describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
       '?cf_subject=Need%20help&ticket_type=Unknown&cf_requested_date=2026-11-13&unknown=value',
     );
 
-    expect(skippedFieldNames).toEqual(['ticket_type', 'cf_requested_date']);
+    expect(skippedFieldNames).toEqual([
+      'ticket_type',
+      'cf_requested_date',
+      'unknown',
+    ]);
   });
 
   it('does not report applied or absent field values as skipped', () => {
@@ -208,6 +247,19 @@ describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
     );
 
     expect(skippedFieldNames).toEqual([]);
+  });
+
+  it('ignores blank unknown query params and deduplicates repeated names', () => {
+    const fields = [
+      makeFreshdeskField({ name: 'cf_subject', type: 'custom_text' }),
+    ];
+
+    const skippedFieldNames = getSkippedFormPrefillFieldNamesFromSearch(
+      fields,
+      '?unknown=value&unknown=second&empty=%20%20%20',
+    );
+
+    expect(skippedFieldNames).toEqual(['unknown']);
   });
 });
 

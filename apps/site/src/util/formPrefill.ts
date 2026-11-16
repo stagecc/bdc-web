@@ -24,20 +24,6 @@ const SUPPORTED_CUSTOM_OBJECT_SELECT_TYPES = new Set([
   'DROPDOWN',
 ] satisfies CustomObjectField['type'][]);
 
-function getTrimmedParamValue(
-  params: URLSearchParams,
-  name: string,
-): string | null {
-  const value = params.get(name);
-
-  if (value == null) {
-    return null;
-  }
-
-  const trimmed = value.trim();
-  return trimmed === '' ? null : trimmed;
-}
-
 function isFreshdeskField(field: PrefillField): field is FreshdeskField {
   return 'label_for_customers' in field;
 }
@@ -83,48 +69,60 @@ function shouldApplyPrefillFieldValue(
   return allowedValues.includes(value);
 }
 
+export interface FormPrefillResult {
+  prefillValues: Record<string, string>;
+  skippedFieldNames: string[];
+}
+
+export function getFormPrefillResultFromSearch(
+  fields: PrefillField[],
+  search: string,
+): FormPrefillResult {
+  const params = new URLSearchParams(search);
+  const fieldsByName = new Map(fields.map((field) => [field.name, field]));
+  const prefillValues: Record<string, string> = {};
+  const skippedFieldNames = new Set<string>();
+
+  for (const [name, rawValue] of params.entries()) {
+    const trimmedValue = rawValue.trim();
+
+    if (trimmedValue === '') {
+      continue;
+    }
+
+    const field = fieldsByName.get(name);
+
+    if (!field) {
+      skippedFieldNames.add(name);
+      continue;
+    }
+
+    if (shouldApplyPrefillFieldValue(field, trimmedValue)) {
+      prefillValues[field.name] = trimmedValue;
+      continue;
+    }
+
+    skippedFieldNames.add(field.name);
+  }
+
+  return {
+    prefillValues,
+    skippedFieldNames: Array.from(skippedFieldNames),
+  };
+}
+
 export function getFormPrefillValuesFromSearch(
   fields: PrefillField[],
   search: string,
 ): Record<string, string> {
-  const params = new URLSearchParams(search);
-  const prefillValues: Record<string, string> = {};
-
-  for (const field of fields) {
-    const value = getTrimmedParamValue(params, field.name);
-
-    if (value == null) {
-      continue;
-    }
-
-    if (shouldApplyPrefillFieldValue(field, value)) {
-      prefillValues[field.name] = value;
-    }
-  }
-
-  return prefillValues;
+  return getFormPrefillResultFromSearch(fields, search).prefillValues;
 }
 
 export function getSkippedFormPrefillFieldNamesFromSearch(
   fields: PrefillField[],
   search: string,
 ): string[] {
-  const params = new URLSearchParams(search);
-  const skippedFieldNames: string[] = [];
-
-  for (const field of fields) {
-    const value = getTrimmedParamValue(params, field.name);
-
-    if (value == null) {
-      continue;
-    }
-
-    if (!shouldApplyPrefillFieldValue(field, value)) {
-      skippedFieldNames.push(field.name);
-    }
-  }
-
-  return skippedFieldNames;
+  return getFormPrefillResultFromSearch(fields, search).skippedFieldNames;
 }
 
 export function getDynamicSectionSelectionsFromPrefill(

@@ -39,10 +39,7 @@
 import { useEffect, useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
-import {
-  getFormPrefillValuesFromSearch,
-  getSkippedFormPrefillFieldNamesFromSearch,
-} from '../../../../util/formPrefill';
+import { getFormPrefillResultFromSearch } from '../../../../util/formPrefill';
 import { buildCustomObjectPayload } from '../../../../util/freshdesk/buildCustomObjectPayload';
 import type { CustomObjectField } from '../../../../util/freshdesk/typesCustomObjects';
 import { getRecaptchaToken } from '../../../../util/recaptcha';
@@ -156,11 +153,7 @@ export default function DynamicCustomObjectForm({
       return;
     }
 
-    const prefillValues = getFormPrefillValuesFromSearch(
-      fields,
-      window.location.search,
-    );
-    const skippedPrefillFieldNames = getSkippedFormPrefillFieldNamesFromSearch(
+    const { prefillValues, skippedFieldNames } = getFormPrefillResultFromSearch(
       fields,
       window.location.search,
     );
@@ -168,7 +161,7 @@ export default function DynamicCustomObjectForm({
     hasAppliedPrefillRef.current = true;
     setHasAppliedPrefillValues(Object.keys(prefillValues).length > 0);
     setSkippedPrefillFields(
-      skippedPrefillFieldNames.map((fieldName) => {
+      skippedFieldNames.map((fieldName) => {
         const field = fields.find((candidate) => candidate.name === fieldName);
         return {
           name: fieldName,

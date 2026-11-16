@@ -40,8 +40,7 @@ import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
   getDynamicSectionSelectionsFromPrefill,
-  getFormPrefillValuesFromSearch,
-  getSkippedFormPrefillFieldNamesFromSearch,
+  getFormPrefillResultFromSearch,
 } from '../../../../util/formPrefill';
 import { buildPayload } from '../../../../util/freshdesk/buildPayload';
 import { getSectionFieldIds } from '../../../../util/freshdesk/getFormFields';
@@ -157,11 +156,7 @@ export default function DynamicForm({
       return;
     }
 
-    const prefillValues = getFormPrefillValuesFromSearch(
-      fields,
-      window.location.search,
-    );
-    const skippedPrefillFieldNames = getSkippedFormPrefillFieldNamesFromSearch(
+    const { prefillValues, skippedFieldNames } = getFormPrefillResultFromSearch(
       fields,
       window.location.search,
     );
@@ -169,7 +164,7 @@ export default function DynamicForm({
     hasAppliedPrefillRef.current = true;
     setHasAppliedPrefillValues(Object.keys(prefillValues).length > 0);
     setSkippedPrefillFields(
-      skippedPrefillFieldNames.map((fieldName) => {
+      skippedFieldNames.map((fieldName) => {
         const field = fields.find((candidate) => candidate.name === fieldName);
         return {
           name: fieldName,
