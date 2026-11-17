@@ -40,6 +40,32 @@ test('article pages render article SEO tags in the document head', async ({
   );
 });
 
+test('landing pages reuse shared and hero SEO descriptions', async ({
+  page,
+}) => {
+  await page.goto('/', { waitUntil: 'domcontentloaded' });
+
+  await expect(page.locator('head meta[name="description"]')).toHaveAttribute(
+    'content',
+    defaultDescription,
+  );
+
+  await page.goto('/help/contact-and-support', {
+    waitUntil: 'domcontentloaded',
+  });
+
+  await expect(page.locator('head meta[name="description"]')).toHaveAttribute(
+    'content',
+    'Find technical help, documentation, live support, or the right contact for your question.',
+  );
+  await expect(
+    page.locator('head meta[property="og:description"]'),
+  ).toHaveAttribute(
+    'content',
+    'Find technical help, documentation, live support, or the right contact for your question.',
+  );
+});
+
 test('search page renders noindex SEO tags in the document head', async ({
   page,
 }) => {
