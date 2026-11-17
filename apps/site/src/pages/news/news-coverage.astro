@@ -27,13 +27,15 @@ for (const item of coverage) {
 const years = Object.keys(coverageByYear)
   .map(Number)
   .sort((a, b) => b - a);
+const heroDescription =
+  'Explore external news articles and media coverage featuring BDC.';
 ---
 
-<Base title="News Coverage">
+<Base title="News Coverage" seo={{ description: heroDescription }}>
   <Hero
     eyebrow="News"
     title="News Coverage"
-    description="Explore external news articles and media coverage featuring BDC. "
+    description={heroDescription}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
       <StatCard
