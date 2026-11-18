@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { resolveSeoMetadata } from './seo';
+import { resolveEventSeoDescription, resolveSeoMetadata } from './seo';
 
 describe('resolveSeoMetadata', () => {
   const site = new URL('https://biodatacatalyst.nhlbi.nih.gov');
@@ -81,5 +81,32 @@ describe('resolveSeoMetadata', () => {
     expect(metadata.imageUrl).toBe(
       'https://biodatacatalyst.nhlbi.nih.gov/_astro/story-card.abc123.webp',
     );
+  });
+});
+
+describe('resolveEventSeoDescription', () => {
+  it('uses the event excerpt when available', () => {
+    expect(
+      resolveEventSeoDescription({
+        excerpt:
+          'For the first time, National Sleep Research Resource harmonized data are available on BDC, with more harmonized datasets to come.',
+      }),
+    ).toBe(
+      'For the first time, National Sleep Research Resource harmonized data are available on BDC, with more harmonized datasets to come.',
+    );
+  });
+
+  it('falls back to the first body paragraph and strips markdown', () => {
+    expect(
+      resolveEventSeoDescription({
+        body: `# Webinar\n\nThe [American Heart Association](https://example.com) and the **National Heart, Lung, and Blood Institute** are co-hosting a webinar on Sept 11, 2025.\n\nPlease register here to join us for this webinar.`,
+      }),
+    ).toBe(
+      'The American Heart Association and the National Heart, Lung, and Blood Institute are co-hosting a webinar on Sept 11, 2025.',
+    );
+  });
+
+  it('returns undefined when no event summary is available', () => {
+    expect(resolveEventSeoDescription({})).toBeUndefined();
   });
 });

@@ -66,6 +66,25 @@ test('landing pages reuse shared and hero SEO descriptions', async ({
   );
 });
 
+test('event pages include event summaries in SEO descriptions', async ({
+  page,
+}) => {
+  await page.goto('/news/events/2026/08/community-hours', {
+    waitUntil: 'domcontentloaded',
+  });
+
+  await expect(page.locator('head meta[name="description"]')).toHaveAttribute(
+    'content',
+    'For the first time, National Sleep Research Resource (NSRR) harmonized data are available on BDC, with more harmonized datasets to come. NSRR brings together extensive sleep-related datasets collected across multiple cohorts and clinical studies, including polysomnography, actigraphy, and questionnaire-based data representing tens of thousands of participants.',
+  );
+  await expect(
+    page.locator('head meta[property="og:description"]'),
+  ).toHaveAttribute(
+    'content',
+    'For the first time, National Sleep Research Resource (NSRR) harmonized data are available on BDC, with more harmonized datasets to come. NSRR brings together extensive sleep-related datasets collected across multiple cohorts and clinical studies, including polysomnography, actigraphy, and questionnaire-based data representing tens of thousands of participants.',
+  );
+});
+
 test('search page renders noindex SEO tags in the document head', async ({
   page,
 }) => {

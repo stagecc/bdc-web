@@ -35,6 +35,11 @@ export interface ResolvedSeoMetadata {
   siteName: string;
 }
 
+interface EventSeoInput {
+  excerpt?: string;
+  body?: string;
+}
+
 function firstNonEmpty(...values: Array<string | null | undefined>) {
   for (const value of values) {
     const normalized = value?.trim();
@@ -65,6 +70,39 @@ function resolveImageUrl(image: SeoImage | null | undefined, site?: URL) {
   if (!site) return src;
 
   return new URL(src, site).toString();
+}
+
+function cleanMarkdownParagraph(paragraph: string) {
+  return paragraph
+    .replace(/^#{1,6}\s.*$/gm, ' ')
+    .replace(/^>\s?/gm, '')
+    .replace(/^\s*[-*+]\s+/gm, '')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, ' ')
+    .replace(/\[([^\]]+)\]\([^)]*\)/g, '$1')
+    .replace(/`([^`]+)`/g, '$1')
+    .replace(/[*_~]/g, '')
+    .replace(/<[^>]+>/g, ' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function getBodySummary(body?: string) {
+  if (!body) return undefined;
+
+  for (const paragraph of body.split(/\n\s*\n/g)) {
+    const summary = cleanMarkdownParagraph(paragraph);
+    if (summary) return summary;
+  }
+
+  return undefined;
+}
+
+export function resolveEventSeoDescription({ excerpt, body }: EventSeoInput) {
+  const summary = firstNonEmpty(excerpt, getBodySummary(body));
+
+  if (!summary) return undefined;
+
+  return summary;
 }
 
 export function resolveSeoMetadata({
