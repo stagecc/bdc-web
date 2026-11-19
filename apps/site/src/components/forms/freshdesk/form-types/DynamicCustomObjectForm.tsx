@@ -218,6 +218,8 @@ export default function DynamicCustomObjectForm({
             className="usa-button usa-button--outline margin-right-2"
             onClick={() => {
               reset();
+              setHasAppliedPrefillValues(false);
+              setSkippedPrefillFields([]);
               setStatus('idle');
             }}
           >
