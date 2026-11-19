@@ -4,62 +4,62 @@
       "id": "readme-sevenbridges",
       "type": "readme",
       "base_url": "https://sb-biodatacatalyst.readme.io",
-      "source_hash": "b932cb4d38eccd07464757f358e0fe648485b4d874e7ab32185f2ceb98102a00",
+      "source_hash": "2c3af79d3ea3ec4bbca4b37f3647fb7c664bdf007a5715fe92b127f468d29cf8",
       "pages": [
         {
           "target_path": "/docs/about-pricing",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/about-pricing",
-          "content_hash": "cb9be2ea14ad425279fc02ca7c194aa4b164b6bf23382b5af2e6ec7b18754c99"
+          "content_hash": "c02e106c157e3e7f442d9bcb9fde64ed6e4bf0468761d478136a21c65e961be1"
         },
         {
           "target_path": "/docs/account-settings",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/account-settings",
-          "content_hash": "186c04070d76b1a7dbd2bc3c1545453617ca4046adb47e2e37dcac35c35f268a"
+          "content_hash": "d77111b361867c0e40aa153c161c667e89c28147d69247817121fac9701658d9"
         },
         {
           "target_path": "/docs/before-you-start",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/before-you-start",
-          "content_hash": "c2544ec3f311a6887fc6aa14080f300b3552ff7715bc67acdc5a21880ec292b2"
+          "content_hash": "7a62333058773c3ba761bb4b49a6f0df13274dad689da43ad139d10cb4b9ed66"
         },
         {
           "target_path": "/docs/comprehensive-user-guide",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/comprehensive-user-guide",
-          "content_hash": "204824b01f79f924353c95b9301db3f5123258b9acbfad35c69f1aeabb4af8cf"
+          "content_hash": "9140abc25c104009875fce5dc9bbf83fa518477d632c3b8874fe5097c584b2c2"
         },
         {
           "target_path": "/docs/compute-costs",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/compute-costs",
-          "content_hash": "539dd29b2e199835203f435832829044cbe8e4d7782ffb24699b4efdfba8e4d6"
+          "content_hash": "d5c849a3689617e01d5b950e019f21e3756387c261d5996636cc062668261195"
         },
         {
           "target_path": "/docs/data-transfer-costs",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/data-transfer-costs",
-          "content_hash": "5e9702c7a2e45b757d9842a83719fe332d3d1b87fd84dc63884c6ced7b799954"
+          "content_hash": "17e554975841ba21cfa2b22c0c86526cb83d5183089c906a68be8e4b087ed0b8"
         },
         {
           "target_path": "/docs/getting-started",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/getting-started",
-          "content_hash": "cbd5c59f3c9857934421d4b103dd44cd6fc73eb2dfa5662362060a7f4e14f856"
+          "content_hash": "9bf6d30a9d1b3b13e14743866293622382dbd2cd1d0f40be3131d602fa9eff07"
         },
         {
           "target_path": "/docs/manage-billing-group-members",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/manage-billing-group-members",
-          "content_hash": "fa3479265cfee79e248da736cc507a04e7bf9259c885455eb8d094d1085ef766"
+          "content_hash": "0850fef331dace16789064af6c04e6a22edabb40c437c582cc61ed47b75e1cdb"
         },
         {
           "target_path": "/docs/payments",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/payments",
-          "content_hash": "cb403db237354bb4a470e2cf085b172233d80007d09c6633c5ca9e0b74a6c979"
+          "content_hash": "e789b86184013ee79fe84dbedfdc1511f8972a834700a2cb5d0f1badbcfa69f3"
         },
         {
           "target_path": "/docs/sign-up-for-biodata-catalyst-powered-by-seven-bridges",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/sign-up-for-biodata-catalyst-powered-by-seven-bridges",
-          "content_hash": "34fa8244ec456fd7d72035e58b7d8c986e8dc23a0ce167483ebf41457de796d1"
+          "content_hash": "01b0717d5a485b6aafccf4cb46e7aebec51afa9a9db900ffeccd8d69af97e3d0"
         },
         {
           "target_path": "/docs/storage-costs",
           "source_url": "https://sb-biodatacatalyst.readme.io/docs/storage-costs",
-          "content_hash": "763bffb8134eaf38de0cfc4ee639b15960a2f5abd7e57b85856484ad58de0729"
+          "content_hash": "8cf79a4572f1ce67faf15e7b49f35e8ddb966c651e6380c8b626346bf3ca3f21"
         }
       ]
     },
