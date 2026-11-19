@@ -1,4 +1,5 @@
 ---
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import Card from '@bdc/ui-astro/card/Card.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
@@ -7,6 +8,9 @@ import InPageNav from '@components/layout/InPageNav.astro';
 import NextStepsAlert from '@components/NextStepsAlert.astro';
 import Notice from '@components/Notice.astro';
 import Base from '@layouts/Base.astro';
+import { getProgramsWithContent } from '../../util/programs';
+
+const remoteProgramDataAvailable = (await getProgramsWithContent()).length > 0;
 ---
 
 <Base title="Researcher-Focused Initiatives">
@@ -45,6 +49,18 @@ import Base from '@layouts/Base.astro';
           from research protocols.
         </p>
 
+        {
+          !remoteProgramDataAvailable && (
+            <InlineAlert
+              variant="warning"
+              heading="Hosted dataset listings are temporarily unavailable"
+            >
+              Initiative overview information remains available on this page.
+              Please check back later for detailed hosted dataset listings.
+            </InlineAlert>
+          )
+        }
+
         <div class="margin-bottom-8">
           <section id="topmed" class="border-top-1px border-base-light margin-top-6">
             <h2>TOPMed</h2>
@@ -65,9 +81,17 @@ import Base from '@layouts/Base.astro';
               For genotype imputation using the TOPMed reference panel, refer to the 
               <Link to="https://imputation.biodatacatalyst.nhlbi.nih.gov/">TOPMed Imputation Server</Link>.
             </p>
-              <Notice icon="database" tone="cool">
-                <Link to={`/about/studies/topmed`}>See a list of the TOPMed data available in BDC</Link>
-              </Notice>
+            {
+              remoteProgramDataAvailable ? (
+                <Notice icon="database" tone="cool">
+                  <Link to={`/about/studies/topmed`}>See a list of the TOPMed data available in BDC</Link>
+                </Notice>
+              ) : (
+                <Notice icon="priority_high" tone="warm">
+                  Dataset listings are temporarily unavailable.
+                </Notice>
+              )
+            }
 
           </section>
 
@@ -89,9 +113,17 @@ import Base from '@layouts/Base.astro';
               <Link to="https://recovercovid.org/data">RECOVER</Link> to help researchers 
               understand and work with these datasets.
             </p>
-            <Notice icon="database" tone="cool">
-              <Link to={`/about/studies/recover`}>See a list of the RECOVER data available in BDC</Link>
-            </Notice>
+            {
+              remoteProgramDataAvailable ? (
+                <Notice icon="database" tone="cool">
+                  <Link to={`/about/studies/recover`}>See a list of the RECOVER data available in BDC</Link>
+                </Notice>
+              ) : (
+                <Notice icon="priority_high" tone="warm">
+                  Dataset listings are temporarily unavailable.
+                </Notice>
+              )
+            }
 
           <section id="heartshare" class="border-top-1px border-base-light margin-top-6">
             <h2>HeartShare</h2>
@@ -112,9 +144,17 @@ import Base from '@layouts/Base.astro';
               available in BDC, along with supporting investigators to ensure data meets 
               needs for desired analyses.
             </p>
-            <Notice icon="database" tone="cool">
-              <Link to={`/about/studies/heartshare`}>See a list of the HeartShare data available in BDC</Link>
-            </Notice>
+            {
+              remoteProgramDataAvailable ? (
+                <Notice icon="database" tone="cool">
+                  <Link to={`/about/studies/heartshare`}>See a list of the HeartShare data available in BDC</Link>
+                </Notice>
+              ) : (
+                <Notice icon="priority_high" tone="warm">
+                  Dataset listings are temporarily unavailable.
+                </Notice>
+              )
+            }
 
           <section id="nsrr" class="border-top-1px border-base-light margin-top-6">
             <h2>National Sleep Research Resource (NSRR)</h2>
@@ -132,9 +172,17 @@ import Base from '@layouts/Base.astro';
               communities, aiming to expand the breadth and depth of the sleep-related
               data and understand optimal methods of sleep data analysis.
             </p>
-            <Notice icon="database" tone="cool">
-              <Link to={`/about/studies/nsrr`}>See a list of the NSRR data available in BDC</Link>
-            </Notice>
+            {
+              remoteProgramDataAvailable ? (
+                <Notice icon="database" tone="cool">
+                  <Link to={`/about/studies/nsrr`}>See a list of the NSRR data available in BDC</Link>
+                </Notice>
+              ) : (
+                <Notice icon="priority_high" tone="warm">
+                  Dataset listings are temporarily unavailable.
+                </Notice>
+              )
+            }
           <section id="rmip" class="border-top-1px border-base-light margin-top-6">
             <h2>Regenerative Medicine Innovation Project (RMIP)</h2>
             <p>

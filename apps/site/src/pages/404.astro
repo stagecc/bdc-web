@@ -1,9 +1,13 @@
 ---
+import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import Card from '@bdc/ui-astro/card/Card.astro';
 import IconBadge from '@bdc/ui-astro/icon/IconBadge.astro';
 import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import Base from '@layouts/Base.astro';
+import { getProgramsWithContent } from '../util/programs';
+
+const remoteDataAvailable = (await getProgramsWithContent()).length > 0;
 ---
 
 <Base title="Page Not Found" indexForSearch={false}>
@@ -27,6 +31,19 @@ import Base from '@layouts/Base.astro';
 
   <section class="usa-section padding-top-4 padding-bottom-8">
     <div class="grid-container">
+      {
+        !remoteDataAvailable && (
+          <InlineAlert
+            variant="warning"
+            heading="Hosted data program pages may be temporarily unavailable"
+          >
+            Hosted data program content is temporarily unavailable while it is
+            being restored. Visit the <Link to="/about/studies/">BDC-Hosted Data
+            page</Link> for current status.
+          </InlineAlert>
+        )
+      }
+
       <h2 class="margin-top-0">Popular paths</h2>
       <div class="grid-row grid-gap-3">
         <div class="tablet:grid-col-6 desktop:grid-col-3 display-flex flex-align-stretch margin-bottom-2">
