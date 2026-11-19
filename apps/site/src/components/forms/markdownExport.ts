@@ -2,6 +2,9 @@ import { getSectionFieldIds } from '../../util/freshdesk/getFormFields';
 import type { FreshdeskField } from '../../util/freshdesk/types';
 import type { CustomObjectField } from '../../util/freshdesk/typesCustomObjects';
 
+export const finalConsentExportNote =
+  'The website also requires a final consent checkbox before submission. This site-level checkbox is not included in the exported fields and must be selected by the user after reviewing the form.';
+
 export interface MarkdownFormField {
   name: string;
   label: string;

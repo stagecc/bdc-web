@@ -141,7 +141,9 @@ export function convertPage(html, { url, collections = {} }) {
     converter.addRule('formMetadata', {
       filter: (node) => node.hasAttribute?.('data-markdown-form'),
       replacement: (_content, node) => {
-        const { fields } = JSON.parse(node.getAttribute('data-markdown-form'));
+        const { fields, note } = JSON.parse(
+          node.getAttribute('data-markdown-form'),
+        );
         const yaml = dump({ url, fields }, { lineWidth: -1, noRefs: true });
         const fence = '`'.repeat(
           Math.max(
@@ -149,7 +151,7 @@ export function convertPage(html, { url, collections = {} }) {
             ...[...yaml.matchAll(/`+/g)].map((match) => match[0].length + 1),
           ),
         );
-        return `\n\n${fence}form\n${yaml}${fence}\n\n`;
+        return `\n\n${fence}form\n${yaml}${fence}\n\n${note ? `${converter.escape(note)}\n\n` : ''}`;
       },
     });
     converter.addRule('table', {

@@ -45,7 +45,7 @@ import { getRecaptchaToken } from '../../../../util/recaptcha';
 import { trackFormSubmitSuccess } from '../../../layout/analytics/forms';
 import ConsentField, { CONSENT_FIELD_NAME } from '../../fields/ConsentField';
 import HoneypotField from '../../fields/HoneypotField';
-import { ticketFormFields } from '../../markdownExport';
+import { finalConsentExportNote, ticketFormFields } from '../../markdownExport';
 import {
   type FormMessages,
   fieldErrors,
@@ -251,6 +251,7 @@ export default function DynamicForm({
         data-analytics-form={analyticsFormName}
         data-markdown-form={JSON.stringify({
           fields: ticketFormFields(fields),
+          note: finalConsentExportNote,
         })}
         onSubmit={handleSubmit(onSubmit, onError)}
         noValidate // Disable native browser validation — RHF handles it

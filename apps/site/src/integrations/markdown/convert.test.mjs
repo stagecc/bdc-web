@@ -296,3 +296,34 @@ test('exports form YAML in place with page URL and no form UI or submitted value
     assert.doesNotMatch(result, /private@example.org|Submit|Form metadata/);
   }
 });
+
+test('places optional consent documentation after fields without changing the schema', () => {
+  const note = 'The final consent checkbox must be selected on the website.';
+  const fields = [
+    {
+      name: 'cf_consent',
+      label: 'Cloud Credits consent',
+      type: 'custom_checkbox',
+      required: true,
+    },
+  ];
+  for (const formNote of [note, undefined]) {
+    const metadata = JSON.stringify({ fields, note: formNote }).replace(
+      /"/g,
+      '&quot;',
+    );
+    const result = convertPage(
+      page(`<form data-markdown-form="${metadata}"></form><p>After form</p>`),
+      { url },
+    );
+    const block = result.match(/```form\n([\s\S]*?)```/);
+    assert.ok(block);
+    assert.deepEqual(load(block[1]), { url, fields });
+    if (formNote) {
+      assert.ok(result.indexOf(note) > result.indexOf(block[0]));
+      assert.ok(result.indexOf(note) < result.indexOf('After form'));
+    } else {
+      assert.ok(!result.includes(note));
+    }
+  }
+});
