@@ -70,6 +70,7 @@ export function parseZendeskArticleRef(targetPath) {
   };
 }
 
+// Decoding logic is implemented from https://github.com/estifie/cf-email-decode
 export function decodeCloudflareEmails(input) {
   if (!/data-cfemail|\/cdn-cgi\/l\/email-protection/i.test(input)) return input;
 
