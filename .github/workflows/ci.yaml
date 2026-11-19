@@ -76,8 +76,7 @@ jobs:
         if: >-
           matrix.app == 'site' &&
           github.event_name == 'push' &&
-          (github.ref == 'refs/heads/prod' ||
-           github.ref == 'refs/heads/feature/form-frontmatter')
+          github.ref == 'refs/heads/prod'
         env:
           FRESHDESK_DOMAIN: ${{ secrets.FRESHDESK_DOMAIN }}
           FRESHDESK_API_KEY: ${{ secrets.FRESHDESK_API_KEY }}
