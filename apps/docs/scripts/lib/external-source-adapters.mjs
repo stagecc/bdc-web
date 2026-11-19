@@ -43,16 +43,17 @@ export async function fetchJsonPage(url) {
 }
 
 export function extractReadmeBodyHtml(html) {
-  // readme.io pages do not expose a stable API for equivalent rendered body HTML,
-  // so we extract the content subtree from the page shell.
-  const match = html.match(
-    /data-testid="RDMD"[^>]*>([\s\S]*?)<\/div><\/div><div class="UpdatedAt"/,
-  );
-  if (!match?.[1]) {
-    throw new Error('Unable to locate readme.io page body');
+  // Select the article body without depending on surrounding layout wrappers.
+  const dom = new JSDOM(html);
+  try {
+    const body = dom.window.document.querySelector('[data-testid="RDMD"]');
+    if (!body?.innerHTML.trim()) {
+      throw new Error('Unable to locate readme.io page body');
+    }
+    return body.innerHTML.trim();
+  } finally {
+    dom.window.close();
   }
-
-  return match[1].trim();
 }
 
 export function parseZendeskArticleRef(targetPath) {
