@@ -98,6 +98,7 @@ export function getFormPrefillResultFromSearch(
 
     if (shouldApplyPrefillFieldValue(field, trimmedValue)) {
       prefillValues[field.name] = trimmedValue;
+      skippedFieldNames.delete(field.name);
       continue;
     }
 
