@@ -39,6 +39,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
 import {
+  clearPrefillUrl,
   getDynamicSectionSelectionsFromPrefill,
   getFormPrefillResultFromSearch,
 } from '../../../../util/formPrefill';
@@ -236,7 +237,8 @@ export default function DynamicForm({
             type="button"
             className="usa-button usa-button--outline margin-right-2"
             onClick={() => {
-              reset();
+              clearPrefillUrl();
+              reset({});
               setSectionSelections({});
               setHasAppliedPrefillValues(false);
               setSkippedPrefillFields([]);

@@ -125,6 +125,18 @@ export function getSkippedFormPrefillFieldNamesFromSearch(
   return getFormPrefillResultFromSearch(fields, search).skippedFieldNames;
 }
 
+export function clearPrefillUrl() {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
+  window.history.replaceState(
+    {},
+    document.title,
+    window.location.pathname + window.location.hash,
+  );
+}
+
 export function getDynamicSectionSelectionsFromPrefill(
   fields: FreshdeskField[],
   prefillValues: Record<string, string>,

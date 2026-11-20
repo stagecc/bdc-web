@@ -39,7 +39,10 @@
 import { useEffect, useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
-import { getFormPrefillResultFromSearch } from '../../../../util/formPrefill';
+import {
+  clearPrefillUrl,
+  getFormPrefillResultFromSearch,
+} from '../../../../util/formPrefill';
 import { buildCustomObjectPayload } from '../../../../util/freshdesk/buildCustomObjectPayload';
 import type { CustomObjectField } from '../../../../util/freshdesk/typesCustomObjects';
 import { getRecaptchaToken } from '../../../../util/recaptcha';
@@ -217,7 +220,8 @@ export default function DynamicCustomObjectForm({
             type="button"
             className="usa-button usa-button--outline margin-right-2"
             onClick={() => {
-              reset();
+              clearPrefillUrl();
+              reset({});
               setHasAppliedPrefillValues(false);
               setSkippedPrefillFields([]);
               setStatus('idle');
