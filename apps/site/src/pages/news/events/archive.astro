@@ -16,13 +16,15 @@ const past = (await getCollection('events'))
     isPastEvent({ date: e.data.date, endDate: e.data.endDate }, now),
   )
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const heroDescription =
+  'Browse archived events from the BDC ecosystem, including links to recordings, slides, and additional resources when available.';
 ---
 
-<Base title="Past Events">
+<Base title="Past Events" seo={{ description: heroDescription }}>
   <Hero
     eyebrow="News"
     title="Past Events"
-    description="Browse archived events from the BDC ecosystem, including links to recordings, slides, and additional resources when available."
+    description={heroDescription}
     primaryCta={{ label: 'View Upcoming Events', href: '/news/events' }}
     secondaryCta={{ label: 'View Latest Updates', href: '/news/latest-updates' }}
   >

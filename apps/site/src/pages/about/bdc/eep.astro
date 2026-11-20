@@ -25,13 +25,15 @@ const rendered = await Promise.all(
     return { member, Content };
   }),
 );
+const heroDescription =
+  'The BDC External Expert Panel (EEP) is an independent body of experts that provides feedback and input that helps NHLBI make strategic decisions about the BDC program.';
 ---
 
-<Base title="BDC External Expert Panel">
+<Base title="BDC External Expert Panel" seo={{ description: heroDescription }}>
   <Hero
     eyebrow="About BDC"
     title="BDC External Expert Panel"
-    description="The BDC External Expert Panel (EEP) is an independent body of experts that provides feedback and input that helps NHLBI make strategic decisions about the BDC program."
+    description={heroDescription}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
       <StatCard

@@ -5,12 +5,19 @@ import Hero from '@bdc/ui-astro/layout/Hero.astro';
 import Link from '@bdc/ui-astro/link/Link.astro';
 import EmailSignupForm from '@components/forms/freshdesk/composed/EmailSignupForm.astro';
 import Base from '@layouts/Base.astro';
+
+const heroDescription =
+  "By joining the BDC Community, you'll receive updates and gain the ability to participate in discussions on the BDC Community Forum.";
 ---
-<Base title="Stay Connected" enableRecaptcha>
+<Base
+  title="Stay Connected"
+  enableRecaptcha
+  seo={{ description: heroDescription }}
+>
   <Hero
     eyebrow="Join BDC"
     title="Stay Connected"
-    description="By joining the BDC Community, you'll receive updates and gain the ability to participate in discussions on the BDC Community Forum."
+    description={heroDescription}
     primaryCta={{ label: 'BDC Community Forum', href: 'https://bdcatalyst.freshdesk.com/support/discussions' }}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">

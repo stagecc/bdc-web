@@ -10,7 +10,32 @@ import EventHeader from '@components/events/EventHeader.astro';
 import Base from '@layouts/Base.astro';
 import { isPastEvent } from '../util/eventDateTime';
 
-const { frontmatter } = Astro.props;
+interface Props {
+  frontmatter: {
+    title: string;
+    date: Date;
+    endDate?: Date;
+    time?: string;
+    location?: string;
+    url?: string;
+    registrationRequired?: boolean;
+    eventType?: string;
+    tags?: string[];
+    externalEvent?: boolean;
+    heroImage?: string | { src: string };
+    heroAlt?: string;
+    materials?: Array<{ type: string; url: string; label: string }>;
+    excerpt?: string;
+    seo?: {
+      title?: string;
+      description?: string | null;
+      keywords?: string[];
+    };
+  };
+  constructedEventSeoDescription?: string;
+}
+
+const { frontmatter, constructedEventSeoDescription }: Props = Astro.props;
 
 const crumbs = [
   { label: 'Events', href: '/news/events/' },
@@ -35,13 +60,24 @@ const {
   heroImage,
   heroAlt,
   materials,
+  excerpt,
+  seo,
 } = frontmatter;
 
 const now = new Date();
 const isPast = isPastEvent({ date, endDate }, now);
 ---
 
-<Base title={title}>
+<Base
+  title={title}
+  seo={{
+    ...seo,
+    description: seo?.description ?? constructedEventSeoDescription,
+    keywords: seo?.keywords,
+    image: heroImage,
+    type: 'article',
+  }}
+>
 
   <section class="usa-section">
     <article class="event">
