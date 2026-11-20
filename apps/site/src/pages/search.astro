@@ -2,7 +2,11 @@
 import Base from '@layouts/Base.astro';
 ---
 
-<Base title="Search Results" indexForSearch={false}>
+<Base
+  title="Search Results"
+  indexForSearch={false}
+  seo={{ robots: 'noindex,follow' }}
+>
   <section class="usa-section padding-top-9 desktop:padding-top-8">
     <div class="grid-container">
       <h1>Search Results</h1>

@@ -23,13 +23,15 @@ const upcoming = allEvents
 const past = allEvents.filter((e) =>
   isPastEvent({ date: e.data.date, endDate: e.data.endDate }, now),
 );
+const heroDescription =
+  'Explore upcoming webinars, trainings, workshops, conferences, and community sessions from across the BDC ecosystem.';
 ---
 
-<Base title="Events">
+<Base title="Events" seo={{ description: heroDescription }}>
   <Hero
     eyebrow="News"
     title="Events"
-    description="Explore upcoming webinars, trainings, workshops, conferences, and community sessions from across the BDC ecosystem."
+    description={heroDescription}
     primaryCta={{ label: 'Browse Upcoming Events', href: '#upcoming-events' }}
     secondaryCta={{ label: 'View Past Events', href: '/news/events/archive/' }}
   >

@@ -3,11 +3,11 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { convertExternalHtmlToMarkdown } from './lib/external-html-to-markdown.mjs';
 import {
+  decodeCloudflareEmails,
   extractReadmeBodyHtml,
   fetchHtmlPage,
   fetchJsonPage,
   parseZendeskArticleRef,
-  stripCloudflareEmailProtection,
 } from './lib/external-source-adapters.mjs';
 import { readSourceConfigsForSync } from './lib/external-source-config.mjs';
 import { assertOverviewHeadingPreserved } from './lib/external-source-integrity.mjs';
@@ -346,7 +346,7 @@ async function fetchReadmePage(url) {
 
   const html = await response.text();
   const title = extractTitle(html);
-  const bodyHtml = extractReadmeBodyHtml(html);
+  const bodyHtml = decodeCloudflareEmails(extractReadmeBodyHtml(html));
   return { title, bodyHtml };
 }
 
@@ -376,7 +376,7 @@ async function fetchZendeskPage(baseUrl, targetPath) {
         : `Zendesk article ${articleRef.articleId}`;
   const bodyHtml =
     typeof article.body === 'string'
-      ? stripCloudflareEmailProtection(article.body)
+      ? decodeCloudflareEmails(article.body)
       : '';
   if (!bodyHtml) {
     throw new Error(`Missing Zendesk article body for ${articleRef.articleId}`);

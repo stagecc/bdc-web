@@ -1,3 +1,5 @@
+import { JSDOM } from 'jsdom';
+
 // Shared adapter primitives used by both:
 // - sync-external-docs.mjs (render markdown output)
 // - check-external-updates.mjs (compute lock hashes)
@@ -41,16 +43,17 @@ export async function fetchJsonPage(url) {
 }
 
 export function extractReadmeBodyHtml(html) {
-  // readme.io pages do not expose a stable API for equivalent rendered body HTML,
-  // so we extract the content subtree from the page shell.
-  const match = html.match(
-    /data-testid="RDMD"[^>]*>([\s\S]*?)<\/div><\/div><div class="UpdatedAt"/,
-  );
-  if (!match?.[1]) {
-    throw new Error('Unable to locate readme.io page body');
+  // Select the article body without depending on surrounding layout wrappers.
+  const dom = new JSDOM(html);
+  try {
+    const body = dom.window.document.querySelector('[data-testid="RDMD"]');
+    if (!body?.innerHTML.trim()) {
+      throw new Error('Unable to locate readme.io page body');
+    }
+    return body.innerHTML.trim();
+  } finally {
+    dom.window.close();
   }
-
-  return match[1].trim();
 }
 
 export function parseZendeskArticleRef(targetPath) {
@@ -67,11 +70,44 @@ export function parseZendeskArticleRef(targetPath) {
   };
 }
 
-export function stripCloudflareEmailProtection(input) {
-  return input.replace(
-    /<a[^>]*href="[^"]*\/cdn-cgi\/l\/email-protection[^"]*"[^>]*>[\s\S]*?<\/a>/gi,
-    '[email protected]',
-  );
+// Decoding logic is implemented from https://github.com/estifie/cf-email-decode
+export function decodeCloudflareEmails(input) {
+  if (!/data-cfemail|\/cdn-cgi\/l\/email-protection/i.test(input)) return input;
+
+  const fragment = JSDOM.fragment(input);
+  for (const element of fragment.querySelectorAll('[data-cfemail]')) {
+    const email = decodeCloudflareEmail(element.getAttribute('data-cfemail'));
+    if (!email) continue;
+    element.textContent = email;
+    element.removeAttribute('data-cfemail');
+    element.classList.remove('__cf_email__');
+    if (!element.className) element.removeAttribute('class');
+  }
+  for (const anchor of fragment.querySelectorAll('a[href]')) {
+    const match = anchor
+      .getAttribute('href')
+      .match(/\/cdn-cgi\/l\/email-protection#([a-f\d]+)$/i);
+    const email = match && decodeCloudflareEmail(match[1]);
+    if (!email) continue;
+    anchor.setAttribute('href', `mailto:${email}`);
+    if (/^\[email\s+protected\]$/i.test(anchor.textContent.trim())) {
+      anchor.textContent = email;
+    }
+  }
+  const container = fragment.ownerDocument.createElement('div');
+  container.append(fragment);
+  return container.innerHTML;
+}
+
+function decodeCloudflareEmail(encoded) {
+  if (!/^(?:[a-f\d]{2}){2,}$/i.test(encoded ?? '')) return null;
+  const bytes = Buffer.from(encoded, 'hex');
+  const decoded = Buffer.from(
+    bytes.subarray(1).map((byte) => byte ^ bytes[0]),
+  ).toString('utf8');
+  return /^[^\s@<>]+@[^\s@<>]+$/.test(decoded) && !decoded.includes('\uFFFD')
+    ? decoded
+    : null;
 }
 
 async function fetchWithRetry(url, options) {

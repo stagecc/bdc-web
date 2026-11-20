@@ -7,13 +7,16 @@ import InPageNav from '@components/layout/InPageNav.astro';
 import NextStepsAlert from '@components/NextStepsAlert.astro';
 import Notice from '@components/Notice.astro';
 import Base from '@layouts/Base.astro';
+
+const heroDescription =
+  'See how BDC works with select research initiatives to bring valuable data and resources into the ecosystem and expand how researchers can use them.';
 ---
 
-<Base title="Researcher-Focused Initiatives">
+<Base title="Researcher-Focused Initiatives" seo={{ description: heroDescription }}>
   <Hero
     eyebrow="About BDC"
     titleLines={['Researcher-Focused', 'Initiatives']}
-    description="See how BDC works with select research initiatives to bring valuable data and resources into the ecosystem and expand how researchers can use them."
+    description={heroDescription}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
       <Card variant="panel">

@@ -8,6 +8,7 @@ import SiteFooter from '@components/layout/SiteFooter.astro';
 import { SiteHeader } from '@components/layout/SiteHeader';
 import SearchResultEnhancementTemplates from '@components/search/SearchResultEnhancementTemplates.astro';
 import SearchResultTemplates from '@components/search/SearchResultTemplates.astro';
+import { resolveSeoMetadata, type SeoConfig } from '../util/seo';
 import '../styles/global.scss';
 
 interface Props {
@@ -17,13 +18,22 @@ interface Props {
   // avoiding unnecessary Google script loading sitewide.
   enableRecaptcha?: boolean;
   indexForSearch?: boolean;
+  seo?: SeoConfig;
 }
 
-const { title, enableRecaptcha = false, indexForSearch = true } = Astro.props;
+const {
+  title,
+  enableRecaptcha = false,
+  indexForSearch = true,
+  seo,
+} = Astro.props;
 const isHomePage = Astro.url.pathname === '/';
-const displayTitle = title.includes('BioData Catalyst')
-  ? title
-  : `${title} | BioData Catalyst`;
+const metadata = resolveSeoMetadata({
+  title,
+  seo,
+  currentUrl: Astro.url,
+  site: Astro.site,
+});
 const gaId = import.meta.env.PUBLIC_GA_ID;
 const hasGa = typeof gaId === 'string' && gaId.length > 0;
 ---
@@ -33,7 +43,30 @@ const hasGa = typeof gaId === 'string' && gaId.length > 0;
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{displayTitle}</title>
+    <title>{metadata.displayTitle}</title>
+    <meta name="description" content={metadata.description} />
+    <meta name="robots" content={metadata.robots} />
+    {metadata.keywords.length > 0 && (
+      <meta name="keywords" content={metadata.keywords.join(', ')} />
+    )}
+    <link rel="canonical" href={metadata.canonicalUrl} />
+    <meta property="og:site_name" content={metadata.siteName} />
+    <meta property="og:type" content={metadata.ogType} />
+    <meta property="og:title" content={metadata.pageTitle} />
+    <meta property="og:description" content={metadata.description} />
+    <meta property="og:url" content={metadata.canonicalUrl} />
+    {metadata.imageUrl && (
+      <meta property="og:image" content={metadata.imageUrl} />
+    )}
+    <meta
+      name="twitter:card"
+      content={metadata.imageUrl ? 'summary_large_image' : 'summary'}
+    />
+    <meta name="twitter:title" content={metadata.pageTitle} />
+    <meta name="twitter:description" content={metadata.description} />
+    {metadata.imageUrl && (
+      <meta name="twitter:image" content={metadata.imageUrl} />
+    )}
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link href="/pagefind/pagefind-component-ui.css" rel="stylesheet" />
     <script src="/pagefind/pagefind-component-ui.js" type="module"></script>

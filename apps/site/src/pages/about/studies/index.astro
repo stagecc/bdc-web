@@ -18,13 +18,15 @@ const totalDatasets = programs.reduce(
   (total, entry) => total + entry.program.data.numberOfStudies,
   0,
 );
+const heroDescription =
+  'Explore the broad range of biomedical datasets available in BDC.';
 ---
 
-<Base title="BDC-Hosted Data">
+<Base title="BDC-Hosted Data" seo={{ description: heroDescription }}>
   <Hero
     eyebrow="Hosted Datasets"
     titleLines={['BDC-Hosted', 'Data']}
-    description="Explore the broad range of biomedical datasets available in BDC."
+    description={heroDescription}
   >
     <div slot="visual" class="width-full maxw-mobile-lg">
       <StatCard

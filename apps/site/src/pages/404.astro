@@ -6,7 +6,11 @@ import Link from '@bdc/ui-astro/link/Link.astro';
 import Base from '@layouts/Base.astro';
 ---
 
-<Base title="Page Not Found" indexForSearch={false}>
+<Base
+  title="Page Not Found"
+  indexForSearch={false}
+  seo={{ robots: 'noindex,follow' }}
+>
   <Hero
     eyebrow="Error 404"
     title="We could not find that page"
