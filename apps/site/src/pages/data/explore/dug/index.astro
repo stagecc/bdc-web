@@ -1,10 +1,6 @@
 ---
-import InlineAlert from '@bdc/ui-astro/alert/InlineAlert.astro';
 import { DugSearchApp } from '@components/dug';
 import Base from '@layouts/Base.astro';
-
-const maintenanceNoticeCutoff = new Date('2026-11-14T00:00:00-05:00');
-const showMaintenanceNotice = new Date() < maintenanceNoticeCutoff;
 ---
 
 <Base title="Disease, Phenotype, Biological Process, or Anatomical Entity Search">
@@ -16,16 +12,11 @@ const showMaintenanceNotice = new Date() < maintenanceNoticeCutoff;
         Dug semantic search.
       </p>
 
-      {showMaintenanceNotice && (
-        <>
-          <InlineAlert variant="warning" heading="Planned Maintenance">
-            The Disease, Phenotype, Biological Process, or Anatomical Entity Search will have planned maintenance on Friday, November 13 at 3:00 PM that may result in a temporary outage. Please check back later if you experience an interruption.
-          </InlineAlert>
+      <p class="margin-bottom-4">
+        Please note: this search undergoes scheduled maintenance updates every
+        Friday at 3:00 PM Eastern Time, which may result in temporary downtime.
+      </p>
 
-          <br />
-        </>
-      )}
-      
       <DugSearchApp client:load />
     </div>
   </section>
