@@ -3,11 +3,11 @@ import { writeFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import {
+  decodeCloudflareEmails,
   extractReadmeBodyHtml,
   fetchHtmlPage,
   fetchJsonPage,
   parseZendeskArticleRef,
-  stripCloudflareEmailProtection,
 } from './lib/external-source-adapters.mjs';
 import { readSourceConfigsForLock } from './lib/external-source-config.mjs';
 
@@ -65,36 +65,12 @@ function sha256(value) {
 }
 
 function normalizeContentForHash(input) {
-  return normalizeCloudflareEmails(input)
+  return decodeCloudflareEmails(input)
     .replace(/\r\n/g, '\n')
     .replace(/\s+/g, ' ')
     .replace(/ data-testid="[^"]+"/g, '')
     .replace(/ class="[^"]*"/g, '')
     .trim();
-}
-
-function normalizeCloudflareEmails(input) {
-  return input
-    .replace(
-      /\/cdn-cgi\/l\/email-protection#([a-f\d]+)/gi,
-      (_, encoded) => `mailto:${decodeCloudflareEmail(encoded)}`,
-    )
-    .replace(
-      /data-cfemail="([a-f\d]+)"/gi,
-      (_, encoded) => `data-email="${decodeCloudflareEmail(encoded)}"`,
-    );
-}
-
-function decodeCloudflareEmail(encoded) {
-  const key = Number.parseInt(encoded.slice(0, 2), 16);
-  let decoded = '';
-
-  for (let index = 2; index < encoded.length; index += 2) {
-    const byte = Number.parseInt(encoded.slice(index, index + 2), 16);
-    decoded += String.fromCharCode(byte ^ key);
-  }
-
-  return decoded;
 }
 
 async function fetchBodyForSource(source, page, sourceUrl) {
@@ -147,5 +123,5 @@ async function fetchZendeskBodyFromApi(baseUrl, targetPath) {
     throw new Error(`Invalid Zendesk article payload for ${targetPath}`);
   }
 
-  return stripCloudflareEmailProtection(article.body);
+  return article.body;
 }
