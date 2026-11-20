@@ -238,6 +238,8 @@ export default function DynamicForm({
             onClick={() => {
               reset();
               setSectionSelections({});
+              setHasAppliedPrefillValues(false);
+              setSkippedPrefillFields([]);
               setStatus('idle');
             }}
           >

@@ -187,6 +187,37 @@ describe('getFormPrefillResultFromSearch', () => {
       skippedFieldNames: ['ticket_type'],
     });
   });
+
+  it('treats repeated query params as last value wins for skipped reporting', () => {
+    const fields = [
+      makeFreshdeskField({
+        name: 'ticket_type',
+        type: 'default_ticket_type',
+        choices: [
+          {
+            id: 1,
+            label: 'Website Issue',
+            value: 'Website Issue',
+            position: 1,
+            parent_choice_id: 0,
+            choices: [],
+          },
+        ],
+      }),
+    ];
+
+    const result = getFormPrefillResultFromSearch(
+      fields,
+      '?ticket_type=Unknown&ticket_type=Website%20Issue',
+    );
+
+    expect(result).toEqual({
+      prefillValues: {
+        ticket_type: 'Website Issue',
+      },
+      skippedFieldNames: [],
+    });
+  });
 });
 
 describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
