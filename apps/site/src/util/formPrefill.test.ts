@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import {
+  clearPrefillUrl,
   getDynamicSectionSelectionsFromPrefill,
   getFormPrefillResultFromSearch,
   getFormPrefillValuesFromSearch,
@@ -288,6 +289,28 @@ describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
     );
 
     expect(skippedFieldNames).toEqual(['cf_requested_date']);
+  });
+});
+
+describe('clearPrefillUrl', () => {
+  it('removes query params while preserving the current path and hash', () => {
+    const originalUrl = window.location.href;
+
+    try {
+      window.history.replaceState(
+        {},
+        '',
+        '/help/get-help?cf_subject=Need%20help#form',
+      );
+
+      clearPrefillUrl();
+
+      expect(window.location.pathname).toBe('/help/get-help');
+      expect(window.location.search).toBe('');
+      expect(window.location.hash).toBe('#form');
+    } finally {
+      window.history.replaceState({}, '', originalUrl);
+    }
   });
 });
 
