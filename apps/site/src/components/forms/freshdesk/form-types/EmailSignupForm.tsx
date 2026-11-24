@@ -4,6 +4,7 @@ import type { FieldError } from 'react-hook-form';
 import { useForm } from 'react-hook-form';
 import { getRecaptchaToken } from '../../../../util/recaptcha/getRecaptchaToken';
 import TextField from '../../fields/TextField';
+import { emailSignupFields } from '../../markdownExport';
 import { fieldErrors, formMessages } from '../../util/errorMessages';
 
 interface Props {
@@ -173,7 +174,11 @@ export default function EmailSignupForm({
         </div>
       )}
 
-      <form className="usa-form maxw-full" onSubmit={handleSubmit(onSubmit)}>
+      <form
+        className="usa-form maxw-full"
+        onSubmit={handleSubmit(onSubmit)}
+        data-markdown-form={JSON.stringify({ fields: emailSignupFields })}
+      >
         <div className="display-flex grid-row">
           <div className="margin-0 grid-col">
             <TextField

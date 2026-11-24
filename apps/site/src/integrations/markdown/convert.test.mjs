@@ -258,3 +258,72 @@ test('writes YAML title and URL with safe escaping and a title fallback', () => 
     assert.doesNotMatch(result.slice(frontmatter[0].length), /^Source:/m);
   }
 });
+
+test('exports form YAML in place with page URL and no form UI or submitted values', () => {
+  const fields = [
+    {
+      name: 'email',
+      label: 'Email',
+      type: 'default_requester',
+      required: true,
+    },
+    {
+      name: 'ticket_type',
+      label: 'Assistance: type',
+      type: 'default_ticket_type',
+      required: true,
+      choices: ['Login Issue', 'Other'],
+    },
+  ];
+  const metadata = JSON.stringify({ fields }).replace(/"/g, '&quot;');
+  for (const contents of [
+    '',
+    '<label>Email</label><input value="private@example.org"><button>Submit</button>',
+  ]) {
+    const result = convertPage(
+      page(
+        `<h1>Get Help</h1><p>Instructions</p><h2>Get Help Form</h2><form data-markdown-form="${metadata}">${contents}</form><p>After form</p>`,
+      ),
+      { url },
+    );
+    const block = result.match(/```form\n([\s\S]*?)```/);
+    assert.ok(block);
+    assert.deepEqual(load(block[1]), { url, fields });
+    assert.match(
+      result,
+      /Instructions[\s\S]*## Get Help Form[\s\S]*```form[\s\S]*After form/,
+    );
+    assert.doesNotMatch(result, /private@example.org|Submit|Form metadata/);
+  }
+});
+
+test('places optional consent documentation after fields without changing the schema', () => {
+  const note = 'The final consent checkbox must be selected on the website.';
+  const fields = [
+    {
+      name: 'cf_consent',
+      label: 'Cloud Credits consent',
+      type: 'custom_checkbox',
+      required: true,
+    },
+  ];
+  for (const formNote of [note, undefined]) {
+    const metadata = JSON.stringify({ fields, note: formNote }).replace(
+      /"/g,
+      '&quot;',
+    );
+    const result = convertPage(
+      page(`<form data-markdown-form="${metadata}"></form><p>After form</p>`),
+      { url },
+    );
+    const block = result.match(/```form\n([\s\S]*?)```/);
+    assert.ok(block);
+    assert.deepEqual(load(block[1]), { url, fields });
+    if (formNote) {
+      assert.ok(result.indexOf(note) > result.indexOf(block[0]));
+      assert.ok(result.indexOf(note) < result.indexOf('After form'));
+    } else {
+      assert.ok(!result.includes(note));
+    }
+  }
+});

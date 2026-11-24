@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import EventLayout from '@layouts/Event.astro';
+import { resolveEventSeoDescription } from '../../../util/seo';
 
 export async function getStaticPaths() {
   const events = await getCollection('events');
@@ -17,9 +18,16 @@ export async function getStaticPaths() {
 
 const { event } = Astro.props;
 const { Content } = await render(event);
+const constructedEventSeoDescription = resolveEventSeoDescription({
+  excerpt: event.data.excerpt,
+  body: event.body,
+});
 ---
 
-<EventLayout frontmatter={event.data}>
+<EventLayout
+  frontmatter={event.data}
+  constructedEventSeoDescription={constructedEventSeoDescription}
+>
 
   <Content />
 

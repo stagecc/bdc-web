@@ -10,13 +10,15 @@ import Base from '@layouts/Base.astro';
 const publications = (await getCollection('publications')).map(
   (pub) => pub.data,
 );
+const heroDescription =
+  'Discover publications that used BDC-hosted datasets, computational workspaces, tools, or other ecosystem resources.';
 ---
 
-<Base title="BDC-Enabled Research">
+<Base title="BDC-Enabled Research" seo={{ description: heroDescription }}>
   <Hero
     eyebrow="Research"
     title="BDC-Enabled Research"
-    description="Discover publications that used BDC-hosted datasets, computational workspaces, tools, or other ecosystem resources."
+    description={heroDescription}
     primaryCta={{ label: 'Cite BDC', href: '/cite-bdc' }}
     secondaryCta={{ label: 'Submit a Publication', href: '/news/bdc-enabled-research/publication-submission' }}
   >

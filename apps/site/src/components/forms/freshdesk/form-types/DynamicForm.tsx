@@ -35,9 +35,14 @@
  *   error={true}. This component renders a fallback message instead of the form.
  */
 
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { FieldError } from 'react-hook-form';
 import { FormProvider, useForm } from 'react-hook-form';
+import {
+  clearPrefillUrl,
+  getDynamicSectionSelectionsFromPrefill,
+  getFormPrefillResultFromSearch,
+} from '../../../../util/formPrefill';
 import { buildPayload } from '../../../../util/freshdesk/buildPayload';
 import { getSectionFieldIds } from '../../../../util/freshdesk/getFormFields';
 import type { FreshdeskField } from '../../../../util/freshdesk/types';
@@ -45,6 +50,7 @@ import { getRecaptchaToken } from '../../../../util/recaptcha';
 import { trackFormSubmitSuccess } from '../../../layout/analytics/forms';
 import ConsentField, { CONSENT_FIELD_NAME } from '../../fields/ConsentField';
 import HoneypotField from '../../fields/HoneypotField';
+import { finalConsentExportNote, ticketFormFields } from '../../markdownExport';
 import {
   type FormMessages,
   fieldErrors,
@@ -58,6 +64,25 @@ import { renderField } from '../helpers/renderField';
 // ---------------------------------------------------------------------------
 
 type FormStatus = 'idle' | 'submitting' | 'success' | 'error';
+
+const PREFILL_NOTICE = {
+  heading: 'Some fields were prepopulated',
+  text: 'Please review the prefilled information and complete any additional required fields before submitting.',
+};
+
+const SKIPPED_PREFILL_NOTICE = {
+  heading: 'Some prefilled values could not be applied',
+  text: 'Please review all fields and complete any missing information before submitting.',
+};
+
+function getPrefillFieldLabel(field: FreshdeskField): string {
+  return field.label_for_customers || field.name;
+}
+
+type SkippedPrefillField = {
+  name: string;
+  label: string;
+};
 
 interface DynamicFormProps {
   // Filtered, enriched field config from getFormFields — only fields where
@@ -97,8 +122,13 @@ export default function DynamicForm({
   const analyticsFormName = formType;
   const [status, setStatus] = useState<FormStatus>('idle');
   const [submitError, setSubmitError] = useState<string | null>(null);
+  const [hasAppliedPrefillValues, setHasAppliedPrefillValues] = useState(false);
+  const [skippedPrefillFields, setSkippedPrefillFields] = useState<
+    SkippedPrefillField[]
+  >([]);
   const errorSummaryRef = useRef<HTMLDivElement>(null);
   const confirmationRef = useRef<HTMLDivElement>(null);
+  const hasAppliedPrefillRef = useRef(false);
 
   // Tracks the currently selected value for each dropdown that has sections.
   // Keyed by field name, value is the selected choice value string.
@@ -122,6 +152,38 @@ export default function DynamicForm({
     reset,
     formState: { errors },
   } = methods;
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || hasAppliedPrefillRef.current) {
+      return;
+    }
+
+    const { prefillValues, skippedFieldNames } = getFormPrefillResultFromSearch(
+      fields,
+      window.location.search,
+    );
+
+    hasAppliedPrefillRef.current = true;
+    setHasAppliedPrefillValues(Object.keys(prefillValues).length > 0);
+    setSkippedPrefillFields(
+      skippedFieldNames.map((fieldName) => {
+        const field = fields.find((candidate) => candidate.name === fieldName);
+        return {
+          name: fieldName,
+          label: field ? getPrefillFieldLabel(field) : fieldName,
+        };
+      }),
+    );
+
+    if (Object.keys(prefillValues).length === 0) {
+      return;
+    }
+
+    reset(prefillValues);
+    setSectionSelections(
+      getDynamicSectionSelectionsFromPrefill(fields, prefillValues),
+    );
+  }, [fields, reset]);
 
   // Called by SelectField (via renderField) when a section-controlling
   // dropdown changes. Updates sectionSelections which triggers a re-render,
@@ -176,8 +238,11 @@ export default function DynamicForm({
             type="button"
             className="usa-button usa-button--outline margin-right-2"
             onClick={() => {
-              reset();
+              clearPrefillUrl();
+              reset({});
               setSectionSelections({});
+              setHasAppliedPrefillValues(false);
+              setSkippedPrefillFields([]);
               setStatus('idle');
             }}
           >
@@ -242,12 +307,18 @@ export default function DynamicForm({
   // ---------------------------------------------------------------------------
 
   const errorFields = Object.keys(errors);
+  const showPrefillNotice =
+    hasAppliedPrefillValues && skippedPrefillFields.length === 0;
 
   return (
     <FormProvider {...methods}>
       <form
         className="usa-form usa-form--large"
         data-analytics-form={analyticsFormName}
+        data-markdown-form={JSON.stringify({
+          fields: ticketFormFields(fields),
+          note: finalConsentExportNote,
+        })}
         onSubmit={handleSubmit(onSubmit, onError)}
         noValidate // Disable native browser validation — RHF handles it
       >
@@ -284,6 +355,31 @@ export default function DynamicForm({
                       {errors[fieldName]?.message as string}
                     </a>
                   </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        )}
+
+        {showPrefillNotice && (
+          <div className="usa-alert usa-alert--info margin-bottom-3">
+            <div className="usa-alert__body">
+              <h2 className="usa-alert__heading">{PREFILL_NOTICE.heading}</h2>
+              <p className="usa-alert__text">{PREFILL_NOTICE.text}</p>
+            </div>
+          </div>
+        )}
+
+        {skippedPrefillFields.length > 0 && (
+          <div className="usa-alert usa-alert--warning margin-bottom-3">
+            <div className="usa-alert__body">
+              <h2 className="usa-alert__heading">
+                {SKIPPED_PREFILL_NOTICE.heading}
+              </h2>
+              <p className="usa-alert__text">{SKIPPED_PREFILL_NOTICE.text}</p>
+              <ul className="usa-list margin-top-1 margin-bottom-0">
+                {skippedPrefillFields.map((field) => (
+                  <li key={field.name}>{field.label}</li>
                 ))}
               </ul>
             </div>
