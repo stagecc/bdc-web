@@ -17,14 +17,16 @@
  *
  * React Hook Form integration note:
  * Trussworks DatePicker doesn't accept a ref directly (it wraps a USWDS
- * component internally), so we use Controller from React Hook Form instead
+ * component internally), so we use useController from React Hook Form instead
  * of register. The parent DynamicForm passes control rather than register
  * for this field type.
  */
 
 import { DatePicker } from '@trussworks/react-uswds';
+import { useState } from 'react';
 import type { Control, FieldError } from 'react-hook-form';
-import { Controller } from 'react-hook-form';
+import { useController } from 'react-hook-form';
+import { normalizeFreshdeskFieldValue } from '../../../util/freshdesk/normalizeFreshdeskFieldValue';
 import { fieldErrors } from '../util/errorMessages';
 
 interface DateFieldProps {
@@ -32,7 +34,7 @@ interface DateFieldProps {
   label: string;
   hint?: string;
   required?: boolean;
-  // DateField uses Controller instead of register because Trussworks DatePicker
+  // DateField uses useController because Trussworks DatePicker
   // doesn't expose a ref for React Hook Form to attach to directly.
   control: Control<Record<string, unknown>>;
   error?: FieldError;
@@ -46,6 +48,19 @@ export default function DateField({
   control,
   error,
 }: DateFieldProps) {
+  const { field } = useController({
+    name,
+    control,
+    rules: { required: required ? fieldErrors.date.required : false },
+  });
+  const value = typeof field.value === 'string' ? field.value : '';
+  const [picker, setPicker] = useState({ value, revision: 0 });
+  // DatePicker only reads defaultValue on mount. Remount for external changes
+  // (prefill/reset), but preserve its focus and calendar during user edits.
+  if (picker.value !== value) {
+    setPicker({ value, revision: picker.revision + 1 });
+  }
+
   const hintId = hint ? `${name}-hint` : undefined;
   const errorId = error ? `${name}-error` : undefined;
 
@@ -73,23 +88,22 @@ export default function DateField({
         </span>
       )}
 
-      <Controller
+      <DatePicker
+        key={picker.revision}
+        id={name}
         name={name}
-        control={control}
-        rules={{ required: required ? fieldErrors.date.required : false }}
-        render={({ field }) => (
-          <DatePicker
-            id={name}
-            name={name}
-            // Trussworks DatePicker returns the selected date as a string
-            // in the active display format. Shared Freshdesk payload builders
-            // normalize that value before submission.
-            onChange={(val) => field.onChange(val)}
-            aria-describedby={
-              [hintId, errorId].filter(Boolean).join(' ') || undefined
-            }
-          />
-        )}
+        defaultValue={
+          normalizeFreshdeskFieldValue({ type: 'custom_date' }, value) as string
+        }
+        onChange={(val) => {
+          const nextValue = val ?? '';
+          setPicker((current) => ({ ...current, value: nextValue }));
+          field.onChange(nextValue);
+        }}
+        onBlur={field.onBlur}
+        aria-describedby={
+          [hintId, errorId].filter(Boolean).join(' ') || undefined
+        }
       />
     </div>
   );

@@ -75,12 +75,12 @@ describe('getFormPrefillValuesFromSearch', () => {
   it('ignores unknown parameters, blank values, and unsupported field types', () => {
     const fields = [
       makeFreshdeskField({ name: 'cf_project_name', type: 'custom_text' }),
-      makeFreshdeskField({ name: 'cf_requested_date', type: 'custom_date' }),
+      makeFreshdeskField({ name: 'cf_requested_count', type: 'custom_number' }),
     ];
 
     const prefillValues = getFormPrefillValuesFromSearch(
       fields,
-      '?cf_project_name=%20%20%20&cf_requested_date=2026-11-13&unknown=value',
+      '?cf_project_name=%20%20%20&cf_requested_count=13&unknown=value',
     );
 
     expect(prefillValues).toEqual({});
@@ -239,15 +239,15 @@ describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
           },
         ],
       }),
-      makeFreshdeskField({ name: 'cf_requested_date', type: 'custom_date' }),
+      makeFreshdeskField({ name: 'cf_requested_count', type: 'custom_number' }),
     ];
 
     const skippedFieldNames = getSkippedFormPrefillFieldNamesFromSearch(
       fields,
-      '?cf_subject=Need%20help&ticket_type=Unknown&cf_requested_date=2026-11-13&unknown=value',
+      '?cf_subject=Need%20help&ticket_type=Unknown&cf_requested_count=13&unknown=value',
     );
 
-    expect(skippedFieldNames).toEqual(['ticket_type', 'cf_requested_date']);
+    expect(skippedFieldNames).toEqual(['ticket_type', 'cf_requested_count']);
   });
 
   it('does not report applied or absent field values as skipped', () => {
@@ -280,15 +280,15 @@ describe('getSkippedFormPrefillFieldNamesFromSearch', () => {
   it('ignores unknown query params and deduplicates repeated known names', () => {
     const fields = [
       makeFreshdeskField({ name: 'cf_subject', type: 'custom_text' }),
-      makeFreshdeskField({ name: 'cf_requested_date', type: 'custom_date' }),
+      makeFreshdeskField({ name: 'cf_requested_count', type: 'custom_number' }),
     ];
 
     const skippedFieldNames = getSkippedFormPrefillFieldNamesFromSearch(
       fields,
-      '?unknown=value&unknown=second&cf_requested_date=2026-11-13&cf_requested_date=2026-11-14',
+      '?unknown=value&unknown=second&cf_requested_count=13&cf_requested_count=14',
     );
 
-    expect(skippedFieldNames).toEqual(['cf_requested_date']);
+    expect(skippedFieldNames).toEqual(['cf_requested_count']);
   });
 });
 
@@ -360,5 +360,54 @@ describe('getDynamicSectionSelectionsFromPrefill', () => {
     });
 
     expect(sectionSelections).toEqual({});
+  });
+});
+
+describe('date prefill', () => {
+  const fields = [
+    makeFreshdeskField({ name: 'publication', type: 'custom_date' }),
+    makeCustomObjectField({ name: 'date', type: 'DATE' }),
+  ];
+
+  it.each([
+    '2026-11-18',
+    '11/18/2026',
+    ' 11/18/2026 ',
+  ])('accepts %s for both form types', (value) => {
+    const search = new URLSearchParams({
+      publication: value,
+      date: value,
+    }).toString();
+    expect(getFormPrefillResultFromSearch(fields, search)).toEqual({
+      prefillValues: { publication: '2026-11-18', date: '2026-11-18' },
+      skippedFieldNames: [],
+    });
+  });
+
+  it.each([
+    '2026-02-29',
+    '02/30/2026',
+    '2026-13-01',
+    '2026-00-01',
+    '2026-01-00',
+    '0000-01-01',
+    'tomorrow',
+    '18/11/2026',
+  ])('skips invalid date %s', (value) => {
+    expect(
+      getFormPrefillResultFromSearch(
+        fields,
+        new URLSearchParams({ publication: value }).toString(),
+      ),
+    ).toEqual({
+      prefillValues: {},
+      skippedFieldNames: ['publication'],
+    });
+  });
+
+  it('accepts leap days', () => {
+    expect(
+      getFormPrefillValuesFromSearch(fields, '?publication=2024-02-29'),
+    ).toEqual({ publication: '2024-02-29' });
   });
 });

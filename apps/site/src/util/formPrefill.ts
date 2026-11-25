@@ -69,6 +69,27 @@ function shouldApplyPrefillFieldValue(
   return allowedValues.includes(value);
 }
 
+function normalizePrefillDate(value: string): string | undefined {
+  const iso = /^(\d{4})-(\d{2})-(\d{2})$/.exec(value);
+  const us = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/.exec(value);
+  if (!iso && !us) return undefined;
+
+  const year = Number(iso ? iso[1] : us?.[3]);
+  const month = Number(iso ? iso[2] : us?.[1]);
+  const day = Number(iso ? iso[3] : us?.[2]);
+  const date = new Date(0);
+  date.setUTCFullYear(year, month - 1, day);
+  if (
+    year < 1 ||
+    date.getUTCFullYear() !== year ||
+    date.getUTCMonth() !== month - 1 ||
+    date.getUTCDate() !== day
+  )
+    return undefined;
+
+  return `${String(year).padStart(4, '0')}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+}
+
 export interface FormPrefillResult {
   prefillValues: Record<string, string>;
   skippedFieldNames: string[];
@@ -96,8 +117,15 @@ export function getFormPrefillResultFromSearch(
       continue;
     }
 
-    if (shouldApplyPrefillFieldValue(field, trimmedValue)) {
-      prefillValues[field.name] = trimmedValue;
+    const value =
+      field.type === 'custom_date' || field.type === 'DATE'
+        ? normalizePrefillDate(trimmedValue)
+        : shouldApplyPrefillFieldValue(field, trimmedValue)
+          ? trimmedValue
+          : undefined;
+
+    if (value !== undefined) {
+      prefillValues[field.name] = value;
       skippedFieldNames.delete(field.name);
       continue;
     }
